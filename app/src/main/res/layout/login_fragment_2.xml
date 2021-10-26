@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.songil.page_login.LoginViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintGuide_begin="20dp"
+            android:orientation="vertical"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintGuide_end="20dp"
+            android:orientation="vertical"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_auth_phoneNumber"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:text="@string/auth_phoneNumber"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btn_back"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            app:layout_constraintTop_toTopOf="@id/tv_auth_phoneNumber"
+            app:layout_constraintBottom_toBottomOf="@id/tv_auth_phoneNumber"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="16dp"
+            android:src="@drawable/ic_arrow_back"
+            android:tint="@color/black"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_input_auth_number"
+            app:layout_constraintTop_toBottomOf="@id/tv_auth_phoneNumber"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            android:gravity="center_vertical"
+            android:layout_marginTop="88dp"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:text="@string/input_auth_number"
+            android:fontFamily="@font/spoqahansansneo_bold"
+            android:textSize="20sp"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_additional_message_input_auth_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tv_input_auth_number"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            android:layout_marginTop="6dp"
+            android:text="@string/additional_message_input_auth_number"/>
+
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/et_auth_number"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            tools:text="1124"
+            app:layout_constraintTop_toBottomOf="@id/tv_additional_message_input_auth_number"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintEnd_toStartOf="@id/btn_receive_again"
+            android:layout_marginEnd="28dp"
+            android:background="@android:color/transparent"
+            android:layout_marginTop="48dp"/>
+
+        <View
+            android:id="@+id/line_et_auth_number"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/g_4"
+            app:layout_constraintTop_toBottomOf="@id/et_auth_number"
+            android:layout_marginTop="12dp"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintEnd_toEndOf="@id/et_auth_number"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/btn_receive_again"
+            android:layout_width="72dp"
+            android:layout_height="35dp"
+            app:layout_constraintTop_toTopOf="@id/et_auth_number"
+            app:layout_constraintBottom_toBottomOf="@id/line_et_auth_number"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            android:background="@drawable/shape_text_button_black"
+            android:text="@string/receive_again"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:gravity="center"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_remain_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/btn_receive_again"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            android:layout_marginTop="12dp"
+            android:textColor="@color/g_4"
+            android:textSize="12sp"
+            tools:text="남은시간 3:00"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="@string/do_login"
+            android:textSize="16sp"
+            android:gravity="center"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
+
