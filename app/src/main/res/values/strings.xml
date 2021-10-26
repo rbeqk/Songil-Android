@@ -9,5 +9,16 @@
     <string name="additional_message_input_auth_number">번호 인증만 하면 로그인이 끝나요!</string>
     <string name="receive_again">다시받기</string>
     <string name="do_login">로그인 하기</string>
+    <string name="do_auth">인증하기</string>
     <string name="remain_time_with_time">남은시간 %d:%02d</string>
+
+    <!-- 회원가입 페이지 관련 -->
+    <string name="songil_welcome">안녕하세요. 손길입니다.</string>
+    <string name="need_terms">원활한 서비스 이용을 위하여\n약관 동의가 필요합니다.</string>
+    <string name="accept_all_terms">약관 전체 동의</string>
+    <string name="terms_required_age">[필수] 만 14세 이상</string>
+    <string name="terms_required_usage">[필수] 이용약관 동의</string>
+    <string name="terms_required_privacy_policy">[필수] 개인 정보 처리방침 동의</string>
+    <string name="terms_optional_ad">[선택] 광고성 정보 수신 및 마케팅 활용 동의</string>
+    <string name="confirmation">확인</string>
 </resources>
