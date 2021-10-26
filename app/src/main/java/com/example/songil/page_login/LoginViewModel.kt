@@ -7,12 +7,12 @@ import androidx.lifecycle.ViewModel
 class LoginViewModel : ViewModel() {
     var fragmentIdx = MutableLiveData<Int>()
     var phoneNumber = MutableLiveData<String>()
-    var btnActivate = MutableLiveData<Boolean>()
+    var btn1Activate = MutableLiveData<Boolean>()
 
     init {
         fragmentIdx.value = 0
         phoneNumber.value = ""
-        btnActivate.value = false
+        btn1Activate.value = false
     }
 
     fun showPhoneNumber(){
@@ -20,6 +20,6 @@ class LoginViewModel : ViewModel() {
     }
 
     fun checkPhoneNumber(){
-        btnActivate.value = phoneNumber.value!!.matches(Regex("^[0-9]{3}[0-9]{4}[0-9]{4}\$"))
+        btn1Activate.value = phoneNumber.value!!.matches(Regex("^[0-9]{3}[0-9]{4}[0-9]{4}\$"))
     }
 }

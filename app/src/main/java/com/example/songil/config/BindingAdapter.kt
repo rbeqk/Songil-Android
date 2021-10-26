@@ -1,9 +1,7 @@
 package com.example.songil.config
 
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
-import androidx.databinding.InverseBindingAdapter
 import com.example.songil.R
 
 object BindingAdapter {
@@ -17,7 +15,6 @@ object BindingAdapter {
             view.setTextColor(view.context.getColor(R.color.songil_1))
             view.setBackgroundColor(view.context.getColor(R.color.g_3))
         }
+        view.isClickable = isActivate
     }
-
-
 }
