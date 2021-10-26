@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="textViewFont" parent="Widget.AppCompat.TextView">
+        <item name="android:fontFamily">@font/spoqahansansneo_medium</item>
+    </style>
+    <style name="EditTextFont" parent="Widget.AppCompat.EditText">
+        <item name="android:fontFamily">@font/spoqahansansneo_medium</item>
+    </style>
+    <style name="ButtonFont" parent="Widget.AppCompat.Button">
+        <item name="android:fontFamily">@font/spoqahansansneo_medium</item>
+    </style>
+    <style name="RadioFont" parent="Widget.AppCompat.CompoundButton.RadioButton">
+        <item name="android:fontFamily">@font/spoqahansansneo_medium</item>
+    </style>
+    <style name="CheckBoxFont" parent="Widget.AppCompat.CompoundButton.CheckBox">
+        <item name="android:fontFamily">@font/spoqahansansneo_medium</item>
+    </style>
+</resources>
