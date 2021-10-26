@@ -7,4 +7,11 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="songil_2">#111111</color>
+    <color name="g_2">#eeeeee</color>
+    <color name="g_4">#969696</color>
+    <color name="g_1">#f5f5f5</color>
+    <color name="g_3">#dcdcdc</color>
+    <color name="songil_1">#ffffff</color>
+    <color name="songil_4">#f0e04c</color>
 </resources>

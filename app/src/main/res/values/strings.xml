@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Songil</string>
+    <!-- 로그인 페이지 관련 -->
+    <string name="auth_phoneNumber">번호 인증</string>
+    <string name="login_with_phoneNumber">전화번호를 이용해\n로그인해주세요.</string>
+    <string name="input_phoneNumber_without_hyphen">( - 없이 숫자만 입력 )</string>
+    <string name="receive_auth_number">인증문자 받기</string>
+    <string name="input_auth_number">인증번호를 입력해주세요.</string>
+    <string name="additional_message_input_auth_number">번호 인증만 하면 로그인이 끝나요!</string>
+    <string name="receive_again">다시받기</string>
+    <string name="do_login">로그인 하기</string>
+    <string name="remain_time_with_time">남은시간 %d:%02d</string>
 </resources>
