@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.songil.page_login.LoginViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintGuide_begin="20dp"
+            android:orientation="vertical"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintGuide_end="20dp"
+            android:orientation="vertical"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_auth_phoneNumber"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:text="@string/auth_phoneNumber"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            app:layout_constraintTop_toTopOf="@id/tv_auth_phoneNumber"
+            app:layout_constraintBottom_toBottomOf="@id/tv_auth_phoneNumber"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="16dp"
+            android:src="@drawable/ic_arrow_back"
+            android:tint="@color/black"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_login_with_phoneNumber"
+            android:layout_width="281dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tv_auth_phoneNumber"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            android:layout_marginTop="88dp"
+            android:text="@string/login_with_phoneNumber"
+            android:textSize="20sp"/>
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/et_phoneNumber"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="@={viewModel.phoneNumber}"
+            app:layout_constraintTop_toBottomOf="@id/tv_login_with_phoneNumber"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            android:background="@android:color/transparent"
+            android:layout_marginTop="48dp"/>
+
+        <View
+            android:id="@+id/line_et_phoneNumber"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/g_4"
+            app:layout_constraintTop_toBottomOf="@id/et_phoneNumber"
+            android:layout_marginTop="12dp"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/line_et_phoneNumber"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            android:layout_marginTop="12dp"
+            android:text="@string/input_phoneNumber_without_hyphen"
+            android:textColor="@color/g_4"
+            android:textSize="12sp"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            textBtnActivate="@{viewModel.btnActivate}"
+            android:text="@string/receive_auth_number"
+            android:onClick="@{() -> viewModel.showPhoneNumber()}"
+            android:textSize="16sp"
+            android:gravity="center"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
+
