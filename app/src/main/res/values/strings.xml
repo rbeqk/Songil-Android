@@ -21,4 +21,12 @@
     <string name="terms_required_privacy_policy">[필수] 개인 정보 처리방침 동의</string>
     <string name="terms_optional_ad">[선택] 광고성 정보 수신 및 마케팅 활용 동의</string>
     <string name="confirmation">확인</string>
+    <string name="input_phoneNumber">전화번호를 입력해주세요.</string>
+    <string name="additional_message_input_phoneNumber">본인 인증을 위해 필요합니다.</string>
+    <string name="additional_message_input_auth_number_signup">번호 인증만 하면 가입이 끝나요!</string>
+    <string name="set_nickname">닉네임 설정</string>
+    <string name="input_nickname">이제 다 됐어요!\n사용하실 닉네임을 적어주세요.</string>
+    <string name="available_nickname">사용 가능한 닉네임 입니다.</string>
+    <string name="unavailable_nickname">사용할 수 없는 닉네임 입니다.</string>
+    <string name="form_word_count">%d/%d</string>
 </resources>
