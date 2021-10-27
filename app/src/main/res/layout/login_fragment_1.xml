@@ -67,6 +67,7 @@
             app:layout_constraintTop_toBottomOf="@id/tv_login_with_phoneNumber"
             app:layout_constraintStart_toStartOf="@id/guideline_start"
             app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            android:textCursorDrawable="@drawable/cursor_gray"
             android:background="@android:color/transparent"
             android:layout_marginTop="48dp"/>
 

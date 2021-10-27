@@ -73,6 +73,7 @@
             app:layout_constraintTop_toBottomOf="@id/tv_additional_message_input_auth_number"
             app:layout_constraintStart_toStartOf="@id/guideline_start"
             app:layout_constraintEnd_toStartOf="@id/btn_receive_again"
+            android:textCursorDrawable="@drawable/cursor_gray"
             android:layout_marginEnd="28dp"
             android:background="@android:color/transparent"
             android:layout_marginTop="48dp"/>
