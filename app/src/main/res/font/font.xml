@@ -19,4 +19,17 @@
         android:fontStyle="normal"
         android:fontWeight="400"
         android:font="@font/montserrat_bold"/>
+    <font
+        android:fontStyle="normal"
+        android:fontWeight="400"
+        android:font="@font/montserrat_medium"/>
+    <font
+        android:fontStyle="normal"
+        android:fontWeight="400"
+        android:font="@font/montserrat_semibold"/>
+
+    <font
+        android:fontStyle="normal"
+        android:fontWeight="400"
+        android:font="@font/montserrat_extrabold"/>
 </font-family>
