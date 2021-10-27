@@ -29,4 +29,23 @@
     <string name="available_nickname">사용 가능한 닉네임 입니다.</string>
     <string name="unavailable_nickname">사용할 수 없는 닉네임 입니다.</string>
     <string name="form_word_count">%d/%d</string>
+
+    <!-- 검색 페이지 관련 -->
+    <string name="recent_search">최근 검색어</string>
+    <string name="remove_all">모두 지우기</string>
+    <string name="popular_search">인기 검색어</string>
+    <string name="shop_eng">SHOP</string>
+    <string name="with_eng">WITH</string>
+    <string name="article_eng">ARTICLE</string>
+    <string name="review_eng">REVIEW</string>
+    <string name="form_price_won">%d won</string>
+    <string name="new_eng">NEW</string>
+    <string name="sort_popular">인기순</string>
+    <string name="sort_recent">최신순</string>
+    <string name="sort_numberOfReview">리뷰 많은 순</string>
+    <string name="sort_low_price">낮은 가격 순</string>
+    <string name="sort_high_price">높은 가격 순</string>
+    <string name="sort">정렬</string>
+    <string name="form_search_result">총 %d개 검색 결과</string>
+
 </resources>
