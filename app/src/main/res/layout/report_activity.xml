@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintGuide_begin="24dp"
+            android:orientation="vertical"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintGuide_end="24dp"
+            android:orientation="vertical"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_text_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintGuide_begin="56dp"
+            android:orientation="vertical"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/navigation_bar"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            app:layout_constraintTop_toTopOf="parent"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:text="@string/report_review"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/btn_back"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            app:layout_constraintTop_toTopOf="@id/navigation_bar"
+            app:layout_constraintBottom_toBottomOf="@id/navigation_bar"
+            app:layout_constraintStart_toStartOf="@id/navigation_bar"
+            android:layout_marginStart="16dp"
+            android:src="@drawable/ic_back_22"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_report_reason"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@id/navigation_bar"
+            android:layout_marginTop="24dp"
+            android:text="@string/reason_of_report"
+            android:textSize="16sp"/>
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/cb_profanity"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/custom_checkbox_circle_20"
+            android:button="@android:color/transparent"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@id/tv_report_reason"
+            android:layout_marginTop="22dp"
+            android:clickable="false"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/cb_profanity"
+            app:layout_constraintBottom_toBottomOf="@id/cb_profanity"
+            app:layout_constraintStart_toStartOf="@id/guideline_text_start"
+            android:textSize="14sp"
+            android:fontFamily="@font/spoqahansansneo_light"
+            android:text="@string/profanity_and_slander"/>
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/cb_pr"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            app:layout_constraintTop_toBottomOf="@id/cb_profanity"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/custom_checkbox_circle_20"
+            android:button="@android:color/transparent"
+            android:clickable="false"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/cb_pr"
+            app:layout_constraintBottom_toBottomOf="@id/cb_pr"
+            app:layout_constraintStart_toStartOf="@id/guideline_text_start"
+            android:fontFamily="@font/spoqahansansneo_light"
+            android:textSize="14sp"
+            android:text="@string/pr_and_commercial"/>
+
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/cb_illegal"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@id/cb_pr"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/custom_checkbox_circle_20"
+            android:button="@android:color/transparent"
+            android:clickable="false"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/cb_illegal"
+            app:layout_constraintBottom_toBottomOf="@id/cb_illegal"
+            app:layout_constraintStart_toStartOf="@id/guideline_text_start"
+            android:fontFamily="@font/spoqahansansneo_light"
+            android:textSize="14sp"
+            android:text="@string/illegal_infomation"/>
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/cb_obscenity"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@id/cb_illegal"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/custom_checkbox_circle_20"
+            android:button="@android:color/transparent"
+            android:clickable="false"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/cb_obscenity"
+            app:layout_constraintBottom_toBottomOf="@id/cb_obscenity"
+            app:layout_constraintStart_toStartOf="@id/guideline_text_start"
+            android:fontFamily="@font/spoqahansansneo_light"
+            android:textSize="14sp"
+            android:text="@string/obscenity_and_harm"/>
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/cb_extrusion"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@id/cb_obscenity"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/custom_checkbox_circle_20"
+            android:button="@android:color/transparent"
+            android:clickable="false"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/cb_extrusion"
+            app:layout_constraintBottom_toBottomOf="@id/cb_extrusion"
+            app:layout_constraintStart_toStartOf="@id/guideline_text_start"
+            android:fontFamily="@font/spoqahansansneo_light"
+            android:textSize="14sp"
+            android:text="@string/personal_information_extrusion"/>
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/cb_spam"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@id/cb_extrusion"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/custom_checkbox_circle_20"
+            android:button="@android:color/transparent"
+            android:clickable="false"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/cb_spam"
+            app:layout_constraintBottom_toBottomOf="@id/cb_spam"
+            app:layout_constraintStart_toStartOf="@id/guideline_text_start"
+            android:fontFamily="@font/spoqahansansneo_light"
+            android:textSize="14sp"
+            android:text="@string/duplicate_spam"/>
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/cb_self_write"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@id/cb_spam"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/custom_checkbox_circle_20"
+            android:button="@android:color/transparent"
+            android:clickable="false"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/cb_self_write"
+            app:layout_constraintBottom_toBottomOf="@id/cb_self_write"
+            app:layout_constraintStart_toStartOf="@id/guideline_text_start"
+            android:fontFamily="@font/spoqahansansneo_light"
+            android:textSize="14sp"
+            android:text="@string/self_write"/>
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="top"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            app:layout_constraintTop_toBottomOf="@id/cb_self_write"
+            android:layout_marginTop="18dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:background="@drawable/shape_edittext_report"
+            android:lines="10"
+            android:textSize="14sp"
+            android:fontFamily="@font/spoqahansansneo_regular"
+            android:textColor="@color/g_4"
+            android:hint="@string/write_report_reason"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
