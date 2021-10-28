@@ -48,4 +48,25 @@
     <string name="sort">정렬</string>
     <string name="form_search_result">총 %d개 검색 결과</string>
 
+    <!-- 장바구니 관련 -->
+    <string name="shopping_basket">장바구니</string>
+    <string name="select_all">전체 선택</string>
+    <string name="select_all_with_count">전체 선택 (%d/%d)</string>
+    <string name="form_payment">%d원 결제하기</string>
+    <string name="word_minus">\u2212</string>
+    <string name="word_plus">\u002b</string>
+
+    <!-- 신고 페이지 관련 -->
+    <string name="do_report">신고하기</string>
+    <string name="report_review">후기 신고하기</string>
+    <string name="reason_of_report">신고사유</string>
+    <string name="profanity_and_slander">욕설 및 비방</string>
+    <string name="pr_and_commercial">홍보 및 영리목적</string>
+    <string name="illegal_infomation">불법 정보</string>
+    <string name="obscenity_and_harm">음란 및 청소년 유해</string>
+    <string name="personal_information_extrusion">개인정보 노출 및 유포</string>
+    <string name="duplicate_spam">도배 및 스팸</string>
+    <string name="self_write">직접 작성 (150자 내외)</string>
+    <string name="write_report_reason">신고 사유를 작성해주세요.</string>
+
 </resources>
