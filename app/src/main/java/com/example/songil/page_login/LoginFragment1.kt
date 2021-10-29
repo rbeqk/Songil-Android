@@ -20,9 +20,12 @@ class LoginFragment1(private val viewModel: LoginViewModel) : BaseFragment<Login
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
             override fun afterTextChanged(s: Editable?) {
-                viewModel.checkPhoneNumber()
+                viewModel.checkPhoneNumberForm()
             }
-
         })
+
+        binding.btnAuth.setOnClickListener {
+            viewModel.sendPhoneNumber { (activity as LoginActivity).goToAuthFragment() }
+        }
     }
 }
