@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="EditTextStyle" parent="Widget.AppCompat.EditText">
+        <item name="android:paddingStart">12dp</item>
+        <item name="android:paddingEnd">12dp</item>
+        <item name="android:background">@drawable/shape_edittext_1</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@font/spoqahansansneo_regular</item>
+    </style>
+</resources>
