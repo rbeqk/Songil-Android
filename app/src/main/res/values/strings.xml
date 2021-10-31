@@ -42,12 +42,6 @@
     <string name="review_eng">REVIEW</string>
     <string name="form_price_won">%d won</string>
     <string name="new_eng">NEW</string>
-    <string name="sort_popular">인기순</string>
-    <string name="sort_recent">최신순</string>
-    <string name="sort_numberOfReview">리뷰 많은 순</string>
-    <string name="sort_low_price">낮은 가격 순</string>
-    <string name="sort_high_price">높은 가격 순</string>
-    <string name="sort">정렬</string>
     <string name="form_search_result">총 %d개 검색 결과</string>
 
     <!-- 장바구니 관련 -->
@@ -92,5 +86,13 @@
     <string name="point_discount">포인트 할인</string>
     <string name="coupon_discount">쿠폰 할인</string>
     <string name="sum">합계</string>
-    
+
+    <!-- 정렬 bottom sheet 관련 -->
+    <string name="sort_popular">인기순</string>
+    <string name="sort_recent">최신순</string>
+    <string name="sort_numberOfReview">리뷰 많은 순</string>
+    <string name="sort_low_price">낮은 가격 순</string>
+    <string name="sort_high_price">높은 가격 순</string>
+    <string name="sort">정렬</string>
+
 </resources>
