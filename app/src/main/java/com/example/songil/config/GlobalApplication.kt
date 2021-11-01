@@ -24,12 +24,13 @@ class GlobalApplication : Application() {
 
     private fun initRetrofitInstance() {
         val client : OkHttpClient = OkHttpClient.Builder()
-                .readTimeout(5000, TimeUnit.MILLISECONDS)
-                .connectTimeout(5000, TimeUnit.MILLISECONDS)
-                .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)) //이건 log 부분이므로 앱 출시 후 삭제할것
-                .build()
+            .readTimeout(5000, TimeUnit.MILLISECONDS)
+            .connectTimeout(5000, TimeUnit.MILLISECONDS)
+            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
+            .addNetworkInterceptor(XAccessTokenInterceptor())
+            .build()
 
+        //sRetrofit = Retrofit.Builder().baseUrl(API_URL).client(client).addCallAdapterFactory(RxJava2CallAdapterFactory.create()).addConverterFactory(GsonConverterFactory.create()).build()
         sRetrofit = Retrofit.Builder().baseUrl(API_URL).client(client).addConverterFactory(GsonConverterFactory.create()).build()
-
     }
 }
