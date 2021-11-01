@@ -4,13 +4,16 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import androidx.lifecycle.ViewModelProvider
 import com.example.songil.R
 import com.example.songil.config.BaseFragment
 import com.example.songil.databinding.LoginFragment1Binding
 
-class LoginFragment1(private val viewModel: LoginViewModel) : BaseFragment<LoginFragment1Binding>(LoginFragment1Binding::bind, R.layout.login_fragment_1) {
+class LoginFragment1() : BaseFragment<LoginFragment1Binding>(LoginFragment1Binding::bind, R.layout.login_fragment_1) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val viewModel = ViewModelProvider(requireActivity())[LoginViewModel::class.java]
+
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
@@ -25,7 +28,7 @@ class LoginFragment1(private val viewModel: LoginViewModel) : BaseFragment<Login
         })
 
         binding.btnAuth.setOnClickListener {
-            viewModel.sendPhoneNumber { (activity as LoginActivity).goToAuthFragment() }
+            viewModel.trySendPhoneNumber { (activity as LoginActivity).goToAuthFragment() }
         }
     }
 }

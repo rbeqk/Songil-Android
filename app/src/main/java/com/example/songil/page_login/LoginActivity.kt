@@ -17,14 +17,14 @@ class LoginActivity : BaseActivity<LoginActivityBinding>(R.layout.login_activity
 
         viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
 
-        supportFragmentManager.beginTransaction().add(binding.layoutFragment.id, LoginFragment1(viewModel)).commit()
+        supportFragmentManager.beginTransaction().add(binding.layoutFragment.id, LoginFragment1()).commit()
     }
 
     fun goToAuthFragment() {
-        supportFragmentManager.beginTransaction().replace(binding.layoutFragment.id, LoginFragment2(viewModel)).commit()
+        supportFragmentManager.beginTransaction().replace(binding.layoutFragment.id, LoginFragment2()).commit()
     }
 
     fun goToPhoneNumberFragment() {
-        supportFragmentManager.beginTransaction().replace(binding.layoutFragment.id, LoginFragment1(viewModel)).commit()
+        supportFragmentManager.beginTransaction().replace(binding.layoutFragment.id, LoginFragment1()).commit()
     }
 }

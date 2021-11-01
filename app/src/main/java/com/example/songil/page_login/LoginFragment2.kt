@@ -5,13 +5,15 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import androidx.lifecycle.ViewModelProvider
 import com.example.songil.R
 import com.example.songil.config.BaseFragment
 import com.example.songil.databinding.LoginFragment2Binding
 
-class LoginFragment2(private val viewModel: LoginViewModel) : BaseFragment<LoginFragment2Binding>(LoginFragment2Binding::bind, R.layout.login_fragment_2) {
+class LoginFragment2() : BaseFragment<LoginFragment2Binding>(LoginFragment2Binding::bind, R.layout.login_fragment_2) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val viewModel = ViewModelProvider(requireActivity())[LoginViewModel::class.java]
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
