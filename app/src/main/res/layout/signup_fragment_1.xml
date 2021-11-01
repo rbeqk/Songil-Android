@@ -2,6 +2,12 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.songil.page_signup.SignupViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -60,17 +66,21 @@
             android:layout_marginTop="44dp"
             android:button="@android:color/transparent"
             android:background="@drawable/custom_checkbox_square"
+            android:checked="@{viewModel.termsAll}"
+            android:onClick="@{() -> viewModel.changeAll()}"
             android:layout_width="26dp"
             android:layout_height="26dp"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvbtn_accept_all_terms"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:gravity="center"
             app:layout_constraintTop_toTopOf="@id/cb_accept_all_terms"
             app:layout_constraintBottom_toBottomOf="@id/cb_accept_all_terms"
             app:layout_constraintStart_toEndOf="@id/cb_accept_all_terms"
             android:layout_marginStart="10dp"
+            android:onClick="@{() -> viewModel.changeAll()}"
             android:text="@string/accept_all_terms"
             android:textSize="16sp"/>
 
@@ -91,16 +101,20 @@
             app:layout_constraintTop_toBottomOf="@id/line_cb_accept_all_terms"
             app:layout_constraintStart_toStartOf="@id/guideline_start"
             android:layout_marginTop="20dp"
+            android:checked="@{viewModel.terms1}"
+            android:onClick="@{() -> viewModel.checkAll(0)}"
             android:background="@drawable/custom_checkbox_nobackground"
             android:button="@android:color/transparent" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:gravity="center"
             app:layout_constraintStart_toEndOf="@id/cb_terms_required_age"
             app:layout_constraintTop_toTopOf="@id/cb_terms_required_age"
             app:layout_constraintBottom_toBottomOf="@id/cb_terms_required_age"
             android:layout_marginStart="10dp"
+            android:onClick="@{() -> viewModel.checkAll(0)}"
             android:text="@string/terms_required_age"
             android:textSize="14sp"
             android:textColor="@color/songil_2"/>
@@ -113,16 +127,20 @@
             app:layout_constraintTop_toBottomOf="@id/cb_terms_required_age"
             app:layout_constraintStart_toStartOf="@id/guideline_start"
             android:layout_marginTop="10dp"
+            android:checked="@{viewModel.terms2}"
+            android:onClick="@{() -> viewModel.checkAll(1)}"
             android:background="@drawable/custom_checkbox_nobackground"
             android:button="@android:color/transparent" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:gravity="center"
             app:layout_constraintTop_toTopOf="@id/cb_terms_required_usage"
             app:layout_constraintBottom_toBottomOf="@id/cb_terms_required_usage"
             app:layout_constraintStart_toEndOf="@id/cb_terms_required_usage"
             android:layout_marginStart="10dp"
+            android:onClick="@{() -> viewModel.checkAll(1)}"
             android:text="@string/terms_required_usage"
             android:textSize="14sp"
             android:textColor="@color/songil_2"/>
@@ -134,6 +152,8 @@
             app:layout_constraintStart_toStartOf="@id/guideline_start"
             app:layout_constraintTop_toBottomOf="@id/cb_terms_required_usage"
             android:layout_marginTop="10dp"
+            android:checked="@{viewModel.terms3}"
+            android:onClick="@{() -> viewModel.checkAll(2)}"
             android:background="@drawable/custom_checkbox_nobackground"
             android:button="@android:color/transparent"
             />
@@ -141,11 +161,13 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_terms_required_privacy_policy"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:gravity="center"
             app:layout_constraintStart_toEndOf="@id/cb_terms_required_privacy_policy"
             app:layout_constraintTop_toTopOf="@id/cb_terms_required_privacy_policy"
             app:layout_constraintBottom_toBottomOf="@id/cb_terms_required_privacy_policy"
             android:layout_marginStart="10dp"
+            android:onClick="@{() -> viewModel.checkAll(2)}"
             android:text="@string/terms_required_privacy_policy"
             android:textSize="14sp"
             android:textColor="@color/songil_2"/>
@@ -157,17 +179,21 @@
             app:layout_constraintStart_toStartOf="@id/guideline_start"
             app:layout_constraintTop_toBottomOf="@id/cb_terms_required_privacy_policy"
             android:layout_marginTop="10dp"
+            android:checked="@{viewModel.terms4}"
+            android:onClick="@{() -> viewModel.checkAll(3)}"
             android:background="@drawable/custom_checkbox_nobackground"
             android:button="@android:color/transparent" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_terms_optional_ad"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:gravity="center"
             app:layout_constraintTop_toTopOf="@id/cb_terms_optional_ad"
             app:layout_constraintBottom_toBottomOf="@id/cb_terms_optional_ad"
             app:layout_constraintStart_toEndOf="@id/cb_terms_optional_ad"
             android:layout_marginStart="10dp"
+            android:onClick="@{() -> viewModel.checkAll(3)}"
             android:text="@string/terms_optional_ad"
             android:textSize="14sp"
             android:textColor="@color/songil_2"/>
@@ -176,8 +202,10 @@
             android:layout_width="match_parent"
             android:layout_height="56dp"
             app:layout_constraintBottom_toBottomOf="parent"
+            textBtnActivate="@{viewModel.btn1Activate}"
             android:fontFamily="@font/spoqahansansneo_bold"
             android:text="@string/confirmation"
+            android:onClick="@{() -> viewModel.setFragmentIdx(1)}"
             android:textSize="16sp"
             android:gravity="center"/>
 

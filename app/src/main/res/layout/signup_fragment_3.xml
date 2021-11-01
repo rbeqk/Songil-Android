@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.songil.page_signup.SignupViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -70,6 +76,7 @@
             android:layout_height="wrap_content"
             android:textSize="20sp"
             tools:text="1124"
+            android:text="@={viewModel.inputAuthNumber}"
             app:layout_constraintTop_toBottomOf="@id/tv_additional_message_input_auth_number"
             app:layout_constraintStart_toStartOf="@id/guideline_start"
             app:layout_constraintEnd_toStartOf="@id/btn_receive_again"
@@ -117,6 +124,8 @@
             android:layout_height="56dp"
             app:layout_constraintBottom_toBottomOf="parent"
             android:fontFamily="@font/spoqahansansneo_bold"
+            textBtnActivate="@{viewModel.btn3Activate}"
+            android:onClick="@{() -> viewModel.setFragmentIdx(1)}"
             android:text="@string/do_auth"
             android:textSize="16sp"
             android:gravity="center"/>

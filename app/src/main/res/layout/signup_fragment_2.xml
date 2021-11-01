@@ -2,7 +2,11 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.songil.page_signup.SignupViewModel" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -73,6 +77,7 @@
             app:layout_constraintTop_toBottomOf="@id/tv_additional_message_input_phoneNumber"
             app:layout_constraintStart_toStartOf="@id/guideline_start"
             app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            android:text="@={viewModel.phoneNumber}"
             android:textCursorDrawable="@drawable/cursor_gray"
             android:background="@android:color/transparent"
             android:layout_marginTop="54dp"/>
@@ -102,6 +107,8 @@
             android:layout_height="56dp"
             app:layout_constraintBottom_toBottomOf="parent"
             android:fontFamily="@font/spoqahansansneo_bold"
+            textBtnActivate="@{viewModel.btn2Activate}"
+            android:onClick="@{() -> viewModel.tryCheckPhoneNumberDuplicate()}"
             android:text="@string/receive_auth_number"
             android:textSize="16sp"
             android:gravity="center"/>
