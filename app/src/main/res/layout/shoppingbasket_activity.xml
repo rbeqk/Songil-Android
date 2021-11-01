@@ -62,12 +62,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/space"
-            tools:listitem="@layout/shoppingbacket_item_content"/>
+            tools:listitem="@layout/shoppingbacket_item_craft"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="match_parent"
             android:layout_height="56dp"
             app:layout_constraintBottom_toBottomOf="parent"
+            android:fontFamily="@font/spoqahansansneo_bold"
             tools:text="38000원 결제하기"
             tools:background="@color/songil_2"
             tools:textColor="@color/songil_4"
