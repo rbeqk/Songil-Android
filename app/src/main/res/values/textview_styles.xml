@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="newTextView" parent="Widget.AppCompat.TextView">
+        <item name="android:background">@color/songil_2</item>
+        <item name="android:textColor">@color/songil_4</item>
+    </style>
+</resources>
