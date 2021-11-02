@@ -105,4 +105,13 @@
     <string name="home_eng">HOME</string>
     <string name="my_eng">MY</string>
     
+    <!-- 작품 상세페이지 관련 -->
+    <string name="craft_description">작품 설명</string>
+    <string name="size">크기</string>
+    <string name="warning_notice">유의사항</string>
+    <string name="detail_image">상세 이미지</string>
+    <string name="cart_eng">CART</string>
+    <string name="buy_now_eng">BUY NOW</string>
+    <string name="buy_eng">BUY</string>
+    
 </resources>
