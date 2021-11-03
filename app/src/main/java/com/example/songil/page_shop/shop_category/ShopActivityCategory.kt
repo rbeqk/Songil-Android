@@ -6,14 +6,21 @@ import android.view.View
 import android.view.animation.TranslateAnimation
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.songil.R
 import com.example.songil.config.BaseActivity
 import com.example.songil.databinding.ShopActivityCategoryBinding
+import com.example.songil.page_shop.shop_category.models.CraftDetail
+import com.example.songil.page_shop.shop_category.models.CraftSimple
 import com.example.songil.popup_sort.SortBottomSheet
 import com.example.songil.popup_sort.popup_interface.PopupSortView
 import com.example.songil.recycler.adapter.ShopRvCategoryTextAdapter
+import com.example.songil.recycler.adapter.ShopRvCraftAdapter
+import com.example.songil.recycler.adapter.ShopRvPopularAdapter
 import com.example.songil.recycler.decoration.ShopRvCategoryTextItemDecoration
+import com.example.songil.recycler.decoration.ShopRvCraftDecoration
+import com.example.songil.recycler.decoration.ShopRvPopularDecoration
 import com.example.songil.recycler.rv_interface.RvCategoryView
 import com.example.songil.recycler.rv_interface.RvCraftView
 
@@ -32,6 +39,13 @@ class ShopActivityCategory : BaseActivity<ShopActivityCategoryBinding>(R.layout.
         binding.rvCategory.adapter = ShopRvCategoryTextAdapter(this, this)
         binding.rvCategory.addItemDecoration(ShopRvCategoryTextItemDecoration(this))
 
+        binding.rvPopular.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        binding.rvPopular.adapter = ShopRvPopularAdapter(this, this)
+        binding.rvPopular.addItemDecoration(ShopRvPopularDecoration(this))
+
+        binding.rvCraft.layoutManager = GridLayoutManager(this, 2)
+        binding.rvCraft.adapter = ShopRvCraftAdapter(this, this)
+        binding.rvCraft.addItemDecoration(ShopRvCraftDecoration(this))
 
         binding.btnSort.setOnClickListener {
             val dialogFragment = SortBottomSheet(this)
@@ -62,6 +76,8 @@ class ShopActivityCategory : BaseActivity<ShopActivityCategoryBinding>(R.layout.
         val intent = intent
         viewModel.setCategory(intent.getStringExtra("category") ?: "도자공예")
 
+
+
     }
 
     // recyclerview 에서 실행될 함수
@@ -83,8 +99,19 @@ class ShopActivityCategory : BaseActivity<ShopActivityCategoryBinding>(R.layout.
             binding.tvCategory.text = liveData
             binding.tvThisWeekPopular.text = getString(R.string.form_this_week_popular, liveData)
             (binding.rvCategory.adapter as ShopRvCategoryTextAdapter).changeCurrentCategory(liveData)
-            // 그리고 여기서 api 호출
+            viewModel.requestProductAll()
         }
         viewModel.category.observe(this, categoryObserver)
+
+        val simpleCraftObserver = Observer<ArrayList<CraftSimple>> { liveData ->
+            (binding.rvPopular.adapter as ShopRvPopularAdapter).applyData(liveData)
+        }
+        viewModel.popularCrafts.observe(this, simpleCraftObserver)
+
+        val detailCraftObserver = Observer<ArrayList<CraftDetail>> { liveData ->
+            (binding.rvCraft.adapter as ShopRvCraftAdapter).applyData(liveData)
+            binding.tvSearchResult.text = getString(R.string.form_search_result, liveData.size)
+        }
+        viewModel.normalCrafts.observe(this, detailCraftObserver)
     }
 }

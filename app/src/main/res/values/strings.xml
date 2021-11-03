@@ -114,6 +114,7 @@
     <string name="buy_now_eng">BUY NOW</string>
     <string name="buy_eng">BUY</string>
 
-    <!-- shop 카테고리 화면 관련 -->
+    <!-- shop 화면 관련 -->
     <string name="form_this_week_popular">이번주 인기 %s</string>
+    <string name="form_review_count">REVIEW %d</string>
 </resources>
