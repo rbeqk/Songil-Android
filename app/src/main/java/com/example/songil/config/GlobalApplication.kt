@@ -14,6 +14,7 @@ class GlobalApplication : Application() {
     companion object {
         val API_URL = "https://dev.songil.shop/"
         const val X_ACCESS_TOKEN = "x-access-token"
+        const val USER_IDX = "user-idx"
         lateinit var sRetrofit: Retrofit
         lateinit var globalSharedPreferences: SharedPreferences
         val categoryList = arrayListOf<Category>(
