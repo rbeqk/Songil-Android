@@ -5,6 +5,6 @@ import com.example.songil.config.GlobalApplication
 class ShopCategoryRepository {
     private val shopCategoryRetrofitInter = GlobalApplication.sRetrofit.create(ShopCategoryRetrofitInterface::class.java)
 
-    suspend fun getProductAll(category : String, page : Int = 1) = shopCategoryRetrofitInter.postAllProduct(category, page)
+    suspend fun getProductAll(category : String, filter : String = "popular", page : Int = 1) = shopCategoryRetrofitInter.postAllProduct(category, page, filter)
 
 }

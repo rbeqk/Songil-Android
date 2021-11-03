@@ -7,5 +7,5 @@ import retrofit2.http.Query
 
 interface ShopCategoryRetrofitInterface {
     @GET("products")
-    suspend fun postAllProduct(@Query("category") category : String, @Query("page") page : Int) : Response<ResponseProductAll>
+    suspend fun postAllProduct(@Query("category") category : String, @Query("page") page : Int, @Query("filter") filter : String) : Response<ResponseProductAll>
 }

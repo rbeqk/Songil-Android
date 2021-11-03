@@ -48,7 +48,7 @@ class ShopActivityCategory : BaseActivity<ShopActivityCategoryBinding>(R.layout.
         binding.rvCraft.addItemDecoration(ShopRvCraftDecoration(this))
 
         binding.btnSort.setOnClickListener {
-            val dialogFragment = SortBottomSheet(this)
+            val dialogFragment = SortBottomSheet(this, viewModel.normalSort)
             dialogFragment.show(supportFragmentManager, dialogFragment.tag)
         }
 
@@ -62,7 +62,7 @@ class ShopActivityCategory : BaseActivity<ShopActivityCategoryBinding>(R.layout.
             } else {
                 val anim = TranslateAnimation(0f, 0f, 0f, -1 * binding.rvCategory.height.toFloat())
                 anim.duration = 500
-                anim.fillAfter = true
+                anim.fillAfter = false
                 binding.rvCategory.animation = anim
                 binding.rvCategory.visibility = View.GONE
             }
@@ -83,15 +83,21 @@ class ShopActivityCategory : BaseActivity<ShopActivityCategoryBinding>(R.layout.
     // recyclerview 에서 실행될 함수
     override fun categoryClick(data: String) {
         viewModel.setCategory(data)
+        val anim = TranslateAnimation(0f, 0f, 0f, -1 * binding.rvCategory.height.toFloat())
+        anim.duration = 500
+        anim.fillAfter = false
+        binding.rvCategory.animation = anim
+        binding.rvCategory.visibility = View.GONE
     }
 
     // popup 에서 실행될 함수
-    override fun sort(sort: String) {
-        Log.d("sort", sort)
+    override fun sort(sort: String, originalWord : String) {
+        binding.tvSort.text = originalWord
+        viewModel.changeSort(sort)
     }
 
     override fun craftClick(craftIdx: Int) {
-
+        Log.d("craftIdx is", craftIdx.toString())
     }
 
     private fun setObserver(){
@@ -113,5 +119,10 @@ class ShopActivityCategory : BaseActivity<ShopActivityCategoryBinding>(R.layout.
             binding.tvSearchResult.text = getString(R.string.form_search_result, liveData.size)
         }
         viewModel.normalCrafts.observe(this, detailCraftObserver)
+
+        val sortObserver = Observer<String> {
+            viewModel.requestProductAll2()
+        }
+        viewModel.sort.observe(this, sortObserver)
     }
 }

@@ -48,13 +48,15 @@
             android:text="@string/sort_popular"/>
 
         <ImageView
+            android:id="@+id/iv_popular"
             android:layout_width="26dp"
             android:layout_height="26dp"
             app:layout_constraintTop_toTopOf="@id/tvbtn_popular"
             app:layout_constraintBottom_toBottomOf="@id/tvbtn_popular"
             app:layout_constraintEnd_toEndOf="@id/guideline_end"
             android:src="@drawable/ic_check_black_26"
-            tools:ignore="ContentDescription" />
+            tools:ignore="ContentDescription"
+            android:visibility="gone"/>
 
         <View
             android:id="@+id/line_popular"
@@ -76,13 +78,15 @@
             android:text="@string/sort_recent"/>
 
         <ImageView
+            android:id="@+id/iv_recent"
             android:layout_width="26dp"
             android:layout_height="26dp"
             app:layout_constraintTop_toTopOf="@id/tvbtn_recent"
             app:layout_constraintBottom_toBottomOf="@id/tvbtn_recent"
             app:layout_constraintEnd_toEndOf="@id/guideline_end"
             android:src="@drawable/ic_check_black_26"
-            tools:ignore="ContentDescription" />
+            tools:ignore="ContentDescription"
+            android:visibility="gone"/>
 
         <View
             android:id="@+id/line_recent"
@@ -104,13 +108,15 @@
             android:text="@string/sort_numberOfReview"/>
 
         <ImageView
+            android:id="@+id/iv_review"
             android:layout_width="26dp"
             android:layout_height="26dp"
             app:layout_constraintTop_toTopOf="@id/tvbtn_review"
             app:layout_constraintBottom_toBottomOf="@id/tvbtn_review"
             app:layout_constraintEnd_toEndOf="@id/guideline_end"
             android:src="@drawable/ic_check_black_26"
-            tools:ignore="ContentDescription" />
+            tools:ignore="ContentDescription"
+            android:visibility="gone"/>
 
         <View
             android:id="@+id/line_review"
@@ -132,13 +138,15 @@
             android:text="@string/sort_low_price"/>
 
         <ImageView
+            android:id="@+id/iv_low_price"
             android:layout_width="26dp"
             android:layout_height="26dp"
             app:layout_constraintTop_toTopOf="@id/tvbtn_low_price"
             app:layout_constraintBottom_toBottomOf="@id/tvbtn_low_price"
             app:layout_constraintEnd_toEndOf="@id/guideline_end"
             android:src="@drawable/ic_check_black_26"
-            tools:ignore="ContentDescription" />
+            tools:ignore="ContentDescription"
+            android:visibility="gone"/>
 
 
 
