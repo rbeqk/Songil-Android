@@ -13,11 +13,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Songil">
         <activity android:name=".page_splash.SplashActivity">
-<!--            <intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
         </activity>
         <activity android:name=".page_login.LoginActivity"
             android:windowSoftInputMode="adjustResize"/>
@@ -30,12 +30,15 @@
         </activity>
         <activity android:name=".page_signup.SignupActivity"
             android:windowSoftInputMode="adjustResize">
-            <intent-filter>
+<!--            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>-->
         </activity>
+        <activity android:name=".page_main.MainActivity"/>
+        <activity android:name=".page_craft.CraftActivity"/>
+        <activity android:name=".page_shop.shop_category.ShopActivityCategory"/>
     </application>
 
 </manifest>
