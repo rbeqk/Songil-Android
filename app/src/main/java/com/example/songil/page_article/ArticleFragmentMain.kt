@@ -5,8 +5,8 @@ import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.songil.R
-import com.example.songil.adapter.ArticleViewPager2Adapter
-import com.example.songil.adapter.ArticleViewPager2ItemDecoration
+import com.example.songil.recycler.adapter.ArticleViewPager2Adapter
+import com.example.songil.recycler.decoration.ArticleViewPager2ItemDecoration
 import com.example.songil.config.BaseFragment
 import com.example.songil.data.Article
 import com.example.songil.databinding.ArticleFragmentMainBinding
@@ -23,8 +23,8 @@ class ArticleFragmentMain : BaseFragment<ArticleFragmentMainBinding>(ArticleFrag
 
         viewModel = ViewModelProvider(this)[ArticleViewModel::class.java]
 
-        val nextItemVisiblePx = dpToPx(activity as MainActivity, 14)
-        val currentItemHorizontalMarginPx = dpToPx(activity as MainActivity, 34)
+        val nextItemVisiblePx = dpToPx(activity as MainActivity, 16)
+        val currentItemHorizontalMarginPx = dpToPx(activity as MainActivity, 32)
         val pageTranslationX = nextItemVisiblePx + currentItemHorizontalMarginPx
         binding.vp2Article.adapter = ArticleViewPager2Adapter(activity as MainActivity)
         binding.vp2Article.setPageTransformer { page, position ->
