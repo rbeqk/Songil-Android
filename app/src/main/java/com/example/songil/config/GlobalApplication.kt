@@ -2,6 +2,8 @@ package com.example.songil.config
 
 import android.app.Application
 import android.content.SharedPreferences
+import com.example.songil.R
+import com.example.songil.data.Category
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -14,7 +16,19 @@ class GlobalApplication : Application() {
         const val X_ACCESS_TOKEN = "x-access-token"
         lateinit var sRetrofit: Retrofit
         lateinit var globalSharedPreferences: SharedPreferences
+        val categoryList = arrayListOf<Category>(
+            Category("도자공예", R.drawable.ic_heart_line_28),
+            Category("유리공예", R.drawable.ic_heart_line_28),
+            Category("금속공예", R.drawable.ic_heart_line_28),
+            Category("목공예", R.drawable.ic_heart_line_28),
+            Category("섬유공예", R.drawable.ic_heart_line_28),
+            Category("가죽공예", R.drawable.ic_heart_line_28),
+            Category("기타공예", R.drawable.ic_heart_line_28),
+            Category("전체보기", R.drawable.ic_heart_line_28),
+        )
     }
+
+
 
     override fun onCreate() {
         super.onCreate()
