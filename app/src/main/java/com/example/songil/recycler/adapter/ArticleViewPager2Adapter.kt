@@ -1,4 +1,4 @@
-package com.example.songil.adapter
+package com.example.songil.recycler.adapter
 
 import android.content.Context
 import android.view.LayoutInflater

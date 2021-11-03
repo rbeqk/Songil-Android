@@ -1,4 +1,4 @@
-package com.example.songil.adapter
+package com.example.songil.recycler.decoration
 
 import android.content.Context
 import android.graphics.Rect
