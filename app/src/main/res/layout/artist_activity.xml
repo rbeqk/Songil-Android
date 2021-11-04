@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/songil_1">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/navigation_bar"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:background="@color/songil_1"
+            android:elevation="1dp"
+            android:outlineProvider="none"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/btn_back"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="16dp"
+                android:src="@drawable/ic_back_22"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:textSize="16sp"
+                tools:text="조민지"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/btn_shoppingbasket"
+                app:layout_constraintTop_toTopOf="@id/btn_back"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="16dp"
+                android:layout_width="28dp"
+                android:layout_height="28dp">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:src="@drawable/ic_shop_22"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:gravity="center"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:background="@drawable/shape_background_circle_black_18"
+                    android:textSize="12sp"
+                    android:textColor="@color/songil_4"
+                    android:fontFamily="@font/montserrat_bold"
+                    tools:text="4"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/btn_search"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                app:layout_constraintTop_toTopOf="@id/btn_back"
+                app:layout_constraintBottom_toBottomOf="@id/btn_back"
+                app:layout_constraintEnd_toStartOf="@id/btn_shoppingbasket"
+                android:layout_marginEnd="12dp"
+                android:src="@drawable/ic_search_22"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/navigation_bar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:overScrollMode="never">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline_start"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintGuide_begin="20dp"
+                    android:orientation="vertical"/>
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline_end"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintGuide_end="20dp"
+                    android:orientation="vertical"/>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_profile"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    app:layout_constraintStart_toStartOf="@id/guideline_start"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="8dp"
+                    app:cardCornerRadius="35dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_profile"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:background="@color/songil_2"/>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_artist_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="@id/cv_profile"
+                    app:layout_constraintBottom_toTopOf="@id/tv_studio"
+                    app:layout_constraintStart_toEndOf="@id/cv_profile"
+                    android:layout_marginStart="16dp"
+                    android:fontFamily="@font/spoqahansansneo_bold"
+                    android:textSize="16sp"
+                    tools:text="조민지 작가"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_studio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="@id/cv_profile"
+                    app:layout_constraintTop_toBottomOf="@id/tv_artist_name"
+                    app:layout_constraintStart_toStartOf="@id/tv_artist_name"
+                    android:textSize="13sp"
+                    android:fontFamily="@font/spoqahansansneo_light"
+                    tools:text="조민지 스튜디오"/>
+
+                <View
+                    android:id="@+id/line_profile"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    app:layout_constraintTop_toBottomOf="@id/cv_profile"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@color/g_2"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_artist_comment"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/line_profile"
+                    app:layout_constraintStart_toStartOf="@id/guideline_start"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_end"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/spoqahansansneo_light"
+                    android:lineSpacingExtra="6sp"
+                    android:textSize="13sp"
+                    tools:text="만든다는 것은 생각하는 것과 동일합니다\n조민지와 당신의 생각을 만듭니다."/>
+
+                <View
+                    android:id="@+id/space_comment"
+                    android:layout_width="match_parent"
+                    android:layout_height="8dp"
+                    app:layout_constraintTop_toBottomOf="@id/tv_artist_comment"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/g_1"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_major_field"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    app:layout_constraintTop_toBottomOf="@id/space_comment"
+                    app:layout_constraintStart_toStartOf="@id/guideline_start"
+                    android:layout_marginTop="24dp"
+                    android:textSize="13sp"
+                    android:text="@string/major_field"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_major_field_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="@id/tv_major_field"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_major_field"
+                    app:layout_constraintStart_toEndOf="@id/tv_major_field"
+                    android:layout_marginStart="28dp"
+                    tools:text="금속공예"
+                    android:textSize="13sp"
+                    android:fontFamily="@font/spoqahansansneo_light"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_brief_history"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/tv_major_field"
+                    app:layout_constraintStart_toStartOf="@id/guideline_start"
+                    android:layout_marginTop="10dp"
+                    android:textSize="13sp"
+                    android:text="@string/brief_history"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_brief_history_value"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="@id/tv_major_field_value"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_end"
+                    app:layout_constraintTop_toTopOf="@id/tv_brief_history"
+                    android:minLines="1"
+                    tools:text="2021 국민대학교 금속공예학과\n2014 국민대학교 일반대학원 금속공예학과"
+                    android:textSize="13sp"
+                    android:fontFamily="@font/spoqahansansneo_light"
+                    android:lineSpacingExtra="4sp"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_display_information"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/tv_brief_history_value"
+                    app:layout_constraintStart_toStartOf="@id/guideline_start"
+                    android:layout_marginTop="10dp"
+                    android:textSize="13sp"
+                    android:text="@string/display_information" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_display_information_value"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="@id/tv_display_information"
+                    app:layout_constraintStart_toStartOf="@id/tv_major_field_value"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_end"
+                    android:minLines="1"
+                    android:textSize="13sp"
+                    android:fontFamily="@font/spoqahansansneo_light"
+                    tools:text="2014 국민대학교 우수인재상\n2018 공예주간 마켓유량 문화역서울 2 84"
+                    android:lineSpacingExtra="4sp"/>
+
+
+
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/btn_craft"
+                    android:layout_width="0dp"
+                    android:layout_height="56dp"
+                    app:layout_constraintTop_toBottomOf="@id/tv_display_information_value"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/btn_article"
+                    android:layout_marginTop="36dp">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/craft_eng"
+                        android:textSize="12sp"
+                        android:fontFamily="@font/montserrat_semibold"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_craft_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginBottom="10dp"
+                        tools:text="(12)"
+                        android:textSize="12sp"
+                        android:fontFamily="@font/montserrat_medium"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/btn_article"
+                    android:layout_width="0dp"
+                    android:layout_height="56dp"
+                    app:layout_constraintTop_toTopOf="@id/btn_craft"
+                    app:layout_constraintStart_toEndOf="@id/btn_craft"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    >
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/article_eng"
+                        android:textSize="12sp"
+                        android:fontFamily="@font/montserrat_semibold"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_article_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginBottom="10dp"
+                        tools:text="(12)"
+                        android:textSize="12sp"
+                        android:fontFamily="@font/montserrat_medium"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <FrameLayout
+                    android:id="@+id/layout_fragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/btn_craft"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
+
