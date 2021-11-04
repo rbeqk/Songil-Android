@@ -3,25 +3,23 @@ package com.example.songil.page_login
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.songil.config.GlobalApplication
-import com.example.songil.data.PhoneNumber
-import com.example.songil.page_login.models.ResponseAuthPhone
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class LoginViewModel : ViewModel() {
-    var phoneNumber = ""//= MutableLiveData<String>()
-    var authNumber = ""
+    private val repository = LoginRepository()
+    var phoneNumber = ""
+    var authNumber = MutableLiveData<String>()
     var btn1Activate = MutableLiveData<Boolean>()
     var btn2Activate = MutableLiveData<Boolean>()
-    var inputAuthNumber = MutableLiveData<String>()
+    var inputAuthNumber = ""
 
+    var fragmentIdx = MutableLiveData<Int>(0)
 
     init {
         btn1Activate.value = false
         btn2Activate.value = false
-        inputAuthNumber.value = ""
     }
 
     fun checkPhoneNumberForm(){
@@ -29,36 +27,54 @@ class LoginViewModel : ViewModel() {
     }
 
     fun checkAuthNumberForm(){
-        btn2Activate.value = inputAuthNumber.value!!.matches(Regex("[0-9]{4}\$"))
+        btn2Activate.value = inputAuthNumber.matches(Regex("[0-9]{4}\$"))
     }
 
     fun checkAuthNumberValue() {
-        if (inputAuthNumber.value == authNumber) {
-            Log.d("login", "success")
+        if (inputAuthNumber == authNumber.value) {
+            tryLogin()
+        } else {
+            Log.d("login", "인증번호가 일치하지 않습니다.")
         }
     }
 
+    fun setFragmentIdx(idx : Int){
+        fragmentIdx.value = idx
+    }
+
     // network!!
-    fun trySendPhoneNumber(successFunc : () -> Unit){
-        val retrofitInterface = GlobalApplication.sRetrofit.create(LoginRetrofitInterface::class.java)
-        retrofitInterface.postAuthPhone(PhoneNumber(phoneNumber)).enqueue(object : Callback<ResponseAuthPhone>{
-            override fun onResponse(
-                call: Call<ResponseAuthPhone>,
-                response: Response<ResponseAuthPhone>
-            ) {
+    fun tryGetAuthNumber(){
+        CoroutineScope(Dispatchers.IO).launch {
+            repository.getAuthNumber(phoneNumber).let { response ->
                 if (response.isSuccessful){
                     if (response.body()!!.isSuccess){
-                        successFunc()
+                        authNumber.postValue(response.body()!!.result.authNumber)
+                        fragmentIdx.postValue(1)
                     } else {
-                        Log.d("sendPhoneNumber", response.body()!!.message!!)
+                        Log.d("get auth number", response.body()!!.message!!)
                     }
+                } else {
+                    Log.d("get auth number", response.body()!!.message!!)
                 }
             }
+        }
+    }
 
-            override fun onFailure(call: Call<ResponseAuthPhone>, t: Throwable) {
-                Log.d("sendPhoneNumber", t.toString())
+    // 일단 테스트하느라 sp 에는 저장 안했다. 이후에 저장할 것!!!!
+    fun tryLogin(){
+        CoroutineScope(Dispatchers.IO).launch {
+            repository.getLogin(phoneNumber).let { response ->
+                if (response.isSuccessful){
+                    if (response.body()!!.isSuccess){
+                        Log.d("login", response.body()!!.result.jwt)
+                        fragmentIdx.postValue(2)
+                    } else {
+                        Log.d("login", response.body()!!.message!!)
+                    }
+                } else {
+                    Log.d("login", response.body()!!.message!!)
+                }
             }
-
-        })
+        }
     }
 }

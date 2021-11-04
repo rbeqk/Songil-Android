@@ -28,7 +28,7 @@ class LoginFragment2() : BaseFragment<LoginFragment2Binding>(LoginFragment2Bindi
         })
 
         binding.btnBack.setOnClickListener {
-            (activity as LoginActivity).goToPhoneNumberFragment()
+            viewModel.setFragmentIdx(0)
         }
 
     }
