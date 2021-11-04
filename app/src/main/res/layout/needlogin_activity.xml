@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="view"
+            type="com.example.songil.page_needlogin.NeedLoginActivity" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -15,6 +20,7 @@
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="12dp"
             android:layout_marginStart="26dp"
+            android:onClick="@{() -> view.goToBack()}"
             android:src="@drawable/ic_clear"
             android:tint="@color/songil_1"/>
 
@@ -26,7 +32,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="228dp"
-            tools:src="@drawable/ic_launcher_foreground"/>
+            android:src="@drawable/logo_songil"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/btn_signup"
@@ -40,6 +46,7 @@
             android:layout_marginEnd="22dp"
             android:layout_marginTop="144dp"
             android:background="@drawable/shape_button_signup"
+            android:onClick="@{() -> view.goToSignUp()}"
             android:text="@string/do_signup"
             android:textSize="16sp"/>
 
@@ -54,6 +61,7 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/shape_button_login"
             android:text="@string/do_login"
+            android:onClick="@{() -> view.goToLogin()}"
             android:textColor="@color/songil_1"
             android:textSize="16sp"/>
 

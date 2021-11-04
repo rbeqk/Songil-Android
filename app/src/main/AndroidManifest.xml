@@ -39,6 +39,7 @@
         <activity android:name=".page_main.MainActivity"/>
         <activity android:name=".page_craft.CraftActivity"/>
         <activity android:name=".page_shop.shop_category.ShopActivityCategory"/>
+        <activity android:name=".page_needlogin.NeedLoginActivity"/>
     </application>
 
 </manifest>
