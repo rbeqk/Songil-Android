@@ -6,7 +6,8 @@ import com.example.songil.R
 import com.example.songil.config.BaseActivity
 import com.example.songil.databinding.MainActivityBinding
 import com.example.songil.page_article.ArticleFragmentMain
-import com.example.songil.page_craft.CraftActivity
+import com.example.songil.page_needlogin.NeedLoginActivity
+import com.example.songil.page_shop.ShopFragmentMain
 import com.example.songil.utils.setStatusBar
 
 class MainActivity : BaseActivity<MainActivityBinding>(R.layout.main_activity){
@@ -19,7 +20,8 @@ class MainActivity : BaseActivity<MainActivityBinding>(R.layout.main_activity){
 
                 }
                 R.id.bottom_shop -> {
-                    startActivity(Intent(this, CraftActivity::class.java))
+                    //startActivity(Intent(this, CraftActivity::class.java))
+                    supportFragmentManager.beginTransaction().replace(binding.layoutFragment.id, ShopFragmentMain()).commit()
                 }
                 R.id.bottom_with -> {
 
@@ -29,7 +31,7 @@ class MainActivity : BaseActivity<MainActivityBinding>(R.layout.main_activity){
                     supportFragmentManager.beginTransaction().replace(binding.layoutFragment.id, ArticleFragmentMain()).commit()
                 }
                 else -> {
-
+                    startActivity(Intent(this, NeedLoginActivity::class.java))
                 }
             }
             true
