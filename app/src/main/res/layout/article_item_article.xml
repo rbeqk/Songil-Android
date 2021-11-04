@@ -7,34 +7,52 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/iv_thumbnail"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_thumbnail"
             android:layout_width="match_parent"
             android:layout_height="342dp"
-            android:scaleType="centerCrop"
-            app:layout_constraintTop_toTopOf="parent"/>
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_article_type"
-            android:layout_width="50dp"
-            android:layout_height="28dp"
-            android:gravity="center"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_margin="8dp"
-            android:background="#cc111111"
-            android:textColor="@color/songil_1"
-            android:fontFamily="@font/spoqahansansneo_bold"
-            tools:text="인터뷰"
-            android:textSize="12sp"/>
+            app:cardCornerRadius="0dp"
+            app:cardElevation="2dp"
+            app:cardUseCompatPadding="true">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="342dp">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_thumbnail"
+                    android:layout_width="match_parent"
+                    android:layout_height="342dp"
+                    android:scaleType="centerCrop"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_article_type"
+                    android:layout_width="50dp"
+                    android:layout_height="28dp"
+                    android:gravity="center"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_margin="8dp"
+                    android:background="#cc111111"
+                    android:textColor="@color/songil_1"
+                    android:fontFamily="@font/spoqahansansneo_bold"
+                    tools:text="인터뷰"
+                    android:textSize="12sp"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </androidx.cardview.widget.CardView>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_article_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/iv_thumbnail"
+            app:layout_constraintTop_toBottomOf="@id/cv_thumbnail"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="14dp"
+            android:layout_marginStart="12dp"
             android:layout_marginTop="26dp"
             android:fontFamily="@font/spoqahansansneo_bold"
             tools:text="문혜주 작가 : 부조리한 모순"
