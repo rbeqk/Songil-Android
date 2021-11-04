@@ -30,7 +30,7 @@ class ShopCategoryViewModel : ViewModel() {
     // for change category
     fun requestProductAll(){
         CoroutineScope(Dispatchers.IO).launch {
-            repository.getProductAll(category.value!!).let { response ->
+            repository.getProductAll(category.value!!, normalSort).let { response ->
                 if (response.isSuccessful){
                     if (response.body()!!.code == 1000){
                         popularCrafts.postValue(response.body()!!.result.popularList)
