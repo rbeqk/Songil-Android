@@ -120,12 +120,12 @@
             tools:text="남은시간 3:00"/>
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/btn_next"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             app:layout_constraintBottom_toBottomOf="parent"
             android:fontFamily="@font/spoqahansansneo_bold"
             textBtnActivate="@{viewModel.btn3Activate}"
-            android:onClick="@{() -> viewModel.setFragmentIdx(1)}"
             android:text="@string/do_auth"
             android:textSize="16sp"
             android:gravity="center"/>

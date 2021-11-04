@@ -3,19 +3,21 @@ package com.example.songil.page_signup
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.songil.config.BaseResponse
-import com.example.songil.config.GlobalApplication
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class SignupViewModel : ViewModel() {
+    private val repository = SignupRepository()
+
     var phoneNumber = ""
-    var authNumber = ""
     var inputAuthNumber = ""
+    var inputNickName = ""
     var fragmentIdx = MutableLiveData<Int>()
-    var authTimer = MutableLiveData<Int>()
+    //var authTimer = MutableLiveData<Int>()
     var isNext = false
+
+    var authNumber = MutableLiveData<String>()
 
     var terms1 = MutableLiveData<Boolean>(false)
     var terms2 = MutableLiveData<Boolean>(false)
@@ -43,8 +45,13 @@ class SignupViewModel : ViewModel() {
         fragmentIdx.value = fragmentIdx.value?.plus(number)
     }
 
+    private fun setFragmentIdxIO(number : Int){
+        isNext = (number > 0)
+        fragmentIdx.postValue(fragmentIdx.value?.plus(number))
+    }
 
-    // fragment1 (약관 페이지)
+
+    // fragment1 (약관 페이지) ---------------------------------------------------------------------------------------
     fun changeAll(){
         termsAll.value = !termsAll.value!!
 
@@ -62,7 +69,6 @@ class SignupViewModel : ViewModel() {
         checkBtn1Activate()
     }
 
-    // fragment1 (약관 페이지)
     fun checkAll(idx : Int){
         when (idx){
             0 -> { terms1.value = !terms1.value!! }
@@ -74,44 +80,96 @@ class SignupViewModel : ViewModel() {
         checkBtn1Activate()
     }
 
-    // fragment1 (약관 페이지)
     private fun checkBtn1Activate() {
         btn1Activate.value = (terms1.value!! && terms2.value!! && terms3.value!! )
     }
 
-    // fragment2 (번호 중복확인 페이지)
+    // fragment2 (번호 중복확인 페이지) ---------------------------------------------------------------------------------------
     fun checkPhoneNumberForm() {
         btn2Activate.value = phoneNumber.matches(Regex("^[0-9]{3}[0-9]{4}[0-9]{4}\$"))
     }
 
-    // fragment3 (인증번호 입력 페이지)
+    // fragment3 (인증번호 입력 페이지) ---------------------------------------------------------------------------------------
     fun checkAuthNumberForm(){
         btn3Activate.value = inputAuthNumber.matches(Regex("[0-9]{4}\$"))
     }
 
-    // network!!
+    fun compareAuthNumber() : Boolean {
+        return (authNumber.value!! == inputAuthNumber)
+    }
+
+    // fragment4 (닉네임 입력 페이지) ---------------------------------------------------------------------------------------
+    fun checkNickNameForm(){
+        btn4Activate.value = (inputNickName.length in 1..10)
+    }
+
+    // network!! ---------------------------------------------------------------------------------------
     fun tryCheckPhoneNumberDuplicate(){
-        val retrofitInterface = GlobalApplication.sRetrofit.create(SignupRetrofitInterface::class.java)
-        retrofitInterface.getPhoneNumberDuplicateCheck(phoneNumber).enqueue(object : Callback<BaseResponse>{
-            override fun onResponse(call: Call<BaseResponse>, response: Response<BaseResponse>) {
+        CoroutineScope(Dispatchers.IO).launch {
+            repository.getDuplicateCheck(phoneNumber).let { response ->
                 if (response.isSuccessful){
                     if (response.body()!!.isSuccess){
                         when (response.body()!!.code){
                             1000 -> {
-                                setFragmentIdx(1)
+                                setFragmentIdxIO(1)
                             }
                             else -> {
-                                Log.d("check phoneNumber", response.body()!!.message!!)
+                                Log.d("check phone number", response.body()!!.message!!)
                             }
                         }
                     } else {
-                        Log.d("check phoneNumber", response.body()!!.message!!)
+                        Log.d("check phone number", response.body()!!.message!!)
                     }
                 }
             }
-            override fun onFailure(call: Call<BaseResponse>, t: Throwable) {
-                Log.d("check phoneNumber", "onFailure...")
+        }
+    }
+
+    fun tryGetAuthNumber(){
+        CoroutineScope(Dispatchers.IO).launch {
+            repository.getAuthNumber(phoneNumber).let { response ->
+                if (response.isSuccessful){
+                    if (response.body()!!.isSuccess){
+                        authNumber.postValue(response.body()!!.result.authNumber)
+                    } else {
+                        Log.d("get auth number", response.body()!!.message!!)
+                    }
+                } else {
+                    Log.d("get auth number", response.body()!!.message!!)
+                }
             }
-        })
+        }
+    }
+
+    fun tryCheckNickNameDuplicate(){
+        CoroutineScope(Dispatchers.IO).launch {
+            var nickNameCheck = false
+            repository.getDuplicateNickNameCheck(inputNickName).let { response ->
+                if (response.isSuccessful){
+                    if (response.body()!!.isSuccess){
+                        nickNameCheck = true
+                    }
+                    else {
+                        Log.d("check nickName", response.body()!!.message!!)
+                    }
+                } else {
+                    Log.d("check nickName", response.body()!!.message!!)
+                }
+            }
+            if (nickNameCheck){
+                repository.postSignUp(phoneNumber, inputNickName).let { response ->
+                    if (response.isSuccessful){
+                        if (response.body()!!.code == 1000){
+                            Log.d("sign up", response.body()!!.message!!)
+                            setFragmentIdxIO(1)
+                        }else {
+                            Log.d("sign up", response.body()!!.message!!)
+                        }
+                    }else {
+                        Log.d("sign up", response.body()!!.message!!)
+                    }
+                }
+            }
+        }
     }
 }

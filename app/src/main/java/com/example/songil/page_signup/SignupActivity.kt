@@ -20,7 +20,7 @@ class SignupActivity : BaseActivity<SignupActivityBinding>(R.layout.signup_activ
         val fragmentObserver = Observer<Int>{ liveData ->
             when (liveData){
                 -1 -> {
-
+                    finish()
                 }
                 0 -> {
                     supportFragmentManager.beginTransaction().replace(binding.layoutFragment.id, SignupFragment1()).commit()
@@ -35,7 +35,7 @@ class SignupActivity : BaseActivity<SignupActivityBinding>(R.layout.signup_activ
                     supportFragmentManager.beginTransaction().replace(binding.layoutFragment.id, SignupFragment4()).commit()
                 }
                 else -> {
-
+                    finish()
                 }
             }
         }

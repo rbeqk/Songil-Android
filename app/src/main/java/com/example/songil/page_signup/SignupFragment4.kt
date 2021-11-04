@@ -1,6 +1,8 @@
 package com.example.songil.page_signup
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.example.songil.R
@@ -13,5 +15,15 @@ class SignupFragment4() : BaseFragment<SignupFragment4Binding>(SignupFragment4Bi
         val viewModel = ViewModelProvider(requireActivity())[SignupViewModel::class.java]
         binding.viewModel = viewModel
         binding.lifecycleOwner = requireActivity()
+
+        binding.etNickname.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+            override fun afterTextChanged(s: Editable?) {
+                viewModel.checkNickNameForm()
+            }
+        })
     }
 }

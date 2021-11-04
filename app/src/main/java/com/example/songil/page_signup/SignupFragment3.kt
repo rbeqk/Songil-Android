@@ -3,7 +3,9 @@ package com.example.songil.page_signup
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.songil.R
 import com.example.songil.config.BaseFragment
@@ -25,5 +27,23 @@ class SignupFragment3() : BaseFragment<SignupFragment3Binding>(SignupFragment3Bi
                 viewModel.checkAuthNumberForm()
             }
         })
+
+        binding.btnNext.setOnClickListener {
+            if (viewModel.compareAuthNumber()){
+                viewModel.setFragmentIdx(1)
+            } else {
+                Log.d("authNumber", "입력한 인증번호가 틀립니다.")
+            }
+        }
+        binding.btnReceiveAgain.setOnClickListener {
+            viewModel.tryGetAuthNumber()
+        }
+
+        val authNumberObserver = Observer<String>{ liveData ->
+            Log.d("authNumber", liveData)
+        }
+        viewModel.authNumber.observe(requireActivity(), authNumberObserver)
+
+        viewModel.tryGetAuthNumber()
     }
 }

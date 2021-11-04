@@ -53,6 +53,7 @@
             android:layout_height="20dp"
             android:background="@android:color/transparent"
             android:textCursorDrawable="@drawable/cursor_gray"
+            android:text="@={viewModel.inputNickName}"
             app:layout_constraintTop_toBottomOf="@id/tv_input_nickname"
             app:layout_constraintStart_toStartOf="@id/guideline_start"
             app:layout_constraintEnd_toEndOf="@id/guideline_end"
@@ -106,7 +107,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:fontFamily="@font/spoqahansansneo_bold"
             textBtnActivate="@{viewModel.btn4Activate}"
-            android:onClick="@{() -> viewModel.setFragmentIdx(1)}"
+            android:onClick="@{() -> viewModel.tryCheckNickNameDuplicate()}"
             android:text="@string/do_auth"
             android:textSize="16sp"
             android:gravity="center"/>
