@@ -19,8 +19,7 @@
         android:gravity="center"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:background="@color/songil_2"
-        android:textColor="@color/songil_4"
+        style="@style/newTextView"
         android:textSize="12sp"
         android:fontFamily="@font/montserrat_extrabold"
         android:text="@string/new_eng"/>

@@ -1,7 +1,6 @@
 package com.example.songil.page_craft
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.animation.TranslateAnimation
 import com.example.songil.R
