@@ -1,4 +1,4 @@
-package com.example.songil.page_craft
+package com.example.songil.page_craft.subpage_detail
 
 import android.os.Bundle
 import android.view.View
@@ -18,14 +18,14 @@ class CraftFragmentDetail : BaseFragment<CraftFragmentDetailBinding>(CraftFragme
             if (tempFlag){
                 val anim = TranslateAnimation(0f, 0f, binding.viewCraftAdd.height.toFloat(), 0f)
                 anim.duration = 500
-                anim.fillAfter = true
+                anim.fillAfter = false
                 binding.viewCraftAdd.animation = anim
                 binding.viewCraftAdd.visibility = View.VISIBLE
                 tempFlag = false
             } else {
                 val anim = TranslateAnimation(0f, 0f, 0f, binding.viewCraftAdd.height.toFloat())
                 anim.duration = 500
-                anim.fillAfter = true
+                anim.fillAfter = false
                 binding.viewCraftAdd.animation = anim
                 binding.viewCraftAdd.visibility = View.GONE
                 tempFlag = true

@@ -4,6 +4,7 @@ import android.os.Bundle
 import com.example.songil.R
 import com.example.songil.config.BaseActivity
 import com.example.songil.databinding.CraftActivityBinding
+import com.example.songil.page_craft.subpage_detail.CraftFragmentDetail
 
 class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity) {
 
