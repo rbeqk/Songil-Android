@@ -1,7 +1,7 @@
 package com.example.songil.page_shop.shop_category
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.animation.TranslateAnimation
 import androidx.lifecycle.Observer
@@ -10,7 +10,9 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.songil.R
 import com.example.songil.config.BaseActivity
+import com.example.songil.config.GlobalApplication
 import com.example.songil.databinding.ShopActivityCategoryBinding
+import com.example.songil.page_craft.CraftActivity
 import com.example.songil.page_shop.shop_category.models.CraftDetail
 import com.example.songil.page_shop.shop_category.models.CraftSimple
 import com.example.songil.popup_sort.SortBottomSheet
@@ -97,7 +99,10 @@ class ShopActivityCategory : BaseActivity<ShopActivityCategoryBinding>(R.layout.
     }
 
     override fun craftClick(craftIdx: Int) {
-        Log.d("craftIdx is", craftIdx.toString())
+        //Log.d("craftIdx is", craftIdx.toString())
+        val intent = Intent(this, CraftActivity::class.java)
+        intent.putExtra(GlobalApplication.CRAFT_IDX, craftIdx)
+        startActivity(intent)
     }
 
     private fun setObserver(){

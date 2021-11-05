@@ -43,6 +43,7 @@
     <string name="form_price_won">%d won</string>
     <string name="new_eng">NEW</string>
     <string name="form_search_result">총 %d개 검색 결과</string>
+    <string name="form_number_bracket">(%d)</string>
 
     <!-- 장바구니 관련 -->
     <string name="shopping_basket">장바구니</string>
@@ -114,6 +115,7 @@
     <string name="ask_to_artist_direct">작가에게 직접 물어보세요!</string>
     <string name="write_inquiry_content">문의 내용을 작성해주세요.</string>
     <string name="register_inquiry">문의 등록하기</string>
+    <string name="form_craft_size">%d x %d x %d (cm)</string>
 
     <!-- 작가 공간 페이지 관련 -->
     <string name="major_field">전공분야</string>

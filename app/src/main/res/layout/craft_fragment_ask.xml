@@ -5,7 +5,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="640dp"
         android:background="@color/songil_1">
 
         <androidx.cardview.widget.CardView
@@ -100,6 +100,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginBottom="16dp"
             android:includeFontPadding="true"
+            android:gravity="center_horizontal"
             android:text="@string/method_check_question"
             android:textColor="@color/g_4"
             android:textSize="12sp"/>
