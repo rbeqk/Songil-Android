@@ -9,359 +9,397 @@
             type="com.example.songil.page_craft.CraftViewModel" />
     </data>
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:overScrollMode="never"
-        android:background="@color/songil_1">
+        android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/songil_1"
+            app:elevation="0dp">
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline_start"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintGuide_begin="16dp"
-                android:orientation="vertical"/>
+            <com.google.android.material.appbar.MaterialToolbar
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                app:contentInsetStart="0dp">
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline_start_detail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintGuide_begin="74dp"
-                android:orientation="vertical"/>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline_end"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintGuide_end="16dp"
-                android:orientation="vertical"/>
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/btn_back"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="12dp"
+                        android:tint="@color/songil_2"
+                        android:src="@drawable/ic_back_22"/>
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/btn_back"
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="@id/guideline_start"
-                android:layout_marginTop="12dp"
-                android:src="@drawable/ic_back_22"/>
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/btn_shoppingbasket"
+                        app:layout_constraintTop_toTopOf="@id/btn_back"
+                        app:layout_constraintBottom_toBottomOf="@id/btn_back"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginEnd="16dp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:tint="@color/songil_2"
+                            android:src="@drawable/ic_shop_22"/>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:gravity="center"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:background="@drawable/shape_background_circle_black_18"
+                            android:textSize="12sp"
+                            android:textColor="@color/songil_4"
+                            android:fontFamily="@font/montserrat_bold"
+                            tools:text="4"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/btn_search"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        app:layout_constraintTop_toTopOf="@id/btn_back"
+                        app:layout_constraintBottom_toBottomOf="@id/btn_back"
+                        app:layout_constraintEnd_toStartOf="@id/btn_shoppingbasket"
+                        android:layout_marginEnd="12dp"
+                        android:tint="@color/songil_2"
+                        android:src="@drawable/ic_search_22"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.appbar.MaterialToolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:overScrollMode="never"
+            android:background="@color/songil_1"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/btn_shoppingbasket"
-                app:layout_constraintTop_toTopOf="@id/btn_back"
-                app:layout_constraintBottom_toBottomOf="@id/btn_back"
-                app:layout_constraintEnd_toEndOf="@id/guideline_end"
-                android:layout_width="30dp"
-                android:layout_height="30dp">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline_start"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintGuide_begin="16dp"
+                    android:orientation="vertical"/>
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline_start_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintGuide_begin="74dp"
+                    android:orientation="vertical"/>
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guideline_end"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintGuide_end="16dp"
+                    android:orientation="vertical"/>
+
+
 
                 <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="22dp"
-                    android:layout_height="22dp"
+                    android:id="@+id/iv_thumbnail"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:src="@drawable/ic_shop_22"/>
+                    android:layout_marginTop="12dp"
+                    android:scaleType="centerCrop"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
+                    android:id="@+id/tv_new"
+                    android:layout_width="54dp"
+                    android:layout_height="28dp"
+                    app:layout_constraintEnd_toEndOf="@id/iv_thumbnail"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_thumbnail"
                     android:gravity="center"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:background="@drawable/shape_background_circle_black_18"
+                    android:fontFamily="@font/montserrat_extrabold"
                     android:textSize="12sp"
-                    android:textColor="@color/songil_4"
-                    android:fontFamily="@font/montserrat_bold"
-                    tools:text="4"/>
+                    style="@style/newTextView"
+                    android:text="@string/new_eng"/>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_craft_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/iv_thumbnail"
+                    app:layout_constraintStart_toStartOf="@id/guideline_start"
+                    android:layout_marginTop="24dp"
+                    android:textSize="16sp"
+                    android:fontFamily="@font/spoqahansansneo_bold"
+                    tools:text="잎사귀모델"/>
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/btn_search"
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                app:layout_constraintTop_toTopOf="@id/btn_back"
-                app:layout_constraintBottom_toBottomOf="@id/btn_back"
-                app:layout_constraintEnd_toStartOf="@id/btn_shoppingbasket"
-                android:layout_marginEnd="12dp"
-                android:src="@drawable/ic_search_22"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/tv_craft_name"
+                    app:layout_constraintStart_toStartOf="@id/guideline_start"
+                    android:layout_marginTop="12dp"
+                    android:fontFamily="@font/spoqahansansneo_regular"
+                    tools:text="38000 won"/>
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_thumbnail"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                app:layout_constraintDimensionRatio="1:1"
-                app:layout_constraintTop_toBottomOf="@id/btn_back"
-                android:layout_marginTop="12dp"
-                android:scaleType="centerCrop"/>
+                <View
+                    android:id="@+id/line_price"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:background="@color/g_2"
+                    app:layout_constraintTop_toBottomOf="@id/tv_price"
+                    app:layout_constraintStart_toStartOf="@id/guideline_start"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_end"
+                    android:layout_marginTop="24dp"/>
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_new"
-                android:layout_width="54dp"
-                android:layout_height="28dp"
-                app:layout_constraintEnd_toEndOf="@id/iv_thumbnail"
-                app:layout_constraintBottom_toBottomOf="@id/iv_thumbnail"
-                android:gravity="center"
-                android:fontFamily="@font/montserrat_extrabold"
-                android:textSize="12sp"
-                style="@style/newTextView"
-                android:text="@string/new_eng"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_shipping_fee"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/line_price"
+                    app:layout_constraintStart_toStartOf="@id/guideline_start_detail"
+                    android:layout_marginTop="24dp"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/spoqahansansneo_light"
+                    tools:text="배송비 무료"/>
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_craft_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/iv_thumbnail"
-                app:layout_constraintStart_toStartOf="@id/guideline_start"
-                android:layout_marginTop="24dp"
-                android:textSize="16sp"
-                android:fontFamily="@font/spoqahansansneo_bold"
-                tools:text="잎사귀모델"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="@id/tv_shipping_fee"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_shipping_fee"
+                    app:layout_constraintStart_toStartOf="@id/guideline_start"
+                    android:textSize="12sp"
+                    android:text="@string/shipping_fee"/>
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/tv_craft_name"
-                app:layout_constraintStart_toStartOf="@id/guideline_start"
-                android:layout_marginTop="12dp"
-                android:fontFamily="@font/spoqahansansneo_regular"
-                tools:text="38000 won"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_material"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/tv_shipping_fee"
+                    app:layout_constraintStart_toStartOf="@id/guideline_start_detail"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/spoqahansansneo_light"
+                    android:textSize="12sp"
+                    tools:text="천연가죽(소)"/>
 
-            <View
-                android:id="@+id/line_price"
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:background="@color/g_2"
-                app:layout_constraintTop_toBottomOf="@id/tv_price"
-                app:layout_constraintStart_toStartOf="@id/guideline_start"
-                app:layout_constraintEnd_toEndOf="@id/guideline_end"
-                android:layout_marginTop="24dp"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="@id/tv_material"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_material"
+                    app:layout_constraintStart_toStartOf="@id/guideline_start"
+                    android:textSize="12sp"
+                    android:text="@string/material"/>
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_shipping_fee"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/line_price"
-                app:layout_constraintStart_toStartOf="@id/guideline_start_detail"
-                android:layout_marginTop="24dp"
-                android:textSize="12sp"
-                android:fontFamily="@font/spoqahansansneo_light"
-                tools:text="배송비 무료"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_usage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/tv_material"
+                    app:layout_constraintStart_toStartOf="@id/guideline_start_detail"
+                    android:layout_marginTop="10dp"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/spoqahansansneo_light"
+                    tools:text="모빌, 인테리어"/>
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="@id/tv_shipping_fee"
-                app:layout_constraintBottom_toBottomOf="@id/tv_shipping_fee"
-                app:layout_constraintStart_toStartOf="@id/guideline_start"
-                android:textSize="12sp"
-                android:text="@string/shipping_fee"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="@id/tv_usage"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_usage"
+                    app:layout_constraintStart_toStartOf="@id/guideline_start"
+                    android:textSize="12sp"
+                    android:text="@string/usage"/>
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_material"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/tv_shipping_fee"
-                app:layout_constraintStart_toStartOf="@id/guideline_start_detail"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/spoqahansansneo_light"
-                android:textSize="12sp"
-                tools:text="천연가죽(소)"/>
+                <View
+                    android:id="@+id/space_craft"
+                    android:layout_width="match_parent"
+                    android:layout_height="8dp"
+                    android:background="@color/g_1"
+                    app:layout_constraintTop_toBottomOf="@id/tv_usage"
+                    android:layout_marginTop="24dp"/>
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="@id/tv_material"
-                app:layout_constraintBottom_toBottomOf="@id/tv_material"
-                app:layout_constraintStart_toStartOf="@id/guideline_start"
-                android:textSize="12sp"
-                android:text="@string/material"/>
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_usage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/tv_material"
-                app:layout_constraintStart_toStartOf="@id/guideline_start_detail"
-                android:layout_marginTop="10dp"
-                android:textSize="12sp"
-                android:fontFamily="@font/spoqahansansneo_light"
-                tools:text="모빌, 인테리어"/>
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="@id/tv_usage"
-                app:layout_constraintBottom_toBottomOf="@id/tv_usage"
-                app:layout_constraintStart_toStartOf="@id/guideline_start"
-                android:textSize="12sp"
-                android:text="@string/usage"/>
-
-            <View
-                android:id="@+id/space_craft"
-                android:layout_width="match_parent"
-                android:layout_height="8dp"
-                android:background="@color/g_1"
-                app:layout_constraintTop_toBottomOf="@id/tv_usage"
-                android:layout_marginTop="24dp"/>
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cv_profile"
-                android:layout_width="56dp"
-                android:layout_height="56dp"
-                app:layout_constraintTop_toBottomOf="@id/space_craft"
-                app:layout_constraintStart_toStartOf="@id/guideline_start"
-                android:layout_marginTop="26dp"
-                app:cardCornerRadius="28dp">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/iv_profile"
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_profile"
                     android:layout_width="56dp"
                     android:layout_height="56dp"
-                    android:scaleType="centerCrop"
-                    tools:background="@color/songil_2"
-                    tools:src="@drawable/logo_songil"/>
+                    app:layout_constraintTop_toBottomOf="@id/space_craft"
+                    app:layout_constraintStart_toStartOf="@id/guideline_start"
+                    android:layout_marginTop="26dp"
+                    app:cardCornerRadius="28dp">
 
-            </androidx.cardview.widget.CardView>
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_profile"
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:scaleType="centerCrop"
+                        tools:background="@color/songil_2"
+                        tools:src="@drawable/logo_songil"/>
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_maker"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toEndOf="@id/cv_profile"
-                app:layout_constraintTop_toTopOf="@id/cv_profile"
-                app:layout_constraintBottom_toTopOf="@id/tv_introduce"
-                android:layout_marginStart="16dp"
-                android:fontFamily="@font/spoqahansansneo_bold"
-                tools:text="조민지"/>
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="12dp"
-                android:layout_height="12dp"
-                app:layout_constraintTop_toTopOf="@id/tv_maker"
-                app:layout_constraintBottom_toBottomOf="@id/tv_maker"
-                app:layout_constraintStart_toEndOf="@id/tv_maker"
-                android:layout_marginStart="4dp"
-                android:src="@drawable/ic_arrow_next_12"/>
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_introduce"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="@id/tv_maker"
-                app:layout_constraintEnd_toEndOf="@id/guideline_end"
-                app:layout_constraintTop_toBottomOf="@id/tv_maker"
-                app:layout_constraintBottom_toBottomOf="@id/cv_profile"
-                android:textSize="13sp"
-                android:fontFamily="@font/spoqahansansneo_light"
-                tools:text="안녕하세요. 금속공예 작가 조민지입니다."/>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/btn_detail"
-                android:layout_width="0dp"
-                android:layout_height="56dp"
-                app:layout_constraintTop_toBottomOf="@id/cv_profile"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/btn_review"
-                android:layout_marginTop="26dp"
-                android:onClick="@{() -> viewModel.setBtnActivate(0)}"
-                detailActivate="@{viewModel.btnDetailActivate}">
+                </androidx.cardview.widget.CardView>
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_maker"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/cv_profile"
+                    app:layout_constraintTop_toTopOf="@id/cv_profile"
+                    app:layout_constraintBottom_toTopOf="@id/tv_introduce"
+                    android:layout_marginStart="16dp"
+                    android:fontFamily="@font/spoqahansansneo_bold"
+                    tools:text="조민지"/>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
+                    app:layout_constraintTop_toTopOf="@id/tv_maker"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_maker"
+                    app:layout_constraintStart_toEndOf="@id/tv_maker"
+                    android:layout_marginStart="4dp"
+                    android:src="@drawable/ic_arrow_next_12"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_introduce"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="@id/tv_maker"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_end"
+                    app:layout_constraintTop_toBottomOf="@id/tv_maker"
+                    app:layout_constraintBottom_toBottomOf="@id/cv_profile"
+                    android:textSize="13sp"
+                    android:fontFamily="@font/spoqahansansneo_light"
+                    tools:text="안녕하세요. 금속공예 작가 조민지입니다."/>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/btn_detail"
+                    android:layout_width="0dp"
+                    android:layout_height="56dp"
+                    app:layout_constraintTop_toBottomOf="@id/cv_profile"
                     app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/btn_review"
+                    android:layout_marginTop="26dp"
+                    android:onClick="@{() -> viewModel.setBtnActivate(0)}"
+                    detailActivate="@{viewModel.btnDetailActivate}">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:text="@string/detail_eng"
+                        android:textSize="12sp"
+                        android:fontFamily="@font/montserrat_semibold"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/btn_review"
+                    android:layout_width="0dp"
+                    android:layout_height="56dp"
+                    app:layout_constraintTop_toTopOf="@id/btn_detail"
+                    app:layout_constraintStart_toEndOf="@id/btn_detail"
+                    app:layout_constraintEnd_toStartOf="@id/btn_ask"
+                    android:onClick="@{() -> viewModel.setBtnActivate(1)}"
+                    detailActivate="@{viewModel.btnReviewActivate}"
+                    >
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginTop="12dp"
+                        android:text="@string/review_eng"
+                        android:textSize="12sp"
+                        android:fontFamily="@font/montserrat_semibold"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_review_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginBottom="12dp"
+                        tools:text="(12)"
+                        android:textSize="12sp"
+                        android:fontFamily="@font/montserrat_medium"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/btn_ask"
+                    android:layout_width="0dp"
+                    android:layout_height="56dp"
+                    app:layout_constraintTop_toTopOf="@id/btn_detail"
+                    app:layout_constraintStart_toEndOf="@id/btn_review"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:text="@string/detail_eng"
-                    android:textSize="12sp"
-                    android:fontFamily="@font/montserrat_semibold"/>
+                    android:onClick="@{() -> viewModel.setBtnActivate(2)}"
+                    detailActivate="@{viewModel.btnAskActivate}">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginTop="12dp"
+                        android:text="@string/one_by_one_ask_eng"
+                        android:textSize="12sp"
+                        android:fontFamily="@font/montserrat_semibold"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_ask_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginBottom="12dp"
+                        tools:text="(12)"
+                        android:textSize="12sp"
+                        android:fontFamily="@font/montserrat_medium"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <FrameLayout
+                    android:id="@+id/layout_fragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/btn_detail"/>
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/btn_review"
-                android:layout_width="0dp"
-                android:layout_height="56dp"
-                app:layout_constraintTop_toTopOf="@id/btn_detail"
-                app:layout_constraintStart_toEndOf="@id/btn_detail"
-                app:layout_constraintEnd_toStartOf="@id/btn_ask"
-                android:onClick="@{() -> viewModel.setBtnActivate(1)}"
-                detailActivate="@{viewModel.btnReviewActivate}"
-                >
+        </androidx.core.widget.NestedScrollView>
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginTop="12dp"
-                    android:text="@string/review_eng"
-                    android:textSize="12sp"
-                    android:fontFamily="@font/montserrat_semibold"/>
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_review_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_marginBottom="12dp"
-                    tools:text="(12)"
-                    android:textSize="12sp"
-                    android:fontFamily="@font/montserrat_medium"/>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/btn_ask"
-                android:layout_width="0dp"
-                android:layout_height="56dp"
-                app:layout_constraintTop_toTopOf="@id/btn_detail"
-                app:layout_constraintStart_toEndOf="@id/btn_review"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:onClick="@{() -> viewModel.setBtnActivate(2)}"
-                detailActivate="@{viewModel.btnAskActivate}">
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginTop="12dp"
-                    android:text="@string/one_by_one_ask_eng"
-                    android:textSize="12sp"
-                    android:fontFamily="@font/montserrat_semibold"/>
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_ask_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_marginBottom="12dp"
-                    tools:text="(12)"
-                    android:textSize="12sp"
-                    android:fontFamily="@font/montserrat_medium"/>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <FrameLayout
-                android:id="@+id/layout_fragment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/btn_detail"/>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <!-- 교체 전 -->
 
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.core.widget.NestedScrollView>
 </layout>

@@ -19,8 +19,6 @@ class ShopRvCraftDecoration(context: Context) : RecyclerView.ItemDecoration() {
             outRect.left = size4
         }
 
-        if (position / 2 != 0){
-            outRect.top = size24
-        }
+        outRect.bottom = size24
     }
 }

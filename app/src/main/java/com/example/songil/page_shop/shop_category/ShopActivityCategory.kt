@@ -2,7 +2,9 @@ package com.example.songil.page_shop.shop_category
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.view.animation.AlphaAnimation
 import android.view.animation.TranslateAnimation
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -56,18 +58,33 @@ class ShopActivityCategory : BaseActivity<ShopActivityCategoryBinding>(R.layout.
 
         binding.btnShopCategory.setOnClickListener {
             if (binding.rvCategory.visibility != View.VISIBLE){
+                val backgroundAnim = AlphaAnimation(0f, 1f)
+                backgroundAnim.duration = 350
+                backgroundAnim.fillAfter = true
+                binding.categoryBackground.animation = backgroundAnim
+                binding.categoryBackground.visibility = View.VISIBLE
+
                 val anim = TranslateAnimation(0f, 0f, -1 * binding.rvCategory.height.toFloat(), 0f)
-                anim.duration = 500
+                anim.duration = 350
                 anim.fillAfter = true
                 binding.rvCategory.animation = anim
                 binding.rvCategory.visibility = View.VISIBLE
             } else {
+                val backgroundAnim = AlphaAnimation(1f, 0f)
+                backgroundAnim.duration = 350
+                backgroundAnim.fillAfter = false
+                binding.categoryBackground.animation = backgroundAnim
+                binding.categoryBackground.visibility = View.GONE
+
                 val anim = TranslateAnimation(0f, 0f, 0f, -1 * binding.rvCategory.height.toFloat())
-                anim.duration = 500
+                anim.duration = 350
                 anim.fillAfter = false
                 binding.rvCategory.animation = anim
                 binding.rvCategory.visibility = View.GONE
             }
+        }
+        binding.categoryBackground.setOnClickListener {
+            Log.d("background", "onclick!")
         }
 
 
@@ -85,8 +102,15 @@ class ShopActivityCategory : BaseActivity<ShopActivityCategoryBinding>(R.layout.
     // recyclerview 에서 실행될 함수
     override fun categoryClick(data: String) {
         viewModel.setCategory(data)
+
+        val backgroundAnim = AlphaAnimation(1f, 0f)
+        backgroundAnim.duration = 350
+        backgroundAnim.fillAfter = false
+        binding.categoryBackground.animation = backgroundAnim
+        binding.categoryBackground.visibility = View.GONE
+
         val anim = TranslateAnimation(0f, 0f, 0f, -1 * binding.rvCategory.height.toFloat())
-        anim.duration = 500
+        anim.duration = 350
         anim.fillAfter = false
         binding.rvCategory.animation = anim
         binding.rvCategory.visibility = View.GONE

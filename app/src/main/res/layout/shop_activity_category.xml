@@ -3,103 +3,116 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/songil_1">
+        android:animateLayoutChanges="true">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/navigation_bar"
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="46dp"
-            android:background="@color/songil_1"
-            android:elevation="1dp"
-            android:outlineProvider="none"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="wrap_content"
+            app:elevation="0dp">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/btn_back"
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginStart="16dp"
-                android:src="@drawable/ic_back_22"/>
+            <com.google.android.material.appbar.MaterialToolbar
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                app:contentInsetStart="0dp">
 
-            <LinearLayout
-                android:id="@+id/btn_shop_category"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:orientation="horizontal">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/navigation_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:background="@color/songil_1"
+                    android:elevation="1dp"
+                    android:outlineProvider="none"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_category"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    tools:text="도자공예"/>
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/btn_back"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginStart="16dp"
+                        android:src="@drawable/ic_back_22"/>
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="19dp"
-                    android:layout_height="19dp"
-                    android:src="@drawable/ic_icon_down_19"
-                    android:layout_marginStart="6dp"/>
+                    <LinearLayout
+                        android:id="@+id/btn_shop_category"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:orientation="horizontal">
 
-            </LinearLayout>
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_category"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="16sp"
+                            tools:text="도자공예"/>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/btn_shoppingbasket"
-                app:layout_constraintTop_toTopOf="@id/btn_back"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="16dp"
-                android:layout_width="28dp"
-                android:layout_height="28dp">
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="19dp"
+                            android:layout_height="19dp"
+                            android:src="@drawable/ic_icon_down_19"
+                            android:layout_marginStart="6dp"/>
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:layout_width="22dp"
-                    android:layout_height="22dp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:src="@drawable/ic_shop_22"/>
+                    </LinearLayout>
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
-                    android:gravity="center"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:background="@drawable/shape_background_circle_black_18"
-                    android:textSize="12sp"
-                    android:textColor="@color/songil_4"
-                    android:fontFamily="@font/montserrat_bold"
-                    tools:text="4"/>
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/btn_shoppingbasket"
+                        app:layout_constraintTop_toTopOf="@id/btn_back"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginEnd="16dp"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp">
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:src="@drawable/ic_shop_22"/>
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/btn_search"
-                android:layout_width="22dp"
-                android:layout_height="22dp"
-                app:layout_constraintTop_toTopOf="@id/btn_back"
-                app:layout_constraintBottom_toBottomOf="@id/btn_back"
-                app:layout_constraintEnd_toStartOf="@id/btn_shoppingbasket"
-                android:layout_marginEnd="12dp"
-                android:src="@drawable/ic_search_22"/>
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:gravity="center"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:background="@drawable/shape_background_circle_black_18"
+                            android:textSize="12sp"
+                            android:textColor="@color/songil_4"
+                            android:fontFamily="@font/montserrat_bold"
+                            tools:text="4"/>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/btn_search"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        app:layout_constraintTop_toTopOf="@id/btn_back"
+                        app:layout_constraintBottom_toBottomOf="@id/btn_back"
+                        app:layout_constraintEnd_toStartOf="@id/btn_shoppingbasket"
+                        android:layout_marginEnd="12dp"
+                        android:src="@drawable/ic_search_22"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.appbar.MaterialToolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@id/navigation_bar"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:overScrollMode="never">
+            android:layout_height="match_parent"
+            android:background="@color/songil_1"
+            android:overScrollMode="never"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -194,22 +207,39 @@
                     app:layout_constraintStart_toStartOf="@id/guideline_start"
                     app:layout_constraintEnd_toEndOf="@id/guideline_end"
                     app:layout_constraintTop_toBottomOf="@id/tv_search_result"
-                    android:layout_marginTop="16dp"/>
-
+                    android:layout_marginTop="16dp"
+                    android:nestedScrollingEnabled="false"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.core.widget.NestedScrollView>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_category"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_category"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/songil_1"
-            android:paddingTop="16dp"
-            android:paddingBottom="36dp"
-            app:layout_constraintTop_toBottomOf="@id/navigation_bar"
-            android:visibility="invisible"/>
+            android:layout_height="match_parent"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <View
+                android:id="@+id/category_background"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#99111111"
+                android:visibility="invisible"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/songil_1"
+                android:paddingTop="16dp"
+                android:paddingBottom="36dp"
+                app:layout_constraintTop_toTopOf="parent"
+                android:visibility="invisible"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
 </layout>
