@@ -5,7 +5,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="640dp"
+        android:layout_height="560dp"
         android:background="@color/songil_1">
 
         <androidx.cardview.widget.CardView
@@ -95,7 +95,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@id/btn_contact"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginBottom="16dp"
@@ -104,17 +104,6 @@
             android:text="@string/method_check_question"
             android:textColor="@color/g_4"
             android:textSize="12sp"/>
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/btn_contact"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            style="@style/newTextView"
-            android:text="@string/inquiry"
-            android:fontFamily="@font/spoqahansansneo_bold"
-            android:textSize="16sp"
-            android:gravity="center"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

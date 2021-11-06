@@ -116,6 +116,9 @@
     <string name="write_inquiry_content">문의 내용을 작성해주세요.</string>
     <string name="register_inquiry">문의 등록하기</string>
     <string name="form_craft_size">%d x %d x %d (cm)</string>
+    <string name="show_only_photo_review">포토리뷰만 보기</string>
+    <string name="report_with_underline"><u>신고</u></string>
+    <string name="form_count">%d/%d</string>
 
     <!-- 작가 공간 페이지 관련 -->
     <string name="major_field">전공분야</string>

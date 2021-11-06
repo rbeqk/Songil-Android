@@ -1,7 +1,6 @@
 package com.example.songil.page_craft
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -12,6 +11,7 @@ import com.example.songil.R
 import com.example.songil.config.BaseActivity
 import com.example.songil.config.GlobalApplication
 import com.example.songil.databinding.CraftActivityBinding
+import com.example.songil.page_craft.shbpage_review.CraftFragmentReview
 import com.example.songil.page_craft.subpage_ask.CraftFragmentAsk
 import com.example.songil.page_craft.subpage_detail.CraftFragmentDetail
 
@@ -19,6 +19,7 @@ class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity
 
     private lateinit var viewModel : CraftViewModel
     private lateinit var detailFragment : CraftFragmentDetail
+    private lateinit var reviewFragment : CraftFragmentReview
     private lateinit var askFragment : CraftFragmentAsk
     private lateinit var currentFragment : Fragment
 
@@ -50,14 +51,19 @@ class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity
                     supportFragmentManager.beginTransaction().hide(currentFragment).commit()
                     supportFragmentManager.beginTransaction().show(detailFragment).commit()
                     currentFragment = detailFragment
+                    showBuyBtn()
                 }
                 1 -> {
-                    Log.d("review page", "not ready")
+                    supportFragmentManager.beginTransaction().hide(currentFragment).commit()
+                    supportFragmentManager.beginTransaction().show(reviewFragment).commit()
+                    currentFragment = reviewFragment
+                    showBuyBtn()
                 }
                 else -> {
                     supportFragmentManager.beginTransaction().hide(currentFragment).commit()
                     supportFragmentManager.beginTransaction().show(askFragment).commit()
                     currentFragment = askFragment
+                    showInquiryBtn()
                 }
             }
         }
@@ -90,8 +96,23 @@ class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity
         askFragment = CraftFragmentAsk(viewModel.baseInfo.artistProfileImg, viewModel.baseInfo.artistName)
         supportFragmentManager.beginTransaction().add(binding.layoutFragment.id, askFragment).commit()
         supportFragmentManager.beginTransaction().hide(askFragment).commit()
+        reviewFragment = CraftFragmentReview(viewModel.reviews)
+        supportFragmentManager.beginTransaction().add(binding.layoutFragment.id, reviewFragment).commit()
+        supportFragmentManager.beginTransaction().hide(reviewFragment).commit()
         detailFragment = CraftFragmentDetail(viewModel.baseInfo.likeOrNot, viewModel.detailInfo)
         supportFragmentManager.beginTransaction().add(binding.layoutFragment.id, detailFragment).commit()
         currentFragment = detailFragment
+        showBuyBtn()
+    }
+
+    private fun showBuyBtn(){
+        binding.layoutBuy.visibility = View.VISIBLE
+        binding.layoutContract.visibility = View.GONE
+    }
+
+    private fun showInquiryBtn(){
+        binding.layoutBuy.visibility = View.GONE
+        binding.layoutContract.visibility = View.VISIBLE
+        binding.viewCraftAdd.visibility = View.GONE
     }
 }
