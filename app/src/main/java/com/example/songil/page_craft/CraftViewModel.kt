@@ -19,10 +19,14 @@ class CraftViewModel : ViewModel() {
     var message = ""
     private var craftIdx = 0
 
+    // detail, review, 1:1 ask fragment 로 전환하는 버튼의 활성화 여부, 그리고 현재 보여주는 fragment 의 idx
     var btnDetailActivate = MutableLiveData<Boolean>()
     var btnReviewActivate = MutableLiveData<Boolean>()
     var btnAskActivate = MutableLiveData<Boolean>()
     var currentIdx = MutableLiveData<Int>()
+
+    // 구매할 product 개수
+    var itemCount = MutableLiveData<Int>()
 
     init {
         btnDetailActivate.value = true
@@ -38,6 +42,7 @@ class CraftViewModel : ViewModel() {
                         baseInfo = response.body()!!.result.infoResult
                         detailInfo = response.body()!!.result.detailResult
                         reviews = response.body()!!.result.reviewResults
+                        itemCount.postValue(1)
                     }
                     message = response.body()!!.message!!
                     resultCode.postValue(response.body()!!.code)
@@ -69,6 +74,12 @@ class CraftViewModel : ViewModel() {
             }
         }
         currentIdx.value = idx
+    }
+
+    fun setItemCount(number : Int) {
+        val tempCount = itemCount.value!!.plus(number)
+        if (tempCount in 1..10)
+            itemCount.value = tempCount
     }
 
 }

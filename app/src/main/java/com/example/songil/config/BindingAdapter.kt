@@ -23,12 +23,10 @@ object BindingAdapter {
         view.isClickable = isActivate
     }
 
-    // testing
     @SuppressLint("UseCompatLoadingForDrawables")
     @JvmStatic
     @BindingAdapter("detailActivate")
     fun setDetailActivate(view : ViewGroup, isActivate: Boolean){
-        Log.d("bindingAdapter activate", "is called $isActivate")
         if (isActivate){
             view.background = view.context.getDrawable(R.drawable.shape_select_detail_activate)
         } else {

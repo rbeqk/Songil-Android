@@ -1,7 +1,9 @@
 package com.example.songil.page_craft
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.view.animation.TranslateAnimation
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -32,6 +34,17 @@ class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
+        setObserver()
+        setButton()
+
+        viewModel.setCraftIdx(idx)
+
+        viewModel.tryGetCraftInfo()
+
+        /*supportFragmentManager.beginTransaction().add(binding.layoutFragment.id, CraftFragmentDetail()).commit()*/
+    }
+
+    private fun setObserver(){
         val resultCodeObserver = Observer<Int>{ liveData ->
             when (liveData) {
                 1000 -> {
@@ -69,12 +82,47 @@ class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity
         }
         viewModel.currentIdx.observe(this, fragmentIdxObserver)
 
+        val productCountObserver = Observer<Int>{ liveData ->
+            binding.tvCount.text = liveData.toString()
+            binding.tvAddPrice.text = getString(R.string.form_price_won, (liveData * viewModel.baseInfo.price))
+        }
+        viewModel.itemCount.observe(this, productCountObserver)
+    }
 
-        viewModel.setCraftIdx(idx)
+    private fun setButton(){
+        binding.btnBuy.setOnClickListener {
+            binding.btnFavorite.visibility = View.INVISIBLE
+            binding.btnShare.visibility = View.INVISIBLE
+            binding.btnBuy.visibility = View.INVISIBLE
+            binding.btnAddToCart.visibility = View.VISIBLE
+            binding.btnBuyNow.visibility = View.VISIBLE
+            binding.btnAddToCart.visibility = View.VISIBLE
+            showAddView()
+        }
 
-        viewModel.tryGetCraftInfo()
+        binding.btnFavorite.setOnClickListener {
+            Log.d("btnFav", "click")
+        }
 
-        /*supportFragmentManager.beginTransaction().add(binding.layoutFragment.id, CraftFragmentDetail()).commit()*/
+        binding.btnShare.setOnClickListener {
+            Log.d("btnShare", "click")
+        }
+
+        binding.ivArrowDown.setOnClickListener {
+            clearBottomButtonState()
+        }
+
+        binding.btnBuyNow.setOnClickListener {
+            Log.d("btnBuyNow", "click")
+        }
+
+        binding.btnAddToCart.setOnClickListener {
+            Log.d("btnCart", "click")
+        }
+
+        binding.layoutContract.setOnClickListener {
+            Log.d("btnContract", "click")
+        }
     }
 
     private fun applyToView(){
@@ -90,6 +138,7 @@ class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity
         binding.tvReviewCount.text = getString(R.string.form_number_bracket, viewModel.baseInfo.reviewCount)
         binding.tvAskCount.text = getString(R.string.form_number_bracket, viewModel.baseInfo.askCount)
         if (viewModel.baseInfo.NewOrNot == "NOT NEW") binding.tvNew.visibility = View.GONE
+        binding.tvMakerCraft.text = getString(R.string.form_artist_craft, viewModel.baseInfo.artistName, viewModel.baseInfo.productName)
     }
 
     private fun addFragments(){
@@ -113,6 +162,35 @@ class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity
     private fun showInquiryBtn(){
         binding.layoutBuy.visibility = View.GONE
         binding.layoutContract.visibility = View.VISIBLE
-        binding.viewCraftAdd.visibility = View.GONE
+        clearBottomButtonState()
+    }
+
+    private fun showAddView(){
+        if (binding.viewCraftAdd.visibility != View.VISIBLE) {
+            val anim = TranslateAnimation(0f, 0f, binding.viewCraftAdd.height.toFloat(), 0f)
+            anim.duration = 500
+            anim.fillAfter = false
+            binding.viewCraftAdd.animation = anim
+            binding.viewCraftAdd.visibility = View.VISIBLE
+        }
+    }
+
+    private fun hideAddView(){
+        if (binding.viewCraftAdd.visibility == View.VISIBLE) {
+            val anim = TranslateAnimation(0f, 0f, 0f, binding.viewCraftAdd.height.toFloat())
+            anim.duration = 500
+            anim.fillAfter = false
+            binding.viewCraftAdd.animation = anim
+            binding.viewCraftAdd.visibility = View.INVISIBLE
+        }
+    }
+
+    private fun clearBottomButtonState(){
+        binding.btnBuyNow.visibility = View.INVISIBLE
+        binding.btnAddToCart.visibility = View.INVISIBLE
+        binding.btnFavorite.visibility = View.VISIBLE
+        binding.btnShare.visibility = View.VISIBLE
+        binding.btnBuy.visibility = View.VISIBLE
+        hideAddView()
     }
 }
