@@ -146,7 +146,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_popular"
                     android:layout_width="0dp"
-                    android:layout_height="190dp"
+                    android:layout_height="220dp"
                     android:overScrollMode="never"
                     app:layout_constraintTop_toBottomOf="@id/tv_this_week_popular"
                     app:layout_constraintStart_toStartOf="parent"

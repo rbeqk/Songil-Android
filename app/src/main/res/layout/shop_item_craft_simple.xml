@@ -19,13 +19,25 @@
             tools:src="@drawable/ic_launcher_background"/>
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_maker"
+            android:id="@+id/tv_craft"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/iv_photo"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginTop="12dp"
             android:fontFamily="@font/spoqahansansneo_regular"
+            android:textSize="13sp"
+            tools:text="싱글베이스"/>
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_maker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tv_craft"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/spoqahansansneo_light"
             android:textSize="12sp"
             tools:text="이형준"/>
 

@@ -21,6 +21,7 @@ class ShopRvPopularAdapter(private val context: Context, private val view : RvCr
         val maker = binding.tvMaker
         val price = binding.tvPrice
         val layoutMain = binding.root
+        var craftName = binding.tvCraft
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -35,6 +36,7 @@ class ShopRvPopularAdapter(private val context: Context, private val view : RvCr
         holder.layoutMain.setOnClickListener {
             view.craftClick(dataList[position].productIdx)
         }
+        holder.craftName.text = dataList[position].productName
     }
 
     override fun getItemCount(): Int = dataList.size
