@@ -139,4 +139,8 @@
     <!-- shop 화면 관련 -->
     <string name="form_this_week_popular">이번주 인기 %s</string>
     <string name="form_review_count">REVIEW %d</string>
+    <string name="today_craft_eng">TODAY CRAFT</string>
+    <string name="today_artisan_eng">TODAY ARTISAN</string>
+    <string name="new_craft_eng">NEW_CRAFT</string>
+    <string name="form_artist">%s 작가</string>
 </resources>

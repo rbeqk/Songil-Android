@@ -3,90 +3,242 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/songil_1">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/btn_shoppingbasket"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_width="30dp"
-            android:layout_height="30dp">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                android:src="@drawable/ic_shoppingback"/>
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="18dp"
-                android:layout_height="18dp"
-                android:gravity="center"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:background="@drawable/shape_background_circle_black_18"
-                android:textSize="12sp"
-                android:textColor="@color/songil_4"
-                android:fontFamily="@font/montserrat_bold"
-                tools:text="4"/>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <View
-            android:id="@+id/btn_search"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/btn_shoppingbasket"
-            android:background="@color/g_1"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginTop="10dp"/>
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:layout_width="22dp"
-            android:layout_height="22dp"
-            app:layout_constraintTop_toTopOf="@id/btn_search"
-            app:layout_constraintBottom_toBottomOf="@id/btn_search"
-            app:layout_constraintStart_toStartOf="@id/btn_search"
-            android:layout_marginStart="12dp"
-            android:src="@drawable/ic_search_gray_22"/>
-
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/vp2_banner"
-            android:layout_width="match_parent"
-            android:layout_height="120dp"
-            app:layout_constraintTop_toBottomOf="@id/btn_search"
-            android:layout_marginTop="10dp"/>
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="6dp"
-            app:layout_constraintBottom_toBottomOf="@id/vp2_banner"
-            app:layout_constraintEnd_toEndOf="@id/vp2_banner"
-            android:layout_margin="12dp"
-            android:background="#cc171717"
-            tools:text="1/5"
-            android:textColor="@color/songil_1"
-            android:textSize="12sp"/>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_category"
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/g_1"
-            android:padding="1dp"
-            app:layout_constraintTop_toBottomOf="@id/vp2_banner"/>
+            android:background="@color/songil_1">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:contentInsetStart="0dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/btn_shoppingbasket"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp">
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:src="@drawable/ic_shoppingback"/>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:gravity="center"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:background="@drawable/shape_background_circle_black_18"
+                            android:textSize="12sp"
+                            android:textColor="@color/songil_4"
+                            android:fontFamily="@font/montserrat_bold"
+                            tools:text="4"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <View
+                        android:id="@+id/btn_search"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/btn_shoppingbasket"
+                        android:background="@color/g_1"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginTop="10dp"/>
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        app:layout_constraintTop_toTopOf="@id/btn_search"
+                        app:layout_constraintBottom_toBottomOf="@id/btn_search"
+                        app:layout_constraintStart_toStartOf="@id/btn_search"
+                        android:layout_marginStart="12dp"
+                        android:src="@drawable/ic_search_gray_22"/>
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.appbar.MaterialToolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+            android:overScrollMode="never">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="24dp">
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/vp2_banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="120dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_marginTop="10dp"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="6dp"
+                    app:layout_constraintBottom_toBottomOf="@id/vp2_banner"
+                    app:layout_constraintEnd_toEndOf="@id/vp2_banner"
+                    android:layout_margin="12dp"
+                    android:background="#cc171717"
+                    tools:text="1/5"
+                    android:textColor="@color/songil_1"
+                    android:textSize="12sp"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_category"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/g_1"
+                    android:padding="1dp"
+                    app:layout_constraintTop_toBottomOf="@id/vp2_banner"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_today_craft"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/rv_category"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="41dp"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:textSize="16sp"
+                    android:text="@string/today_craft_eng"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_today_craft"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/tv_today_craft"
+                    android:layout_marginTop="28dp"/>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_today_artisan"
+                    android:layout_width="match_parent"
+                    android:layout_height="256dp"
+                    app:layout_constraintTop_toBottomOf="@id/rv_today_craft"
+                    android:layout_marginTop="80dp"
+                    android:background="@color/songil_2">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_today_artisan"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginTop="36dp"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:textSize="16sp"
+                        android:textColor="@color/songil_1"
+                        android:text="@string/today_artisan_eng"/>
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/cv_profile"
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        app:layout_constraintTop_toBottomOf="@id/tv_today_artisan"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginTop="32dp"
+                        app:cardCornerRadius="32dp"
+                        app:cardBackgroundColor="@color/songil_1"
+                        app:contentPadding="1dp">
+
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="62dp"
+                            android:layout_height="62dp"
+                            app:cardCornerRadius="31dp"
+                            android:layout_gravity="center">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/iv_profile"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:background="@color/songil_2"/>
+
+                        </androidx.cardview.widget.CardView>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_today_artisan_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/cv_profile"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginTop="30dp"
+                        android:fontFamily="@font/spoqahansansneo_bold"
+                        tools:text="조민지 작가"
+                        android:textSize="13sp"
+                        android:textColor="@color/songil_1"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_today_artisan_major"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/tv_today_artisan_name"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginTop="6dp"
+                        android:textColor="@color/songil_1"
+                        android:fontFamily="@font/spoqahansansneo_regular"
+                        android:textSize="12sp"
+                        tools:text="금속 공예"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_new_craft"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/layout_today_artisan"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="80dp"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:textSize="16sp"
+                    android:text="@string/new_craft_eng"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_new_craft"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/tv_new_craft"
+                    android:layout_marginTop="28dp"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </layout>
