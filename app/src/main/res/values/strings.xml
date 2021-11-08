@@ -143,4 +143,24 @@
     <string name="today_artisan_eng">TODAY ARTISAN</string>
     <string name="new_craft_eng">NEW_CRAFT</string>
     <string name="form_artist">%s 작가</string>
+    
+    <!-- my page 관련 -->
+    <string name="my_page_eng">MY PAGE</string>
+    <string name="form_level">Lv. %d</string>
+    <string name="favorite_product">찜한 상품</string>
+    <string name="order_status">주문 현황</string>
+    <string name="my_comment">내 코멘트</string>
+    <string name="one_by_one_ask">1:1 문의</string>
+    <string name="my_activity">내 활동</string>
+    <string name="like_post">좋아요한 게시글</string>
+    <string name="like_article">좋아요한 아티클</string>
+    <string name="my_write">내가 쓴 글</string>
+    <string name="comment_post">댓글 단 글</string>
+    <string name="setting">설정</string>
+    <string name="modify_profile">프로필 수정</string>
+    <string name="apply_social_login">소셜 로그인 연동</string>
+    <string name="authorize_artist">작가 인증</string>
+    <string name="logout">로그아웃</string>
+    <string name="benefit">베네핏</string>
+
 </resources>

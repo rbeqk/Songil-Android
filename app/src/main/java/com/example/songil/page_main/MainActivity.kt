@@ -6,9 +6,11 @@ import com.example.songil.R
 import com.example.songil.config.BaseActivity
 import com.example.songil.databinding.MainActivityBinding
 import com.example.songil.page_article.ArticleFragmentMain
+import com.example.songil.page_mypage.MypaegFragment
 import com.example.songil.page_needlogin.NeedLoginActivity
 import com.example.songil.page_shop.ShopFragmentMain
-import com.example.songil.utils.setStatusBar
+import com.example.songil.utils.checkLoginUser
+//import com.example.songil.utils.setStatusBar
 
 class MainActivity : BaseActivity<MainActivityBinding>(R.layout.main_activity){
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,7 +33,11 @@ class MainActivity : BaseActivity<MainActivityBinding>(R.layout.main_activity){
                     supportFragmentManager.beginTransaction().replace(binding.layoutFragment.id, ArticleFragmentMain()).commit()
                 }
                 else -> {
-                    startActivity(Intent(this, NeedLoginActivity::class.java))
+                    if (checkLoginUser()){
+                        supportFragmentManager.beginTransaction().replace(binding.layoutFragment.id, MypaegFragment()).commit()
+                    } else {
+                        startActivity(Intent(this, NeedLoginActivity::class.java))
+                    }
                 }
             }
             true
