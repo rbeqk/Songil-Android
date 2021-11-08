@@ -163,4 +163,10 @@
     <string name="logout">로그아웃</string>
     <string name="benefit">베네핏</string>
 
+    <!-- home page 관련 -->
+    <string name="trend_craft_eng">TREND CRAFT</string>
+    <string name="recommend_eng">RECOMMEND</string>
+    <string name="talk_with_plus_eng">TALK WITH +</string>
+    <string name="hot_story_eng">HOT STORY</string>
+
 </resources>
