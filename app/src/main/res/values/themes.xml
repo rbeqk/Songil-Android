@@ -23,6 +23,7 @@
         <item name="android:radioButtonStyle">@style/RadioFont</item>
         <item name="android:checkboxStyle">@style/CheckBoxFont</item>
         <item name="android:includeFontPadding">false</item>
+        <item name="android:overScrollMode">never</item>
 
         <item name="bottomSheetDialogTheme">@style/CustomBottomSheetDialog</item>
     </style>
