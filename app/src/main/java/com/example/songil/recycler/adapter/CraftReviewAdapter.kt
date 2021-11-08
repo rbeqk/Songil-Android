@@ -36,7 +36,7 @@ class CraftReviewAdapter(private val context : Context, private val dataList : A
         holder.nickName.text = dataList[position].userNickName
         holder.date.text = dataList[position].date
         holder.review.text = dataList[position].reviewContent
-        holder.photo.adapter = CraftImageAdapter(context, dataList[position].imgs)
+        holder.photo.adapter = CraftViewPager2ImageAdapter(context, dataList[position].imgs)
         if (imageCount != 0){
             holder.photo.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
