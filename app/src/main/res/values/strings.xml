@@ -169,4 +169,19 @@
     <string name="talk_with_plus_eng">TALK WITH +</string>
     <string name="hot_story_eng">HOT STORY</string>
 
+    <!-- 주문현황 관련 -->
+    <string name="payment_information">결제정보</string>
+    <string name="delivery_status">배송현황</string>
+    <string name="cancel_order">주문취소</string>
+    <string name="go_write_comment">코멘트 작성하러 가기</string>
+    <string name="complete_write_comment">코멘트 작성 완료</string>
+    <string name="in_transit">배송중</string>
+    <string name="cancelled_complete">취소완료</string>
+    <string name="delivered">배송완료</string>
+    
+    <!-- 내 코멘트 관련 -->
+    <string name="writeable_comment">작성 가능한 코멘트</string>
+    <string name="written_comment">작성한 코멘트</string>
+    <string name="do_write">작성하기</string>
+
 </resources>

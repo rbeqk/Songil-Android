@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="172dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_photo"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:background="@color/songil_2"
+            tools:src="@drawable/logo_songil"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_craft_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/iv_photo"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="14dp"
+            android:fontFamily="@font/spoqahansansneo_regular"
+            android:textSize="12sp"
+            android:lines="1"
+            tools:text="작품명작품명"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_artist_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tv_craft_name"
+            app:layout_constraintStart_toStartOf="@id/tv_craft_name"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/spoqahansansneo_regular"
+            android:textSize="12sp"
+            android:textColor="@color/g_4"
+            android:lines="1"
+            tools:text="작가명"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/tv_craft_name"
+            app:layout_constraintBottom_toBottomOf="@id/iv_photo"
+            android:lines="1"
+            android:textSize="12sp"
+            android:textColor="@color/g_4"
+            android:fontFamily="@font/spoqahansansneo_regular"
+            tools:text="1개"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/tv_count"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toBottomOf="@id/iv_photo"
+            android:textSize="12sp"
+            tools:text="38000 won"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_order_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textSize="12sp"
+            tools:text="배송중"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/btn_payment_information"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btn_delivery_status"
+            app:layout_constraintTop_toBottomOf="@id/iv_photo"
+            android:layout_marginTop="12dp"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:text="@string/payment_information"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/btn_delivery_status"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            app:layout_constraintStart_toEndOf="@id/btn_payment_information"
+            app:layout_constraintEnd_toStartOf="@id/btn_inquiry"
+            app:layout_constraintTop_toTopOf="@id/btn_payment_information"
+            android:layout_marginStart="8dp"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:text="@string/delivery_status"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/btn_inquiry"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            app:layout_constraintStart_toEndOf="@id/btn_delivery_status"
+            app:layout_constraintEnd_toStartOf="@id/btn_cancel_order"
+            app:layout_constraintTop_toTopOf="@id/btn_payment_information"
+            android:layout_marginStart="8dp"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:text="@string/inquiry"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/btn_cancel_order"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            app:layout_constraintStart_toEndOf="@id/btn_inquiry"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/btn_payment_information"
+            android:layout_marginStart="8dp"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:text="@string/cancel_order"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/btn_go_comment"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:textSize="12sp"
+            android:gravity="center"
+            tools:text="@string/go_write_comment"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
