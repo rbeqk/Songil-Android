@@ -1,4 +1,4 @@
-package com.example.songil.page_login.models
+package com.example.songil.page_mypage.models
 
 data class LoginResult(val jwt : String)
 

@@ -9,7 +9,7 @@ import com.example.songil.page_article.ArticleFragmentMain
 import com.example.songil.page_mypage.MypaegFragment
 import com.example.songil.page_needlogin.NeedLoginActivity
 import com.example.songil.page_shop.ShopFragmentMain
-import com.example.songil.utils.checkLoginUser
+import com.example.songil.utils.checkUserIdx
 //import com.example.songil.utils.setStatusBar
 
 class MainActivity : BaseActivity<MainActivityBinding>(R.layout.main_activity){
@@ -33,14 +33,19 @@ class MainActivity : BaseActivity<MainActivityBinding>(R.layout.main_activity){
                     supportFragmentManager.beginTransaction().replace(binding.layoutFragment.id, ArticleFragmentMain()).commit()
                 }
                 else -> {
-                    if (checkLoginUser()){
+                    if (checkUserIdx()){
                         supportFragmentManager.beginTransaction().replace(binding.layoutFragment.id, MypaegFragment()).commit()
                     } else {
                         startActivity(Intent(this, NeedLoginActivity::class.java))
                     }
+                    //supportFragmentManager.beginTransaction().replace(binding.layoutFragment.id, MypaegFragment()).commit()
                 }
             }
             true
         }
+    }
+
+    fun moveToHome(){
+        binding.bottom.selectedItemId = R.id.bottom_shop
     }
 }

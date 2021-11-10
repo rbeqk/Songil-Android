@@ -3,6 +3,7 @@ package com.example.songil.page_login
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.songil.config.GlobalApplication
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -60,19 +61,44 @@ class LoginViewModel : ViewModel() {
         }
     }
 
-    // 일단 테스트하느라 sp 에는 저장 안했다. 이후에 저장할 것!!!!
-    fun tryLogin(){
+    private fun tryLogin(){
         CoroutineScope(Dispatchers.IO).launch {
+            var jwt = ""
             repository.getLogin(phoneNumber).let { response ->
                 if (response.isSuccessful){
                     if (response.body()!!.isSuccess){
-                        Log.d("login", response.body()!!.result.jwt)
-                        fragmentIdx.postValue(2)
+                        //Log.d("login", response.body()!!.result.jwt)
+                        jwt = response.body()!!.result.jwt
+                        val edit = GlobalApplication.globalSharedPreferences.edit()
+                        edit.putString(GlobalApplication.X_ACCESS_TOKEN, jwt)
+                        edit.apply()
+                        //fragmentIdx.postValue(2)
                     } else {
                         Log.d("login", response.body()!!.message!!)
                     }
                 } else {
                     Log.d("login", response.body()!!.message!!)
+                }
+            }
+            if (jwt != ""){
+                repository.getUserIdx().let { response ->
+                    if (response.isSuccessful){
+                        if (response.body()!!.isSuccess){
+                            Log.d("userIdx", response.body()!!.result.userIdx.toString())
+                            val edit = GlobalApplication.globalSharedPreferences.edit()
+                            edit.putInt(GlobalApplication.USER_IDX, response.body()!!.result.userIdx)
+                            edit.apply()
+                            fragmentIdx.postValue(2)
+                        } else {
+                            // 로그인 userIdx 를 얻어오는데 실패하면 그냥 jwt 삭제
+                            Log.d("userIdx", response.body()!!.message!!)
+                            val edit = GlobalApplication.globalSharedPreferences.edit()
+                            edit.remove(GlobalApplication.X_ACCESS_TOKEN)
+                            edit.apply()
+                        }
+                    } else {
+                        Log.d("userIdx", response.body()!!.message!!)
+                    }
                 }
             }
         }

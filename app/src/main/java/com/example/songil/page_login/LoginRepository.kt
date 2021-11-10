@@ -9,4 +9,6 @@ class LoginRepository {
     suspend fun getAuthNumber(phoneNumber : String) = loginRetrofitInterface.postAuthPhone(PhoneNumber(phoneNumber))
 
     suspend fun getLogin(phoneNumber: String) = loginRetrofitInterface.postLogin(PhoneNumber(phoneNumber))
+
+    suspend fun getUserIdx() = loginRetrofitInterface.getAuthJwt()
 }
