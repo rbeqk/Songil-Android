@@ -1,5 +1,6 @@
 package com.example.songil.page_mypage
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -10,6 +11,7 @@ import com.example.songil.config.BaseFragment
 //import com.example.songil.config.GlobalApplication
 import com.example.songil.databinding.MypageFragmentBinding
 import com.example.songil.page_main.MainActivity
+import com.example.songil.page_mybenefit.MybenefitActivity
 
 class MypaegFragment : BaseFragment<MypageFragmentBinding>(MypageFragmentBinding::bind, R.layout.mypage_fragment){
 
@@ -21,10 +23,7 @@ class MypaegFragment : BaseFragment<MypageFragmentBinding>(MypageFragmentBinding
         //binding.lifecycleOwner = this
 
         setObserver()
-        // test
-        binding.tvbtnLogout.setOnClickListener {
-            viewModel.tryLogout()
-        }
+        setButton()
     }
 
     private fun setObserver(){
@@ -34,5 +33,15 @@ class MypaegFragment : BaseFragment<MypageFragmentBinding>(MypageFragmentBinding
             }
         }
         viewModel.logoutSuccess.observe(viewLifecycleOwner, logoutResultObserver)
+    }
+
+    private fun setButton(){
+        binding.btnBenefit.setOnClickListener {
+            startActivity(Intent(activity as MainActivity, MybenefitActivity::class.java))
+        }
+
+        binding.tvbtnLogout.setOnClickListener {
+            viewModel.tryLogout()
+        }
     }
 }
