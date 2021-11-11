@@ -19,8 +19,8 @@ import com.example.songil.page_shop.models.TodayArtistsResult
 import com.example.songil.page_shop.models.TodayCraft
 import com.example.songil.page_shop.shop_category.ShopActivityCategory
 import com.example.songil.recycler.rv_interface.RvCategoryView
-import com.example.songil.recycler.adapter.ShopRvCategoryAdapter
-import com.example.songil.recycler.adapter.ShopRvNewCraftAdapter
+import com.example.songil.recycler.adapter.RvShopCategoryAdapter
+import com.example.songil.recycler.adapter.RvImageAdapter
 import com.example.songil.recycler.adapter.ShopRvTodayCraftAdapter
 import com.example.songil.recycler.decoration.ShopRvCategoryItemDecoration
 import com.example.songil.recycler.decoration.ShopRvNewCraftDecoration
@@ -66,14 +66,14 @@ class ShopFragmentMain : BaseFragment<ShopFragmentMainBinding>(ShopFragmentMainB
         viewModel.todayCrafts.observe(viewLifecycleOwner, todayCraftObserver)
 
         val newCraftObserver = Observer<ArrayList<NewCraft>> { liveData ->
-            (binding.rvNewCraft.adapter as ShopRvNewCraftAdapter).applyData(liveData)
+            (binding.rvNewCraft.adapter as RvImageAdapter).applyData(liveData)
         }
         viewModel.newCrafts.observe(viewLifecycleOwner, newCraftObserver)
     }
 
     private fun setRecyclerView(){
         binding.rvCategory.layoutManager = GridLayoutManager(activity as MainActivity, 4)
-        binding.rvCategory.adapter = ShopRvCategoryAdapter(activity as MainActivity, this)
+        binding.rvCategory.adapter = RvShopCategoryAdapter(activity as MainActivity, this)
         binding.rvCategory.addItemDecoration(ShopRvCategoryItemDecoration(activity as MainActivity))
 
         binding.rvTodayCraft.layoutManager = LinearLayoutManager(activity as MainActivity, LinearLayoutManager.HORIZONTAL, false)
@@ -81,7 +81,7 @@ class ShopFragmentMain : BaseFragment<ShopFragmentMainBinding>(ShopFragmentMainB
         binding.rvTodayCraft.addItemDecoration(ShopRvPopularDecoration(activity as MainActivity))   // 똑같은 간격이라 그대로 사용
 
         binding.rvNewCraft.layoutManager = GridLayoutManager(activity as MainActivity, 3)
-        binding.rvNewCraft.adapter = ShopRvNewCraftAdapter(activity as MainActivity, this)
+        binding.rvNewCraft.adapter = RvImageAdapter(activity as MainActivity, this)
         binding.rvNewCraft.addItemDecoration(ShopRvNewCraftDecoration(activity as MainActivity))
     }
 

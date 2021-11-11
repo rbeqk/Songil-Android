@@ -8,7 +8,7 @@ import com.example.songil.R
 import com.example.songil.config.BaseActivity
 import com.example.songil.data.Benefit
 import com.example.songil.databinding.MydetailActivityBinding
-import com.example.songil.recycler.adapter.BenefitRvAdapter
+import com.example.songil.recycler.adapter.RvBenefitAdapter
 import com.example.songil.recycler.decoration.BenefitDecoration
 
 class MybenefitActivity : BaseActivity<MydetailActivityBinding>(R.layout.mydetail_activity) {
@@ -33,13 +33,13 @@ class MybenefitActivity : BaseActivity<MydetailActivityBinding>(R.layout.mydetai
 
     private fun setRecyclerView(){
         binding.rvContent.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        binding.rvContent.adapter = BenefitRvAdapter(this)
+        binding.rvContent.adapter = RvBenefitAdapter(this)
         binding.rvContent.addItemDecoration(BenefitDecoration(this))
     }
 
     private fun setObserver(){
         val benefitObserver = Observer<ArrayList<Benefit>>{ liveData ->
-            (binding.rvContent.adapter as BenefitRvAdapter).applyData(liveData)
+            (binding.rvContent.adapter as RvBenefitAdapter).applyData(liveData)
         }
         viewModel.benefitDatas.observe(this, benefitObserver)
     }

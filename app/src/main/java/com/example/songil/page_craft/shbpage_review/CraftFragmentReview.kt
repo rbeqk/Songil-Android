@@ -8,7 +8,7 @@ import com.example.songil.config.BaseFragment
 import com.example.songil.databinding.CraftFragmentReviewBinding
 import com.example.songil.page_craft.CraftActivity
 import com.example.songil.page_craft.models.CraftReview
-import com.example.songil.recycler.adapter.CraftReviewAdapter
+import com.example.songil.recycler.adapter.RvReviewAdapter
 import com.example.songil.recycler.decoration.CraftReviewDecoration
 
 class CraftFragmentReview(private val reviewList : ArrayList<CraftReview>) : BaseFragment<CraftFragmentReviewBinding>(CraftFragmentReviewBinding::bind, R.layout.craft_fragment_review) {
@@ -17,7 +17,7 @@ class CraftFragmentReview(private val reviewList : ArrayList<CraftReview>) : Bas
         super.onViewCreated(view, savedInstanceState)
 
         binding.rvReview.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-        binding.rvReview.adapter = CraftReviewAdapter(activity as CraftActivity, reviewList)
+        binding.rvReview.adapter = RvReviewAdapter(activity as CraftActivity, reviewList)
         binding.rvReview.addItemDecoration(CraftReviewDecoration(activity as CraftActivity))
     }
 }

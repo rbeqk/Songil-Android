@@ -7,7 +7,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.example.songil.R
-import com.example.songil.recycler.adapter.ArticleViewPager2Adapter
+import com.example.songil.recycler.adapter.Vp2ArticleAdapter
 import com.example.songil.recycler.decoration.ArticleViewPager2ItemDecoration
 import com.example.songil.config.BaseFragment
 import com.example.songil.data.SimpleArticle
@@ -33,7 +33,7 @@ class ArticleFragmentMain : BaseFragment<ArticleFragmentMainBinding>(ArticleFrag
         setSeekBar()
 
         val articleObserver = Observer<ArrayList<SimpleArticle>>{ LiveData ->
-            (binding.vp2Article.adapter as ArticleViewPager2Adapter).applyData(LiveData)
+            (binding.vp2Article.adapter as Vp2ArticleAdapter).applyData(LiveData)
             pageRangeSize = (progressMax / (LiveData.size - 1))
         }
 
@@ -45,7 +45,7 @@ class ArticleFragmentMain : BaseFragment<ArticleFragmentMainBinding>(ArticleFrag
         val nextItemVisiblePx = dpToPx(activity as MainActivity, 16)
         val currentItemHorizontalMarginPx = dpToPx(activity as MainActivity, 32)
         val pageTranslationX = nextItemVisiblePx + currentItemHorizontalMarginPx
-        binding.vp2Article.adapter = ArticleViewPager2Adapter(activity as MainActivity)
+        binding.vp2Article.adapter = Vp2ArticleAdapter(activity as MainActivity)
         binding.vp2Article.setPageTransformer { page, position ->
             page.translationX = -1  * pageTranslationX * position
             page.scaleY = 1 - (0.1f * abs(position))

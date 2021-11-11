@@ -19,9 +19,9 @@ import com.example.songil.page_shop.shop_category.models.CraftDetail
 import com.example.songil.page_shop.shop_category.models.CraftSimple
 import com.example.songil.popup_sort.SortBottomSheet
 import com.example.songil.popup_sort.popup_interface.PopupSortView
-import com.example.songil.recycler.adapter.ShopRvCategoryTextAdapter
-import com.example.songil.recycler.adapter.ShopRvCraftAdapter
-import com.example.songil.recycler.adapter.ShopRvPopularAdapter
+import com.example.songil.recycler.adapter.RvShopCategoryTextAdapter
+import com.example.songil.recycler.adapter.RvCraftBaseAdapter
+import com.example.songil.recycler.adapter.RvCraftSimpleAdapter
 import com.example.songil.recycler.decoration.ShopRvCategoryTextItemDecoration
 import com.example.songil.recycler.decoration.ShopRvCraftDecoration
 import com.example.songil.recycler.decoration.ShopRvPopularDecoration
@@ -40,15 +40,15 @@ class ShopActivityCategory : BaseActivity<ShopActivityCategoryBinding>(R.layout.
         viewModel = ViewModelProvider(this)[ShopCategoryViewModel::class.java]
 
         binding.rvCategory.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        binding.rvCategory.adapter = ShopRvCategoryTextAdapter(this, this)
+        binding.rvCategory.adapter = RvShopCategoryTextAdapter(this, this)
         binding.rvCategory.addItemDecoration(ShopRvCategoryTextItemDecoration(this))
 
         binding.rvPopular.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        binding.rvPopular.adapter = ShopRvPopularAdapter(this, this)
+        binding.rvPopular.adapter = RvCraftSimpleAdapter(this, this)
         binding.rvPopular.addItemDecoration(ShopRvPopularDecoration(this))
 
         binding.rvCraft.layoutManager = GridLayoutManager(this, 2)
-        binding.rvCraft.adapter = ShopRvCraftAdapter(this, this)
+        binding.rvCraft.adapter = RvCraftBaseAdapter(this, this)
         binding.rvCraft.addItemDecoration(ShopRvCraftDecoration(this))
 
         binding.btnSort.setOnClickListener {
@@ -133,18 +133,18 @@ class ShopActivityCategory : BaseActivity<ShopActivityCategoryBinding>(R.layout.
         val categoryObserver = Observer<String> {liveData ->
             binding.tvCategory.text = liveData
             binding.tvThisWeekPopular.text = getString(R.string.form_this_week_popular, liveData)
-            (binding.rvCategory.adapter as ShopRvCategoryTextAdapter).changeCurrentCategory(liveData)
+            (binding.rvCategory.adapter as RvShopCategoryTextAdapter).changeCurrentCategory(liveData)
             viewModel.requestProductAll()
         }
         viewModel.category.observe(this, categoryObserver)
 
         val simpleCraftObserver = Observer<ArrayList<CraftSimple>> { liveData ->
-            (binding.rvPopular.adapter as ShopRvPopularAdapter).applyData(liveData)
+            (binding.rvPopular.adapter as RvCraftSimpleAdapter).applyData(liveData)
         }
         viewModel.popularCrafts.observe(this, simpleCraftObserver)
 
         val detailCraftObserver = Observer<ArrayList<CraftDetail>> { liveData ->
-            (binding.rvCraft.adapter as ShopRvCraftAdapter).applyData(liveData)
+            (binding.rvCraft.adapter as RvCraftBaseAdapter).applyData(liveData)
             binding.tvSearchResult.text = getString(R.string.form_search_result, liveData.size)
         }
         viewModel.normalCrafts.observe(this, detailCraftObserver)
