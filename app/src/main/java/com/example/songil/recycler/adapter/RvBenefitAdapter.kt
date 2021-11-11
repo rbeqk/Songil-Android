@@ -8,7 +8,7 @@ import com.bumptech.glide.Glide
 import com.example.songil.data.Benefit
 import com.example.songil.databinding.ItemCouponBinding
 
-class BenefitRvAdapter(private val context : Context) : RecyclerView.Adapter<BenefitRvAdapter.ViewHolder>() {
+class RvBenefitAdapter(private val context : Context) : RecyclerView.Adapter<RvBenefitAdapter.ViewHolder>() {
 
     private val dataList = ArrayList<Benefit>()
     private val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater

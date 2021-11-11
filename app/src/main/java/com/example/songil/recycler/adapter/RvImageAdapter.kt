@@ -9,7 +9,7 @@ import com.example.songil.databinding.CraftItemImgBinding
 import com.example.songil.page_shop.models.NewCraft
 import com.example.songil.recycler.rv_interface.RvCraftView
 
-class ShopRvNewCraftAdapter(private val context : Context, private val view : RvCraftView) : RecyclerView.Adapter<ShopRvNewCraftAdapter.ViewHolder>() {
+class RvImageAdapter(private val context : Context, private val view : RvCraftView) : RecyclerView.Adapter<RvImageAdapter.ViewHolder>() {
 
     private val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
     private lateinit var binding : CraftItemImgBinding

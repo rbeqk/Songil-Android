@@ -10,7 +10,7 @@ import com.example.songil.databinding.ShopItemCraftSimpleBinding
 import com.example.songil.page_shop.shop_category.models.CraftSimple
 import com.example.songil.recycler.rv_interface.RvCraftView
 
-class ShopRvPopularAdapter(private val context: Context, private val view : RvCraftView) : RecyclerView.Adapter<ShopRvPopularAdapter.ViewHolder>() {
+class RvCraftSimpleAdapter(private val context: Context, private val view : RvCraftView) : RecyclerView.Adapter<RvCraftSimpleAdapter.ViewHolder>() {
 
     private val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
     private lateinit var binding : ShopItemCraftSimpleBinding

@@ -8,7 +8,7 @@ import com.bumptech.glide.Glide
 import com.example.songil.data.SimpleArticle
 import com.example.songil.databinding.ArticleItemArticleBinding
 
-class ArticleViewPager2Adapter(private val context: Context) : RecyclerView.Adapter<ArticleViewPager2Adapter.ViewHolder>() {
+class Vp2ArticleAdapter(private val context: Context) : RecyclerView.Adapter<Vp2ArticleAdapter.ViewHolder>() {
 
     private val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
     private lateinit var binding : ArticleItemArticleBinding

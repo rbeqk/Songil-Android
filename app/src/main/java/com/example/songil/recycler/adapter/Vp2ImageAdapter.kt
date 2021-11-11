@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.songil.databinding.CraftItemImgVp2Binding
 
-class CraftViewPager2ImageAdapter(private val context : Context, private val dataList : ArrayList<String>) : RecyclerView.Adapter<CraftViewPager2ImageAdapter.ViewHolder>(){
+class Vp2ImageAdapter(private val context : Context, private val dataList : ArrayList<String>) : RecyclerView.Adapter<Vp2ImageAdapter.ViewHolder>(){
     private val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
     private lateinit var binding : CraftItemImgVp2Binding
 

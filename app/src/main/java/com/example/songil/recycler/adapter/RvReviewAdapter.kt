@@ -10,7 +10,7 @@ import com.example.songil.R
 import com.example.songil.databinding.CraftItemReviewBinding
 import com.example.songil.page_craft.models.CraftReview
 
-class CraftReviewAdapter(private val context : Context, private val dataList : ArrayList<CraftReview>) : RecyclerView.Adapter<CraftReviewAdapter.ViewHolder>(){
+class RvReviewAdapter(private val context : Context, private val dataList : ArrayList<CraftReview>) : RecyclerView.Adapter<RvReviewAdapter.ViewHolder>(){
 
     private val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
     private lateinit var binding : CraftItemReviewBinding
@@ -36,7 +36,7 @@ class CraftReviewAdapter(private val context : Context, private val dataList : A
         holder.nickName.text = dataList[position].userNickName
         holder.date.text = dataList[position].date
         holder.review.text = dataList[position].reviewContent
-        holder.photo.adapter = CraftViewPager2ImageAdapter(context, dataList[position].imgs)
+        holder.photo.adapter = Vp2ImageAdapter(context, dataList[position].imgs)
         if (imageCount != 0){
             holder.photo.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {

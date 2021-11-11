@@ -10,7 +10,7 @@ import com.example.songil.databinding.ShoppingbasketItemCraftBinding
 import com.example.songil.page_basket.models.BasketItem
 import com.example.songil.recycler.rv_interface.RvTriggerView
 
-class BasketRvCraftAdapter(private val context : Context, private val view : RvTriggerView) : RecyclerView.Adapter<BasketRvCraftAdapter.ViewHolder>() {
+class RvShoppginBasketAdapter(private val context : Context, private val view : RvTriggerView) : RecyclerView.Adapter<RvShoppginBasketAdapter.ViewHolder>() {
 
     private var dataList = ArrayList<BasketItem>()
     private val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater

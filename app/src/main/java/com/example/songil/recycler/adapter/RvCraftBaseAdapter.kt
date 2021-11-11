@@ -11,7 +11,7 @@ import com.example.songil.databinding.ShopItemCraftBaseBinding
 import com.example.songil.page_shop.shop_category.models.CraftDetail
 import com.example.songil.recycler.rv_interface.RvCraftView
 
-class ShopRvCraftAdapter(private val context: Context, private val view : RvCraftView) : RecyclerView.Adapter<ShopRvCraftAdapter.ViewHolder>() {
+class RvCraftBaseAdapter(private val context: Context, private val view : RvCraftView) : RecyclerView.Adapter<RvCraftBaseAdapter.ViewHolder>() {
 
     private lateinit var binding : ShopItemCraftBaseBinding
     private val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater

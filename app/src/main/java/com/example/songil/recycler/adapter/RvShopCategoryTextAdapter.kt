@@ -10,7 +10,7 @@ import com.example.songil.config.GlobalApplication
 import com.example.songil.databinding.ShopItemCategoryTextBinding
 import com.example.songil.recycler.rv_interface.RvCategoryView
 
-class ShopRvCategoryTextAdapter(private val context : Context, private val view : RvCategoryView<String>) : RecyclerView.Adapter<ShopRvCategoryTextAdapter.ViewHolder>() {
+class RvShopCategoryTextAdapter(private val context : Context, private val view : RvCategoryView<String>) : RecyclerView.Adapter<RvShopCategoryTextAdapter.ViewHolder>() {
 
     private var currentCategory = ""
     private val dataList = GlobalApplication.categoryList
