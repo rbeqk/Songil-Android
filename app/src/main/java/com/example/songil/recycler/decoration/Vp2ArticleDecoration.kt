@@ -6,7 +6,7 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.example.songil.utils.dpToPx
 
-class ArticleViewPager2ItemDecoration(context: Context) : RecyclerView.ItemDecoration() {
+class Vp2ArticleDecoration(context: Context) : RecyclerView.ItemDecoration() {
     val margin = dpToPx(context, 38)
 
     override fun getItemOffsets(

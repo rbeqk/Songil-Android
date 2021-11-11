@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.example.songil.R
 import com.example.songil.recycler.adapter.Vp2ArticleAdapter
-import com.example.songil.recycler.decoration.ArticleViewPager2ItemDecoration
+import com.example.songil.recycler.decoration.Vp2ArticleDecoration
 import com.example.songil.config.BaseFragment
 import com.example.songil.data.SimpleArticle
 import com.example.songil.databinding.ArticleFragmentMainBinding
@@ -50,7 +50,7 @@ class ArticleFragmentMain : BaseFragment<ArticleFragmentMainBinding>(ArticleFrag
             page.translationX = -1  * pageTranslationX * position
             page.scaleY = 1 - (0.1f * abs(position))
         }
-        binding.vp2Article.addItemDecoration(ArticleViewPager2ItemDecoration(activity as MainActivity))
+        binding.vp2Article.addItemDecoration(Vp2ArticleDecoration(activity as MainActivity))
         binding.vp2Article.offscreenPageLimit = 3
         binding.vp2Article.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
             override fun onPageSelected(position: Int) {
