@@ -37,6 +37,7 @@
             </intent-filter>-->
         </activity>
         <activity android:name=".page_mybenefit.MybenefitActivity"/>
+        <activity android:name=".page_myfavorite.MyfavoriteActivity"/>
     </application>
 
 </manifest>
