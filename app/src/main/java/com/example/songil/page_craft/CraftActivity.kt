@@ -87,6 +87,13 @@ class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity
             binding.tvAddPrice.text = getString(R.string.form_price_won, (liveData * viewModel.baseInfo.price))
         }
         viewModel.itemCount.observe(this, productCountObserver)
+
+        val addToCartObserver = Observer<Int>{ liveData ->
+            if (liveData == 1000){
+                hideAddView()
+            }
+        }
+        viewModel.addCartResult.observe(this, addToCartObserver)
     }
 
     private fun setButton(){
@@ -117,7 +124,7 @@ class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity
         }
 
         binding.btnAddToCart.setOnClickListener {
-            Log.d("btnCart", "click")
+            viewModel.tryAddToCart()
         }
 
         binding.layoutContract.setOnClickListener {

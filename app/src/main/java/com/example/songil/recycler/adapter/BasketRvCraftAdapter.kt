@@ -40,26 +40,26 @@ class BasketRvCraftAdapter(private val context : Context, private val view : RvT
         holder.artistName.text = dataList[position].artistName
         holder.checkBox.setOnClickListener{
             dataList[position].checked = !dataList[position].checked
-            view.notifyDataChange()
+            view.notifyDataChange(0)    // 0 : check 변경
         }
         holder.minusBtn.setOnClickListener {
             if (dataList[position].amount > 1) {
                 dataList[position].amount -= 1
                 notifyItemChanged(position)
-                view.notifyDataChange()
+                view.notifyDataChange(1, position) // 1 : 개수변경
             }
         }
         holder.plusBtn.setOnClickListener {
             if (dataList[position].amount < 9) {
                 dataList[position].amount += 1
                 notifyItemChanged(position)
-                view.notifyDataChange()
+                view.notifyDataChange(1, position)  // 1 : 개수변경
             }
         }
         holder.removeBtn.setOnClickListener {
+            view.notifyDataChange(2, position) // 2 : 해당 아이템 삭제
             dataList.removeAt(position)
             notifyDataSetChanged()
-            view.notifyDataChange()
         }
         holder.checkBox.isChecked = dataList[position].checked
         holder.price.text = context.getString(R.string.form_price_won, dataList[position].price)

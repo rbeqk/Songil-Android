@@ -26,7 +26,7 @@ class BasketActivity : BaseActivity<ShoppingbasketActivityBinding>(R.layout.shop
         setObserver()
         setBtn()
 
-        viewModel.tempFunction()
+        viewModel.tryGetCart()
     }
 
     private fun setObserver(){
@@ -34,8 +34,8 @@ class BasketActivity : BaseActivity<ShoppingbasketActivityBinding>(R.layout.shop
             if (liveData == 1000){
                 (binding.rvShoppingContent.adapter as BasketRvCraftAdapter).applyData(viewModel.itemList)
                 binding.btnPayment.text = getString(R.string.form_price_won, viewModel.getTotalPrice())
-                viewModel.checkAll.value = viewModel.checkAllCbSelected()
-                binding.tvSelectAll.text = getString(R.string.select_all_with_count, viewModel.itemList.size, viewModel.itemList.size)
+                //viewModel.checkAll.value = viewModel.checkAllCbSelected()
+                binding.tvSelectAll.text = getString(R.string.select_all_with_count, viewModel.getCheckCount(), viewModel.itemList.size)
             }
         }
         viewModel.itemResultCode.observe(this, resultCodeObserver)
@@ -59,6 +59,9 @@ class BasketActivity : BaseActivity<ShoppingbasketActivityBinding>(R.layout.shop
         binding.btnPayment.setOnClickListener {
             Log.d("test", "payment ${viewModel.itemList}")
         }
+        binding.btnBack.setOnClickListener {
+            Log.d("test", "${viewModel.itemList}")
+        }
     }
 
     private fun changeActivityViews(){
@@ -69,8 +72,18 @@ class BasketActivity : BaseActivity<ShoppingbasketActivityBinding>(R.layout.shop
     }
 
     // call in adapter
-    override fun notifyDataChange() {
-        viewModel.checkAll.value = viewModel.checkAllCbSelected()
+    override fun notifyDataChange(type : Int, position : Int?) {
+        when (type){
+            0 -> { // check 만 변경, 서버 호출 불필요
+                viewModel.checkAll.value = viewModel.checkAllCbSelected()
+            }
+            1 -> { // 개수 조정
+                viewModel.tryChangeItemCount(position!!)
+            }
+            else -> {   // 삭제
+                viewModel.tryDeleteItem(position!!)
+            }
+        }
         changeActivityViews()
     }
 

@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.example.songil.page_craft.models.CraftBaseInfo
 import com.example.songil.page_craft.models.CraftDetailInfo
 import com.example.songil.page_craft.models.CraftReview
+import com.example.songil.page_craft.models.RequestCarts
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -28,6 +29,9 @@ class CraftViewModel : ViewModel() {
     // 구매할 product 개수
     var itemCount = MutableLiveData<Int>()
 
+    // 장바구니 추가 호출 확인용
+    var addCartResult = MutableLiveData<Int>()
+
     init {
         btnDetailActivate.value = true
         btnReviewActivate.value = false
@@ -50,6 +54,18 @@ class CraftViewModel : ViewModel() {
             }
         }
     }
+
+
+    fun tryAddToCart(){
+        CoroutineScope(Dispatchers.IO).launch {
+            repository.addToCart(craftIdx, itemCount.value!!).let { response ->
+                if (response.isSuccessful){
+                    addCartResult.postValue(response.body()!!.code)
+                }
+            }
+        }
+    }
+
 
     fun setCraftIdx(idx : Int){
         craftIdx = idx
