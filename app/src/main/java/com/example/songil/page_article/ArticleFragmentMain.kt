@@ -1,7 +1,6 @@
 package com.example.songil.page_article
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.SeekBar
 import androidx.lifecycle.Observer
@@ -11,7 +10,7 @@ import com.example.songil.R
 import com.example.songil.recycler.adapter.ArticleViewPager2Adapter
 import com.example.songil.recycler.decoration.ArticleViewPager2ItemDecoration
 import com.example.songil.config.BaseFragment
-import com.example.songil.data.Article
+import com.example.songil.data.SimpleArticle
 import com.example.songil.databinding.ArticleFragmentMainBinding
 import com.example.songil.page_main.MainActivity
 import com.example.songil.utils.dpToPx
@@ -33,13 +32,13 @@ class ArticleFragmentMain : BaseFragment<ArticleFragmentMainBinding>(ArticleFrag
         setViewPager()
         setSeekBar()
 
-        val articleObserver = Observer<ArrayList<Article>>{ LiveData ->
+        val articleObserver = Observer<ArrayList<SimpleArticle>>{ LiveData ->
             (binding.vp2Article.adapter as ArticleViewPager2Adapter).applyData(LiveData)
             pageRangeSize = (progressMax / (LiveData.size - 1))
         }
 
         viewModel.articleData.observe(viewLifecycleOwner, articleObserver)
-        viewModel.getArticleData()
+        viewModel.tryGetArticleData()
     }
 
     private fun setViewPager(){
