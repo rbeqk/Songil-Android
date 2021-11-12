@@ -4,6 +4,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.songil.page_inquiry.InquiryViewModel" />
+
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -52,6 +59,7 @@
             android:lineSpacingExtra="6sp"
             android:fontFamily="@font/spoqahansansneo_regular"
             android:textColor="@color/g_4"
+            android:text="@={viewModel.reviewContent}"
             android:hint="@string/write_inquiry_content"
             android:gravity="top"/>
 
@@ -62,15 +70,18 @@
             app:layout_constraintBottom_toBottomOf="@id/et_content"
             app:layout_constraintEnd_toEndOf="@id/et_content"
             android:layout_margin="14dp"
+            android:text="@{viewModel.sizeText}"
             android:textColor="@color/g_4"
             android:fontFamily="@font/spoqahansansneo_light"
             tools:text="0/300"/>
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/btn_register"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             app:layout_constraintBottom_toBottomOf="parent"
             android:fontFamily="@font/spoqahansansneo_bold"
+            textBtnActivate="@{viewModel.buttonActivate}"
             android:text="@string/register_inquiry"
             android:textSize="16sp"
             android:gravity="center"/>

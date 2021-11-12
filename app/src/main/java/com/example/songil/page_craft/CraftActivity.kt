@@ -1,5 +1,6 @@
 package com.example.songil.page_craft
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -16,6 +17,7 @@ import com.example.songil.databinding.CraftActivityBinding
 import com.example.songil.page_craft.shbpage_review.CraftFragmentReview
 import com.example.songil.page_craft.subpage_ask.CraftFragmentAsk
 import com.example.songil.page_craft.subpage_detail.CraftFragmentDetail
+import com.example.songil.page_inquiry.InquiryActivity
 
 class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity) {
 
@@ -128,7 +130,11 @@ class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity
         }
 
         binding.layoutContract.setOnClickListener {
-            Log.d("btnContract", "click")
+            startActivity(Intent(this, InquiryActivity::class.java))
+        }
+
+        binding.btnBack.setOnClickListener {
+            finish()
         }
     }
 
