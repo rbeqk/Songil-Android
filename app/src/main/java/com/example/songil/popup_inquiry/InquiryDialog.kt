@@ -14,11 +14,12 @@ class InquiryDialog : DialogFragment() {
     private var _binding : InquiryPopupConfirmBinding ?= null
     private val binding get() = _binding!!
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = InquiryPopupConfirmBinding.inflate(LayoutInflater.from(context))
 
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
+        dialog?.setCanceledOnTouchOutside(false)
 
         return binding.root
     }
@@ -34,5 +35,10 @@ class InquiryDialog : DialogFragment() {
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
+    }
+
+    override fun dismiss() {
+        super.dismiss()
+        activity?.finish()
     }
 }
