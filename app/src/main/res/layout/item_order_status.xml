@@ -5,7 +5,9 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="172dp"
+        android:layout_height="wrap_content"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
         android:paddingStart="16dp"
         android:paddingEnd="16dp">
 
@@ -127,7 +129,8 @@
             android:id="@+id/btn_go_comment"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_payment_information"
+            android:layout_marginTop="8dp"
             android:textSize="12sp"
             android:gravity="center"
             tools:text="@string/go_write_comment"/>
