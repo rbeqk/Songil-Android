@@ -1,6 +1,8 @@
 package com.example.songil.recycler.adapter
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.example.songil.R
 import com.example.songil.data.Order
 import com.example.songil.databinding.ItemOrderStatusBinding
+import com.example.songil.page_inquiry.InquiryActivity
 
 class RvOrderStatusAdapter(private val context : Context, private val dataList : ArrayList<Order>) : RecyclerView.Adapter<RvOrderStatusAdapter.ViewHolder>() {
 
@@ -47,7 +50,8 @@ class RvOrderStatusAdapter(private val context : Context, private val dataList :
             Log.d("order", "배송 정보 to ${dataList[position].orderStatus}")
         }
         holder.btnInquiry.setOnClickListener {
-            Log.d("order", "문의 작성 to ${dataList[position].productIdx}")
+            //Log.d("order", "문의 작성 to ${dataList[position].productIdx}")
+            context.startActivity(Intent(context as Activity, InquiryActivity::class.java))
         }
         holder.btnOrderCancel.setOnClickListener {
             Log.d("order", "주문 취소 to ${dataList[position].orderIdx}")
@@ -56,10 +60,17 @@ class RvOrderStatusAdapter(private val context : Context, private val dataList :
             Log.d("order", "결제정보 확인 to ${dataList[position].orderIdx}")
         }
         holder.amount.text = context.getString(R.string.form_single_count, dataList[position].amount)
+        holder.btnComment.text = "코멘트 작성하러 가기"
         Glide.with(context).load(dataList[position].productThumbnail).into(holder.image)
+        if (checkDelivery(dataList[position].orderStatus)){
+            holder.btnOrderCancel.isEnabled = false
+        }
     }
 
     override fun getItemCount(): Int = dataList.size
 
+    private fun checkDelivery(deliveryStatus : String) : Boolean{
+        return (deliveryStatus == "배송완료")
+    }
 
 }

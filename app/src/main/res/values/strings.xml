@@ -185,4 +185,11 @@
     <string name="written_comment">작성한 코멘트</string>
     <string name="do_write">작성하기</string>
 
+    <!-- 주문 취소 페이지 관련 -->
+    <string name="reason_of_cancel">취소 사유</string>
+    <string name="simple_remorse">단순 변심</string>
+    <string name="option_selection_mistake">옵션 선택 실수</string>
+    <string name="consult_with_artist">작가로부터 따로 안내 받음</string>
+    <string name="will_reorder">재주문 예정</string>
+    <string name="do_cancel_order">주문 취소하기</string>
 </resources>

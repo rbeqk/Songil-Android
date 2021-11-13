@@ -11,6 +11,7 @@ import com.example.songil.config.BaseFragment
 import com.example.songil.databinding.MypageFragmentBinding
 import com.example.songil.page_main.MainActivity
 import com.example.songil.page_mybenefit.MybenefitActivity
+import com.example.songil.page_mycomment.MycommentActivity
 import com.example.songil.page_myfavorite.MyfavoriteActivity
 import com.example.songil.page_orderstatus.OrderstatusActivity
 
@@ -51,6 +52,10 @@ class MypaegFragment : BaseFragment<MypageFragmentBinding>(MypageFragmentBinding
 
         binding.btnOrderStatus.setOnClickListener {
             startActivity(Intent(activity as MainActivity, OrderstatusActivity::class.java))
+        }
+
+        binding.btnMyComment.setOnClickListener {
+            startActivity(Intent(activity as MainActivity, MycommentActivity::class.java))
         }
     }
 }
