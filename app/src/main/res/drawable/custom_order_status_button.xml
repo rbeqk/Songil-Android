@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true" android:drawable="@drawable/shape_rectangle_black_radius_4"/>
+    <item android:state_pressed="false" android:state_enabled="true"
+        android:drawable="@drawable/shape_rectangle_white_radius_4_stroke_g3"/>
+    <item android:state_pressed="false" android:state_enabled="false"
+        android:drawable="@drawable/shape_rectangle_g1_radius_4"/>
+</selector>

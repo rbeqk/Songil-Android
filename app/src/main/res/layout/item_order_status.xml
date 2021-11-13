@@ -85,6 +85,8 @@
             app:layout_constraintEnd_toStartOf="@id/btn_delivery_status"
             app:layout_constraintTop_toBottomOf="@id/iv_photo"
             android:layout_marginTop="12dp"
+            android:background="@drawable/custom_order_status_button"
+            android:textColor="@drawable/custom_order_status_button_text"
             android:gravity="center"
             android:textSize="12sp"
             android:text="@string/payment_information"/>
@@ -97,6 +99,8 @@
             app:layout_constraintEnd_toStartOf="@id/btn_inquiry"
             app:layout_constraintTop_toTopOf="@id/btn_payment_information"
             android:layout_marginStart="8dp"
+            android:background="@drawable/custom_order_status_button"
+            android:textColor="@drawable/custom_order_status_button_text"
             android:gravity="center"
             android:textSize="12sp"
             android:text="@string/delivery_status"/>
@@ -109,6 +113,8 @@
             app:layout_constraintEnd_toStartOf="@id/btn_cancel_order"
             app:layout_constraintTop_toTopOf="@id/btn_payment_information"
             android:layout_marginStart="8dp"
+            android:background="@drawable/custom_order_status_button"
+            android:textColor="@drawable/custom_order_status_button_text"
             android:gravity="center"
             android:textSize="12sp"
             android:text="@string/inquiry"/>
@@ -121,6 +127,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/btn_payment_information"
             android:layout_marginStart="8dp"
+            android:background="@drawable/custom_order_status_button"
+            android:textColor="@drawable/custom_order_status_button_text"
             android:gravity="center"
             android:textSize="12sp"
             android:text="@string/cancel_order"/>
@@ -131,6 +139,8 @@
             android:layout_height="40dp"
             app:layout_constraintTop_toBottomOf="@id/btn_payment_information"
             android:layout_marginTop="8dp"
+            android:background="@drawable/custom_order_status_button"
+            android:textColor="@drawable/custom_order_status_button_text"
             android:textSize="12sp"
             android:gravity="center"
             tools:text="@string/go_write_comment"/>
