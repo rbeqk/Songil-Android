@@ -6,6 +6,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="120dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:background="@color/songil_1">
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -48,7 +50,16 @@
             app:layout_constraintStart_toStartOf="@id/tv_craft_name"
             android:gravity="center"
             android:textSize="12sp"
+            android:background="@drawable/shape_rectangle_black_radius_4"
+            android:textColor="@color/songil_1"
             android:text="@string/do_write"/>
+
+        <View
+            android:id="@+id/line_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@color/g_2"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
