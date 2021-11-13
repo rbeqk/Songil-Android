@@ -119,6 +119,7 @@
     <string name="show_only_photo_review">포토리뷰만 보기</string>
     <string name="report_with_underline"><u>신고</u></string>
     <string name="form_count">%d/%d</string>
+    <string name="form_single_count">%d개</string>
     <string name="form_artist_craft">%s / %s</string>
 
     <!-- 작가 공간 페이지 관련 -->
