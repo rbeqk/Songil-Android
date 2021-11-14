@@ -149,7 +149,6 @@ class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity
         binding.tvMaker.text = viewModel.baseInfo.artistName
         binding.tvIntroduce.text = viewModel.baseInfo.artistIntro
         binding.tvReviewCount.text = getString(R.string.form_number_bracket, viewModel.baseInfo.reviewCount)
-        binding.tvAskCount.text = getString(R.string.form_number_bracket, viewModel.baseInfo.askCount)
         if (viewModel.baseInfo.NewOrNot == "NOT NEW") binding.tvNew.visibility = View.GONE
         binding.tvMakerCraft.text = getString(R.string.form_artist_craft, viewModel.baseInfo.artistName, viewModel.baseInfo.productName)
     }

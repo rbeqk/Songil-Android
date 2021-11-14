@@ -346,22 +346,10 @@
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        android:layout_marginTop="12dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         android:text="@string/one_by_one_ask_eng"
                         android:textSize="12sp"
                         android:fontFamily="@font/montserrat_semibold"/>
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_ask_count"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        android:layout_marginBottom="12dp"
-                        tools:text="(12)"
-                        android:textSize="12sp"
-                        android:fontFamily="@font/montserrat_medium"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
