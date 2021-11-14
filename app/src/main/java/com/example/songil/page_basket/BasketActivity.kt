@@ -39,11 +39,32 @@ class BasketActivity : BaseActivity<ShoppingbasketActivityBinding>(R.layout.shop
             }
         }
         viewModel.itemResultCode.observe(this, resultCodeObserver)
+
+        val resultChangeObserver = Observer<Int> { liveData ->
+            if (liveData == 1000){
+                (binding.rvShoppingContent.adapter as RvShoppginBasketAdapter).changeData()
+                changeActivityViews()
+            }
+        }
+        viewModel.changeItemResult.observe(this, resultChangeObserver)
+
+        val resultRemoveObserver = Observer<Int> { liveData ->
+            if (liveData == 1000){
+                (binding.rvShoppingContent.adapter as RvShoppginBasketAdapter).changeData()
+                changeActivityViews()
+            }
+        }
+        viewModel.removeItemResult.observe(this, resultRemoveObserver)
+
+        val checkAllObserver = Observer<Boolean>{
+            changeActivityViews()
+        }
+        viewModel.checkAll.observe(this, checkAllObserver)
     }
 
     private fun setRecyclerView(){
         binding.rvShoppingContent.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        binding.rvShoppingContent.adapter = RvShoppginBasketAdapter(this, this)
+        binding.rvShoppingContent.adapter = RvShoppginBasketAdapter(this, viewModel)
         val animator = binding.rvShoppingContent.itemAnimator
         if (animator is SimpleItemAnimator){
             animator.supportsChangeAnimations = false
@@ -67,7 +88,6 @@ class BasketActivity : BaseActivity<ShoppingbasketActivityBinding>(R.layout.shop
     private fun changeActivityViews(){
         binding.btnPayment.text = getString(R.string.form_price_won, viewModel.getTotalPrice())
         viewModel.paymentBtnActivate.value = (viewModel.getTotalPrice() != 0)
-
         binding.tvSelectAll.text = getString(R.string.select_all_with_count, viewModel.getCheckCount(), viewModel.itemList.size)
     }
 

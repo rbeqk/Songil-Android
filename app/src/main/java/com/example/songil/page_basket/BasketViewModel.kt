@@ -15,6 +15,9 @@ class BasketViewModel : ViewModel() {
     var itemResultCode = MutableLiveData<Int>()
     var checkAll = MutableLiveData<Boolean>(false)
 
+    var changeItemResult = MutableLiveData<Int>()
+    var removeItemResult = MutableLiveData<Int>()
+
     /*fun tempFunction(){
         itemList.add(BasketItem(1, 1, "테스트상품1", "작가1", 1, 35000, "https://kougeihin.jp/wp/wp-content/uploads/craft0629.jpg"))
         itemList.add(BasketItem(1, 1, "테스트상품2", "작가1", 2, 30000, "https://kougeihin.jp/wp/wp-content/uploads/craft0629.jpg"))
@@ -41,24 +44,30 @@ class BasketViewModel : ViewModel() {
         CoroutineScope(Dispatchers.IO).launch {
             repository.changeItemCount(itemList[position].cartIdx, itemList[position].amount).let { response ->
                 if (response.isSuccessful){
-                    Log.d("change item", response.body()!!.message!!)
+                    Log.d("change item", response.body()!!.message!! + "${itemList[position]}")
+                    changeItemResult.postValue(response.body()!!.code)
                 }
             }
         }
     }
 
     fun tryDeleteItem(position : Int) {
+        val temp = itemList[position].cartIdx
         CoroutineScope(Dispatchers.IO).launch {
             repository.deleteItem(itemList[position].cartIdx).let { response ->
                 if (response.isSuccessful){
-                    Log.d("delete item", response.body()!!.message!!)
+                    Log.d("deleteItem", response.body()!!.message!! + "${temp}")
+                    if (response.body()!!.isSuccess){
+                        itemList.removeAt(position)
+                    }
+                    removeItemResult.postValue(response.body()!!.code)
                 }
             }
         }
     }
 
 
-    // get checked item total price
+    // get checked item total price ( amount * price )
     fun getTotalPrice() : Int {
         var total = 0
         for (item in itemList){
@@ -68,7 +77,7 @@ class BasketViewModel : ViewModel() {
         return total
     }
 
-    // get checked item count
+    // get checked item count (used for checkedItemText [ex. 1/3])
     fun getCheckCount() : Int {
         var total = 0
         for (item in itemList){
@@ -77,7 +86,7 @@ class BasketViewModel : ViewModel() {
         return total
     }
 
-    // get all item is checked
+    // check all item is checked (apply isChecked in cbAll)
     fun checkAllCbSelected() : Boolean {
         var flag = true
         for (item in itemList){
@@ -92,9 +101,27 @@ class BasketViewModel : ViewModel() {
     // change all item check status
     fun changeCbAll(){
         checkAll.value = !checkAll.value!!
-
         for (i in 0 until itemList.size){
             itemList[i].checked = checkAll.value!!
         }
+    }
+
+    // change item's checked
+    fun toggleCheckButton(position : Int){
+        itemList[position].checked = !itemList[position].checked
+        checkAll.value = checkAllCbSelected()
+    }
+
+    fun changeItemAmount(position : Int, isPlus : Boolean){
+        if (isPlus && itemList[position].amount < 9){
+            itemList[position].amount += 1
+        } else if (!isPlus && itemList[position].amount > 1){
+            itemList[position].amount -= 1
+        }
+        tryChangeItemCount(position)
+    }
+
+    fun removeItem(position: Int){
+        tryDeleteItem(position)
     }
 }

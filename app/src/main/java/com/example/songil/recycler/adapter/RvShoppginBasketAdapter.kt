@@ -7,10 +7,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.songil.R
 import com.example.songil.databinding.ShoppingbasketItemCraftBinding
+import com.example.songil.page_basket.BasketViewModel
 import com.example.songil.page_basket.models.BasketItem
 import com.example.songil.recycler.rv_interface.RvTriggerView
 
-class RvShoppginBasketAdapter(private val context : Context, private val view : RvTriggerView) : RecyclerView.Adapter<RvShoppginBasketAdapter.ViewHolder>() {
+class RvShoppginBasketAdapter(private val context : Context, private val viewModel : BasketViewModel) : RecyclerView.Adapter<RvShoppginBasketAdapter.ViewHolder>() {
 
     private var dataList = ArrayList<BasketItem>()
     private val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -39,26 +40,16 @@ class RvShoppginBasketAdapter(private val context : Context, private val view : 
         holder.craftName.text = dataList[position].productName
         holder.artistName.text = dataList[position].artistName
         holder.checkBox.setOnClickListener{
-            dataList[position].checked = !dataList[position].checked
-            view.notifyDataChange(0)    // 0 : check 변경
+            viewModel.toggleCheckButton(position)
         }
         holder.minusBtn.setOnClickListener {
-            if (dataList[position].amount > 1) {
-                dataList[position].amount -= 1
-                notifyItemChanged(position)
-                view.notifyDataChange(1, position) // 1 : 개수변경
-            }
+            viewModel.changeItemAmount(position, false)
         }
         holder.plusBtn.setOnClickListener {
-            if (dataList[position].amount < 9) {
-                dataList[position].amount += 1
-                notifyItemChanged(position)
-                view.notifyDataChange(1, position)  // 1 : 개수변경
-            }
+            viewModel.changeItemAmount(position, true)
         }
         holder.removeBtn.setOnClickListener {
-            view.notifyDataChange(2, position) // 2 : 해당 아이템 삭제
-            dataList.removeAt(position)
+            viewModel.removeItem(position)
             notifyDataSetChanged()
         }
         holder.checkBox.isChecked = dataList[position].checked
