@@ -92,7 +92,8 @@ class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity
 
         val addToCartObserver = Observer<Int>{ liveData ->
             if (liveData == 1000){
-                hideAddView()
+                /*hideAddView()*/
+                clearBottomButtonState()
             }
         }
         viewModel.addCartResult.observe(this, addToCartObserver)
