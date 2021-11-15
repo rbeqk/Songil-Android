@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:background="@color/songil_2">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_thumbnail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/songil_1"
+            android:scaleType="centerCrop"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#4c000000"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_craft_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/tv_artist_name"
+            android:layout_marginStart="36dp"
+            android:layout_marginEnd="36dp"
+            app:layout_constraintVertical_chainStyle="packed"
+            android:layout_marginBottom="12dp"
+            android:gravity="center_horizontal"
+            android:lines="1"
+            android:ellipsize="end"
+            android:textSize="18sp"
+            android:textColor="@color/songil_1"
+            tools:text="바다물결화병 No.2"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_artist_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tv_craft_name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:textSize="16sp"
+            android:fontFamily="@font/spoqahansansneo_light"
+            android:textColor="@color/songil_1"
+            android:lines="1"
+            tools:text="안서희"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="24dp"
+            android:textColor="@color/songil_1"
+            android:lines="1"
+            tools:text="38000 won"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

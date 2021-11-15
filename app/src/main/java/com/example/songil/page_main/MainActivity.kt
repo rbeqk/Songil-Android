@@ -6,6 +6,7 @@ import com.example.songil.R
 import com.example.songil.config.BaseActivity
 import com.example.songil.databinding.MainActivityBinding
 import com.example.songil.page_article.ArticleFragmentMain
+import com.example.songil.page_home.HomeFragment
 import com.example.songil.page_mypage.MypaegFragment
 import com.example.songil.page_needlogin.NeedLoginActivity
 import com.example.songil.page_shop.ShopFragmentMain
@@ -19,7 +20,7 @@ class MainActivity : BaseActivity<MainActivityBinding>(R.layout.main_activity){
         binding.bottom.setOnItemSelectedListener {
             when(it.itemId){
                 R.id.bottom_home -> {
-
+                    supportFragmentManager.beginTransaction().replace(binding.layoutFragment.id, HomeFragment()).commit()
                 }
                 R.id.bottom_shop -> {
                     //startActivity(Intent(this, CraftActivity::class.java))
@@ -43,6 +44,7 @@ class MainActivity : BaseActivity<MainActivityBinding>(R.layout.main_activity){
             }
             true
         }
+        binding.bottom.selectedItemId = R.id.bottom_home
     }
 
     fun moveToHome(){
