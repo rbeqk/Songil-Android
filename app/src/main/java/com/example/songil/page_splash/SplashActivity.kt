@@ -3,7 +3,10 @@ package com.example.songil.page_splash
 import android.content.Intent
 import com.example.songil.R
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
+import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.songil.config.BaseActivity
@@ -21,12 +24,21 @@ class SplashActivity : BaseActivity<SplashActivityBinding>(R.layout.splash_activ
         viewModel = ViewModelProvider(this)[SplashViewModel::class.java]
         setObserver()
 
+        logoAnimation()
 
-        if (GlobalApplication.globalSharedPreferences.getString(GlobalApplication.X_ACCESS_TOKEN, null) == null) {
+        Handler(Looper.getMainLooper()).postDelayed({
+            if (GlobalApplication.globalSharedPreferences.getString(GlobalApplication.X_ACCESS_TOKEN, null) == null) {
+                viewModel.requestAuthLogin()
+            } else {
+                viewModel.requestAuthJwt()
+            }
+        }, 1000)
+
+        /*if (GlobalApplication.globalSharedPreferences.getString(GlobalApplication.X_ACCESS_TOKEN, null) == null) {
             viewModel.requestAuthLogin()
         } else {
             viewModel.requestAuthJwt()
-        }
+        }*/
     }
 
     private fun setObserver(){
@@ -55,5 +67,15 @@ class SplashActivity : BaseActivity<SplashActivityBinding>(R.layout.splash_activ
             }
         }
         viewModel.authJwtResultCode.observe(this, jwtResultObserver)
+    }
+
+    private fun logoAnimation(){
+        binding.apply {
+            ivLogo1.apply {
+                alpha = 0f
+                visibility = View.VISIBLE
+                animate().alpha(1f).setDuration(1000).setListener(null)
+            }
+        }
     }
 }
