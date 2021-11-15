@@ -19,8 +19,11 @@
     <string name="accept_all_terms">약관 전체 동의</string>
     <string name="terms_required_age">[필수] 만 14세 이상</string>
     <string name="terms_required_usage">[필수] 이용약관 동의</string>
+    <string name="use_term">이용약관</string>
     <string name="terms_required_privacy_policy">[필수] 개인 정보 처리방침 동의</string>
+    <string name="terms_privacy_policy">개인 정보 처리방침</string>
     <string name="terms_optional_ad">[선택] 광고성 정보 수신 및 마케팅 활용 동의</string>
+    <string name="terms_ad">광고성 정보 수신 및 마케팅 활용 동의</string>
     <string name="confirmation">확인</string>
     <string name="input_phoneNumber">전화번호를 입력해주세요.</string>
     <string name="additional_message_input_phoneNumber">본인 인증을 위해 필요합니다.</string>
@@ -192,4 +195,19 @@
     <string name="consult_with_artist">작가로부터 따로 안내 받음</string>
     <string name="will_reorder">재주문 예정</string>
     <string name="do_cancel_order">주문 취소하기</string>
+
+    <!-- 설정 페이지 관련 -->
+    <string name="notice">공지사항</string>
+    <string name="setting_app_push_alarm">앱 푸시 알림 설정</string>
+    <string name="withdrawal">회원탈퇴</string>
+    
+    <!-- 고객센터 페이지 관련 -->
+    <string name="customer_center">고객센터</string>
+    <string name="operating_time">운영시간</string>
+    <string name="phone_number">전화번호</string>
+    <string name="inquiry_use_kakao">카카오톡 채널로 문의하기</string>
+    <string name="FnQ_eng">F&amp;Q</string>
+    <string name="operating_time_value">평일 9:00 ~ 18:00\n(주말 &amp; 공휴일 제외)</string>
+    <string name="phone_number_value">(02) 0000–0000</string>
+
 </resources>
