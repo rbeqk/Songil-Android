@@ -104,7 +104,8 @@
                 app:layout_constraintEnd_toEndOf="@id/guideline_end"
                 android:checked="true"
                 app:track="@drawable/custom_switch"
-                android:thumb="@drawable/shape_switch_thumb"/>
+                android:thumb="@drawable/shape_switch_thumb"
+                android:background="@null"/>
 
             <View
                 android:id="@+id/space_app_push"
