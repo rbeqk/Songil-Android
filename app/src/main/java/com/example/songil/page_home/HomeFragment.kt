@@ -1,5 +1,6 @@
 package com.example.songil.page_home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.SeekBar
@@ -15,6 +16,7 @@ import com.example.songil.data.CraftSimpleInfo
 import com.example.songil.data.SimpleArticle
 import com.example.songil.databinding.HomeFragmentBinding
 import com.example.songil.page_main.MainActivity
+import com.example.songil.page_search.SearchActivity
 import com.example.songil.recycler.adapter.RvMainTrendCraftAdapter
 import com.example.songil.recycler.adapter.Vp2MainArticleAdapter
 import com.example.songil.recycler.adapter.Vp2MainRecommendAdapter
@@ -35,6 +37,7 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::bind
 
         viewModel = ViewModelProvider(this)[HomeViewModel::class.java]
 
+        setButton()
         setScroll()
         setRecyclerView()
         setSeekBar()
@@ -107,5 +110,11 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::bind
                 binding.btnSearch.setColorFilter(ContextCompat.getColor(requireContext(), R.color.songil_1))
             }
         })
+    }
+
+    private fun setButton(){
+        binding.btnSearch.setOnClickListener {
+            startActivity(Intent(requireContext(), SearchActivity::class.java))
+        }
     }
 }

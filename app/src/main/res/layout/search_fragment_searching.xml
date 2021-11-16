@@ -51,7 +51,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_recent_search"
             android:layout_marginTop="16dp"
-            tools:listitem="@layout/search_item_recentsearch"/>
+            tools:listitem="@layout/item_search_recentsearch"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_popular_search"

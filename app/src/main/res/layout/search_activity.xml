@@ -37,7 +37,11 @@
                 android:background="@color/g_1"
                 android:paddingStart="12dp"
                 android:paddingEnd="12dp"
+                android:lines="1"
+                android:ellipsize="end"
+                android:inputType="text"
                 android:textCursorDrawable="@drawable/cursor_black"
+                android:imeOptions="actionDone"
                 android:textSize="14sp"
                 tools:text="화병"/>
 
