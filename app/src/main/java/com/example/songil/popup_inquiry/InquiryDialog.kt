@@ -8,14 +8,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import androidx.fragment.app.DialogFragment
-import com.example.songil.databinding.InquiryPopupConfirmBinding
+import com.example.songil.databinding.PopupConfirmBinding
 
 class InquiryDialog : DialogFragment() {
-    private var _binding : InquiryPopupConfirmBinding ?= null
+    private var _binding : PopupConfirmBinding ?= null
     private val binding get() = _binding!!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        _binding = InquiryPopupConfirmBinding.inflate(LayoutInflater.from(context))
+        _binding = PopupConfirmBinding.inflate(LayoutInflater.from(context))
 
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
