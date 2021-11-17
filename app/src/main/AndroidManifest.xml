@@ -47,6 +47,7 @@
         <activity android:name=".page_mycomment.MycommentActivity"/>
         <activity android:name=".page_setting.SettingActivity"/>
         <activity android:name=".page_search.SearchActivity"/>
+        <activity android:name=".page_cancel.CancelActivity" android:windowSoftInputMode="adjustResize"/>
     </application>
 
 </manifest>

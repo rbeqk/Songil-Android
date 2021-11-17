@@ -2,6 +2,12 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.songil.page_cancel.CancelViewModel" />
+    </data>
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -92,7 +98,8 @@
                 app:layout_constraintStart_toStartOf="@id/guideline_start"
                 app:layout_constraintTop_toBottomOf="@id/tv_cancel_reason"
                 android:layout_marginTop="22dp"
-                android:clickable="false"/>
+                android:clickable="false"
+                android:onClick="@{() -> viewModel.changeIdx(0)}"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
@@ -102,7 +109,8 @@
                 app:layout_constraintStart_toStartOf="@id/guideline_text_start"
                 android:textSize="14sp"
                 android:fontFamily="@font/spoqahansansneo_light"
-                android:text="@string/simple_remorse"/>
+                android:text="@string/simple_remorse"
+                android:onClick="@{() -> viewModel.changeIdx(0)}"/>
 
             <androidx.appcompat.widget.AppCompatCheckBox
                 android:id="@+id/cb_option_mistake"
@@ -113,7 +121,8 @@
                 android:layout_marginTop="18dp"
                 android:background="@drawable/custom_checkbox_circle_20"
                 android:button="@android:color/transparent"
-                android:clickable="false"/>
+                android:clickable="false"
+                android:onClick="@{() -> viewModel.changeIdx(1)}"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
@@ -123,7 +132,8 @@
                 app:layout_constraintStart_toStartOf="@id/guideline_text_start"
                 android:fontFamily="@font/spoqahansansneo_light"
                 android:textSize="14sp"
-                android:text="@string/option_selection_mistake"/>
+                android:text="@string/option_selection_mistake"
+                android:onClick="@{() -> viewModel.changeIdx(1)}"/>
 
 
             <androidx.appcompat.widget.AppCompatCheckBox
@@ -135,7 +145,8 @@
                 android:layout_marginTop="18dp"
                 android:background="@drawable/custom_checkbox_circle_20"
                 android:button="@android:color/transparent"
-                android:clickable="false"/>
+                android:clickable="false"
+                android:onClick="@{() -> viewModel.changeIdx(2)}"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
@@ -145,7 +156,8 @@
                 app:layout_constraintStart_toStartOf="@id/guideline_text_start"
                 android:fontFamily="@font/spoqahansansneo_light"
                 android:textSize="14sp"
-                android:text="@string/consult_with_artist"/>
+                android:text="@string/consult_with_artist"
+                android:onClick="@{() -> viewModel.changeIdx(2)}"/>
 
             <androidx.appcompat.widget.AppCompatCheckBox
                 android:id="@+id/cb_reorder"
@@ -156,7 +168,8 @@
                 android:layout_marginTop="18dp"
                 android:background="@drawable/custom_checkbox_circle_20"
                 android:button="@android:color/transparent"
-                android:clickable="false"/>
+                android:clickable="false"
+                android:onClick="@{() -> viewModel.changeIdx(3)}"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
@@ -166,7 +179,8 @@
                 app:layout_constraintStart_toStartOf="@id/guideline_text_start"
                 android:fontFamily="@font/spoqahansansneo_light"
                 android:textSize="14sp"
-                android:text="@string/will_reorder"/>
+                android:text="@string/will_reorder"
+                android:onClick="@{() -> viewModel.changeIdx(3)}"/>
 
 
             <androidx.appcompat.widget.AppCompatCheckBox
@@ -178,7 +192,8 @@
                 android:layout_marginTop="18dp"
                 android:background="@drawable/custom_checkbox_circle_20"
                 android:button="@android:color/transparent"
-                android:clickable="false"/>
+                android:clickable="false"
+                android:onClick="@{() -> viewModel.changeIdx(4)}"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
@@ -188,9 +203,11 @@
                 app:layout_constraintStart_toStartOf="@id/guideline_text_start"
                 android:fontFamily="@font/spoqahansansneo_light"
                 android:textSize="14sp"
-                android:text="@string/self_write"/>
+                android:text="@string/self_write"
+                android:onClick="@{() -> viewModel.changeIdx(4)}"/>
 
             <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/et_reason"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:gravity="top"
@@ -206,15 +223,18 @@
                 android:lines="10"
                 android:textSize="14sp"
                 android:fontFamily="@font/spoqahansansneo_regular"
+                android:text="@={viewModel.reasonContent}"
                 android:textColor="@color/g_4"
                 android:hint="@string/write_report_reason"/>
 
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/btn_cancel"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:fontFamily="@font/spoqahansansneo_bold"
+                textBtnActivate="@{viewModel.cancelButtonActivate}"
                 android:text="@string/do_cancel_order"
                 android:textSize="16sp"
                 android:gravity="center"/>

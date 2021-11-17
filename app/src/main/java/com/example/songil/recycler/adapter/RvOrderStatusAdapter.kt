@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.example.songil.R
 import com.example.songil.data.Order
 import com.example.songil.databinding.ItemOrderStatusBinding
+import com.example.songil.page_cancel.CancelActivity
 import com.example.songil.page_inquiry.InquiryActivity
 
 class RvOrderStatusAdapter(private val context : Context, private val dataList : ArrayList<Order>) : RecyclerView.Adapter<RvOrderStatusAdapter.ViewHolder>() {
@@ -54,7 +55,8 @@ class RvOrderStatusAdapter(private val context : Context, private val dataList :
             context.startActivity(Intent(context as Activity, InquiryActivity::class.java))
         }
         holder.btnOrderCancel.setOnClickListener {
-            Log.d("order", "주문 취소 to ${dataList[position].orderIdx}")
+            //Log.d("order", "주문 취소 to ${dataList[position].orderIdx}")
+            context.startActivity(Intent(context as Activity, CancelActivity::class.java))
         }
         holder.btnPaymentInfo.setOnClickListener {
             Log.d("order", "결제정보 확인 to ${dataList[position].orderIdx}")

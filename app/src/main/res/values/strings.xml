@@ -195,6 +195,8 @@
     <string name="consult_with_artist">작가로부터 따로 안내 받음</string>
     <string name="will_reorder">재주문 예정</string>
     <string name="do_cancel_order">주문 취소하기</string>
+    <string name="cancel_complete">취소 완료</string>
+    <string name="cancel_message">주문이 취소처리 되었습니다.\n결제수단으로 환불예정입니다.</string>
 
     <!-- 설정 페이지 관련 -->
     <string name="notice">공지사항</string>
