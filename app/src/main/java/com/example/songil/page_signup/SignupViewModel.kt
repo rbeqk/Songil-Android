@@ -14,11 +14,8 @@ class SignupViewModel : ViewModel() {
     var inputAuthNumber = ""
     var inputNickName = ""
     var fragmentIdx = MutableLiveData<Int>()
-    var authTimer = MutableLiveData<Int>()
     var isNext = false
 
-    // timer
-    private lateinit var timer : Job
 
     // 첫 페이지에서 약관 동의 여부
     var terms1 = MutableLiveData<Boolean>(false)
@@ -54,6 +51,7 @@ class SignupViewModel : ViewModel() {
     fun setFragmentIdx(number : Int){
         isNext = (number > 0) // 다음으로 가는지, 이전으로 가는지에 따라 애니메이션 효과를 다르게 적용하기 위함
         fragmentIdx.value = fragmentIdx.value?.plus(number)
+        Log.d("fragmentIdx", fragmentIdx.value!!.toString())
     }
 
     private fun setFragmentIdxIO(number : Int){
@@ -104,23 +102,6 @@ class SignupViewModel : ViewModel() {
     fun checkAuthNumberForm(){
         btn3Activate.value = inputAuthNumber.matches(Regex("[0-9]{6}\$"))
     }
-
-    fun startTimer(){
-        if (::timer.isInitialized) timer.cancel()
-
-        authTimer.value = 180
-        CoroutineScope(Dispatchers.Default).launch {
-            while(authTimer.value!! > 0){
-                authTimer.postValue( authTimer.value!!.minus(1))
-                delay(1000L)
-            }
-        }
-    }
-
-    fun stopTimer(){
-        if (::timer.isInitialized) timer.cancel()
-    }
-
 
     // fragment4 (닉네임 입력 페이지) ---------------------------------------------------------------------------------------
     fun checkNickNameForm(){
