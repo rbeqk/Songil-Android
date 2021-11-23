@@ -41,7 +41,8 @@ class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity
 
         viewModel.setCraftIdx(idx)
 
-        viewModel.tryGetCraftInfo()
+        //viewModel.tryGetCraftInfo()
+        viewModel.tempGetCraftInfo()
 
         /*supportFragmentManager.beginTransaction().add(binding.layoutFragment.id, CraftFragmentDetail()).commit()*/
     }
@@ -49,7 +50,7 @@ class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity
     private fun setObserver(){
         val resultCodeObserver = Observer<Int>{ liveData ->
             when (liveData) {
-                1000 -> {
+                200 -> {
                     applyToView()
                     addFragments()
                 }
@@ -86,7 +87,7 @@ class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity
 
         val productCountObserver = Observer<Int>{ liveData ->
             binding.tvCount.text = liveData.toString()
-            binding.tvAddPrice.text = getString(R.string.form_price_won, (liveData * viewModel.baseInfo.price))
+            binding.tvAddPrice.text = getString(R.string.form_price_won, (liveData * viewModel.productDetailInfo.price))
         }
         viewModel.itemCount.observe(this, productCountObserver)
 
@@ -140,7 +141,7 @@ class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity
     }
 
     private fun applyToView(){
-        Glide.with(this).load(viewModel.baseInfo.thumbNailImg).into(binding.ivThumbnail)
+        /*Glide.with(this).load(viewModel.baseInfo.thumbNailImg).into(binding.ivThumbnail)
         Glide.with(this).load(viewModel.baseInfo.artistProfileImg).into(binding.ivProfile)
         binding.tvCraftName.text = viewModel.baseInfo.productName
         binding.tvPrice.text = getString(R.string.form_price_won, viewModel.baseInfo.price)
@@ -151,17 +152,29 @@ class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity
         binding.tvIntroduce.text = viewModel.baseInfo.artistIntro
         binding.tvReviewCount.text = getString(R.string.form_number_bracket, viewModel.baseInfo.reviewCount)
         if (viewModel.baseInfo.NewOrNot == "NOT NEW") binding.tvNew.visibility = View.GONE
-        binding.tvMakerCraft.text = getString(R.string.form_artist_craft, viewModel.baseInfo.artistName, viewModel.baseInfo.productName)
+        binding.tvMakerCraft.text = getString(R.string.form_artist_craft, viewModel.baseInfo.artistName, viewModel.baseInfo.productName)*/
+        Glide.with(this).load(viewModel.productDetailInfo.mainImgUrl).into(binding.ivThumbnail)
+        if (viewModel.productDetailInfo.artistImageUrl != null) Glide.with(this).load(viewModel.productDetailInfo.artistImageUrl).into(binding.ivProfile)
+        binding.tvCraftName.text = viewModel.productDetailInfo.name
+        binding.tvPrice.text = getString(R.string.form_price_won, viewModel.productDetailInfo.price)
+        binding.tvShippingFee.text = viewModel.productDetailInfo.shippingFee.joinToString("\n")
+        binding.tvMaterial.text = viewModel.productDetailInfo.material.joinToString(", ")
+        binding.tvUsage.text = viewModel.productDetailInfo.usage.joinToString(", ")
+        binding.tvMaker.text = viewModel.productDetailInfo.artistName
+        binding.tvIntroduce.text = viewModel.productDetailInfo.artistIntroduction
+        binding.tvReviewCount.text = getString(R.string.form_number_bracket, viewModel.productDetailInfo.totalReviewCnt)
+        if (viewModel.productDetailInfo.isNew == "N") binding.tvNew.visibility = View.GONE
+        binding.tvMakerCraft.text = getString(R.string.form_artist_craft, viewModel.productDetailInfo.artistName, viewModel.productDetailInfo.name)
     }
 
     private fun addFragments(){
-        askFragment = CraftFragmentAsk(viewModel.baseInfo.artistProfileImg, viewModel.baseInfo.artistName)
+        askFragment = CraftFragmentAsk(viewModel.productDetailInfo.artistImageUrl, viewModel.productDetailInfo.artistName)
         supportFragmentManager.beginTransaction().add(binding.layoutFragment.id, askFragment).commit()
         supportFragmentManager.beginTransaction().hide(askFragment).commit()
-        reviewFragment = CraftFragmentReview(viewModel.reviews)
+/*        reviewFragment = CraftFragmentReview(viewModel.reviews)
         supportFragmentManager.beginTransaction().add(binding.layoutFragment.id, reviewFragment).commit()
-        supportFragmentManager.beginTransaction().hide(reviewFragment).commit()
-        detailFragment = CraftFragmentDetail(viewModel.baseInfo.likeOrNot, viewModel.detailInfo)
+        supportFragmentManager.beginTransaction().hide(reviewFragment).commit()*/
+        detailFragment = CraftFragmentDetail(viewModel.productDetailInfo)
         supportFragmentManager.beginTransaction().add(binding.layoutFragment.id, detailFragment).commit()
         currentFragment = detailFragment
         showBuyBtn()

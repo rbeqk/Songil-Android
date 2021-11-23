@@ -41,6 +41,7 @@
             app:layout_constraintTop_toBottomOf="@id/tv_craft_description"
             android:layout_marginTop="18dp"
             android:includeFontPadding="true"
+            android:lineSpacingExtra="4sp"
             android:textSize="13sp"
             android:fontFamily="@font/spoqahansansneo_light"
             tools:text="초록 이파리가 달린 자연을 닮은 테이블 모빌 오브제 입니다. 살랑살랑 미세한 움직임을 보여줍니다. 자연 속에서 마음의 평온을 얻는 작가는 이 평온한 순간의 마음이 오브제에 고스란히 담겨 전달되기를 바라며"
@@ -83,6 +84,7 @@
             app:layout_constraintStart_toStartOf="@id/guideline_start"
             app:layout_constraintEnd_toEndOf="@id/guideline_end"
             android:layout_marginTop="14dp"
+            android:lineSpacingExtra="4sp"
             android:textSize="13sp"
             android:fontFamily="@font/spoqahansansneo_light"
             tools:text="100도 이상의 높은 온도에서 보관을 피해주십시오."/>
@@ -106,171 +108,6 @@
             app:layout_constraintTop_toBottomOf="@id/tv_detail_image"
             android:overScrollMode="never"
             android:layout_marginTop="14dp"/>
-
-        <!--<androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/view_craft_add"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@id/layout_etc"
-            android:animateLayoutChanges="true"
-            android:background="@color/songil_1"
-            android:visibility="invisible">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iv_arrow_down"
-                android:layout_width="19dp"
-                android:layout_height="19dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginTop="8dp"
-                android:src="@drawable/ic_icon_down_19"/>
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_maker_craft"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/iv_arrow_down"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="6dp"
-                tools:text="조민지 / 잎사귀 모빌"
-                android:fontFamily="@font/spoqahansansneo_regular"/>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layout_count"
-                android:layout_width="104dp"
-                android:layout_height="28dp"
-                app:layout_constraintTop_toBottomOf="@id/tv_maker_craft"
-                app:layout_constraintStart_toStartOf="@id/tv_maker_craft"
-                android:layout_marginTop="16dp"
-                android:background="@color/g_3">
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/btn_minus"
-                    android:layout_width="28dp"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:includeFontPadding="true"
-                    android:textColor="@color/songil_1"
-                    android:background="@color/songil_2"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    android:text="@string/word_minus"/>
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/btn_plus"
-                    android:layout_width="28dp"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:includeFontPadding="true"
-                    android:textColor="@color/songil_1"
-                    android:background="@color/songil_2"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:text="@string/word_plus"/>
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_count"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    app:layout_constraintStart_toEndOf="@id/btn_minus"
-                    app:layout_constraintEnd_toStartOf="@id/btn_plus"
-                    android:layout_marginTop="1dp"
-                    android:layout_marginBottom="1dp"
-                    android:background="@color/songil_1"
-                    tools:text="1"/>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="@id/layout_count"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginEnd="16dp"
-                android:textSize="16sp"
-                android:fontFamily="@font/spoqahansansneo_bold"
-                tools:text="38000 won"/>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                app:layout_constraintTop_toBottomOf="@id/tv_price"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_etc"
-            android:layout_width="0dp"
-            android:layout_height="56dp"
-            app:layout_constraintHorizontal_weight="1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/btn_buy"
-            app:layout_constraintTop_toBottomOf="@id/rv_detail_image"
-            android:layout_marginTop="14dp"
-            android:background="@color/songil_2">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/btn_favorite"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/btn_share"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:src="@drawable/ic_heart_line_28"
-                android:tint="@color/songil_1"/>
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/btn_share"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/btn_favorite"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:src="@drawable/ic_share_28"
-                android:tint="@color/white"/>
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/btn_add_to_cart"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:textColor="@color/songil_1"
-                android:fontFamily="@font/montserrat_semibold"
-                android:text="@string/cart_eng"
-                android:visibility="gone"
-                android:textSize="18sp"/>
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/btn_buy"
-            android:layout_width="0dp"
-            android:layout_height="56dp"
-            android:gravity="center"
-            app:layout_constraintHorizontal_weight="2"
-            app:layout_constraintStart_toEndOf="@id/layout_etc"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/layout_etc"
-            app:layout_constraintBottom_toBottomOf="@id/layout_etc"
-            android:fontFamily="@font/montserrat_semibold"
-            android:textSize="18sp"
-            android:text="@string/buy_eng"
-            style="@style/newTextView"/>
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="26dp"
-            app:layout_constraintTop_toTopOf="@id/btn_buy"
-            app:layout_constraintBottom_toBottomOf="@id/btn_buy"
-            app:layout_constraintStart_toEndOf="@id/layout_etc"
-            app:layout_constraintEnd_toStartOf="@id/btn_buy"
-            android:background="#80969696"/>-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

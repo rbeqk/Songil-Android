@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.songil.utils.dpToPx
 
 class CraftImageDecoration(context : Context) : RecyclerView.ItemDecoration() {
-    private val size14 = dpToPx(context, 14)
+    private val size16 = dpToPx(context, 16)
 
     override fun getItemOffsets(
         outRect: Rect,
@@ -20,7 +20,7 @@ class CraftImageDecoration(context : Context) : RecyclerView.ItemDecoration() {
         val position = parent.getChildLayoutPosition(view)
 
         if (position != 0){
-            outRect.top = size14
+            outRect.top = size16
         }
     }
 }

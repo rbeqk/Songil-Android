@@ -2,10 +2,10 @@ package com.example.songil.page_craft
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.songil.data.ProductDetailInfo
 import com.example.songil.page_craft.models.CraftBaseInfo
 import com.example.songil.page_craft.models.CraftDetailInfo
 import com.example.songil.page_craft.models.CraftReview
-import com.example.songil.page_craft.models.RequestCarts
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -14,11 +14,16 @@ class CraftViewModel : ViewModel() {
     private val repository = CraftRepository()
 
     var resultCode = MutableLiveData<Int>()
-    lateinit var baseInfo: CraftBaseInfo
+/*    lateinit var baseInfo: CraftBaseInfo
     lateinit var detailInfo : CraftDetailInfo
-    lateinit var reviews : ArrayList<CraftReview>
+    lateinit var reviews : ArrayList<CraftReview>*/
     var message = ""
     private var craftIdx = 0
+
+    // 수정 후 api 에서 사용하는 데이터
+    lateinit var productDetailInfo : ProductDetailInfo
+
+
 
     // detail, review, 1:1 ask fragment 로 전환하는 버튼의 활성화 여부, 그리고 현재 보여주는 fragment 의 idx
     var btnDetailActivate = MutableLiveData<Boolean>()
@@ -42,10 +47,10 @@ class CraftViewModel : ViewModel() {
         CoroutineScope(Dispatchers.IO).launch {
             repository.getDetailCraftInfo(craftIdx).let { response ->
                 if (response.isSuccessful){
-                    if (response.body()!!.code == 1000){
-                        baseInfo = response.body()!!.result.infoResult
+                    if (response.body()!!.code == 200){
+/*                        baseInfo = response.body()!!.result.infoResult
                         detailInfo = response.body()!!.result.detailResult
-                        reviews = response.body()!!.result.reviewResults
+                        reviews = response.body()!!.result.reviewResults*/
                         itemCount.postValue(1)
                     }
                     message = response.body()!!.message!!
@@ -54,6 +59,19 @@ class CraftViewModel : ViewModel() {
             }
         }
     }
+
+    fun tempGetCraftInfo(){
+        productDetailInfo = ProductDetailInfo(1, "Y", "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTA3MjFfMjQz%2FMDAxNjI2ODMwMzY4NDc4.idg1-Q4qxqxCSg-e4259B4Syr8Z05OmJ0YhupJdtPtwg.pZW6_b8MetkF9vp2s9sy9nada6Gj1JlgSD3akClUQyMg.JPEG.myohan6%2FDSC_2498.JPG&type=a340",
+                "물결화병", 38000, arrayListOf("50000원 이하 5000원", "50000~100000원 2500원", "100000원 이상 무료"),
+                arrayListOf("유리"), arrayListOf("시각적 만족감"), "물결화병에 대한 설명이\n들어갈 예정입니다.\n\n문의는 1:1 ask를 사용해주세요", "15x16x15(cm)", arrayListOf("유의사항1", "유의사항2"),
+                arrayListOf("https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTA5MTBfMjEz%2FMDAxNjMxMjYyMTM1MDM2.-SRY3A7o4aSsLjMVqm8h2nEZQcLDowaxwG2vDgBw76Ig.fqAqJK87AzAfvX-NLNk3bpeUt-Ibk8VufXOpYZo05PIg.JPEG.redjudy%2F%25C4%25AB%25B5%25E5%25C1%25F6%25B0%25A9_%25BA%25B0%25B9%25E3_%25283%2529.JPG&type=a340",
+                        "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTA3MjFfMjQz%2FMDAxNjI2ODMwMzY4NDc4.idg1-Q4qxqxCSg-e4259B4Syr8Z05OmJ0YhupJdtPtwg.pZW6_b8MetkF9vp2s9sy9nada6Gj1JlgSD3akClUQyMg.JPEG.myohan6%2FDSC_2498.JPG&type=a340"), 1,
+                "조민지 작가", "조민지 작가에 대한 소개입니다.", 12)
+        resultCode.postValue(200)
+
+        itemCount.postValue(1)
+    }
+
 
 
     fun tryAddToCart(){
