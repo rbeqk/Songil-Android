@@ -17,37 +17,21 @@ class SignupActivity : BaseActivity<SignupActivityBinding>(R.layout.signup_activ
         binding.lifecycleOwner = this
         viewModel = ViewModelProvider(this).get(SignupViewModel::class.java)
 
+        setObserver()
+    }
+
+    private fun setObserver(){
+
         val fragmentObserver = Observer<Int>{ liveData ->
             when (liveData){
-                -1 -> {
-                    finish()
-                }
-                0 -> {
-                    supportFragmentManager.beginTransaction().replace(binding.layoutFragment.id, SignupFragment1()).commit()
-                }
-                1 -> {
-                    supportFragmentManager.beginTransaction().replace(binding.layoutFragment.id, SignupFragment2()).commit()
-                }
-                2 -> {
-                    supportFragmentManager.beginTransaction().replace(binding.layoutFragment.id, SignupFragment3()).commit()
-                }
-                3 -> {
-                    supportFragmentManager.beginTransaction().replace(binding.layoutFragment.id, SignupFragment4()).commit()
-                }
-                else -> {
-                    finish()
-                }
+                -1 -> { finish() }
+                0 -> { supportFragmentManager.beginTransaction().replace(binding.layoutFragment.id, SignupFragment1()).commit() }
+                1 -> { supportFragmentManager.beginTransaction().replace(binding.layoutFragment.id, SignupFragment2()).commit() }
+                2 -> { supportFragmentManager.beginTransaction().replace(binding.layoutFragment.id, SignupFragment3()).commit() }
+                3 -> { supportFragmentManager.beginTransaction().replace(binding.layoutFragment.id, SignupFragment4()).commit() }
+                else -> { finish() }
             }
         }
         viewModel.fragmentIdx.observe(this, fragmentObserver)
     }
-
-    fun goToNext(){
-        viewModel.setFragmentIdx(1)
-    }
-
-    fun goToPrev(){
-        viewModel.setFragmentIdx(-1)
-    }
-
 }

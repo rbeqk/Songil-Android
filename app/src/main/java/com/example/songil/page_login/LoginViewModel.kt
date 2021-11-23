@@ -1,6 +1,5 @@
 package com.example.songil.page_login
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.songil.config.GlobalApplication
@@ -11,12 +10,13 @@ import kotlinx.coroutines.launch
 class LoginViewModel : ViewModel() {
     private val repository = LoginRepository()
     var phoneNumber = ""
-    var authNumber = MutableLiveData<String>()
+    var inputAuthNumber = ""
     var btn1Activate = MutableLiveData<Boolean>()
     var btn2Activate = MutableLiveData<Boolean>()
-    var inputAuthNumber = ""
 
-    var fragmentIdx = MutableLiveData<Int>(0)
+    var apiResultMessage = ""
+    var loginResultCode = MutableLiveData<Int>()
+    var authResultCode = MutableLiveData<Int>()
 
     init {
         btn1Activate.value = false
@@ -28,77 +28,35 @@ class LoginViewModel : ViewModel() {
     }
 
     fun checkAuthNumberForm(){
-        btn2Activate.value = inputAuthNumber.matches(Regex("[0-9]{4}\$"))
+        btn2Activate.value = inputAuthNumber.matches(Regex("[0-9]{6}\$"))
     }
 
     fun checkAuthNumberValue() {
-        if (inputAuthNumber == authNumber.value) {
-            tryLogin()
-        } else {
-            Log.d("login", "인증번호가 일치하지 않습니다.")
-        }
-    }
-
-    fun setFragmentIdx(idx : Int){
-        fragmentIdx.value = idx
-    }
-
-    // network!!
-    fun tryGetAuthNumber(){
-        CoroutineScope(Dispatchers.IO).launch {
-            repository.getAuthNumber(phoneNumber).let { response ->
-                if (response.isSuccessful){
-                    if (response.body()!!.isSuccess){
-                        authNumber.postValue(response.body()!!.result.authNumber)
-                        fragmentIdx.postValue(1)
-                    } else {
-                        Log.d("get auth number", response.body()!!.message!!)
-                    }
-                } else {
-                    Log.d("get auth number", response.body()!!.message!!)
-                }
-            }
-        }
+        tryLogin()
     }
 
     private fun tryLogin(){
         CoroutineScope(Dispatchers.IO).launch {
-            var jwt = ""
-            repository.getLogin(phoneNumber).let { response ->
+            repository.tryLogin(phoneNumber, inputAuthNumber).let { response ->
                 if (response.isSuccessful){
-                    if (response.body()!!.isSuccess){
-                        //Log.d("login", response.body()!!.result.jwt)
-                        jwt = response.body()!!.result.jwt
+                    apiResultMessage = response.body()!!.message!!
+                    if (response.body()!!.code == 200){
+                        val jwt = response.body()!!.result.jwt
                         val edit = GlobalApplication.globalSharedPreferences.edit()
-                        edit.putString(GlobalApplication.X_ACCESS_TOKEN, jwt)
-                        edit.apply()
-                        //fragmentIdx.postValue(2)
-                    } else {
-                        Log.d("login", response.body()!!.message!!)
+                        edit.putString(GlobalApplication.X_ACCESS_TOKEN, jwt).apply()
                     }
-                } else {
-                    Log.d("login", response.body()!!.message!!)
+                    loginResultCode.postValue(response.body()!!.code)
                 }
             }
-            if (jwt != ""){
-                repository.getUserIdx().let { response ->
-                    if (response.isSuccessful){
-                        if (response.body()!!.isSuccess){
-                            Log.d("userIdx", response.body()!!.result.userIdx.toString())
-                            val edit = GlobalApplication.globalSharedPreferences.edit()
-                            edit.putInt(GlobalApplication.USER_IDX, response.body()!!.result.userIdx)
-                            edit.apply()
-                            fragmentIdx.postValue(2)
-                        } else {
-                            // 로그인 userIdx 를 얻어오는데 실패하면 그냥 jwt 삭제
-                            Log.d("userIdx", response.body()!!.message!!)
-                            val edit = GlobalApplication.globalSharedPreferences.edit()
-                            edit.remove(GlobalApplication.X_ACCESS_TOKEN)
-                            edit.apply()
-                        }
-                    } else {
-                        Log.d("userIdx", response.body()!!.message!!)
-                    }
+        }
+    }
+
+    fun trySetAuthNumber(){
+        CoroutineScope(Dispatchers.IO).launch {
+            repository.setAuthNumber(phoneNumber).let { response ->
+                if (response.isSuccessful){
+                    apiResultMessage = response.body()!!.message!!
+                    authResultCode.postValue(response.body()!!.code)
                 }
             }
         }

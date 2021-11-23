@@ -15,5 +15,9 @@ class SignupFragment1() : BaseFragment<SignupFragment1Binding>(SignupFragment1Bi
 
         binding.viewModel = viewModel
         binding.lifecycleOwner = requireActivity()
+
+        binding.btnCancel.setOnClickListener {
+            viewModel.setFragmentIdx(-1)
+        }
     }
 }

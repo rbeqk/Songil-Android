@@ -3,7 +3,6 @@ package com.example.songil.page_login
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.example.songil.R
@@ -28,7 +27,7 @@ class LoginFragment2() : BaseFragment<LoginFragment2Binding>(LoginFragment2Bindi
         })
 
         binding.btnBack.setOnClickListener {
-            viewModel.setFragmentIdx(0)
+            (activity as LoginActivity).backToPhoneNumberFragment()
         }
 
     }

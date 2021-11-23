@@ -13,9 +13,11 @@ import com.example.songil.databinding.SignupFragment3Binding
 
 class SignupFragment3() : BaseFragment<SignupFragment3Binding>(SignupFragment3Binding::bind, R.layout.signup_fragment_3) {
 
+    private lateinit var viewModel : SignupViewModel
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val viewModel = ViewModelProvider(requireActivity())[SignupViewModel::class.java]
+        viewModel = ViewModelProvider(requireActivity())[SignupViewModel::class.java]
         binding.viewModel = viewModel
         binding.lifecycleOwner = requireActivity()
         binding.etAuthNumber.addTextChangedListener(object : TextWatcher {
@@ -28,22 +30,48 @@ class SignupFragment3() : BaseFragment<SignupFragment3Binding>(SignupFragment3Bi
             }
         })
 
+        binding.btnBack.setOnClickListener {
+            viewModel.setFragmentIdx(-1)
+        }
+
         binding.btnNext.setOnClickListener {
-            if (viewModel.compareAuthNumber()){
-                viewModel.setFragmentIdx(1)
-            } else {
-                Log.d("authNumber", "입력한 인증번호가 틀립니다.")
-            }
+            viewModel.tryCheckAuthNumber()
         }
         binding.btnReceiveAgain.setOnClickListener {
             viewModel.tryGetAuthNumber()
         }
 
-        val authNumberObserver = Observer<String>{ liveData ->
-            Log.d("authNumber", liveData)
-        }
-        viewModel.authNumber.observe(requireActivity(), authNumberObserver)
+        setObserver()
 
         viewModel.tryGetAuthNumber()
+    }
+
+    private fun setObserver(){
+        val checkAuthObserver = Observer<Int> { liveData ->
+            when(liveData){
+                200 -> {
+                    viewModel.setFragmentIdx(1)
+                }
+                else -> {
+                    binding.tvRemainTime.text = viewModel.apiMessage
+                    binding.tvRemainTime.setTextColor(requireContext().getColor(R.color.songil_2))
+                }
+            }
+        }
+        viewModel.checkAuthResult.observe(requireActivity(), checkAuthObserver)
+
+        val setAuthObserver = Observer<Int>{ liveData ->
+            when(liveData){
+                200 -> {
+                    viewModel.startTimer()
+                }
+            }
+        }
+        viewModel.getAuthResult.observe(requireActivity(), setAuthObserver)
+
+        val timeObserver = Observer<Int> { liveData ->
+            binding.tvRemainTime.text = getString(R.string.remain_time_with_time, liveData / 60, liveData % 60)
+        }
+        viewModel.authTimer.observe(requireActivity(), timeObserver)
     }
 }

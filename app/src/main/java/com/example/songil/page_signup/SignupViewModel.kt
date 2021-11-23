@@ -3,9 +3,9 @@ package com.example.songil.page_signup
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import com.example.songil.config.GlobalApplication
+import kotlinx.coroutines.*
+import kotlin.concurrent.timer
 
 class SignupViewModel : ViewModel() {
     private val repository = SignupRepository()
@@ -14,11 +14,13 @@ class SignupViewModel : ViewModel() {
     var inputAuthNumber = ""
     var inputNickName = ""
     var fragmentIdx = MutableLiveData<Int>()
-    //var authTimer = MutableLiveData<Int>()
+    var authTimer = MutableLiveData<Int>()
     var isNext = false
 
-    var authNumber = MutableLiveData<String>()
+    // timer
+    private lateinit var timer : Job
 
+    // 첫 페이지에서 약관 동의 여부
     var terms1 = MutableLiveData<Boolean>(false)
     var terms2 = MutableLiveData<Boolean>(false)
     var terms3 = MutableLiveData<Boolean>(false)
@@ -30,6 +32,15 @@ class SignupViewModel : ViewModel() {
     var btn2Activate = MutableLiveData<Boolean>()
     var btn3Activate = MutableLiveData<Boolean>()
     var btn4Activate = MutableLiveData<Boolean>()
+
+    // api 통신 결과
+    var apiMessage = ""
+    var checkAuthResult = MutableLiveData<Int>()
+    var getAuthResult = MutableLiveData<Int>()
+    var signUpResult = MutableLiveData<Int>()
+    var phoneDupResult = MutableLiveData<Int>()
+    var nicknameDupResult = MutableLiveData<Int>()
+    var loadAgreementResult = MutableLiveData<Int>()
 
 
     init {
@@ -91,12 +102,25 @@ class SignupViewModel : ViewModel() {
 
     // fragment3 (인증번호 입력 페이지) ---------------------------------------------------------------------------------------
     fun checkAuthNumberForm(){
-        btn3Activate.value = inputAuthNumber.matches(Regex("[0-9]{4}\$"))
+        btn3Activate.value = inputAuthNumber.matches(Regex("[0-9]{6}\$"))
     }
 
-    fun compareAuthNumber() : Boolean {
-        return (authNumber.value!! == inputAuthNumber)
+    fun startTimer(){
+        if (::timer.isInitialized) timer.cancel()
+
+        authTimer.value = 180
+        CoroutineScope(Dispatchers.Default).launch {
+            while(authTimer.value!! > 0){
+                authTimer.postValue( authTimer.value!!.minus(1))
+                delay(1000L)
+            }
+        }
     }
+
+    fun stopTimer(){
+        if (::timer.isInitialized) timer.cancel()
+    }
+
 
     // fragment4 (닉네임 입력 페이지) ---------------------------------------------------------------------------------------
     fun checkNickNameForm(){
@@ -106,20 +130,10 @@ class SignupViewModel : ViewModel() {
     // network!! ---------------------------------------------------------------------------------------
     fun tryCheckPhoneNumberDuplicate(){
         CoroutineScope(Dispatchers.IO).launch {
-            repository.getDuplicateCheck(phoneNumber).let { response ->
+            repository.tryCheckPhoneDuplicate(phoneNumber).let { response ->
                 if (response.isSuccessful){
-                    if (response.body()!!.isSuccess){
-                        when (response.body()!!.code){
-                            1000 -> {
-                                setFragmentIdxIO(1)
-                            }
-                            else -> {
-                                Log.d("check phone number", response.body()!!.message!!)
-                            }
-                        }
-                    } else {
-                        Log.d("check phone number", response.body()!!.message!!)
-                    }
+                    apiMessage = response.body()!!.message!!
+                    phoneDupResult.postValue(response.body()!!.code)
                 }
             }
         }
@@ -127,15 +141,21 @@ class SignupViewModel : ViewModel() {
 
     fun tryGetAuthNumber(){
         CoroutineScope(Dispatchers.IO).launch {
-            repository.getAuthNumber(phoneNumber).let { response ->
+            repository.setAuthNumber(phoneNumber).let { response ->
                 if (response.isSuccessful){
-                    if (response.body()!!.isSuccess){
-                        authNumber.postValue(response.body()!!.result.authNumber)
-                    } else {
-                        Log.d("get auth number", response.body()!!.message!!)
-                    }
-                } else {
-                    Log.d("get auth number", response.body()!!.message!!)
+                    apiMessage = response.body()!!.message!!
+                    getAuthResult.postValue(response.body()!!.code)
+                }
+            }
+        }
+    }
+
+    fun tryCheckAuthNumber(){
+        CoroutineScope(Dispatchers.IO).launch {
+            repository.tryCheckAuthNumber(phoneNumber, inputAuthNumber).let { response ->
+                if (response.isSuccessful){
+                    apiMessage = response.body()!!.message!!
+                    checkAuthResult.postValue(response.body()!!.code)
                 }
             }
         }
@@ -143,31 +163,36 @@ class SignupViewModel : ViewModel() {
 
     fun tryCheckNickNameDuplicate(){
         CoroutineScope(Dispatchers.IO).launch {
-            var nickNameCheck = false
-            repository.getDuplicateNickNameCheck(inputNickName).let { response ->
+            repository.tryCheckNickName(inputNickName).let { response ->
                 if (response.isSuccessful){
-                    if (response.body()!!.isSuccess){
-                        nickNameCheck = true
-                    }
-                    else {
-                        Log.d("check nickName", response.body()!!.message!!)
-                    }
-                } else {
-                    Log.d("check nickName", response.body()!!.message!!)
+                    apiMessage = response.body()!!.message!!
+                    nicknameDupResult.postValue(response.body()!!.code)
                 }
             }
-            if (nickNameCheck){
-                repository.postSignUp(phoneNumber, inputNickName).let { response ->
-                    if (response.isSuccessful){
-                        if (response.body()!!.code == 1000){
-                            Log.d("sign up", response.body()!!.message!!)
-                            setFragmentIdxIO(1)
-                        }else {
-                            Log.d("sign up", response.body()!!.message!!)
-                        }
-                    }else {
-                        Log.d("sign up", response.body()!!.message!!)
+        }
+    }
+
+    fun trySignUp(){
+        CoroutineScope(Dispatchers.IO).launch {
+            repository.trySignUp(phoneNumber, inputNickName).let { response ->
+                if (response.isSuccessful){
+                    apiMessage = response.body()!!.message!!
+                    if (response.body()!!.code == 200){
+                        val edit = GlobalApplication.globalSharedPreferences.edit()
+                        edit.putString(GlobalApplication.X_ACCESS_TOKEN, response.body()!!.result.jwt).apply()
                     }
+                    signUpResult.postValue(response.body()!!.code)
+                }
+            }
+        }
+    }
+
+    fun tryGetAgreementDetail(agreementIdx : Int){
+        CoroutineScope(Dispatchers.IO).launch {
+            repository.getAgreementDetail(agreementIdx).let { response ->
+                if (response.isSuccessful){
+                    apiMessage = response.body()!!.message!!
+                    loadAgreementResult.postValue(response.body()!!.code)
                 }
             }
         }

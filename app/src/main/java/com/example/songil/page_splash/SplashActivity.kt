@@ -13,6 +13,7 @@ import com.example.songil.config.BaseActivity
 import com.example.songil.config.GlobalApplication
 import com.example.songil.databinding.SplashActivityBinding
 import com.example.songil.page_main.MainActivity
+import com.example.songil.page_needlogin.NeedLoginActivity
 
 class SplashActivity : BaseActivity<SplashActivityBinding>(R.layout.splash_activity){
 
@@ -28,45 +29,27 @@ class SplashActivity : BaseActivity<SplashActivityBinding>(R.layout.splash_activ
 
         Handler(Looper.getMainLooper()).postDelayed({
             if (GlobalApplication.globalSharedPreferences.getString(GlobalApplication.X_ACCESS_TOKEN, null) == null) {
-                viewModel.requestAuthLogin()
+                // 앱이 가장 처음 실행됐는지 여부를 비교해 need_login 페이지 호출
+                startActivity(Intent(this, NeedLoginActivity::class.java))
             } else {
-                viewModel.requestAuthJwt()
+                viewModel.tryAutoLogin()
             }
         }, 1000)
-
-        /*if (GlobalApplication.globalSharedPreferences.getString(GlobalApplication.X_ACCESS_TOKEN, null) == null) {
-            viewModel.requestAuthLogin()
-        } else {
-            viewModel.requestAuthJwt()
-        }*/
     }
 
     private fun setObserver(){
-        val loginResultObserver = Observer<Int>{ liveData ->
+        val autoLoginObserver = Observer<Int> { liveData ->
             when (liveData){
-                1000 -> {
-                    /*startActivity(Intent(this, MainActivity::class.java))
-                    finish()*/
-                    viewModel.requestAuthJwt()
-                }
-                else -> {
-                    Log.d("resultCode", liveData.toString())
-                }
-            }
-        }
-        viewModel.authLoginResultCode.observe(this, loginResultObserver)
-        val jwtResultObserver = Observer<Int>{ liveData ->
-            when(liveData){
-                1001 -> {
+                200 ->{
                     startActivity(Intent(this, MainActivity::class.java))
                     finish()
                 }
-                else -> {
-                    Log.d("resultCode", liveData.toString())
+                else ->{
+                    // 다시 시도 여부를 묻는 dialog 가 필요할 듯
                 }
             }
         }
-        viewModel.authJwtResultCode.observe(this, jwtResultObserver)
+        viewModel.autoLoginResultCode.observe(this, autoLoginObserver)
     }
 
     private fun logoAnimation(){

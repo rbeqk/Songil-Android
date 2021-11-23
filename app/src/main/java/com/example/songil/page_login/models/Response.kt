@@ -1,10 +1,6 @@
 package com.example.songil.page_login.models
 
 import com.example.songil.config.BaseResponse
-import com.example.songil.data.AuthNumber
+import com.example.songil.data.Jwt
 
-data class ResponseAuthPhone(val result : AuthNumber) : BaseResponse()
-
-data class ResponseLogin(val result : LoginResult) : BaseResponse()
-
-data class ResponseAuthJwt(val result : AuthJwtResult) : BaseResponse()
+data class ResponseLogin(val result : Jwt) : BaseResponse()

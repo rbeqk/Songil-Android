@@ -8,33 +8,20 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class SplashViewModel : ViewModel() {
-    var authLoginResultCode = MutableLiveData<Int>()
-    var authJwtResultCode = MutableLiveData<Int>()
+    var autoLoginResultCode = MutableLiveData<Int>()
     private val repository = SplashRepository()
 
-    fun requestAuthLogin(){
+    fun tryAutoLogin(){
         CoroutineScope(Dispatchers.IO).launch {
-            repository.postAuthLogin().let { response ->
+            repository.getAutoLogin().let { response ->
                 if (response.isSuccessful){
-                    if (response.body()!!.code == 1000) {
+                    if (response.body()!!.code != 200){
                         val edit = GlobalApplication.globalSharedPreferences.edit()
-                        edit.putString(GlobalApplication.X_ACCESS_TOKEN, response.body()!!.result.jwt).apply()
+                        edit.remove(GlobalApplication.X_ACCESS_TOKEN).apply()
                     }
-                    authLoginResultCode.postValue(response.body()!!.code)
-                }
-            }
-        }
-    }
-
-    fun requestAuthJwt(){
-        CoroutineScope(Dispatchers.IO).launch {
-            repository.getAuthJwt().let { response ->
-                if (response.isSuccessful){
-                    if (response.body()!!.code == 1001){
-                        val edit = GlobalApplication.globalSharedPreferences.edit()
-                        edit.putInt(GlobalApplication.USER_IDX, response.body()!!.result.userIdx).apply()
-                    }
-                    authJwtResultCode.postValue(response.body()!!.code)
+                    autoLoginResultCode.postValue(response.body()!!.code)
+                } else {
+                    autoLoginResultCode.postValue(-1)
                 }
             }
         }

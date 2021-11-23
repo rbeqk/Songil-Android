@@ -28,10 +28,10 @@ class LoginFragment1() : BaseFragment<LoginFragment1Binding>(LoginFragment1Bindi
         })
 
         binding.btnAuth.setOnClickListener {
-            viewModel.tryGetAuthNumber()
+            viewModel.trySetAuthNumber()
         }
         binding.btnBack.setOnClickListener {
-            viewModel.setFragmentIdx(-1)
+            (activity as LoginActivity).finishWithResult(false)
         }
     }
 }

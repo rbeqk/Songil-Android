@@ -20,22 +20,45 @@ class LoginActivity : BaseActivity<LoginActivityBinding>(R.layout.login_activity
 
         supportFragmentManager.beginTransaction().add(binding.layoutFragment.id, LoginFragment1()).commit()
 
-        val fragmentIdxObserver = Observer<Int>{ liveData ->
-            when (liveData){
-                -1 -> finish()
-                0 -> goToPhoneNumberFragment()
-                1 -> goToAuthFragment()
-                else -> finish()
-            }
-        }
-        viewModel.fragmentIdx.observe(this, fragmentIdxObserver)
+        setObserver()
     }
 
     private fun goToAuthFragment() {
         supportFragmentManager.beginTransaction().replace(binding.layoutFragment.id, LoginFragment2()).commit()
     }
 
-    private fun goToPhoneNumberFragment() {
+    fun backToPhoneNumberFragment() {
         supportFragmentManager.beginTransaction().replace(binding.layoutFragment.id, LoginFragment1()).commit()
+    }
+
+    fun finishWithResult(isLogin : Boolean = false){
+        // 로그인 성공시 추가적인 작업이 있을 수 있다.
+        finish()
+    }
+
+    private fun setObserver(){
+        val loginResultObserver = Observer<Int> { liveData ->
+            when (liveData){
+                200 -> {
+                    finishWithResult(true)
+                }
+                else -> {
+
+                }
+            }
+        }
+        viewModel.loginResultCode.observe(this, loginResultObserver)
+
+        val authResultCode = Observer<Int> { liveData ->
+            when(liveData){
+                200 -> {
+                    goToAuthFragment()
+                }
+                else -> {
+
+                }
+            }
+        }
+        viewModel.authResultCode.observe(this, authResultCode)
     }
 }
