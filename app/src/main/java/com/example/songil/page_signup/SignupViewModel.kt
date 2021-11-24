@@ -16,6 +16,7 @@ class SignupViewModel : ViewModel() {
     var fragmentIdx = MutableLiveData<Int>()
     var isNext = false
 
+    var agreementContent = ""
 
     // 첫 페이지에서 약관 동의 여부
     var terms1 = MutableLiveData<Boolean>(false)
@@ -173,6 +174,9 @@ class SignupViewModel : ViewModel() {
             repository.getAgreementDetail(agreementIdx).let { response ->
                 if (response.isSuccessful){
                     apiMessage = response.body()!!.message!!
+                    if (response.body()!!.code == 200){
+                        agreementContent = response.body()!!.result.content
+                    }
                     loadAgreementResult.postValue(response.body()!!.code)
                 }
             }

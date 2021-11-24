@@ -4,17 +4,14 @@ import com.example.songil.config.BaseResponse
 import com.example.songil.data.PhoneNumber
 import com.example.songil.page_signup.models.*
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface SignupRetrofitInterface {
     @GET("agreements")
     suspend fun getAgreements() : Response<ResponseAgreements>
 
-    @GET("agreements")
-    suspend fun getAgreementDetail(@Query("agreementIdx")agreementIdx :Int) : Response<ResponseAgreementDetail>
+    @GET("agreements/{agreementIdx}")
+    suspend fun getAgreementDetail(@Path("agreementIdx")agreementIdx :Int) : Response<ResponseAgreementDetail>
 
     @POST("auth")   // 인증번호 발급
     suspend fun postAuth(@Body params : RequestAuth) : Response<BaseResponse>

@@ -18,11 +18,11 @@
     <string name="need_terms">원활한 서비스 이용을 위하여\n약관 동의가 필요합니다.</string>
     <string name="accept_all_terms">약관 전체 동의</string>
     <string name="terms_required_age">[필수] 만 14세 이상</string>
-    <string name="terms_required_usage">[필수] 이용약관 동의</string>
+    <string name="terms_required_usage"><u>[필수] 이용약관 동의</u></string>
     <string name="use_term">이용약관</string>
-    <string name="terms_required_privacy_policy">[필수] 개인 정보 처리방침 동의</string>
+    <string name="terms_required_privacy_policy"><u>[필수] 개인 정보 처리방침 동의</u></string>
     <string name="terms_privacy_policy">개인 정보 처리방침</string>
-    <string name="terms_optional_ad">[선택] 광고성 정보 수신 및 마케팅 활용 동의</string>
+    <string name="terms_optional_ad"><u>[선택] 광고성 정보 수신 및 마케팅 활용 동의</u></string>
     <string name="terms_ad">광고성 정보 수신 및 마케팅 활용 동의</string>
     <string name="confirmation">확인</string>
     <string name="input_phoneNumber">전화번호를 입력해주세요.</string>
