@@ -29,30 +29,12 @@
         </activity>
         <activity android:name=".page_signup.SignupActivity" android:windowSoftInputMode="adjustResize">
         </activity>
-        <activity android:name=".page_main.MainActivity">
-<!--                <intent-filter>
-                        <action android:name="android.intent.action.MAIN" />
-
-                        <category android:name="android.intent.category.LAUNCHER" />
-                </intent-filter>-->
-        </activity>
-        <activity android:name=".page_craft.CraftActivity">
-<!--            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
-        </activity>
+        <activity android:name=".page_main.MainActivity"/>
+        <activity android:name=".page_craft.CraftActivity"/>
         <activity android:name=".page_shop.shop_category.ShopActivityCategory"/>
         <activity android:name=".page_needlogin.NeedLoginActivity" android:noHistory="true"/>
         <activity android:name=".page_inquiry.InquiryActivity" android:windowSoftInputMode="adjustResize"/>
-        <activity android:name=".page_basket.BasketActivity">
-<!--            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
-        </activity>
+        <activity android:name=".page_basket.BasketActivity"/>
         <activity android:name=".page_mybenefit.MybenefitActivity"/>
         <activity android:name=".page_myfavorite.MyfavoriteActivity"/>
         <activity android:name=".page_orderstatus.OrderstatusActivity"/>
@@ -61,6 +43,8 @@
         <activity android:name=".page_search.SearchActivity"/>
         <activity android:name=".page_cancel.CancelActivity" android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".page_articlecontent.ArticleContentActivity"/>
+        <activity android:name=".page_ordercomplete.OrdercompleteActivity" android:noHistory="true"/>
+        <activity android:name=".page_withdrawal.WithdrawalActivity"/>
     </application>
 
 </manifest>

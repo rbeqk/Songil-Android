@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.songil.page_withdrawal.WithdrawalVieModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/navigation_bar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/btn_back"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginStart="16dp"
+                android:src="@drawable/ic_back_22"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:textSize="16sp"
+                android:text="@string/withdrawal"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_check_before_withdrawal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/navigation_bar"
+            app:layout_constraintBottom_toTopOf="@id/tv_withdrawal_warning"
+            app:layout_constraintVertical_chainStyle="packed"
+            android:fontFamily="@font/spoqahansansneo_regular"
+            android:text="@string/check_before_withdrawal"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_withdrawal_warning"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tv_check_before_withdrawal"
+            app:layout_constraintBottom_toTopOf="@id/btn_check_withdrawal"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="56dp"
+            android:background="@color/g_1"
+            android:paddingTop="36dp"
+            android:paddingBottom="36dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:fontFamily="@font/spoqahansansneo_light"
+            android:lineSpacingExtra="4sp"
+            android:text="@string/withdrawal_warning"/>
+
+        <LinearLayout
+            android:id="@+id/btn_check_withdrawal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/tv_withdrawal_warning"
+            app:layout_constraintBottom_toTopOf="@id/btn_withdrawal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:onClick="@{() -> viewModel.toggleWithdrawalActivate()}">
+
+            <CheckBox
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/custom_checkbox_square_20"
+                android:checked="@{viewModel.withdrawalActivate}"
+                android:button="@android:color/transparent"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:text="@string/register_withdrawal"/>
+
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/btn_withdrawal"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_constraintBottom_toBottomOf="parent"
+            textBtnActivate="@{viewModel.withdrawalActivate}"
+            android:fontFamily="@font/spoqahansansneo_bold"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:text="@string/do_withdrawal"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

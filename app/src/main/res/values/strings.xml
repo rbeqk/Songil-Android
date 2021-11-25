@@ -223,7 +223,21 @@
     <!-- 아티클 상세 페이지 관련 -->
     <string name="related_article_eng">RELATED ARTICLE</string>
 
-    <!-- -->
+    <!-- 아이템이 없는 페이지 관련 -->
     <string name="no_product_yet">아직 등록된 상품이 없어요.</string>
+
+    <!-- 주문완료 페이지 관련 -->
+    <string name="complete_order">주문결제가\n완료되었습니다.</string>
+    <string name="search_order_status"><u>주문현황 확인하기</u></string>
+
+    <!-- 회원탈퇴 페이지 관련 -->
+    <string name="do_withdrawal">손길 탈퇴하기</string>
+    <string name="check_before_withdrawal">회원탈퇴를 신청하기 전에 확인해주세요.</string>
+    <string name="withdrawal_warning">탈퇴 후 회원정보 및 이용기록은 모두 삭제되며, 다시 복구 할 수 없습니다. 작성한 구매후기와 결제 내역은 이용약관과 관련법에 의해 보관됩니다. 동일한 SNS계정, 이메일, 전화번호를 사용한 재가입은 24시간 이내에는 불가능합니다.</string>
+    <string name="register_withdrawal">탈퇴를 신청합니다.</string>
+
+    <!-- 경고 dialog 관련 -->
+    <string name="warning_title_artist_page">입점 작가\n전용 페이지 입니다.</string>
+    <string name="warning_message_artist_page">작가 입점을 원하시는 경우\n고객센터 메일로 문의해주세요</string>
 
 </resources>
