@@ -2,12 +2,11 @@ package com.example.songil.recycler.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.songil.R
-import com.example.songil.data.CraftSimpleInfo
+import com.example.songil.data.ProductSimpleInfo
 import com.example.songil.databinding.ItemMainRecommendVp2Binding
 
 // 임의로 craftSimple 데이터를 사용합니다!! 아직 서버가 없어요
@@ -15,7 +14,7 @@ class Vp2MainRecommendAdapter(private val context: Context) : RecyclerView.Adapt
 
     private val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
     private lateinit var binding : ItemMainRecommendVp2Binding
-    private val dataList = ArrayList<CraftSimpleInfo>()
+    private val dataList = ArrayList<ProductSimpleInfo>()
 
     class ViewHolder(binding : ItemMainRecommendVp2Binding) : RecyclerView.ViewHolder(binding.root){
         val img = binding.ivThumbnail
@@ -39,7 +38,7 @@ class Vp2MainRecommendAdapter(private val context: Context) : RecyclerView.Adapt
 
     override fun getItemCount(): Int = dataList.size
 
-    fun applyData(newData : ArrayList<CraftSimpleInfo>){
+    fun applyData(newData : ArrayList<ProductSimpleInfo>){
         dataList.clear()
         dataList.addAll(newData)
         notifyDataSetChanged()

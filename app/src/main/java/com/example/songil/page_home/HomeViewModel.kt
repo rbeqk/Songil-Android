@@ -2,13 +2,13 @@ package com.example.songil.page_home
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.songil.data.CraftSimpleInfo
+import com.example.songil.data.ProductSimpleInfo
 import com.example.songil.data.SimpleArticle
 
 class HomeViewModel : ViewModel() {
     var articleData = MutableLiveData<ArrayList<SimpleArticle>>()
-    var trendCraftData = MutableLiveData<ArrayList<CraftSimpleInfo>>()
-    var recommendCraftData = MutableLiveData<ArrayList<CraftSimpleInfo>>()
+    var trendCraftData = MutableLiveData<ArrayList<ProductSimpleInfo>>()
+    var recommendCraftData = MutableLiveData<ArrayList<ProductSimpleInfo>>()
 
     private fun getArticleData(){
         val fromNetwork = arrayListOf(
@@ -22,11 +22,11 @@ class HomeViewModel : ViewModel() {
     }
 
     private fun getCraftData(){
-        val fromNetwork = ArrayList<CraftSimpleInfo>()
-        fromNetwork.add(CraftSimpleInfo("화병", "브런치", 38000, "https://t1.daumcdn.net/thumb/R720x0/?fname=http://t1.daumcdn.net/brunch/service/user/2xEY/image/UVy3A7kOAnJVm_HaMW9vPWFyf-0.jpg"))
-        fromNetwork.add(CraftSimpleInfo("접시", "호미", 38000, "https://images.homify.com/c_fill,f_auto,q_0,w_740/v1439386593/p/photo/image/494903/IMG_0005_1_COEdit.jpg"))
-        fromNetwork.add(CraftSimpleInfo("목공예", "대림", 38000, "https://lh3.googleusercontent.com/proxy/wmpLg0_6tDlhPQzRw5LnsO-iWSQ-7yVw2vyPJPDI6LsRPPUVOHvvKbcLi9X3Q3w2gVu1C7dzEu3OaG7AOqloBPAIdzfiqcx_r8p1cU8lv4-rsyxB0WiuT1UXseThGsAr2AXkHNRClD4"))
-        fromNetwork.add(CraftSimpleInfo("금속", "백일", 38000, "https://cdn.class101.net/images/07064f5a-c599-4c8b-b77a-a2c0857849ef/original"))
+        val fromNetwork = ArrayList<ProductSimpleInfo>()
+        fromNetwork.add(ProductSimpleInfo("화병", "브런치", 38000, "https://t1.daumcdn.net/thumb/R720x0/?fname=http://t1.daumcdn.net/brunch/service/user/2xEY/image/UVy3A7kOAnJVm_HaMW9vPWFyf-0.jpg"))
+        fromNetwork.add(ProductSimpleInfo("접시", "호미", 38000, "https://images.homify.com/c_fill,f_auto,q_0,w_740/v1439386593/p/photo/image/494903/IMG_0005_1_COEdit.jpg"))
+        fromNetwork.add(ProductSimpleInfo("목공예", "대림", 38000, "https://lh3.googleusercontent.com/proxy/wmpLg0_6tDlhPQzRw5LnsO-iWSQ-7yVw2vyPJPDI6LsRPPUVOHvvKbcLi9X3Q3w2gVu1C7dzEu3OaG7AOqloBPAIdzfiqcx_r8p1cU8lv4-rsyxB0WiuT1UXseThGsAr2AXkHNRClD4"))
+        fromNetwork.add(ProductSimpleInfo("금속", "백일", 38000, "https://cdn.class101.net/images/07064f5a-c599-4c8b-b77a-a2c0857849ef/original"))
         trendCraftData.value = fromNetwork
         recommendCraftData.value = fromNetwork
     }

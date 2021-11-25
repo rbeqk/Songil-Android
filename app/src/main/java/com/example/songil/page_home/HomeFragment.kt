@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.example.songil.R
 import com.example.songil.config.BaseFragment
-import com.example.songil.data.CraftSimpleInfo
+import com.example.songil.data.ProductSimpleInfo
 import com.example.songil.data.SimpleArticle
 import com.example.songil.databinding.HomeFragmentBinding
 import com.example.songil.page_main.MainActivity
@@ -22,7 +22,6 @@ import com.example.songil.recycler.adapter.Vp2MainArticleAdapter
 import com.example.songil.recycler.adapter.Vp2MainRecommendAdapter
 import com.example.songil.recycler.decoration.RvMainTrendDecoration
 import com.example.songil.recycler.decoration.Vp2MainRecommendDecoration
-import com.google.android.material.appbar.AppBarLayout
 
 class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::bind, R.layout.home_fragment){
 
@@ -67,12 +66,12 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::bind
     }
 
     private fun setObserver(){
-        val trendCraftObserver = Observer<ArrayList<CraftSimpleInfo>>{ liveData ->
+        val trendCraftObserver = Observer<ArrayList<ProductSimpleInfo>>{ liveData ->
             (binding.rvTrendCraft.adapter as RvMainTrendCraftAdapter).applyData(liveData)
         }
         viewModel.trendCraftData.observe(viewLifecycleOwner, trendCraftObserver)
 
-        val recommendCraftObserver = Observer<ArrayList<CraftSimpleInfo>>{ liveData ->
+        val recommendCraftObserver = Observer<ArrayList<ProductSimpleInfo>>{ liveData ->
             (binding.vp2Recommend.adapter as Vp2MainRecommendAdapter).applyData(liveData)
             pageRangeSize = (progressMax / (liveData.size - 1))
         }
