@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:elevation="0dp"
+            android:background="@color/songil_1">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:contentInsetStart="0dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/btn_back"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:layout_marginStart="16dp"
+                        android:src="@drawable/ic_back_22"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_category"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:textSize="16sp"
+                        tools:text="인터뷰"/>
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/btn_home"
+                        android:layout_width="22dp"
+                        android:layout_height="22dp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginEnd="16dp"
+                        android:src="@drawable/ic_home_22"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.appbar.MaterialToolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/songil_1"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_thumbnail"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintDimensionRatio="1:1"
+                    android:background="@color/songil_2"
+                    android:scaleType="centerCrop"
+                    />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_article_title"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/iv_thumbnail"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:fontFamily="@font/spoqahansansneo_bold"
+                    android:textSize="24sp"
+                    android:lineSpacingExtra="6sp"
+                    tools:text="문혜주 작가 : 부조리한 모순"/>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cv_editor_thumbnail"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    app:layout_constraintTop_toBottomOf="@id/tv_article_title"
+                    app:layout_constraintStart_toStartOf="@id/tv_article_title"
+                    android:layout_marginTop="24dp"
+                    app:cardCornerRadius="18dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_editor_thumbnail"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/g_4"
+                        android:src="@drawable/logo_songil"/>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_editor_name"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@id/cv_editor_thumbnail"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/cv_editor_thumbnail"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="20dp"
+                    tools:text = "손길 에디터"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_upload_date"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="@id/tv_editor_name"
+                    app:layout_constraintBottom_toBottomOf="@id/cv_editor_thumbnail"
+                    android:textSize="12sp"
+                    android:textColor="@color/g_4"
+                    android:fontFamily="@font/spoqahansansneo_regular"
+                    tools:text="2021.04.23. 20:20"/>
+
+                <View
+                    android:id="@+id/line_title"
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_upload_date"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginEnd="16dp"
+                    android:background="@color/g_2"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/line_title"
+                    android:layout_marginTop="24dp"/>
+
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/cg_tag"
+                    app:layout_constraintTop_toBottomOf="@id/rv_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"/>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_related_article"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/cg_tag">
+
+                    <View
+                        android:id="@+id/line_related_article"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:background="@color/g_2"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_related_article"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/line_related_article"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="24dp"
+                        android:textSize="16sp"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:text="@string/related_article_eng" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_related_article"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/tv_related_article"
+                        android:layout_marginTop="24dp"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:layout_constraintTop_toBottomOf="@id/layout_related_article"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_gravity="bottom"
+            android:background="@color/songil_1">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                app:layout_constraintTop_toTopOf="parent"
+                android:background="@color/g_2"/>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/btn_favorite"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="20dp"
+                android:src="@drawable/ic_heart_line_28"
+                android:tint="@color/songil_2"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_favorite_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/btn_favorite"
+                app:layout_constraintTop_toTopOf="@id/btn_favorite"
+                app:layout_constraintBottom_toBottomOf="@id/btn_favorite"
+                android:layout_marginStart="4dp"
+                android:textSize="13sp"
+                android:fontFamily="@font/spoqahansansneo_regular"
+                tools:text="123" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/btn_share"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                app:layout_constraintTop_toTopOf="@id/btn_favorite"
+                app:layout_constraintBottom_toBottomOf="@id/btn_favorite"
+                app:layout_constraintStart_toEndOf="@id/tv_favorite_count"
+                android:layout_marginStart="16dp"
+                android:src="@drawable/ic_share_28"
+                android:tint="@color/songil_2"/>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</layout>

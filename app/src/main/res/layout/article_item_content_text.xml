@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            android:fontFamily="@font/spoqahansansneo_light"
+            android:lineSpacingExtra="6sp"
+            tools:text=" 작업은 하나의 전시로 시작되었습니다. ‘어둠속의 대화’라는 프로젝트형 전시로 120분간 칠흙 같은 어둠 속에서 시각을 제외한 다른 감각으로 느끼는 전시입니다.\n\n
+ 이 전시는 1988년 독일 프랑크푸르트에서 안드레아스 하이네케 박사(Dr.Andreas Heinecke)에 의해 시작된 프로그램으로 29년간 유럽, 아시아, 미국 등 전 세계 32개국 130여개 도시에서 1000만명 이상의 사람들과 소통하고 있습니다. 2010년 신촌에서 전세계 10번째 상설전시관을 개관하면서 한국에서도 소통을 시작하게 되었고, 2014년에 북촌에 두 번째 상설전시관이 생기면서 더 많은 사람들과 소통하게 되었습니다"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

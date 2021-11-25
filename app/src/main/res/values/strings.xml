@@ -220,6 +220,9 @@
     <string name="complete_write">작성 완료</string>
     <string name="write_comment_hint">코멘트를 작성해주세요.</string>
 
+    <!-- 아티클 상세 페이지 관련 -->
+    <string name="related_article_eng">RELATED ARTICLE</string>
+
     <!-- -->
     <string name="no_product_yet">아직 등록된 상품이 없어요.</string>
 
