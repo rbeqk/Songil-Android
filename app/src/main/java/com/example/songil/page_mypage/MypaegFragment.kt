@@ -15,6 +15,7 @@ import com.example.songil.page_mycomment.MycommentActivity
 import com.example.songil.page_myfavorite.MyfavoriteActivity
 import com.example.songil.page_orderstatus.OrderstatusActivity
 import com.example.songil.page_setting.SettingActivity
+import com.example.songil.popup_warning.WarningDialog
 
 class MypaegFragment : BaseFragment<MypageFragmentBinding>(MypageFragmentBinding::bind, R.layout.mypage_fragment){
 
@@ -61,6 +62,11 @@ class MypaegFragment : BaseFragment<MypageFragmentBinding>(MypageFragmentBinding
 
         binding.btnSetting.setOnClickListener {
             startActivity(Intent(activity as MainActivity, SettingActivity::class.java))
+        }
+
+        binding.tvbtnAuthorizeArtist.setOnClickListener {
+            val dialogFragment = WarningDialog()
+            dialogFragment.show(childFragmentManager, dialogFragment.tag)
         }
     }
 }

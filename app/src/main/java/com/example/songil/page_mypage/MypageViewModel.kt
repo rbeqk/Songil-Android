@@ -17,7 +17,9 @@ class MypageViewModel : ViewModel(){
         edit.remove(GlobalApplication.X_ACCESS_TOKEN)
         edit.remove(GlobalApplication.USER_IDX)
         edit.apply()*/
-        getGuestUser()
+        //getGuestUser()
+        val edit = GlobalApplication.globalSharedPreferences.edit()
+        edit.remove(GlobalApplication.X_ACCESS_TOKEN).apply()
     }
 
     private fun getGuestUser(){

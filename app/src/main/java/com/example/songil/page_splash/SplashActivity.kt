@@ -5,7 +5,6 @@ import com.example.songil.R
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -14,6 +13,7 @@ import com.example.songil.config.GlobalApplication
 import com.example.songil.databinding.SplashActivityBinding
 import com.example.songil.page_main.MainActivity
 import com.example.songil.page_needlogin.NeedLoginActivity
+import com.example.songil.utils.setStatusBarBlack
 
 class SplashActivity : BaseActivity<SplashActivityBinding>(R.layout.splash_activity){
 
@@ -21,6 +21,8 @@ class SplashActivity : BaseActivity<SplashActivityBinding>(R.layout.splash_activ
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        setStatusBarBlack(this, true)
 
         viewModel = ViewModelProvider(this)[SplashViewModel::class.java]
         setObserver()

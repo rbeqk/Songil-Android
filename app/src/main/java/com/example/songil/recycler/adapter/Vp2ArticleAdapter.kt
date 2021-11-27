@@ -1,12 +1,14 @@
 package com.example.songil.recycler.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.songil.data.SimpleArticle
 import com.example.songil.databinding.ArticleItemArticleBinding
+import com.example.songil.page_articlecontent.ArticleContentActivity
 
 class Vp2ArticleAdapter(private val context: Context) : RecyclerView.Adapter<Vp2ArticleAdapter.ViewHolder>() {
 
@@ -37,6 +39,9 @@ class Vp2ArticleAdapter(private val context: Context) : RecyclerView.Adapter<Vp2
             else -> holder.articleType.text = "아티클"
         }
         //holder.articleType.text = articleList[position].articleType
+        holder.thumbnail.setOnClickListener {
+            context.startActivity(Intent(context, ArticleContentActivity::class.java))
+        }
     }
 
     override fun getItemCount(): Int = articleList.size

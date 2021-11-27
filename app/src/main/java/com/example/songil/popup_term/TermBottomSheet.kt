@@ -12,7 +12,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class TermBottomSheet : BottomSheetDialogFragment() {
+class TermBottomSheet(private val agreementContext : String = "") : BottomSheetDialogFragment() {
     private var _binding : BottomsheetTermBinding? = null
     private val binding get() = _binding!!
 
@@ -47,6 +47,7 @@ class TermBottomSheet : BottomSheetDialogFragment() {
             dismiss()
         }
 
+        binding.tvTermContent.text = agreementContext
 
     }
 
