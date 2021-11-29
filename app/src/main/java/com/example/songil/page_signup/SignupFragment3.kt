@@ -39,6 +39,7 @@ class SignupFragment3() : BaseFragment<SignupFragment3Binding>(SignupFragment3Bi
 
     fun fragmentShow(){
         viewModel.tryGetAuthNumber()
+        binding.etAuthNumber.requestFocus()
     }
 
     override fun onDestroyView() {
@@ -100,7 +101,7 @@ class SignupFragment3() : BaseFragment<SignupFragment3Binding>(SignupFragment3Bi
         }
     }
 
-    private fun stopTimer(){
+    fun stopTimer(){
         if (::timer.isInitialized) timer.cancel()
     }
 }

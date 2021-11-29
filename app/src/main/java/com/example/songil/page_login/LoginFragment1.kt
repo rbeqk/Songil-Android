@@ -15,7 +15,7 @@ class LoginFragment1() : BaseFragment<LoginFragment1Binding>(LoginFragment1Bindi
         val viewModel = ViewModelProvider(requireActivity())[LoginViewModel::class.java]
 
         binding.viewModel = viewModel
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = requireActivity()
 
         binding.etPhoneNumber.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}

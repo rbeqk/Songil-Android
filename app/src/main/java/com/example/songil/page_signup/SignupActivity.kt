@@ -45,6 +45,11 @@ class SignupActivity : BaseActivity<SignupActivityBinding>(R.layout.signup_activ
         currentFragment = fragment1
     }
 
+    override fun onBackPressed() {
+        fragment3.stopTimer()
+        super.onBackPressed()
+    }
+
     private fun setObserver(){
         val fragmentObserver = Observer<Int>{ liveData ->
             when (liveData){
