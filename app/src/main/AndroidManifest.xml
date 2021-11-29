@@ -46,6 +46,7 @@
         <activity android:name=".page_ordercomplete.OrdercompleteActivity" android:noHistory="true"/>
         <activity android:name=".page_withdrawal.WithdrawalActivity"/>
         <activity android:name=".page_shippinginfo.ShippinginfoActivity" android:windowSoftInputMode="adjustResize"/>
+        <activity android:name=".page_comment.CommentActivity"/>
     </application>
 
 </manifest>

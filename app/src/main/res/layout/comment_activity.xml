@@ -3,6 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.songil.page_comment.CommentViewModel" />
+
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -60,6 +67,7 @@
             android:lines="12"
             android:textSize="14sp"
             android:lineSpacingExtra="6sp"
+            android:text="@={viewModel.comment}"
             android:fontFamily="@font/spoqahansansneo_regular"
             android:textColor="@color/g_4"
             android:hint="@string/write_comment_hint"
@@ -104,7 +112,6 @@
             app:layout_constraintTop_toBottomOf="@id/tv_photo"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:listitem="@layout/item_add_photo"
             tools:itemCount="3"
             android:layout_margin="16dp"/>
 
@@ -114,6 +121,7 @@
             android:layout_height="56dp"
             app:layout_constraintBottom_toBottomOf="parent"
             android:fontFamily="@font/spoqahansansneo_bold"
+            textBtnActivate="@{viewModel.commentBtnActivate}"
             android:text="@string/complete_write"
             android:textSize="16sp"
             android:gravity="center"/>
