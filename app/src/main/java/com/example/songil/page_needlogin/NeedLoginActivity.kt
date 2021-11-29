@@ -11,9 +11,13 @@ import com.example.songil.page_main.MainActivity
 import com.example.songil.page_signup.SignupActivity
 
 class NeedLoginActivity : BaseActivity<NeedloginActivityBinding>(R.layout.needlogin_activity) {
+
+    private var isFirst = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        isFirst = intent.getBooleanExtra("isFirst", false)
 
         // 테스트용!!!
         binding.ivLogo.setOnClickListener {
@@ -27,8 +31,13 @@ class NeedLoginActivity : BaseActivity<NeedloginActivityBinding>(R.layout.needlo
     override fun onRestart() {
         super.onRestart()
 
-        if (GlobalApplication.globalSharedPreferences.getInt(GlobalApplication.USER_IDX, 0) != 0){
-            finish()
+        if (GlobalApplication.globalSharedPreferences.contains(GlobalApplication.X_ACCESS_TOKEN)){
+            if (isFirst){
+                startActivity(Intent(this, MainActivity::class.java))
+                finish()
+            } else {
+                finish()
+            }
         }
     }
 

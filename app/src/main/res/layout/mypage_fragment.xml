@@ -3,6 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.songil.page_mypage.MypageViewModel" />
+    </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -336,6 +341,7 @@
                     android:gravity="center_vertical"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
+                    isLoginText="@{viewModel.isLogin()}"
                     android:text="@string/like_post"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -346,6 +352,7 @@
                     android:paddingEnd="16dp"
                     android:paddingStart="16dp"
                     android:gravity="center_vertical"
+                    isLoginText="@{viewModel.isLogin()}"
                     android:text="@string/like_article" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -356,6 +363,7 @@
                     android:gravity="center_vertical"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
+                    isLoginText="@{viewModel.isLogin()}"
                     android:text="@string/my_write"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -366,6 +374,7 @@
                     android:gravity="center_vertical"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
+                    isLoginText="@{viewModel.isLogin()}"
                     android:text="@string/comment_post"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -388,6 +397,7 @@
                     android:gravity="center_vertical"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
+                    isLoginText="@{viewModel.isLogin()}"
                     android:text="@string/modify_profile"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -398,27 +408,40 @@
                     android:gravity="center_vertical"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
+                    isLoginText="@{viewModel.isLogin()}"
                     android:text="@string/apply_social_login"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvbtn_authorize_artist"
+                    android:id="@+id/tvbtn_logout"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     app:layout_constraintTop_toBottomOf="@id/tvbtn_apply_social_login"
                     android:gravity="center_vertical"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
-                    android:text="@string/authorize_artist"/>
+                    isLoginText="@{viewModel.isLogin()}"
+                    android:text="@string/logout"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvbtn_logout"
+                    android:id="@+id/tvbtn_customer_center"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    app:layout_constraintTop_toBottomOf="@id/tvbtn_authorize_artist"
+                    app:layout_constraintTop_toBottomOf="@id/tvbtn_logout"
                     android:gravity="center_vertical"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
-                    android:text="@string/logout"/>
+                    android:text="@string/customer_center" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvbtn_change_to_artist_page"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    app:layout_constraintTop_toBottomOf="@id/tvbtn_customer_center"
+                    android:gravity="center_vertical"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    isLoginText="@{viewModel.isLogin()}"
+                    android:text="@string/change_to_artist_page"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

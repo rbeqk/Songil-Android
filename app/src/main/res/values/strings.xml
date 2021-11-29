@@ -172,6 +172,7 @@
     <string name="authorize_artist">작가 인증</string>
     <string name="logout">로그아웃</string>
     <string name="benefit">베네핏</string>
+    <string name="change_to_artist_page">작가페이지로 전환</string>
 
     <!-- home page 관련 -->
     <string name="trend_craft_eng">TREND CRAFT</string>

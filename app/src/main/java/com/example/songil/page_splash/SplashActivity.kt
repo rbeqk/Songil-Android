@@ -30,9 +30,15 @@ class SplashActivity : BaseActivity<SplashActivityBinding>(R.layout.splash_activ
         logoAnimation()
 
         Handler(Looper.getMainLooper()).postDelayed({
-            if (GlobalApplication.globalSharedPreferences.getString(GlobalApplication.X_ACCESS_TOKEN, null) == null) {
-                // 앱이 가장 처음 실행됐는지 여부를 비교해 need_login 페이지 호출
-                startActivity(Intent(this, NeedLoginActivity::class.java))
+            if (GlobalApplication.globalSharedPreferences.getBoolean(GlobalApplication.IS_FIRST_EXEC, true) &&
+                GlobalApplication.globalSharedPreferences.getString(GlobalApplication.X_ACCESS_TOKEN, null) == null) {
+                val edit = GlobalApplication.globalSharedPreferences.edit()
+                edit.putBoolean(GlobalApplication.IS_FIRST_EXEC, false).apply()
+
+                val intent = Intent(this, NeedLoginActivity::class.java)
+                intent.putExtra("isFirst", true)
+                startActivity(intent)
+                finish()
             } else {
                 viewModel.tryAutoLogin()
             }
@@ -48,6 +54,9 @@ class SplashActivity : BaseActivity<SplashActivityBinding>(R.layout.splash_activ
                 }
                 else ->{
                     // 다시 시도 여부를 묻는 dialog 가 필요할 듯
+                    // ????
+                    startActivity(Intent(this, MainActivity::class.java))
+                    finish()
                 }
             }
         }

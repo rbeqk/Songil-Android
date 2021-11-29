@@ -7,12 +7,14 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.songil.R
 import com.example.songil.config.BaseFragment
+import com.example.songil.config.GlobalApplication
 //import com.example.songil.config.GlobalApplication
 import com.example.songil.databinding.MypageFragmentBinding
 import com.example.songil.page_main.MainActivity
 import com.example.songil.page_mybenefit.MybenefitActivity
 import com.example.songil.page_mycomment.MycommentActivity
 import com.example.songil.page_myfavorite.MyfavoriteActivity
+import com.example.songil.page_needlogin.NeedLoginActivity
 import com.example.songil.page_orderstatus.OrderstatusActivity
 import com.example.songil.page_setting.SettingActivity
 import com.example.songil.popup_warning.WarningDialog
@@ -24,22 +26,39 @@ class MypaegFragment : BaseFragment<MypageFragmentBinding>(MypageFragmentBinding
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this)[MypageViewModel::class.java]
-        //binding.lifecycleOwner = this
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
 
         setObserver()
         setButton()
     }
 
     private fun setObserver(){
-        val logoutResultObserver = Observer<Boolean>{ liveData ->
+        val loginChangeObserver = Observer<Boolean>{ liveData ->
             if (liveData){
-                (activity as MainActivity).moveToHome()
+                binding.tvNickname.text = "API 연결 필요"
+            } else {
+                binding.tvNickname.text = "로그인해 주세요"
             }
         }
-        viewModel.logoutSuccess.observe(viewLifecycleOwner, logoutResultObserver)
+        viewModel.isLogin.observe(viewLifecycleOwner, loginChangeObserver)
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        viewModel.checkLogin()
     }
 
     private fun setButton(){
+
+        binding.tvNickname.setOnClickListener {
+            if (!GlobalApplication.globalSharedPreferences.contains(GlobalApplication.X_ACCESS_TOKEN)){
+                startActivity(Intent(activity as MainActivity, NeedLoginActivity::class.java))
+            }
+        }
+
+
         binding.btnBenefit.setOnClickListener {
             startActivity(Intent(activity as MainActivity, MybenefitActivity::class.java))
         }
@@ -64,7 +83,7 @@ class MypaegFragment : BaseFragment<MypageFragmentBinding>(MypageFragmentBinding
             startActivity(Intent(activity as MainActivity, SettingActivity::class.java))
         }
 
-        binding.tvbtnAuthorizeArtist.setOnClickListener {
+        binding.tvbtnChangeToArtistPage.setOnClickListener {
             val dialogFragment = WarningDialog()
             dialogFragment.show(childFragmentManager, dialogFragment.tag)
         }

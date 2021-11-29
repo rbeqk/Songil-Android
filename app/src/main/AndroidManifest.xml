@@ -32,7 +32,7 @@
         <activity android:name=".page_main.MainActivity"/>
         <activity android:name=".page_craft.CraftActivity"/>
         <activity android:name=".page_shop.shop_category.ShopActivityCategory"/>
-        <activity android:name=".page_needlogin.NeedLoginActivity" android:noHistory="true"/>
+        <activity android:name=".page_needlogin.NeedLoginActivity"/>
         <activity android:name=".page_inquiry.InquiryActivity" android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".page_basket.BasketActivity"/>
         <activity android:name=".page_mybenefit.MybenefitActivity"/>
