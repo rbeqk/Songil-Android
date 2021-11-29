@@ -63,6 +63,12 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::bind
         })
 
         binding.vp2Main.adapter = Vp2MainArticleAdapter(activity as MainActivity)
+        binding.vp2Main.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                binding.pageCountDot.changeIdx(position)
+            }
+        })
     }
 
     private fun setObserver(){
@@ -79,6 +85,7 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::bind
 
         val articleObserver = Observer<ArrayList<SimpleArticle>>{ liveData ->
             (binding.vp2Main.adapter as Vp2MainArticleAdapter).applyData(liveData)
+            binding.pageCountDot.initialSetting(liveData.size)
         }
         viewModel.articleData.observe(viewLifecycleOwner, articleObserver)
     }
