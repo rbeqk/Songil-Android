@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:elevation="0dp">
+
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/layout_hot_talk"
+                    android:layout_width="match_parent"
+                    android:layout_height="210dp"
+                    android:layout_marginTop="136dp"
+                    android:background="@color/g_1"
+                    app:layout_collapseMode="parallax">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_hot_talk"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginStart="20dp"
+                        android:layout_marginTop="28dp"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:text="@string/HOT_TALK_eng"/>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_hot_talk"
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        app:layout_constraintTop_toBottomOf="@id/tv_hot_talk"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="28dp"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <com.google.android.material.appbar.MaterialToolbar
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:contentInsetStart="0dp"
+                    app:layout_collapseMode="pin">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/navigation_bar"
+                            android:layout_width="match_parent"
+                            android:layout_height="56dp"
+                            android:background="@color/songil_2"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                android:layout_marginStart="20dp"
+                                android:textSize="18sp"
+                                android:textColor="@color/songil_1"
+                                android:fontFamily="@font/montserrat_bold"
+                                android:text="@string/with_eng"/>
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/btn_notice"
+                                android:layout_width="22dp"
+                                android:layout_height="22dp"
+                                android:src="@drawable/ic_icon_notice"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                android:layout_marginEnd="20dp"/>
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/btn_search"
+                                android:layout_width="22dp"
+                                android:layout_height="22dp"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toStartOf="@id/btn_notice"
+                                android:src="@drawable/ic_search_22"
+                                android:tint="@color/songil_1"
+                                android:layout_marginEnd="16dp"/>
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="56dp"
+                            app:layout_constraintTop_toBottomOf="@id/navigation_bar"
+                            android:background="@color/songil_2">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/btn_story"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                android:layout_marginStart="20dp"
+                                android:textColor="@color/songil_1"
+                                android:fontFamily="@font/montserrat_semibold"
+                                android:text="@string/story_eng"/>
+
+                            <View
+                                android:id="@+id/line_select_story"
+                                android:layout_width="28dp"
+                                android:layout_height="4dp"
+                                android:background="@color/songil_1"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="@id/btn_story"
+                                app:layout_constraintEnd_toEndOf="@id/btn_story"/>
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/btn_qna"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:layout_constraintTop_toTopOf="@id/btn_story"
+                                app:layout_constraintStart_toEndOf="@id/btn_story"
+                                android:layout_marginStart="24dp"
+                                android:textColor="@color/songil_1"
+                                android:fontFamily="@font/montserrat_semibold"
+                                android:text="@string/QnA_eng" />
+
+                            <View
+                                android:id="@+id/line_select_qna"
+                                android:layout_width="28dp"
+                                android:layout_height="4dp"
+                                android:background="@color/songil_1"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="@id/btn_qna"
+                                app:layout_constraintEnd_toEndOf="@id/btn_qna"/>
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/btn_ab_test"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                app:layout_constraintTop_toTopOf="@id/btn_story"
+                                app:layout_constraintStart_toEndOf="@id/btn_qna"
+                                android:layout_marginStart="24dp"
+                                android:textColor="@color/songil_1"
+                                android:fontFamily="@font/montserrat_semibold"
+                                android:text="@string/AB_TEST_eng"/>
+
+                            <View
+                                android:id="@+id/line_select_ab_test"
+                                android:layout_width="28dp"
+                                android:layout_height="4dp"
+                                android:background="@color/songil_1"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="@id/btn_ab_test"
+                                app:layout_constraintEnd_toEndOf="@id/btn_ab_test"/>
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.material.appbar.MaterialToolbar>
+
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:background="@color/songil_1">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_total_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="16dp"
+                    android:fontFamily="@font/spoqahansansneo_regular"
+                    android:textSize="12sp"
+                    tools:text="총 12개 검색 결과"/>
+
+                <LinearLayout
+                    android:id="@+id/btn_sort"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="16dp"
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="12sp"
+                        android:fontFamily="@font/spoqahansansneo_regular"
+                        android:text="@string/sort_popular"/>
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="19dp"
+                        android:layout_height="19dp"
+                        android:layout_marginStart="6dp"
+                        android:src="@drawable/ic_icon_down_19"/>
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <FrameLayout
+            android:id="@+id/layout_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btn_write"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="20dp"
+            android:src="@drawable/ic_note_pencil"
+            app:useCompatPadding="true"
+            app:maxImageSize="29dp"
+            tools:ignore="ContentDescription" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>
