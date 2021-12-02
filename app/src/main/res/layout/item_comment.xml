@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/songil_1"
+        android:paddingTop="16dp">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintGuide_begin="16dp"
+            android:orientation="vertical"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintGuide_end="16dp"
+            android:orientation="vertical"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guide_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintGuide_begin="68dp"
+            android:orientation="vertical"/>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cv_profile"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            app:cardCornerRadius="18dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guide_start">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_profile"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/g_2"/>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/guide_text"
+            android:fontFamily="@font/spoqahansansneo_bold"
+            android:textSize="12sp"
+            tools:text="하이에나"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_content"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tv_name"
+            app:layout_constraintStart_toStartOf="@id/tv_name"
+            app:layout_constraintEnd_toEndOf="@id/guide_end"
+            android:layout_marginTop="8dp"
+            android:textSize="12sp"
+            android:lineSpacingExtra="4sp"
+            android:fontFamily="@font/spoqahansansneo_light"
+            tools:text="노솔세라믹에서 이번에 도자기와인잔 나왔던데 도자기 와인잔은 특이해서 선물 할 만 할꺼같아요!"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_deadline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/tv_name"
+            app:layout_constraintTop_toBottomOf="@id/tv_content"
+            android:layout_marginTop="12dp"
+            android:textSize="12sp"
+            android:fontFamily="@font/spoqahansansneo_light"
+            android:textColor="@color/g_4"
+            tools:text="2021.04.23 20:20"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/tv_deadline"
+            app:layout_constraintStart_toEndOf="@id/tv_deadline"
+            android:layout_marginStart="16dp"
+            android:textSize="12sp"
+            android:text="@string/comment_reply"
+            android:textColor="@color/g_4"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_reply"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tv_deadline"
+            tools:listitem="@layout/item_comment_reply"
+            tools:itemCount="3"
+            android:layout_marginTop="16dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
