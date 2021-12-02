@@ -3,9 +3,6 @@ package com.example.songil.page_craft
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.songil.data.ProductDetailInfo
-import com.example.songil.page_craft.models.CraftBaseInfo
-import com.example.songil.page_craft.models.CraftDetailInfo
-import com.example.songil.page_craft.models.CraftReview
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -14,9 +11,6 @@ class CraftViewModel : ViewModel() {
     private val repository = CraftRepository()
 
     var resultCode = MutableLiveData<Int>()
-/*    lateinit var baseInfo: CraftBaseInfo
-    lateinit var detailInfo : CraftDetailInfo
-    lateinit var reviews : ArrayList<CraftReview>*/
     var message = ""
     private var craftIdx = 0
 
@@ -48,10 +42,8 @@ class CraftViewModel : ViewModel() {
             repository.getDetailCraftInfo(craftIdx).let { response ->
                 if (response.isSuccessful){
                     if (response.body()!!.code == 200){
-/*                        baseInfo = response.body()!!.result.infoResult
-                        detailInfo = response.body()!!.result.detailResult
-                        reviews = response.body()!!.result.reviewResults*/
                         itemCount.postValue(1)
+                        productDetailInfo = response.body()!!.result
                     }
                     message = response.body()!!.message!!
                     resultCode.postValue(response.body()!!.code)

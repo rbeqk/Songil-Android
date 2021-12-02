@@ -30,7 +30,7 @@ class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val idx = intent.getIntExtra(GlobalApplication.CRAFT_IDX, 0)
+        val idx = intent.getIntExtra(GlobalApplication.CRAFT_IDX, 1)
 
         viewModel = ViewModelProvider(this)[CraftViewModel::class.java]
         binding.viewModel = viewModel
@@ -41,8 +41,8 @@ class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity
 
         viewModel.setCraftIdx(idx)
 
-        //viewModel.tryGetCraftInfo()
-        viewModel.tempGetCraftInfo()
+        viewModel.tryGetCraftInfo()
+        //viewModel.tempGetCraftInfo()
 
         /*supportFragmentManager.beginTransaction().add(binding.layoutFragment.id, CraftFragmentDetail()).commit()*/
     }
@@ -141,19 +141,7 @@ class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity
     }
 
     private fun applyToView(){
-        /*Glide.with(this).load(viewModel.baseInfo.thumbNailImg).into(binding.ivThumbnail)
-        Glide.with(this).load(viewModel.baseInfo.artistProfileImg).into(binding.ivProfile)
-        binding.tvCraftName.text = viewModel.baseInfo.productName
-        binding.tvPrice.text = getString(R.string.form_price_won, viewModel.baseInfo.price)
-        binding.tvShippingFee.text = viewModel.baseInfo.shippingFee
-        binding.tvMaterial.text = viewModel.baseInfo.productSubject
-        binding.tvUsage.text = viewModel.baseInfo.purpose
-        binding.tvMaker.text = viewModel.baseInfo.artistName
-        binding.tvIntroduce.text = viewModel.baseInfo.artistIntro
-        binding.tvReviewCount.text = getString(R.string.form_number_bracket, viewModel.baseInfo.reviewCount)
-        if (viewModel.baseInfo.NewOrNot == "NOT NEW") binding.tvNew.visibility = View.GONE
-        binding.tvMakerCraft.text = getString(R.string.form_artist_craft, viewModel.baseInfo.artistName, viewModel.baseInfo.productName)*/
-        Glide.with(this).load(viewModel.productDetailInfo.mainImgUrl).into(binding.ivThumbnail)
+        Glide.with(this).load(viewModel.productDetailInfo.mainImageUrl).into(binding.ivThumbnail)
         if (viewModel.productDetailInfo.artistImageUrl != null) Glide.with(this).load(viewModel.productDetailInfo.artistImageUrl).into(binding.ivProfile)
         binding.tvCraftName.text = viewModel.productDetailInfo.name
         binding.tvPrice.text = getString(R.string.form_price_won, viewModel.productDetailInfo.price)

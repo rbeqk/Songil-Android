@@ -270,6 +270,20 @@
     <string name="QnA_eng">QnA</string>
     <string name="AB_TEST_eng">AB TEST</string>
     <string name="HOT_TALK_eng">HOT TALK</string>
-
-
+    <string name="do_vote">투표하기</string>
+    <string name="do_re_vote">재투표하기</string>
+    <string name="closed_voting">마감된 투표입니다.</string>
+    <string name="register">등록</string>
+    <string name="comment_reply">답글</string>
+    <string name="writer">작성자</string>
+    <string name="title">제목</string>
+    <string name="input_title">제목을 입력하세요.</string>
+    <string name="input_content">내용을 입력하세요.</string>
+    <string name="alarm">알림</string>
+    <string name="register_ab_test">AB TEST 등록</string>
+    <string name="response_date">응답기간</string>
+    <string name="until_receive_survey">까지 설문받기</string>
+    <string name="until">까지</string>
+    <string name="write_post">게시글 작성하기</string>
+    <string name="photo_count_ab_test">2장인 경우에만 업로드 가능</string>
 </resources>

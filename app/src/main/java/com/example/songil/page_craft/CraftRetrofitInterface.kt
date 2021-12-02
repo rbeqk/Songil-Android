@@ -10,7 +10,7 @@ import retrofit2.http.POST
 import retrofit2.http.Path
 
 interface CraftRetrofitInterface {
-    @GET("products/{productIdx}")
+    @GET("shop/products/{productIdx}")
     suspend fun getProducts(@Path("productIdx") productIdx : Int) : Response<ResponseProductDetail>
 
     @POST("carts")
