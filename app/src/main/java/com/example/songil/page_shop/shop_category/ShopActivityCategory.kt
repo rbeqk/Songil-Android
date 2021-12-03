@@ -15,8 +15,6 @@ import com.example.songil.config.BaseActivity
 import com.example.songil.config.GlobalApplication
 import com.example.songil.databinding.ShopActivityCategoryBinding
 import com.example.songil.page_craft.CraftActivity
-import com.example.songil.page_shop.shop_category.models.CraftDetail
-import com.example.songil.page_shop.shop_category.models.CraftSimple
 import com.example.songil.popup_sort.SortBottomSheet
 import com.example.songil.popup_sort.popup_interface.PopupSortView
 import com.example.songil.recycler.adapter.RvShopCategoryTextAdapter
@@ -26,11 +24,15 @@ import com.example.songil.recycler.decoration.ShopRvCategoryTextItemDecoration
 import com.example.songil.recycler.decoration.ShopRvCraftDecoration
 import com.example.songil.recycler.decoration.ShopRvPopularDecoration
 import com.example.songil.recycler.rv_interface.RvCategoryView
+import com.example.songil.recycler.rv_interface.RvCraftLikeView
 import com.example.songil.recycler.rv_interface.RvCraftView
 
-// 인터페이스 3개... 이래도 되나?
+// RvCategoryView -> 카테고리 recyclerView 에서 카테고리 선택시 호출할 함수 정의
+// PopupSortView -> sort dialog 에서 sort 기준 클릭시 호출할 함수 정의
+// RvCraftView -> 이번주 인기 공예 recyclerView 에서 아이템 클릭시 호출할 함수 정의
+// RvCraftLikeView -> 전체 상품을 표시하는 recyclerView 에서 아이템 클릭시, 그리고 좋아요 클릭시 호출할 함수 정의
 class ShopActivityCategory : BaseActivity<ShopActivityCategoryBinding>(R.layout.shop_activity_category),
-    RvCategoryView<String>, PopupSortView, RvCraftView {
+    RvCategoryView<String>, PopupSortView, RvCraftView, RvCraftLikeView<Int> {
 
     private lateinit var viewModel : ShopCategoryViewModel
 
@@ -52,7 +54,7 @@ class ShopActivityCategory : BaseActivity<ShopActivityCategoryBinding>(R.layout.
         binding.rvCraft.addItemDecoration(ShopRvCraftDecoration(this))
 
         binding.btnSort.setOnClickListener {
-            val dialogFragment = SortBottomSheet(this, viewModel.normalSort)
+            val dialogFragment = SortBottomSheet(this, viewModel.sort.value!!)
             dialogFragment.show(supportFragmentManager, dialogFragment.tag)
         }
 
@@ -95,7 +97,8 @@ class ShopActivityCategory : BaseActivity<ShopActivityCategoryBinding>(R.layout.
         val intent = intent
         viewModel.setCategory(intent.getStringExtra("category") ?: "도자공예")
 
-
+        viewModel.tryGetPopular()
+        viewModel.tryGetProduct()
 
     }
 
@@ -114,12 +117,15 @@ class ShopActivityCategory : BaseActivity<ShopActivityCategoryBinding>(R.layout.
         anim.fillAfter = false
         binding.rvCategory.animation = anim
         binding.rvCategory.visibility = View.GONE
+
+        viewModel.tryGetProduct()
+        viewModel.tryGetPopular()
     }
 
     // popup 에서 실행될 함수
-    override fun sort(sort: String, originalWord : String) {
-        binding.tvSort.text = originalWord
+    override fun sort(sort: String) {
         viewModel.changeSort(sort)
+        viewModel.tryGetProduct()
     }
 
     override fun craftClick(craftIdx: Int) {
@@ -134,24 +140,24 @@ class ShopActivityCategory : BaseActivity<ShopActivityCategoryBinding>(R.layout.
             binding.tvCategory.text = liveData
             binding.tvThisWeekPopular.text = getString(R.string.form_this_week_popular, liveData)
             (binding.rvCategory.adapter as RvShopCategoryTextAdapter).changeCurrentCategory(liveData)
-            viewModel.requestProductAll()
         }
         viewModel.category.observe(this, categoryObserver)
 
-        val simpleCraftObserver = Observer<ArrayList<CraftSimple>> { liveData ->
-            (binding.rvPopular.adapter as RvCraftSimpleAdapter).applyData(liveData)
-        }
-        viewModel.popularCrafts.observe(this, simpleCraftObserver)
-
-        val detailCraftObserver = Observer<ArrayList<CraftDetail>> { liveData ->
-            (binding.rvCraft.adapter as RvCraftBaseAdapter).applyData(liveData)
-            binding.tvSearchResult.text = getString(R.string.form_search_result, liveData.size)
-        }
-        viewModel.normalCrafts.observe(this, detailCraftObserver)
-
-        val sortObserver = Observer<String> {
-            viewModel.requestProductAll2()
+        val sortObserver = Observer<String> { liveData ->
+            binding.tvSort.text = GlobalApplication.sort[liveData]
         }
         viewModel.sort.observe(this, sortObserver)
+    }
+
+    // 이걸로 바꿀예정
+    override fun clickData(dataKey: Int) {
+        // data 클릭했을 때 해당 activity 로 이동
+        val intent = Intent(this, CraftActivity::class.java)
+        intent.putExtra(GlobalApplication.CRAFT_IDX, dataKey)
+        startActivity(intent)
+    }
+
+    override fun clickLike(dataKey: Int, position: Int) {
+        // data 의 like 버튼을 클릭했을 때, like api 호출
     }
 }

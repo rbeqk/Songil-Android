@@ -9,9 +9,9 @@ import com.bumptech.glide.Glide
 import com.example.songil.R
 import com.example.songil.databinding.ShopItemCraftBaseBinding
 import com.example.songil.page_shop.shop_category.models.CraftDetail
-import com.example.songil.recycler.rv_interface.RvCraftView
+import com.example.songil.recycler.rv_interface.RvCraftLikeView
 
-class RvCraftBaseAdapter(private val context: Context, private val view : RvCraftView) : RecyclerView.Adapter<RvCraftBaseAdapter.ViewHolder>() {
+class RvCraftBaseAdapter(private val context: Context, private val view : RvCraftLikeView<Int>) : RecyclerView.Adapter<RvCraftBaseAdapter.ViewHolder>() {
 
     private lateinit var binding : ShopItemCraftBaseBinding
     private val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -37,7 +37,7 @@ class RvCraftBaseAdapter(private val context: Context, private val view : RvCraf
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.layoutMain.setOnClickListener {
-            view.craftClick(dataList[position].productIdx)
+            view.clickData(dataList[position].productIdx)
         }
         Glide.with(context).load(dataList[position].thumbnailImg).into(holder.image)
         holder.craftName.text = dataList[position].productName
@@ -56,7 +56,7 @@ class RvCraftBaseAdapter(private val context: Context, private val view : RvCraf
             holder.ivFav.setImageResource(R.drawable.ic_heart_base_16)
         }
         holder.btnFav.setOnClickListener {
-
+            view.clickLike(dataList[position].productIdx, position)
         }
     }
 
@@ -66,5 +66,9 @@ class RvCraftBaseAdapter(private val context: Context, private val view : RvCraf
         dataList.clear()
         dataList.addAll(newData)
         notifyDataSetChanged()
+    }
+
+    fun applyLike(position : Int){
+
     }
 }

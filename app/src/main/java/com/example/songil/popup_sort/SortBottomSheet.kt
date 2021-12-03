@@ -12,30 +12,30 @@ class SortBottomSheet(private val view : PopupSortView, private val sort : Strin
     private var _binding : BottomsheetSortBinding ?= null
     private val binding get() = _binding!!
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = BottomsheetSortBinding.inflate(LayoutInflater.from(context))
 
         binding.tvbtnLowPrice.setOnClickListener {
-            view.sort("price", "낮은 가격 순")
+            view.sort("price")
             dismiss()
         }
         binding.tvbtnPopular.setOnClickListener {
-            view.sort("popular", "인기순")
+            view.sort("popular")
             dismiss()
         }
         binding.tvbtnRecent.setOnClickListener {
-            view.sort("latest", "최신순")
+            view.sort("new")
             dismiss()
         }
         binding.tvbtnReview.setOnClickListener {
-            view.sort("review","리뷰 많은 순")
+            view.sort("review")
             dismiss()
         }
 
         when(sort){
             "popular" -> binding.ivPopular.visibility = View.VISIBLE
             "price" -> binding.ivLowPrice.visibility = View.VISIBLE
-            "latest" -> binding.ivRecent.visibility = View.VISIBLE
+            "new" -> binding.ivRecent.visibility = View.VISIBLE
             "review" -> binding.ivReview.visibility = View.VISIBLE
         }
 

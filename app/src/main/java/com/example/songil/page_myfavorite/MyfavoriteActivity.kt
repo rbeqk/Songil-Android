@@ -10,9 +10,10 @@ import com.example.songil.databinding.MydetailActivityBinding
 import com.example.songil.page_shop.shop_category.models.CraftDetail
 import com.example.songil.recycler.adapter.RvCraftBaseAdapter
 import com.example.songil.recycler.decoration.RvCraftBaseDecoration2
+import com.example.songil.recycler.rv_interface.RvCraftLikeView
 import com.example.songil.recycler.rv_interface.RvCraftView
 
-class MyfavoriteActivity : BaseActivity<MydetailActivityBinding>(R.layout.mydetail_activity), RvCraftView {
+class MyfavoriteActivity : BaseActivity<MydetailActivityBinding>(R.layout.mydetail_activity), RvCraftView, RvCraftLikeView<Int> {
 
     private lateinit var viewModel : MyfavoriteViewModel
 
@@ -42,6 +43,15 @@ class MyfavoriteActivity : BaseActivity<MydetailActivityBinding>(R.layout.mydeta
     }
 
     override fun craftClick(craftIdx: Int) {
+
+    }
+
+    // 이걸로 바꿀겁니다
+    override fun clickData(dataKey: Int) {
+
+    }
+
+    override fun clickLike(dataKey: Int, position: Int) {
 
     }
 }

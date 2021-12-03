@@ -17,11 +17,11 @@ class SortBottomSheetSimple(private val view : PopupSortView, private val sort :
 
         binding.tvbtnLowPrice.visibility = View.GONE
         binding.tvbtnPopular.setOnClickListener {
-            view.sort("popular", "인기순")
+            view.sort("popular")
             dismiss()
         }
         binding.tvbtnRecent.setOnClickListener {
-            view.sort("latest", "최신순")
+            view.sort("latest")
             dismiss()
         }
         binding.tvbtnReview.visibility = View.GONE

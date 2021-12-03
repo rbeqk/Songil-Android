@@ -23,7 +23,7 @@ class WithFragment : BaseFragment<WithFragmentMainBinding>(WithFragmentMainBindi
         }
     }
 
-    override fun sort(sort: String, originalWord: String) {
+    override fun sort(sort: String) {
 
     }
 }
