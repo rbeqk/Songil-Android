@@ -60,7 +60,10 @@ class SignupActivity : BaseActivity<SignupActivityBinding>(R.layout.signup_activ
                     changeFragment(fragment3)
                     fragment3.fragmentShow()
                 }
-                3 -> { changeFragment(fragment4) }
+                3 -> {
+                    changeFragment(fragment4)
+                    fragment4.fragmentShow()
+                }
                 else -> { finish() }
             }
         }

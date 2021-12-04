@@ -34,6 +34,10 @@ class SignupFragment4() : BaseFragment<SignupFragment4Binding>(SignupFragment4Bi
         setObserver()
     }
 
+    fun fragmentShow(){
+        binding.etNickname.requestFocus()
+    }
+
     private fun setObserver(){
         val checkNicknameObserver = Observer<Int>{ liveData ->
             when (liveData){

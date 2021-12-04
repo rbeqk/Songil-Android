@@ -54,6 +54,7 @@ class SignupFragment3() : BaseFragment<SignupFragment3Binding>(SignupFragment3Bi
         }
 
         binding.btnNext.setOnClickListener {
+            clearResponseMessage()
             viewModel.tryCheckAuthNumber()
         }
         binding.btnReceiveAgain.setOnClickListener {
@@ -70,8 +71,8 @@ class SignupFragment3() : BaseFragment<SignupFragment3Binding>(SignupFragment3Bi
                     viewModel.setFragmentIdx(1)
                 }
                 else -> {
-                    binding.tvRemainTime.text = viewModel.apiMessage
-                    binding.tvRemainTime.setTextColor(requireContext().getColor(R.color.songil_2))
+                    binding.tvResponseMessage.text = viewModel.apiMessage
+                    binding.tvResponseMessage.setTextColor(requireContext().getColor(R.color.tomato))
                 }
             }
         }
@@ -103,5 +104,9 @@ class SignupFragment3() : BaseFragment<SignupFragment3Binding>(SignupFragment3Bi
 
     fun stopTimer(){
         if (::timer.isInitialized) timer.cancel()
+    }
+
+    fun clearResponseMessage(){
+        binding.tvResponseMessage.text = ""
     }
 }

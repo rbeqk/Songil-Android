@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.example.songil.R
 import com.example.songil.config.BaseFragment
@@ -28,10 +29,24 @@ class LoginFragment1() : BaseFragment<LoginFragment1Binding>(LoginFragment1Bindi
         })
 
         binding.btnAuth.setOnClickListener {
+            clearMessage()
             viewModel.trySetAuthNumber()
+
         }
         binding.btnBack.setOnClickListener {
             (activity as LoginActivity).finishWithResult(false)
+        }
+    }
+
+    fun applyApiResultMessage(message : String){
+        binding.tvResponseMessage.text = message
+        binding.tvResponseMessage.setTextColor(ContextCompat.getColor(activity as LoginActivity, R.color.tomato))
+    }
+
+    private fun clearMessage(){
+        if (binding.tvResponseMessage.text != getString(R.string.input_phoneNumber_without_hyphen)) {
+            binding.tvResponseMessage.text = getString(R.string.input_phoneNumber_without_hyphen)
+            binding.tvResponseMessage.setTextColor(ContextCompat.getColor(activity as LoginActivity, R.color.g_4))
         }
     }
 }

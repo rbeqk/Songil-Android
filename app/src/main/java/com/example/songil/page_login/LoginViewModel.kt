@@ -36,8 +36,10 @@ class LoginViewModel : ViewModel() {
     }
 
     private fun tryLogin(){
+        btn2Activate.value = false
         CoroutineScope(Dispatchers.IO).launch {
             repository.tryLogin(phoneNumber, inputAuthNumber).let { response ->
+                btn2Activate.postValue(true)
                 if (response.isSuccessful){
                     apiResultMessage = response.body()!!.message!!
                     if (response.body()!!.code == 200){
@@ -52,8 +54,10 @@ class LoginViewModel : ViewModel() {
     }
 
     fun trySetAuthNumber(){
+        btn1Activate.value = false
         CoroutineScope(Dispatchers.IO).launch {
             repository.setAuthNumber(phoneNumber).let { response ->
+                btn1Activate.postValue(true)
                 if (response.isSuccessful){
                     apiResultMessage = response.body()!!.message!!
                     authResultCode.postValue(response.body()!!.code)

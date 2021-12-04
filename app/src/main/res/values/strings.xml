@@ -34,6 +34,9 @@
     <string name="unavailable_nickname">사용할 수 없는 닉네임 입니다.</string>
     <string name="form_word_count">%d/%d</string>
     <string name="do_signup">회원가입 하기</string>
+    <string name="duplicate_phone_number">이미 가입된 번호에요.</string>
+    <string name="duplicate_phone_number_message">해당 번호로 가입된 계정이 있습니다.\n처음으로 돌아가 로그인해주세요.</string>
+    <string name="return_to_start"><u>처음으로</u></string>
 
     <!-- 검색 페이지 관련 -->
     <string name="recent_search">최근 검색어</string>

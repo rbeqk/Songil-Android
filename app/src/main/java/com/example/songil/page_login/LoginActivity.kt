@@ -82,7 +82,9 @@ class LoginActivity : BaseActivity<LoginActivityBinding>(R.layout.login_activity
                     fragment2.startTimer()
                 }
                 else -> {
-
+                    if (currentFragment is LoginFragment1){
+                        (currentFragment as LoginFragment1).applyApiResultMessage(viewModel.apiResultMessage)
+                    }
                 }
             }
         }

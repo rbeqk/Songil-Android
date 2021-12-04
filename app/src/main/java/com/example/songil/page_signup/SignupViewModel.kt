@@ -111,8 +111,10 @@ class SignupViewModel : ViewModel() {
 
     // network!! ---------------------------------------------------------------------------------------
     fun tryCheckPhoneNumberDuplicate(){
+        btn2Activate.value = false
         CoroutineScope(Dispatchers.IO).launch {
             repository.tryCheckPhoneDuplicate(phoneNumber).let { response ->
+                btn2Activate.postValue(true)
                 if (response.isSuccessful){
                     apiMessage = response.body()!!.message!!
                     phoneDupResult.postValue(response.body()!!.code)
@@ -133,8 +135,10 @@ class SignupViewModel : ViewModel() {
     }
 
     fun tryCheckAuthNumber(){
+        btn3Activate.value = false
         CoroutineScope(Dispatchers.IO).launch {
             repository.tryCheckAuthNumber(phoneNumber, inputAuthNumber).let { response ->
+                btn3Activate.postValue(true)
                 if (response.isSuccessful){
                     apiMessage = response.body()!!.message!!
                     checkAuthResult.postValue(response.body()!!.code)
@@ -144,8 +148,10 @@ class SignupViewModel : ViewModel() {
     }
 
     fun tryCheckNickNameDuplicate(){
+        btn4Activate.value = false
         CoroutineScope(Dispatchers.IO).launch {
             repository.tryCheckNickName(inputNickName).let { response ->
+                btn4Activate.postValue(true)
                 if (response.isSuccessful){
                     apiMessage = response.body()!!.message!!
                     nicknameDupResult.postValue(response.body()!!.code)
