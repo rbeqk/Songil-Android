@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import android.view.animation.AlphaAnimation
 import android.view.animation.TranslateAnimation
+import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -93,6 +94,8 @@ class ShopActivityCategory : BaseActivity<ShopActivityCategoryBinding>(R.layout.
         // observer 세팅
         setObserver()
 
+        setNestedScrollView()
+
         // liveData 변경
         val intent = intent
         viewModel.setCategory(intent.getStringExtra("category") ?: "도자공예")
@@ -118,18 +121,21 @@ class ShopActivityCategory : BaseActivity<ShopActivityCategoryBinding>(R.layout.
         binding.rvCategory.animation = anim
         binding.rvCategory.visibility = View.GONE
 
+        (binding.rvCraft.adapter as RvCraftBaseAdapter).clearData()
+        viewModel.nextPage = 10
         viewModel.tryGetProduct()
         viewModel.tryGetPopular()
     }
 
     // popup 에서 실행될 함수
     override fun sort(sort: String) {
+        (binding.rvCraft.adapter as RvCraftBaseAdapter).clearData()
+        viewModel.nextPage = 10
         viewModel.changeSort(sort)
         viewModel.tryGetProduct()
     }
 
     override fun craftClick(craftIdx: Int) {
-        //Log.d("craftIdx is", craftIdx.toString())
         val intent = Intent(this, CraftActivity::class.java)
         intent.putExtra(GlobalApplication.CRAFT_IDX, craftIdx)
         startActivity(intent)
@@ -147,6 +153,26 @@ class ShopActivityCategory : BaseActivity<ShopActivityCategoryBinding>(R.layout.
             binding.tvSort.text = GlobalApplication.sort[liveData]
         }
         viewModel.sort.observe(this, sortObserver)
+
+        val totalObserver = Observer<Int> { liveData ->
+            when (liveData){
+                200 -> {
+                    (binding.rvCraft.adapter as RvCraftBaseAdapter).updateList(viewModel.totalCraftData)
+                }
+                else -> {
+
+                }
+            }
+        }
+        viewModel.allCraftResultCode.observe(this, totalObserver)
+    }
+
+    private fun setNestedScrollView(){
+        binding.layoutNested.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, _, scrollY, _, _ ->
+            if (scrollY == v.getChildAt(0).measuredHeight -  v.measuredHeight){
+                viewModel.tryGetProduct()
+            }
+        })
     }
 
     // 이걸로 바꿀예정

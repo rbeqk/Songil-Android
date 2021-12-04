@@ -15,8 +15,8 @@ class ShopCategoryRepository {
         }
         else {
             val temp = ArrayList<CraftDetail>()
-            for (i in 0 until 20){
-                val tempIdx = page * 20 + i
+            for (i in 0 until 10){
+                val tempIdx = page * 5 + i
                 temp.add(CraftDetail(i, "${category}_${filter}_${tempIdx}", "", 124, 12, 20000, "프로브","Y", 1))
             }
             temp

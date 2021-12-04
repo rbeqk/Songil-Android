@@ -39,7 +39,7 @@ class RvCraftBaseAdapter(private val context: Context, private val view : RvCraf
         holder.layoutMain.setOnClickListener {
             view.clickData(dataList[position].productIdx)
         }
-        Glide.with(context).load(dataList[position].thumbnailImg).into(holder.image)
+        //Glide.with(context).load(dataList[position].thumbnailImg).into(holder.image)
         holder.craftName.text = dataList[position].productName
         holder.artistName.text = dataList[position].artistName
         holder.price.text = context.getString(R.string.form_price_won, dataList[position].price)
@@ -68,7 +68,26 @@ class RvCraftBaseAdapter(private val context: Context, private val view : RvCraf
         notifyDataSetChanged()
     }
 
-    fun applyLike(position : Int){
+    fun clearData(){
+        val prevSize = dataList.size
+        dataList.clear()
+        notifyItemRangeRemoved(0, prevSize)
+    }
 
+    fun applyLike(position : Int, isLike : Int, likeCount : Int){
+        dataList[position].likeOrNot = isLike
+        dataList[position].likeCount = likeCount
+        notifyItemChanged(position)
+    }
+
+    fun updateList(item : ArrayList<CraftDetail>?){
+        if (item != null) {
+            val prevSize = dataList.size
+            val newSize = item.size
+            val addCount = newSize - prevSize
+            dataList.clear()
+            dataList.addAll(item)
+            notifyItemRangeInserted(prevSize, addCount)
+        }
     }
 }
