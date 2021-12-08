@@ -110,7 +110,8 @@
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:id="@+id/btn_story"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_height="0dp"
+                                android:gravity="center_vertical"
                                 app:layout_constraintTop_toTopOf="parent"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
@@ -131,9 +132,9 @@
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:id="@+id/btn_qna"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                app:layout_constraintTop_toTopOf="@id/btn_story"
+                                android:layout_height="match_parent"
                                 app:layout_constraintStart_toEndOf="@id/btn_story"
+                                android:gravity="center_vertical"
                                 android:layout_marginStart="24dp"
                                 android:textColor="@color/songil_1"
                                 android:fontFamily="@font/montserrat_semibold"
@@ -144,6 +145,7 @@
                                 android:layout_width="28dp"
                                 android:layout_height="4dp"
                                 android:background="@color/songil_1"
+                                android:visibility="invisible"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toStartOf="@id/btn_qna"
                                 app:layout_constraintEnd_toEndOf="@id/btn_qna"/>
@@ -151,9 +153,9 @@
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:id="@+id/btn_ab_test"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                app:layout_constraintTop_toTopOf="@id/btn_story"
+                                android:layout_height="match_parent"
                                 app:layout_constraintStart_toEndOf="@id/btn_qna"
+                                android:gravity="center_vertical"
                                 android:layout_marginStart="24dp"
                                 android:textColor="@color/songil_1"
                                 android:fontFamily="@font/montserrat_semibold"
@@ -164,6 +166,7 @@
                                 android:layout_width="28dp"
                                 android:layout_height="4dp"
                                 android:background="@color/songil_1"
+                                android:visibility="invisible"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintStart_toStartOf="@id/btn_ab_test"
                                 app:layout_constraintEnd_toEndOf="@id/btn_ab_test"/>
