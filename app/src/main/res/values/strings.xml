@@ -176,6 +176,7 @@
     <string name="logout">로그아웃</string>
     <string name="benefit">베네핏</string>
     <string name="change_to_artist_page">작가페이지로 전환</string>
+    <string name="zero_integer">0</string>
 
     <!-- home page 관련 -->
     <string name="trend_craft_eng">TREND CRAFT</string>
@@ -289,4 +290,8 @@
     <string name="until">까지</string>
     <string name="write_post">게시글 작성하기</string>
     <string name="photo_count_ab_test">2장인 경우에만 업로드 가능</string>
+    <string name="write_story">스토리 작성</string>
+    <string name="tag">태그</string>
+    <string name="input_tag_message">#태그를 입력하세요.</string>
+    <string name="how_to_input_tag">엔터를 누르면 태그가 등록됩니다. (최대 3개)</string>
 </resources>
