@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit
 
 class GlobalApplication : Application() {
     companion object {
-        val API_URL = "https://dev.songil.shop/"
+        const val API_URL = "https://dev.songil.shop/"
         const val X_ACCESS_TOKEN = "x-access-token"
         const val USER_IDX = "user-idx"
         const val CRAFT_IDX = "craft-idx"
@@ -31,8 +31,6 @@ class GlobalApplication : Application() {
         )
         val sort = mapOf("price" to "낮은 가격순", "popular" to "인기순", "new" to "최신순", "review" to "리뷰 많은 순")
     }
-
-
 
     override fun onCreate() {
         super.onCreate()
