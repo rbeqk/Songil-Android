@@ -18,6 +18,7 @@ import com.example.songil.page_craft.shbpage_review.CraftFragmentReview
 import com.example.songil.page_craft.subpage_ask.CraftFragmentAsk
 import com.example.songil.page_craft.subpage_detail.CraftFragmentDetail
 import com.example.songil.page_inquiry.InquiryActivity
+import com.example.songil.page_order.OrderActivity
 
 class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity) {
 
@@ -41,8 +42,8 @@ class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity
 
         viewModel.setCraftIdx(idx)
 
-        viewModel.tryGetCraftInfo()
-        //viewModel.tempGetCraftInfo()
+        //viewModel.tryGetCraftInfo()
+        viewModel.tempGetCraftInfo()
 
         /*supportFragmentManager.beginTransaction().add(binding.layoutFragment.id, CraftFragmentDetail()).commit()*/
     }
@@ -125,6 +126,7 @@ class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity
 
         binding.btnBuyNow.setOnClickListener {
             Log.d("btnBuyNow", "click")
+            startActivity(Intent(this, OrderActivity::class.java))
         }
 
         binding.btnAddToCart.setOnClickListener {
