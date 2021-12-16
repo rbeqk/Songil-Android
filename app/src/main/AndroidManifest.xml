@@ -14,11 +14,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Songil">
         <activity android:name=".page_splash.SplashActivity">
-            <intent-filter>
+<!--            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>-->
         </activity>
         <activity android:name=".page_login.LoginActivity" android:windowSoftInputMode="adjustResize" android:noHistory="true"/>
         <activity android:name=".test_area.TestActivity">
@@ -57,6 +57,13 @@
             </intent-filter>-->
         </activity>
         <activity android:name=".page_imagepicker.ImagePickerActivity"/>
+        <activity android:name=".page_artist.ArtistActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
