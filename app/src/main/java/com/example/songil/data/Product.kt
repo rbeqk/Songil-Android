@@ -9,3 +9,5 @@ data class ProductDetailInfo(val productIdx : Int, val isNew : String, val mainI
                              val artistImageUrl : String? = null)
 
 data class ProductReview(val reviewIdx : Int, val userIdx : Int, val nickname : String, val createAt : String, val imageUrl : ArrayList<String> ?= null, val content : String, val isReported : String)
+
+data class ProductSimple(val productIdx : Int, val imageUrl : String, val name : String, val artist : String, val price : Int, val isNew : String)
