@@ -5,19 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.songil.R
-import com.example.songil.databinding.ShopItemCraftBaseBinding
+import com.example.songil.databinding.ItemCraft1Binding
 import com.example.songil.page_shop.shop_category.models.CraftDetail
 import com.example.songil.recycler.rv_interface.RvCraftLikeView
 
-class RvCraftBaseAdapter(private val context: Context, private val view : RvCraftLikeView<Int>) : RecyclerView.Adapter<RvCraftBaseAdapter.ViewHolder>() {
+class Craft1Adapter(private val context: Context, private val view : RvCraftLikeView<Int>) : RecyclerView.Adapter<Craft1Adapter.ViewHolder>() {
 
-    private lateinit var binding : ShopItemCraftBaseBinding
+    private lateinit var binding : ItemCraft1Binding
     private val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
     private val dataList = ArrayList<CraftDetail>()
 
-    class ViewHolder(binding : ShopItemCraftBaseBinding) : RecyclerView.ViewHolder(binding.root){
+    class ViewHolder(binding : ItemCraft1Binding) : RecyclerView.ViewHolder(binding.root){
         val layoutMain = binding.root
         val image = binding.ivPhoto
         val isNew = binding.tvIsNew
@@ -31,7 +30,7 @@ class RvCraftBaseAdapter(private val context: Context, private val view : RvCraf
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        binding = ShopItemCraftBaseBinding.inflate(inflater, parent, false)
+        binding = ItemCraft1Binding.inflate(inflater, parent, false)
         return ViewHolder(binding)
     }
 

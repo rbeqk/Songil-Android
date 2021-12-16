@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.example.songil.R
 import com.example.songil.config.BaseFragment
 import com.example.songil.config.GlobalApplication
+import com.example.songil.data.Craft2
 import com.example.songil.databinding.ShopFragmentMainBinding
 import com.example.songil.page_craft.CraftActivity
 import com.example.songil.page_main.MainActivity
@@ -19,9 +20,9 @@ import com.example.songil.page_shop.models.TodayArtistsResult
 import com.example.songil.page_shop.models.TodayCraft
 import com.example.songil.page_shop.shop_category.ShopActivityCategory
 import com.example.songil.recycler.rv_interface.RvCategoryView
-import com.example.songil.recycler.adapter.RvShopCategoryAdapter
-import com.example.songil.recycler.adapter.RvImageAdapter
-import com.example.songil.recycler.adapter.ShopRvTodayCraftAdapter
+import com.example.songil.recycler.adapter.ShopCategoryAdapter
+import com.example.songil.recycler.adapter.ClickImageAdapter
+import com.example.songil.recycler.adapter.Craft2Adapter
 import com.example.songil.recycler.decoration.ShopRvCategoryItemDecoration
 import com.example.songil.recycler.decoration.ShopRvNewCraftDecoration
 import com.example.songil.recycler.decoration.ShopRvPopularDecoration
@@ -60,28 +61,28 @@ class ShopFragmentMain : BaseFragment<ShopFragmentMainBinding>(ShopFragmentMainB
         }
         viewModel.todayArtist.observe(viewLifecycleOwner, todayArtistObserver)
 
-        val todayCraftObserver = Observer<ArrayList<TodayCraft>> { liveData ->
-            (binding.rvTodayCraft.adapter as ShopRvTodayCraftAdapter).applyData(liveData)
+        val todayCraftObserver = Observer<ArrayList<Craft2>> { liveData ->
+            (binding.rvTodayCraft.adapter as Craft2Adapter).applyData(liveData)
         }
         viewModel.todayCrafts.observe(viewLifecycleOwner, todayCraftObserver)
 
         val newCraftObserver = Observer<ArrayList<NewCraft>> { liveData ->
-            (binding.rvNewCraft.adapter as RvImageAdapter).applyData(liveData)
+            (binding.rvNewCraft.adapter as ClickImageAdapter).applyData(liveData)
         }
         viewModel.newCrafts.observe(viewLifecycleOwner, newCraftObserver)
     }
 
     private fun setRecyclerView(){
         binding.rvCategory.layoutManager = GridLayoutManager(activity as MainActivity, 4)
-        binding.rvCategory.adapter = RvShopCategoryAdapter(activity as MainActivity, this)
+        binding.rvCategory.adapter = ShopCategoryAdapter(activity as MainActivity, this)
         binding.rvCategory.addItemDecoration(ShopRvCategoryItemDecoration(activity as MainActivity))
 
         binding.rvTodayCraft.layoutManager = LinearLayoutManager(activity as MainActivity, LinearLayoutManager.HORIZONTAL, false)
-        binding.rvTodayCraft.adapter = ShopRvTodayCraftAdapter(activity as MainActivity, this)
+        binding.rvTodayCraft.adapter = Craft2Adapter(activity as MainActivity, this)
         binding.rvTodayCraft.addItemDecoration(ShopRvPopularDecoration(activity as MainActivity))   // 똑같은 간격이라 그대로 사용
 
         binding.rvNewCraft.layoutManager = GridLayoutManager(activity as MainActivity, 3)
-        binding.rvNewCraft.adapter = RvImageAdapter(activity as MainActivity, this)
+        binding.rvNewCraft.adapter = ClickImageAdapter(activity as MainActivity, this)
         binding.rvNewCraft.addItemDecoration(ShopRvNewCraftDecoration(activity as MainActivity))
     }
 

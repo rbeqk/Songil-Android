@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.songil.R
 import com.example.songil.config.BaseActivity
 import com.example.songil.databinding.ImagepickerActivityBinding
-import com.example.songil.recycler.adapter.RvImagePickerAdapter
+import com.example.songil.recycler.adapter.ImagePickerAdapter
 import com.example.songil.recycler.rv_interface.RvImagePickerView
 
 class ImagePickerActivity : BaseActivity<ImagepickerActivityBinding>(R.layout.imagepicker_activity), RvImagePickerView {
@@ -33,7 +33,7 @@ class ImagePickerActivity : BaseActivity<ImagepickerActivityBinding>(R.layout.im
 
     private fun setRecyclerView(){
         binding.rvImages.layoutManager = GridLayoutManager(this, 3)
-        binding.rvImages.adapter = RvImagePickerAdapter(this, min, max)
+        binding.rvImages.adapter = ImagePickerAdapter(this, min, max)
     }
 
     private fun setButton(){
@@ -43,7 +43,7 @@ class ImagePickerActivity : BaseActivity<ImagepickerActivityBinding>(R.layout.im
 
         binding.btnConfirmation.setOnClickListener {
             val sendIntent = Intent(this, Activity::class.java)
-            sendIntent.putExtra("imageList", (binding.rvImages.adapter as RvImagePickerAdapter).getSelectImageList())
+            sendIntent.putExtra("imageList", (binding.rvImages.adapter as ImagePickerAdapter).getSelectImageList())
             setResult(RESULT_OK, sendIntent)
             finish()
         }
@@ -68,7 +68,7 @@ class ImagePickerActivity : BaseActivity<ImagepickerActivityBinding>(R.layout.im
         }
 
         cursor?.close()
-        (binding.rvImages.adapter as RvImagePickerAdapter).applyData(imageList)
+        (binding.rvImages.adapter as ImagePickerAdapter).applyData(imageList)
     }
 
     override fun countCheck(size: Int) {

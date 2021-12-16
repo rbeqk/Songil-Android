@@ -8,7 +8,7 @@ import com.example.songil.R
 import com.example.songil.config.BaseActivity
 import com.example.songil.databinding.MydetailActivityBinding
 import com.example.songil.page_shop.shop_category.models.CraftDetail
-import com.example.songil.recycler.adapter.RvCraftBaseAdapter
+import com.example.songil.recycler.adapter.Craft1Adapter
 import com.example.songil.recycler.decoration.RvCraftBaseDecoration2
 import com.example.songil.recycler.rv_interface.RvCraftLikeView
 import com.example.songil.recycler.rv_interface.RvCraftView
@@ -31,13 +31,13 @@ class MyfavoriteActivity : BaseActivity<MydetailActivityBinding>(R.layout.mydeta
 
     private fun setRecyclerView(){
         binding.rvContent.layoutManager = GridLayoutManager(this, 2)
-        binding.rvContent.adapter = RvCraftBaseAdapter(this, this)
+        binding.rvContent.adapter = Craft1Adapter(this, this)
         binding.rvContent.addItemDecoration(RvCraftBaseDecoration2(this))
     }
 
     private fun setObserver(){
         val craftObserver = Observer<ArrayList<CraftDetail>>{ liveData ->
-            (binding.rvContent.adapter as RvCraftBaseAdapter).applyData(liveData)
+            (binding.rvContent.adapter as Craft1Adapter).applyData(liveData)
         }
         viewModel.craftList.observe(this, craftObserver)
     }

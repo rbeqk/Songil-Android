@@ -5,22 +5,22 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.songil.config.GlobalApplication
-import com.example.songil.databinding.ShopItemCategoryBinding
+import com.example.songil.databinding.ItemShopCategoryBinding
 import com.example.songil.recycler.rv_interface.RvCategoryView
 
-class RvShopCategoryAdapter(context: Context, private val view : RvCategoryView<String>) : RecyclerView.Adapter<RvShopCategoryAdapter.ViewHolder>() {
+class ShopCategoryAdapter(context: Context, private val view : RvCategoryView<String>) : RecyclerView.Adapter<ShopCategoryAdapter.ViewHolder>() {
     private val dataList = GlobalApplication.categoryList
-    private lateinit var binding: ShopItemCategoryBinding
+    private lateinit var binding: ItemShopCategoryBinding
     private val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
-    class ViewHolder(binding : ShopItemCategoryBinding) : RecyclerView.ViewHolder(binding.root){
+    class ViewHolder(binding : ItemShopCategoryBinding) : RecyclerView.ViewHolder(binding.root){
         val imageView = binding.ivPhoto
         val categoryName = binding.tvCategory
         val layoutMain = binding.root
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        binding = ShopItemCategoryBinding.inflate(inflater, parent, false)
+        binding = ItemShopCategoryBinding.inflate(inflater, parent, false)
         return ViewHolder(binding)
     }
 

@@ -9,7 +9,7 @@ import com.example.songil.databinding.ItemAddPhotoBinding
 import com.example.songil.recycler.rv_interface.RvPhotoView
 import kotlin.math.min
 
-class RvAddPhotoPickerAdapter(private val view : RvPhotoView, private val max : Int = 3) : RecyclerView.Adapter<RvAddPhotoPickerAdapter.AddPhotoPickerViewHolder>(){
+class AddPhotoPickerAdapter(private val view : RvPhotoView, private val max : Int = 3) : RecyclerView.Adapter<AddPhotoPickerAdapter.AddPhotoPickerViewHolder>(){
 
     private val imageList = ArrayList<String>()
 

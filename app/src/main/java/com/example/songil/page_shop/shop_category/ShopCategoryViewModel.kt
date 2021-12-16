@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.songil.config.GlobalApplication
-import com.example.songil.data.ProductSimple
+import com.example.songil.data.Craft2
 import com.example.songil.page_shop.shop_category.models.CraftDetail
 /*import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers*/
@@ -17,7 +17,7 @@ class ShopCategoryViewModel : ViewModel() {
     // new
     var startIdx = 0
     var nextPage = 10
-    var products = ArrayList<ProductSimple>()
+    var products = ArrayList<Craft2>()
     var sort = MutableLiveData<String>("popular")
     var popularResultCode = MutableLiveData<Int>()
     var allCraftResultCode = MutableLiveData<Int>()

@@ -1,4 +1,4 @@
-package com.example.songil.recycler.adapter
+package com.example.songil.viewPager2.adapter
 
 import android.content.Context
 import android.content.Intent
@@ -7,16 +7,16 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.songil.data.SimpleArticle
-import com.example.songil.databinding.ArticleItemArticleBinding
+import com.example.songil.databinding.ItemArticleTitleVp2Binding
 import com.example.songil.page_articlecontent.ArticleContentActivity
 
-class Vp2ArticleAdapter(private val context: Context) : RecyclerView.Adapter<Vp2ArticleAdapter.ViewHolder>() {
+class Vp2ArticleTitleAdapter(private val context: Context) : RecyclerView.Adapter<Vp2ArticleTitleAdapter.ViewHolder>() {
 
     private val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-    private lateinit var binding : ArticleItemArticleBinding
+    private lateinit var binding : ItemArticleTitleVp2Binding
     private val articleList = ArrayList<SimpleArticle>()
 
-    class ViewHolder(binding : ArticleItemArticleBinding) : RecyclerView.ViewHolder(binding.root){
+    class ViewHolder(binding : ItemArticleTitleVp2Binding) : RecyclerView.ViewHolder(binding.root){
         val thumbnail = binding.ivThumbnail
         val articleTitle = binding.tvArticleTitle
         val articleEditor = binding.tvArticleEditor
@@ -24,7 +24,7 @@ class Vp2ArticleAdapter(private val context: Context) : RecyclerView.Adapter<Vp2
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        binding = ArticleItemArticleBinding.inflate(inflater, parent, false)
+        binding = ItemArticleTitleVp2Binding.inflate(inflater, parent, false)
         return ViewHolder(binding)
     }
 

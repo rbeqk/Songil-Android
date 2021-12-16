@@ -18,9 +18,9 @@ import com.example.songil.databinding.ShopActivityCategoryBinding
 import com.example.songil.page_craft.CraftActivity
 import com.example.songil.popup_sort.SortBottomSheet
 import com.example.songil.popup_sort.popup_interface.PopupSortView
-import com.example.songil.recycler.adapter.RvShopCategoryTextAdapter
-import com.example.songil.recycler.adapter.RvCraftBaseAdapter
-import com.example.songil.recycler.adapter.RvCraftSimpleAdapter
+import com.example.songil.recycler.adapter.ShopCategoryTextAdapter
+import com.example.songil.recycler.adapter.Craft1Adapter
+import com.example.songil.recycler.adapter.Craft2Adapter
 import com.example.songil.recycler.decoration.ShopRvCategoryTextItemDecoration
 import com.example.songil.recycler.decoration.ShopRvCraftDecoration
 import com.example.songil.recycler.decoration.ShopRvPopularDecoration
@@ -43,15 +43,15 @@ class ShopActivityCategory : BaseActivity<ShopActivityCategoryBinding>(R.layout.
         viewModel = ViewModelProvider(this)[ShopCategoryViewModel::class.java]
 
         binding.rvCategory.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        binding.rvCategory.adapter = RvShopCategoryTextAdapter(this, this)
+        binding.rvCategory.adapter = ShopCategoryTextAdapter(this, this)
         binding.rvCategory.addItemDecoration(ShopRvCategoryTextItemDecoration(this))
 
         binding.rvPopular.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        binding.rvPopular.adapter = RvCraftSimpleAdapter(this, this)
+        binding.rvPopular.adapter = Craft2Adapter(this, this)
         binding.rvPopular.addItemDecoration(ShopRvPopularDecoration(this))
 
         binding.rvCraft.layoutManager = GridLayoutManager(this, 2)
-        binding.rvCraft.adapter = RvCraftBaseAdapter(this, this)
+        binding.rvCraft.adapter = Craft1Adapter(this, this)
         binding.rvCraft.addItemDecoration(ShopRvCraftDecoration(this))
 
         binding.btnSort.setOnClickListener {
@@ -121,7 +121,7 @@ class ShopActivityCategory : BaseActivity<ShopActivityCategoryBinding>(R.layout.
         binding.rvCategory.animation = anim
         binding.rvCategory.visibility = View.GONE
 
-        (binding.rvCraft.adapter as RvCraftBaseAdapter).clearData()
+        (binding.rvCraft.adapter as Craft1Adapter).clearData()
         viewModel.nextPage = 10
         viewModel.tryGetProduct()
         viewModel.tryGetPopular()
@@ -129,7 +129,7 @@ class ShopActivityCategory : BaseActivity<ShopActivityCategoryBinding>(R.layout.
 
     // popup 에서 실행될 함수
     override fun sort(sort: String) {
-        (binding.rvCraft.adapter as RvCraftBaseAdapter).clearData()
+        (binding.rvCraft.adapter as Craft1Adapter).clearData()
         viewModel.nextPage = 10
         viewModel.changeSort(sort)
         viewModel.tryGetProduct()
@@ -145,7 +145,7 @@ class ShopActivityCategory : BaseActivity<ShopActivityCategoryBinding>(R.layout.
         val categoryObserver = Observer<String> {liveData ->
             binding.tvCategory.text = liveData
             binding.tvThisWeekPopular.text = getString(R.string.form_this_week_popular, liveData)
-            (binding.rvCategory.adapter as RvShopCategoryTextAdapter).changeCurrentCategory(liveData)
+            (binding.rvCategory.adapter as ShopCategoryTextAdapter).changeCurrentCategory(liveData)
         }
         viewModel.category.observe(this, categoryObserver)
 
@@ -157,7 +157,7 @@ class ShopActivityCategory : BaseActivity<ShopActivityCategoryBinding>(R.layout.
         val totalObserver = Observer<Int> { liveData ->
             when (liveData){
                 200 -> {
-                    (binding.rvCraft.adapter as RvCraftBaseAdapter).updateList(viewModel.totalCraftData)
+                    (binding.rvCraft.adapter as Craft1Adapter).updateList(viewModel.totalCraftData)
                 }
                 else -> {
 

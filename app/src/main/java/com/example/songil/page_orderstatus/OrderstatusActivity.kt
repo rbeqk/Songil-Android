@@ -8,7 +8,7 @@ import com.example.songil.R
 import com.example.songil.config.BaseActivity
 import com.example.songil.data.Orders
 import com.example.songil.databinding.OrderstatusActivityBinding
-import com.example.songil.recycler.adapter.RvOrdersAdapter
+import com.example.songil.recycler.adapter.OrdersAdapter
 
 class OrderstatusActivity : BaseActivity<OrderstatusActivityBinding>(R.layout.orderstatus_activity) {
 
@@ -25,12 +25,12 @@ class OrderstatusActivity : BaseActivity<OrderstatusActivityBinding>(R.layout.or
 
     private fun setRecyclerView(){
         binding.rvOrders.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        binding.rvOrders.adapter = RvOrdersAdapter(this)
+        binding.rvOrders.adapter = OrdersAdapter(this)
     }
 
     private fun setObserver(){
         val orderStatusObserver = Observer<ArrayList<Orders>>{ liveData ->
-            (binding.rvOrders.adapter as RvOrdersAdapter).applyData(liveData)
+            (binding.rvOrders.adapter as OrdersAdapter).applyData(liveData)
         }
         viewModel.ordersData.observe(this, orderStatusObserver)
     }

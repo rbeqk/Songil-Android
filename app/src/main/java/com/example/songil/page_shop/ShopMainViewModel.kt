@@ -2,6 +2,7 @@ package com.example.songil.page_shop
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.songil.data.Craft2
 import com.example.songil.page_shop.models.NewCraft
 import com.example.songil.page_shop.models.TodayArtistsResult
 import com.example.songil.page_shop.models.TodayCraft
@@ -13,7 +14,7 @@ class ShopMainViewModel : ViewModel() {
     private val repository = ShopMainRepository()
 
     var todayArtist = MutableLiveData<TodayArtistsResult>()
-    var todayCrafts = MutableLiveData<ArrayList<TodayCraft>>()
+    var todayCrafts = MutableLiveData<ArrayList<Craft2>>()
     var newCrafts = MutableLiveData<ArrayList<NewCraft>>()
 
     fun tryGetTodayArtists(){

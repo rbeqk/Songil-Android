@@ -10,7 +10,7 @@ import com.example.songil.data.ProductSimpleInfo
 import com.example.songil.databinding.ItemMainTrendCraftBinding
 
 // 임의로 craftSimple 데이터를 사용합니다!! 아직 서버가 없어요
-class RvMainTrendCraftAdapter(private val context: Context) : RecyclerView.Adapter<RvMainTrendCraftAdapter.ViewHolder>() {
+class MainTrendCraftAdapter(private val context: Context) : RecyclerView.Adapter<MainTrendCraftAdapter.ViewHolder>() {
 
     private val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
     private lateinit var binding : ItemMainTrendCraftBinding

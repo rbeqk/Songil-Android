@@ -96,7 +96,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/tv_deadline"
-            tools:listitem="@layout/item_comment_reply"
+            tools:listitem="@layout/item_post_comment_reply"
             tools:itemCount="3"
             android:layout_marginTop="16dp"/>
 

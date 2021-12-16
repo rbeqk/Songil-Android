@@ -10,7 +10,7 @@ import com.example.songil.R
 import com.example.songil.config.BaseFragment
 import com.example.songil.data.WithQna
 import com.example.songil.databinding.SimpleRecyclerviewFragmentBinding
-import com.example.songil.recycler.adapter.RvWithQnaAdapter
+import com.example.songil.recycler.adapter.PostAdapter
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -27,14 +27,14 @@ class WithFragmentQna : BaseFragment<SimpleRecyclerviewFragmentBinding>(SimpleRe
 
         lifecycleScope.launch {
             viewModel.flow.collectLatest { pagingData ->
-                (binding.rvContent.adapter as RvWithQnaAdapter).submitData(pagingData)
+                (binding.rvContent.adapter as PostAdapter).submitData(pagingData)
             }
         }
     }
 
     private fun setRecyclerView(){
         binding.rvContent.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        binding.rvContent.adapter = RvWithQnaAdapter(WithQnaComparator)
+        binding.rvContent.adapter = PostAdapter(WithQnaComparator)
     }
 
     object WithQnaComparator : DiffUtil.ItemCallback<WithQna>(){

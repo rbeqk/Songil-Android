@@ -7,9 +7,9 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.songil.R
 import com.example.songil.data.WithQna
-import com.example.songil.databinding.ItemQnaBinding
+import com.example.songil.databinding.ItemPostBinding
 
-class RvWithQnaAdapter(diffCallback : DiffUtil.ItemCallback<WithQna>) : PagingDataAdapter<WithQna, RvWithQnaAdapter.WithQnaViewHolder>(diffCallback){
+class PostAdapter(diffCallback : DiffUtil.ItemCallback<WithQna>) : PagingDataAdapter<WithQna, PostAdapter.WithQnaViewHolder>(diffCallback){
 
     override fun onBindViewHolder(holder: WithQnaViewHolder, position: Int) {
         val qnaItem = getItem(position)
@@ -30,11 +30,11 @@ class RvWithQnaAdapter(diffCallback : DiffUtil.ItemCallback<WithQna>) : PagingDa
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WithQnaViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = ItemQnaBinding.inflate(inflater, parent, false)
+        val binding = ItemPostBinding.inflate(inflater, parent, false)
         return WithQnaViewHolder(binding)
     }
 
-    class WithQnaViewHolder(binding : ItemQnaBinding) : RecyclerView.ViewHolder(binding.root){
+    class WithQnaViewHolder(binding : ItemPostBinding) : RecyclerView.ViewHolder(binding.root){
         val title = binding.tvTitle
         val commentCount = binding.tvChatCount
         val likeCount = binding.tvFavoriteCount

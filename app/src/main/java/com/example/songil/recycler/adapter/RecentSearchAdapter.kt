@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.songil.databinding.ItemSearchRecentsearchBinding
 import com.example.songil.recycler.rv_interface.RvTriggerView
 
-class RvRecentSearchAdapter(context : Context, private val triggerView: RvTriggerView) : RecyclerView.Adapter<RvRecentSearchAdapter.ViewHolder>() {
+class RecentSearchAdapter(context : Context, private val triggerView: RvTriggerView) : RecyclerView.Adapter<RecentSearchAdapter.ViewHolder>() {
 
     private val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
     private lateinit var binding : ItemSearchRecentsearchBinding

@@ -17,9 +17,9 @@ import com.example.songil.data.SimpleArticle
 import com.example.songil.databinding.HomeFragmentBinding
 import com.example.songil.page_main.MainActivity
 import com.example.songil.page_search.SearchActivity
-import com.example.songil.recycler.adapter.RvMainTrendCraftAdapter
-import com.example.songil.recycler.adapter.Vp2MainArticleAdapter
-import com.example.songil.recycler.adapter.Vp2MainRecommendAdapter
+import com.example.songil.recycler.adapter.MainTrendCraftAdapter
+import com.example.songil.viewPager2.adapter.Vp2MainArticleAdapter
+import com.example.songil.viewPager2.adapter.Vp2MainRecommendAdapter
 import com.example.songil.recycler.decoration.RvMainTrendDecoration
 import com.example.songil.recycler.decoration.Vp2MainRecommendDecoration
 
@@ -48,7 +48,7 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::bind
     private fun setRecyclerView(){
         //binding.rvHotStory.layoutManager = GridLayoutManager(activity as MainActivity, 3)
         binding.rvTrendCraft.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
-        binding.rvTrendCraft.adapter = RvMainTrendCraftAdapter(activity as MainActivity)
+        binding.rvTrendCraft.adapter = MainTrendCraftAdapter(activity as MainActivity)
         binding.rvTrendCraft.addItemDecoration(RvMainTrendDecoration(activity as MainActivity))
 
         binding.vp2Recommend.adapter = Vp2MainRecommendAdapter(activity as MainActivity)
@@ -73,7 +73,7 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::bind
 
     private fun setObserver(){
         val trendCraftObserver = Observer<ArrayList<ProductSimpleInfo>>{ liveData ->
-            (binding.rvTrendCraft.adapter as RvMainTrendCraftAdapter).applyData(liveData)
+            (binding.rvTrendCraft.adapter as MainTrendCraftAdapter).applyData(liveData)
         }
         viewModel.trendCraftData.observe(viewLifecycleOwner, trendCraftObserver)
 

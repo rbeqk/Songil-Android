@@ -5,19 +5,19 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.songil.databinding.CraftItemImgBinding
+import com.example.songil.databinding.ItemImageBinding
 
-class CraftImageAdapter(private val context : Context, private val dataList : ArrayList<String>) : RecyclerView.Adapter<CraftImageAdapter.ViewHolder>() {
+class SimpleImageAdpater(private val context : Context, private val dataList : ArrayList<String>) : RecyclerView.Adapter<SimpleImageAdpater.ViewHolder>() {
 
     private val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-    private lateinit var binding : CraftItemImgBinding
+    private lateinit var binding : ItemImageBinding
 
-    class ViewHolder(binding : CraftItemImgBinding) : RecyclerView.ViewHolder(binding.root){
+    class ViewHolder(binding : ItemImageBinding) : RecyclerView.ViewHolder(binding.root){
         val image = binding.ivImage
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        binding = CraftItemImgBinding.inflate(inflater, parent, false)
+        binding = ItemImageBinding.inflate(inflater, parent, false)
         return ViewHolder(binding)
     }
 

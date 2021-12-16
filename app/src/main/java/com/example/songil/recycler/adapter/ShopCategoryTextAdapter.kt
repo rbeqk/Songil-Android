@@ -7,22 +7,22 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.songil.R
 import com.example.songil.config.GlobalApplication
-import com.example.songil.databinding.ShopItemCategoryTextBinding
+import com.example.songil.databinding.ItemShopCategoryTextBinding
 import com.example.songil.recycler.rv_interface.RvCategoryView
 
-class RvShopCategoryTextAdapter(private val context : Context, private val view : RvCategoryView<String>) : RecyclerView.Adapter<RvShopCategoryTextAdapter.ViewHolder>() {
+class ShopCategoryTextAdapter(private val context : Context, private val view : RvCategoryView<String>) : RecyclerView.Adapter<ShopCategoryTextAdapter.ViewHolder>() {
 
     private var currentCategory = ""
     private val dataList = GlobalApplication.categoryList
     private val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-    private lateinit var binding : ShopItemCategoryTextBinding
+    private lateinit var binding : ItemShopCategoryTextBinding
 
-    class ViewHolder(binding : ShopItemCategoryTextBinding) : RecyclerView.ViewHolder(binding.root){
+    class ViewHolder(binding : ItemShopCategoryTextBinding) : RecyclerView.ViewHolder(binding.root){
         val categoryName = binding.tvbtnSelectCategory
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        binding = ShopItemCategoryTextBinding.inflate(inflater, parent, false)
+        binding = ItemShopCategoryTextBinding.inflate(inflater, parent, false)
         return ViewHolder(binding)
     }
 

@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.songil.databinding.ItemAddPhotoBinding
 import com.example.songil.recycler.rv_interface.RvPhotoView
 
-class RvAddPhotoSingleAdapter(context : Context, private val view : RvPhotoView) :RecyclerView.Adapter<RvAddPhotoSingleAdapter.ViewHolder>() {
+class AddPhotoSingleAdapter(context : Context, private val view : RvPhotoView) :RecyclerView.Adapter<AddPhotoSingleAdapter.ViewHolder>() {
 
     private val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
     lateinit var binding: ItemAddPhotoBinding

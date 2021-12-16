@@ -14,7 +14,7 @@ import com.example.songil.databinding.ItemOrderStatusBinding
 import com.example.songil.page_cancel.CancelActivity
 import com.example.songil.page_inquiry.InquiryActivity
 
-class RvOrderStatusAdapter(private val context : Context, private val dataList : ArrayList<Order>) : RecyclerView.Adapter<RvOrderStatusAdapter.ViewHolder>() {
+class OrderStatusAdapter(private val context : Context, private val dataList : ArrayList<Order>) : RecyclerView.Adapter<OrderStatusAdapter.ViewHolder>() {
 
     private lateinit var binding : ItemOrderStatusBinding
     private val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater

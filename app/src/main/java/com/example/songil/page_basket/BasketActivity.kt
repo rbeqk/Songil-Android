@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.SimpleItemAnimator
 import com.example.songil.R
 import com.example.songil.config.BaseActivity
 import com.example.songil.databinding.ShoppingbasketActivityBinding
-import com.example.songil.recycler.adapter.RvShoppginBasketAdapter
+import com.example.songil.recycler.adapter.ShoppingCartAdapter
 import com.example.songil.recycler.rv_interface.RvTriggerView
 
 class BasketActivity : BaseActivity<ShoppingbasketActivityBinding>(R.layout.shoppingbasket_activity), RvTriggerView {
@@ -32,7 +32,7 @@ class BasketActivity : BaseActivity<ShoppingbasketActivityBinding>(R.layout.shop
     private fun setObserver(){
         val resultCodeObserver = Observer<Int>{ liveData ->
             if (liveData == 1000){
-                (binding.rvShoppingContent.adapter as RvShoppginBasketAdapter).applyData(viewModel.itemList)
+                (binding.rvShoppingContent.adapter as ShoppingCartAdapter).applyData(viewModel.itemList)
                 binding.btnPayment.text = getString(R.string.form_price_won, viewModel.getTotalPrice())
                 //viewModel.checkAll.value = viewModel.checkAllCbSelected()
                 binding.tvSelectAll.text = getString(R.string.select_all_with_count, viewModel.getCheckCount(), viewModel.itemList.size)
@@ -42,7 +42,7 @@ class BasketActivity : BaseActivity<ShoppingbasketActivityBinding>(R.layout.shop
 
         val resultChangeObserver = Observer<Int> { liveData ->
             if (liveData == 1000){
-                (binding.rvShoppingContent.adapter as RvShoppginBasketAdapter).changeData()
+                (binding.rvShoppingContent.adapter as ShoppingCartAdapter).changeData()
                 changeActivityViews()
             }
         }
@@ -50,7 +50,7 @@ class BasketActivity : BaseActivity<ShoppingbasketActivityBinding>(R.layout.shop
 
         val resultRemoveObserver = Observer<Int> { liveData ->
             if (liveData == 1000){
-                (binding.rvShoppingContent.adapter as RvShoppginBasketAdapter).changeData()
+                (binding.rvShoppingContent.adapter as ShoppingCartAdapter).changeData()
                 changeActivityViews()
             }
         }
@@ -64,7 +64,7 @@ class BasketActivity : BaseActivity<ShoppingbasketActivityBinding>(R.layout.shop
 
     private fun setRecyclerView(){
         binding.rvShoppingContent.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        binding.rvShoppingContent.adapter = RvShoppginBasketAdapter(this, viewModel)
+        binding.rvShoppingContent.adapter = ShoppingCartAdapter(this, viewModel)
         val animator = binding.rvShoppingContent.itemAnimator
         if (animator is SimpleItemAnimator){
             animator.supportsChangeAnimations = false
@@ -74,7 +74,7 @@ class BasketActivity : BaseActivity<ShoppingbasketActivityBinding>(R.layout.shop
     private fun setBtn(){
         binding.cbSelectAll.setOnClickListener { // 전체 선택 버튼 클릭 이벤트 
             viewModel.changeCbAll() 
-            (binding.rvShoppingContent.adapter as RvShoppginBasketAdapter).changeData()    // adapter 에 데이터 변화 전달
+            (binding.rvShoppingContent.adapter as ShoppingCartAdapter).changeData()    // adapter 에 데이터 변화 전달
             changeActivityViews()
         }
         binding.btnPayment.setOnClickListener {

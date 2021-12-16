@@ -10,7 +10,7 @@ import com.example.songil.R
 import com.example.songil.data.FrontStory
 import com.example.songil.databinding.ItemStoryBinding
 
-class RvFrontStoryAdapter(diffCallback : DiffUtil.ItemCallback<FrontStory>) : PagingDataAdapter<FrontStory, RvFrontStoryAdapter.FrontStoryViewHolder>(diffCallback) {
+class WithStoryAdapter(diffCallback : DiffUtil.ItemCallback<FrontStory>) : PagingDataAdapter<FrontStory, WithStoryAdapter.FrontStoryViewHolder>(diffCallback) {
 
     override fun onBindViewHolder(holder: FrontStoryViewHolder, position: Int) {
         val storyItem = getItem(position)

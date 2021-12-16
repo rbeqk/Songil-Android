@@ -5,23 +5,23 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.songil.databinding.CraftItemImgBinding
+import com.example.songil.databinding.ItemImageBinding
 import com.example.songil.page_shop.models.NewCraft
 import com.example.songil.recycler.rv_interface.RvCraftView
 
-class RvImageAdapter(private val context : Context, private val view : RvCraftView) : RecyclerView.Adapter<RvImageAdapter.ViewHolder>() {
+class ClickImageAdapter(private val context : Context, private val view : RvCraftView) : RecyclerView.Adapter<ClickImageAdapter.ViewHolder>() {
 
     private val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-    private lateinit var binding : CraftItemImgBinding
+    private lateinit var binding : ItemImageBinding
     private val dataList = ArrayList<NewCraft>()
 
-    class ViewHolder(binding : CraftItemImgBinding) : RecyclerView.ViewHolder(binding.root){
+    class ViewHolder(binding : ItemImageBinding) : RecyclerView.ViewHolder(binding.root){
         val image = binding.ivImage
         val main = binding.root
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        binding = CraftItemImgBinding.inflate(inflater, parent, false)
+        binding = ItemImageBinding.inflate(inflater, parent, false)
         return ViewHolder(binding)
     }
 

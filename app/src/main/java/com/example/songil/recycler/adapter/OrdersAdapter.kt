@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.songil.data.Orders
 import com.example.songil.databinding.ItemOrdersBinding
 
-class RvOrdersAdapter(private val context : Context) : RecyclerView.Adapter<RvOrdersAdapter.ViewHolder>() {
+class OrdersAdapter(private val context : Context) : RecyclerView.Adapter<OrdersAdapter.ViewHolder>() {
 
     private val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
     private lateinit var binding : ItemOrdersBinding
@@ -27,7 +27,7 @@ class RvOrdersAdapter(private val context : Context) : RecyclerView.Adapter<RvOr
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.date.text = dataList[position].date
         holder.orders.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        holder.orders.adapter = RvOrderStatusAdapter(context, dataList[position].orderList)
+        holder.orders.adapter = OrderStatusAdapter(context, dataList[position].orderList)
     }
 
     override fun getItemCount(): Int = dataList.size

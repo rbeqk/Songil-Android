@@ -11,7 +11,7 @@ import com.example.songil.R
 import com.example.songil.config.BaseFragment
 import com.example.songil.databinding.SearchFragmentSearchingBinding
 import com.example.songil.page_search.SearchActivity
-import com.example.songil.recycler.adapter.RvRecentSearchAdapter
+import com.example.songil.recycler.adapter.RecentSearchAdapter
 import com.example.songil.recycler.rv_interface.RvTriggerView
 import com.google.android.material.chip.Chip
 
@@ -50,10 +50,10 @@ class SearchingFragment : BaseFragment<SearchFragmentSearchingBinding>(SearchFra
         val recentObserver = Observer<Int>{ liveData ->
             when (liveData){
                 -1 -> {
-                    (binding.rvRecentSearch.adapter as RvRecentSearchAdapter).applyData(viewModel.recentSearch)
+                    (binding.rvRecentSearch.adapter as RecentSearchAdapter).applyData(viewModel.recentSearch)
                 }
                 else -> {
-                    (binding.rvRecentSearch.adapter as RvRecentSearchAdapter).notifyDataSetChanged()//notifyItemRemoved(liveData)
+                    (binding.rvRecentSearch.adapter as RecentSearchAdapter).notifyDataSetChanged()//notifyItemRemoved(liveData)
                 }
             }
         }
@@ -62,7 +62,7 @@ class SearchingFragment : BaseFragment<SearchFragmentSearchingBinding>(SearchFra
 
     private fun setRecyclerView(){
         binding.rvRecentSearch.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        binding.rvRecentSearch.adapter = RvRecentSearchAdapter(context as Activity, this)
+        binding.rvRecentSearch.adapter = RecentSearchAdapter(context as Activity, this)
     }
 
     override fun notifyDataChange(type: Int, position: Int?) {

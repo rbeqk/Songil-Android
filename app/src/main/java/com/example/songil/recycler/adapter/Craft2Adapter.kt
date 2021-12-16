@@ -6,17 +6,17 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.songil.R
-import com.example.songil.databinding.ShopItemCraftSimpleBinding
-import com.example.songil.page_shop.models.TodayCraft
+import com.example.songil.data.Craft2
+import com.example.songil.databinding.ItemCraft2Binding
 import com.example.songil.recycler.rv_interface.RvCraftView
 
-class ShopRvTodayCraftAdapter(private val context: Context, private val view : RvCraftView) : RecyclerView.Adapter<ShopRvTodayCraftAdapter.ViewHolder>() {
+class Craft2Adapter(private val context: Context, private val view : RvCraftView) : RecyclerView.Adapter<Craft2Adapter.ViewHolder>() {
 
     private val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-    private lateinit var binding : ShopItemCraftSimpleBinding
-    private val dataList = ArrayList<TodayCraft>()
+    private lateinit var binding : ItemCraft2Binding
+    private val dataList = ArrayList<Craft2>()
 
-    class ViewHolder(binding : ShopItemCraftSimpleBinding) : RecyclerView.ViewHolder(binding.root){
+    class ViewHolder(binding : ItemCraft2Binding) : RecyclerView.ViewHolder(binding.root){
         val image = binding.ivPhoto
         val maker = binding.tvMaker
         val price = binding.tvPrice
@@ -25,23 +25,23 @@ class ShopRvTodayCraftAdapter(private val context: Context, private val view : R
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        binding = ShopItemCraftSimpleBinding.inflate(inflater, parent, false)
+        binding = ItemCraft2Binding.inflate(inflater, parent, false)
         return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        Glide.with(context).load(dataList[position].thumbNailImg).into(holder.image)
-        holder.maker.text = dataList[position].artistName
+        Glide.with(context).load(dataList[position].imageUrl).into(holder.image)
+        holder.maker.text = dataList[position].artist
         holder.price.text = context.getString(R.string.form_price_won, dataList[position].price)
         holder.layoutMain.setOnClickListener {
             view.craftClick(dataList[position].productIdx)
         }
-        holder.craftName.text = dataList[position].productName
+        holder.craftName.text = dataList[position].name
     }
 
     override fun getItemCount(): Int = dataList.size
 
-    fun applyData(newData : ArrayList<TodayCraft>) {
+    fun applyData(newData : ArrayList<Craft2>) {
         dataList.clear()
         dataList.addAll(newData)
         notifyDataSetChanged()

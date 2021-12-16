@@ -9,7 +9,7 @@ import com.example.songil.databinding.ItemImagePickerBinding
 import com.example.songil.page_imagepicker.ImagePickerData
 import com.example.songil.recycler.rv_interface.RvImagePickerView
 
-class RvImagePickerAdapter(private val view : RvImagePickerView, private val min : Int = 0, private val max : Int = 3) : RecyclerView.Adapter<RvImagePickerAdapter.ImagePickerViewHolder>() {
+class ImagePickerAdapter(private val view : RvImagePickerView, private val min : Int = 0, private val max : Int = 3) : RecyclerView.Adapter<ImagePickerAdapter.ImagePickerViewHolder>() {
 
     private val imageList = ArrayList<ImagePickerData>()
     private val selectPosition = ArrayList<Int>()

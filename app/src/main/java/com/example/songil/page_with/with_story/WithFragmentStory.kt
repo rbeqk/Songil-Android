@@ -11,7 +11,7 @@ import com.example.songil.config.BaseFragment
 import com.example.songil.data.FrontStory
 import com.example.songil.databinding.SimpleRecyclerviewFragmentBinding
 import com.example.songil.page_main.MainActivity
-import com.example.songil.recycler.adapter.RvFrontStoryAdapter
+import com.example.songil.recycler.adapter.WithStoryAdapter
 import com.example.songil.recycler.decoration.RvItemStoryDecoration
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -29,14 +29,14 @@ class WithFragmentStory : BaseFragment<SimpleRecyclerviewFragmentBinding>(Simple
 
         lifecycleScope.launch {
             viewModel.flow.collectLatest { pagingData ->
-                (binding.rvContent.adapter as RvFrontStoryAdapter).submitData(pagingData)
+                (binding.rvContent.adapter as WithStoryAdapter).submitData(pagingData)
             }
         }
     }
 
     private fun setRecyclerView(){
         binding.rvContent.layoutManager = GridLayoutManager(context, 2)
-        binding.rvContent.adapter = RvFrontStoryAdapter(WithStoryComparator)
+        binding.rvContent.adapter = WithStoryAdapter(WithStoryComparator)
         binding.rvContent.addItemDecoration(RvItemStoryDecoration(context as MainActivity))
     }
 

@@ -8,11 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.songil.R
 import com.example.songil.data.ArticleContentInfo
-import com.example.songil.databinding.ArticleItemContentImageBinding
-import com.example.songil.databinding.ArticleItemContentProductBinding
-import com.example.songil.databinding.ArticleItemContentTextBinding
+import com.example.songil.databinding.*
 
-class RvArticleContentAdapter(private val context : Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+class ArticleContentAdapter(private val context : Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
     private val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
@@ -21,15 +19,15 @@ class RvArticleContentAdapter(private val context : Context) : RecyclerView.Adap
     //private val product = 3 // else 로 사용
     private val dataList = ArrayList<ArticleContentInfo>()
 
-    class TextViewHolder(binding : ArticleItemContentTextBinding) : RecyclerView.ViewHolder(binding.root){
+    class TextViewHolder(binding : ItemArticleContentTextBinding) : RecyclerView.ViewHolder(binding.root){
         val text = binding.tvContent
     }
 
-    class ImageViewHolder(binding : ArticleItemContentImageBinding) : RecyclerView.ViewHolder(binding.root){
+    class ImageViewHolder(binding : ItemArticleContentImageBinding) : RecyclerView.ViewHolder(binding.root){
         val image = binding.ivContent
     }
 
-    class ProductViewHolder(binding : ArticleItemContentProductBinding) : RecyclerView.ViewHolder(binding.root){
+    class ProductViewHolder(binding : ItemArticleContentCraftBinding) : RecyclerView.ViewHolder(binding.root){
         val productName = binding.tvProductName
         val artistName = binding.tvArtistName
         val productImage = binding.ivProduct
@@ -45,15 +43,15 @@ class RvArticleContentAdapter(private val context : Context) : RecyclerView.Adap
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when(viewType){
             text -> {
-                val binding = ArticleItemContentTextBinding.inflate(inflater, parent, false)
+                val binding = ItemArticleContentTextBinding.inflate(inflater, parent, false)
                 TextViewHolder(binding)
             }
             image -> {
-                val binding = ArticleItemContentImageBinding.inflate(inflater, parent, false)
+                val binding = ItemArticleContentImageBinding.inflate(inflater, parent, false)
                 ImageViewHolder(binding)
             }
             else -> {
-                val binding = ArticleItemContentProductBinding.inflate(inflater, parent, false)
+                val binding = ItemArticleContentCraftBinding.inflate(inflater, parent, false)
                 ProductViewHolder(binding)
             }
         }
