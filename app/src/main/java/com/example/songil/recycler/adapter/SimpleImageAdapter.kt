@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.songil.databinding.ItemImageBinding
 
-class SimpleImageAdpater(private val context : Context, private val dataList : ArrayList<String>) : RecyclerView.Adapter<SimpleImageAdpater.ViewHolder>() {
+class SimpleImageAdapter(private val context : Context, private val dataList : ArrayList<String>) : RecyclerView.Adapter<SimpleImageAdapter.ViewHolder>() {
 
     private val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
     private lateinit var binding : ItemImageBinding
