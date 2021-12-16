@@ -17,15 +17,14 @@ import com.example.songil.page_craft.CraftActivity
 import com.example.songil.page_main.MainActivity
 import com.example.songil.page_shop.models.NewCraft
 import com.example.songil.page_shop.models.TodayArtistsResult
-import com.example.songil.page_shop.models.TodayCraft
 import com.example.songil.page_shop.shop_category.ShopActivityCategory
 import com.example.songil.recycler.rv_interface.RvCategoryView
 import com.example.songil.recycler.adapter.ShopCategoryAdapter
 import com.example.songil.recycler.adapter.ClickImageAdapter
 import com.example.songil.recycler.adapter.Craft2Adapter
-import com.example.songil.recycler.decoration.ShopRvCategoryItemDecoration
+import com.example.songil.recycler.decoration.ShopCategoryDecoration
 import com.example.songil.recycler.decoration.ShopRvNewCraftDecoration
-import com.example.songil.recycler.decoration.ShopRvPopularDecoration
+import com.example.songil.recycler.decoration.Craft2Decoration
 import com.example.songil.recycler.rv_interface.RvCraftView
 
 class ShopFragmentMain : BaseFragment<ShopFragmentMainBinding>(ShopFragmentMainBinding::bind, R.layout.shop_fragment_main),
@@ -75,11 +74,11 @@ class ShopFragmentMain : BaseFragment<ShopFragmentMainBinding>(ShopFragmentMainB
     private fun setRecyclerView(){
         binding.rvCategory.layoutManager = GridLayoutManager(activity as MainActivity, 4)
         binding.rvCategory.adapter = ShopCategoryAdapter(activity as MainActivity, this)
-        binding.rvCategory.addItemDecoration(ShopRvCategoryItemDecoration(activity as MainActivity))
+        binding.rvCategory.addItemDecoration(ShopCategoryDecoration(activity as MainActivity))
 
         binding.rvTodayCraft.layoutManager = LinearLayoutManager(activity as MainActivity, LinearLayoutManager.HORIZONTAL, false)
         binding.rvTodayCraft.adapter = Craft2Adapter(activity as MainActivity, this)
-        binding.rvTodayCraft.addItemDecoration(ShopRvPopularDecoration(activity as MainActivity))   // 똑같은 간격이라 그대로 사용
+        binding.rvTodayCraft.addItemDecoration(Craft2Decoration(activity as MainActivity))   // 똑같은 간격이라 그대로 사용
 
         binding.rvNewCraft.layoutManager = GridLayoutManager(activity as MainActivity, 3)
         binding.rvNewCraft.adapter = ClickImageAdapter(activity as MainActivity, this)

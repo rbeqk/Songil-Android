@@ -12,7 +12,7 @@ import com.example.songil.R
 import com.example.songil.config.BaseActivity
 import com.example.songil.databinding.CommentActivityBinding
 import com.example.songil.recycler.adapter.AddPhotoSingleAdapter
-import com.example.songil.recycler.decoration.RvAddPhotoDecoration
+import com.example.songil.recycler.decoration.AddPhotoDecoration
 import com.example.songil.recycler.rv_interface.RvPhotoView
 
 class CommentActivity : BaseActivity<CommentActivityBinding>(R.layout.comment_activity), RvPhotoView {
@@ -39,7 +39,7 @@ class CommentActivity : BaseActivity<CommentActivityBinding>(R.layout.comment_ac
     private fun setRecyclerView(){
         binding.rvPhoto.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.rvPhoto.adapter = AddPhotoSingleAdapter(this, this)
-        binding.rvPhoto.addItemDecoration(RvAddPhotoDecoration(this))
+        binding.rvPhoto.addItemDecoration(AddPhotoDecoration(this))
     }
 
     private fun setEditText(){

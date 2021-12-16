@@ -21,9 +21,9 @@ import com.example.songil.popup_sort.popup_interface.PopupSortView
 import com.example.songil.recycler.adapter.ShopCategoryTextAdapter
 import com.example.songil.recycler.adapter.Craft1Adapter
 import com.example.songil.recycler.adapter.Craft2Adapter
-import com.example.songil.recycler.decoration.ShopRvCategoryTextItemDecoration
-import com.example.songil.recycler.decoration.ShopRvCraftDecoration
-import com.example.songil.recycler.decoration.ShopRvPopularDecoration
+import com.example.songil.recycler.decoration.Craft1Decoration
+import com.example.songil.recycler.decoration.ShopCategoryTextDecoration
+import com.example.songil.recycler.decoration.Craft2Decoration
 import com.example.songil.recycler.rv_interface.RvCategoryView
 import com.example.songil.recycler.rv_interface.RvCraftLikeView
 import com.example.songil.recycler.rv_interface.RvCraftView
@@ -44,15 +44,15 @@ class ShopActivityCategory : BaseActivity<ShopActivityCategoryBinding>(R.layout.
 
         binding.rvCategory.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.rvCategory.adapter = ShopCategoryTextAdapter(this, this)
-        binding.rvCategory.addItemDecoration(ShopRvCategoryTextItemDecoration(this))
+        binding.rvCategory.addItemDecoration(ShopCategoryTextDecoration(this))
 
         binding.rvPopular.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.rvPopular.adapter = Craft2Adapter(this, this)
-        binding.rvPopular.addItemDecoration(ShopRvPopularDecoration(this))
+        binding.rvPopular.addItemDecoration(Craft2Decoration(this))
 
         binding.rvCraft.layoutManager = GridLayoutManager(this, 2)
         binding.rvCraft.adapter = Craft1Adapter(this, this)
-        binding.rvCraft.addItemDecoration(ShopRvCraftDecoration(this))
+        binding.rvCraft.addItemDecoration(Craft1Decoration(this))
 
         binding.btnSort.setOnClickListener {
             val dialogFragment = SortBottomSheet(this, viewModel.sort.value!!)

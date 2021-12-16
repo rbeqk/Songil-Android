@@ -1,4 +1,4 @@
-package com.example.songil.recycler.decoration
+package com.example.songil.viewPager2.decoration
 
 import android.content.Context
 import android.graphics.Rect

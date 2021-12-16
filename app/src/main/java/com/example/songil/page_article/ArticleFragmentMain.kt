@@ -8,7 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.example.songil.R
 import com.example.songil.viewPager2.adapter.Vp2ArticleTitleAdapter
-import com.example.songil.recycler.decoration.Vp2ArticleDecoration
+import com.example.songil.viewPager2.decoration.Vp2ArticleDecoration
 import com.example.songil.config.BaseFragment
 import com.example.songil.data.SimpleArticle
 import com.example.songil.databinding.ArticleFragmentMainBinding

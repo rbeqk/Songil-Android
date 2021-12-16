@@ -20,8 +20,8 @@ import com.example.songil.page_search.SearchActivity
 import com.example.songil.recycler.adapter.MainTrendCraftAdapter
 import com.example.songil.viewPager2.adapter.Vp2MainArticleAdapter
 import com.example.songil.viewPager2.adapter.Vp2MainRecommendAdapter
-import com.example.songil.recycler.decoration.RvMainTrendDecoration
-import com.example.songil.recycler.decoration.Vp2MainRecommendDecoration
+import com.example.songil.recycler.decoration.MainTrendDecoration
+import com.example.songil.viewPager2.decoration.Vp2MainRecommendDecoration
 
 class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::bind, R.layout.home_fragment){
 
@@ -49,7 +49,7 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::bind
         //binding.rvHotStory.layoutManager = GridLayoutManager(activity as MainActivity, 3)
         binding.rvTrendCraft.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         binding.rvTrendCraft.adapter = MainTrendCraftAdapter(activity as MainActivity)
-        binding.rvTrendCraft.addItemDecoration(RvMainTrendDecoration(activity as MainActivity))
+        binding.rvTrendCraft.addItemDecoration(MainTrendDecoration(activity as MainActivity))
 
         binding.vp2Recommend.adapter = Vp2MainRecommendAdapter(activity as MainActivity)
         binding.vp2Recommend.addItemDecoration(Vp2MainRecommendDecoration(activity as MainActivity))

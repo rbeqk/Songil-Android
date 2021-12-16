@@ -6,23 +6,24 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.example.songil.utils.dpToPx
 
-class RvMainTrendDecoration(context: Context) : RecyclerView.ItemDecoration() {
+class Craft1Decoration (context: Context) : RecyclerView.ItemDecoration() {
     private val size12 = dpToPx(context, 12)
-    private val size4 = dpToPx(context, 4)
+    private val size2 = dpToPx(context, 2)
+    private val size24 = dpToPx(context, 24)
 
     override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
         super.getItemOffsets(outRect, view, parent, state)
 
         val position = parent.getChildLayoutPosition(view)
 
-        if (position == 0){
-            outRect.left = size12
+        if (position % 2 == 1){
+            outRect.left = size2
+            outRect.right = size12
         } else {
-            outRect.left = size4
+            outRect.left = size12
+            outRect.right = size2
         }
 
-        if (position == (parent.childCount - 1)){
-            outRect.right = size12
-        }
+        outRect.bottom = size24
     }
 }

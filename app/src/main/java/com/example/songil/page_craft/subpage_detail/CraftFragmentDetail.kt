@@ -9,7 +9,7 @@ import com.example.songil.data.ProductDetailInfo
 import com.example.songil.databinding.CraftFragmentDetailBinding
 import com.example.songil.page_craft.CraftActivity
 import com.example.songil.recycler.adapter.SimpleImageAdpater
-import com.example.songil.recycler.decoration.CraftImageDecoration
+import com.example.songil.recycler.decoration.SimpleImageDecoration
 
 class CraftFragmentDetail(private val detailInfo: ProductDetailInfo) : BaseFragment<CraftFragmentDetailBinding>(CraftFragmentDetailBinding::bind, R.layout.craft_fragment_detail) {
 
@@ -27,7 +27,7 @@ class CraftFragmentDetail(private val detailInfo: ProductDetailInfo) : BaseFragm
         binding.tvWarningNoticeContent.text = setCautionString()
         binding.rvDetailImage.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
         binding.rvDetailImage.adapter = SimpleImageAdpater(activity as CraftActivity, detailInfo.detailImageUrls)
-        binding.rvDetailImage.addItemDecoration(CraftImageDecoration(activity as CraftActivity))
+        binding.rvDetailImage.addItemDecoration(SimpleImageDecoration(activity as CraftActivity))
     }
 
     private fun setCautionString() : String{

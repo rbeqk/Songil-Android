@@ -1,4 +1,4 @@
-package com.example.songil.recycler.decoration
+package com.example.songil.viewPager2.decoration
 
 import android.content.Context
 import android.graphics.Rect
@@ -6,8 +6,8 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.example.songil.utils.dpToPx
 
-class RvAddPhotoDecoration(context : Context) : RecyclerView.ItemDecoration() {
-    private val size6 = dpToPx(context, 6)
+class Vp2ArticleDecoration(context: Context) : RecyclerView.ItemDecoration() {
+    val margin = dpToPx(context, 38)
 
     override fun getItemOffsets(
         outRect: Rect,
@@ -15,9 +15,8 @@ class RvAddPhotoDecoration(context : Context) : RecyclerView.ItemDecoration() {
         parent: RecyclerView,
         state: RecyclerView.State
     ) {
-        val position = parent.getChildLayoutPosition(view)
-        if (position != 0){
-            outRect.left = size6
-        }
+        outRect.right = margin
+        outRect.left = margin
     }
+
 }

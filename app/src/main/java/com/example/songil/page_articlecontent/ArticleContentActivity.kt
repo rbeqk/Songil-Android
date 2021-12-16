@@ -9,7 +9,7 @@ import com.example.songil.R
 import com.example.songil.config.BaseActivity
 import com.example.songil.databinding.ArticleActivityContentBinding
 import com.example.songil.recycler.adapter.ArticleContentAdapter
-import com.example.songil.recycler.decoration.RvArticleContentDecoration
+import com.example.songil.recycler.decoration.ArticleContentDecoration
 
 class ArticleContentActivity : BaseActivity<ArticleActivityContentBinding>(R.layout.article_activity_content) {
 
@@ -29,7 +29,7 @@ class ArticleContentActivity : BaseActivity<ArticleActivityContentBinding>(R.lay
     private fun setRecyclerView(){
         binding.rvContent.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.rvContent.adapter = ArticleContentAdapter(this)
-        binding.rvContent.addItemDecoration(RvArticleContentDecoration(this))
+        binding.rvContent.addItemDecoration(ArticleContentDecoration(this))
     }
 
     private fun setObserver(){

@@ -6,8 +6,8 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.example.songil.utils.dpToPx
 
-class RvCraftBaseDecoration2 (context: Context) : RecyclerView.ItemDecoration() {
-    private val size12 = dpToPx(context, 12)
+class WithStoryDecoration(context: Context) : RecyclerView.ItemDecoration() {
+    private val size16 = dpToPx(context, 16)
     private val size2 = dpToPx(context, 2)
     private val size24 = dpToPx(context, 24)
 
@@ -16,14 +16,13 @@ class RvCraftBaseDecoration2 (context: Context) : RecyclerView.ItemDecoration() 
 
         val position = parent.getChildLayoutPosition(view)
 
-        if (position % 2 == 1){
-            outRect.left = size2
-            outRect.right = size12
-        } else {
-            outRect.left = size12
+        if (position % 2 == 0){
+            outRect.left = size16
             outRect.right = size2
+        } else {
+            outRect.right = size16
+            outRect.left = size2
         }
-
         outRect.bottom = size24
     }
 }

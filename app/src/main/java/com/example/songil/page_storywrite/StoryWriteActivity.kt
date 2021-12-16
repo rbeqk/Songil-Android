@@ -16,7 +16,7 @@ import com.example.songil.config.BaseActivity
 import com.example.songil.databinding.StoryActivityWriteBinding
 import com.example.songil.page_imagepicker.ImagePickerActivity
 import com.example.songil.recycler.adapter.AddPhotoPickerAdapter
-import com.example.songil.recycler.decoration.RvAddPhotoDecoration
+import com.example.songil.recycler.decoration.AddPhotoDecoration
 import com.example.songil.recycler.rv_interface.RvPhotoView
 import com.google.android.material.chip.Chip
 
@@ -73,7 +73,7 @@ class StoryWriteActivity : BaseActivity<StoryActivityWriteBinding>(R.layout.stor
     private fun setRecyclerView(){
         binding.rvPhoto.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.rvPhoto.adapter = AddPhotoPickerAdapter(this, 2)
-        binding.rvPhoto.addItemDecoration(RvAddPhotoDecoration(this))
+        binding.rvPhoto.addItemDecoration(AddPhotoDecoration(this))
     }
 
     override fun photoItemClick() {
