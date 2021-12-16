@@ -6,7 +6,7 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.example.songil.utils.dpToPx
 
-class ShopRvNewCraftDecoration(context: Context) : RecyclerView.ItemDecoration() {
+class Grid3Decoration(context: Context) : RecyclerView.ItemDecoration() {
     private val size3 = dpToPx(context, 3)
     private val size2 = dpToPx(context, 2)
     private val size1 = dpToPx(context, 1)

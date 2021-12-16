@@ -26,14 +26,14 @@ import com.example.songil.recycler.decoration.ShopCategoryTextDecoration
 import com.example.songil.recycler.decoration.Craft2Decoration
 import com.example.songil.recycler.rv_interface.RvCategoryView
 import com.example.songil.recycler.rv_interface.RvCraftLikeView
-import com.example.songil.recycler.rv_interface.RvCraftView
+import com.example.songil.recycler.rv_interface.RvClickView
 
 // RvCategoryView -> 카테고리 recyclerView 에서 카테고리 선택시 호출할 함수 정의
 // PopupSortView -> sort dialog 에서 sort 기준 클릭시 호출할 함수 정의
 // RvCraftView -> 이번주 인기 공예 recyclerView 에서 아이템 클릭시 호출할 함수 정의
 // RvCraftLikeView -> 전체 상품을 표시하는 recyclerView 에서 아이템 클릭시, 그리고 좋아요 클릭시 호출할 함수 정의
 class ShopActivityCategory : BaseActivity<ShopActivityCategoryBinding>(R.layout.shop_activity_category),
-    RvCategoryView<String>, PopupSortView, RvCraftView, RvCraftLikeView<Int> {
+    RvCategoryView<String>, PopupSortView, RvClickView, RvCraftLikeView<Int> {
 
     private lateinit var viewModel : ShopCategoryViewModel
 
@@ -135,9 +135,9 @@ class ShopActivityCategory : BaseActivity<ShopActivityCategoryBinding>(R.layout.
         viewModel.tryGetProduct()
     }
 
-    override fun craftClick(craftIdx: Int) {
+    override fun itemClick(idx: Int) {
         val intent = Intent(this, CraftActivity::class.java)
-        intent.putExtra(GlobalApplication.CRAFT_IDX, craftIdx)
+        intent.putExtra(GlobalApplication.CRAFT_IDX, idx)
         startActivity(intent)
     }
 

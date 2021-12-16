@@ -8,9 +8,9 @@ import com.bumptech.glide.Glide
 import com.example.songil.R
 import com.example.songil.data.Craft2
 import com.example.songil.databinding.ItemCraft2Binding
-import com.example.songil.recycler.rv_interface.RvCraftView
+import com.example.songil.recycler.rv_interface.RvClickView
 
-class Craft2Adapter(private val context: Context, private val view : RvCraftView) : RecyclerView.Adapter<Craft2Adapter.ViewHolder>() {
+class Craft2Adapter(private val context: Context, private val view : RvClickView) : RecyclerView.Adapter<Craft2Adapter.ViewHolder>() {
 
     private val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
     private lateinit var binding : ItemCraft2Binding
@@ -34,7 +34,7 @@ class Craft2Adapter(private val context: Context, private val view : RvCraftView
         holder.maker.text = dataList[position].artist
         holder.price.text = context.getString(R.string.form_price_won, dataList[position].price)
         holder.layoutMain.setOnClickListener {
-            view.craftClick(dataList[position].productIdx)
+            view.itemClick(dataList[position].productIdx)
         }
         holder.craftName.text = dataList[position].name
     }

@@ -23,12 +23,12 @@ import com.example.songil.recycler.adapter.ShopCategoryAdapter
 import com.example.songil.recycler.adapter.ClickImageAdapter
 import com.example.songil.recycler.adapter.Craft2Adapter
 import com.example.songil.recycler.decoration.ShopCategoryDecoration
-import com.example.songil.recycler.decoration.ShopRvNewCraftDecoration
+import com.example.songil.recycler.decoration.Grid3Decoration
 import com.example.songil.recycler.decoration.Craft2Decoration
-import com.example.songil.recycler.rv_interface.RvCraftView
+import com.example.songil.recycler.rv_interface.RvClickView
 
 class ShopFragmentMain : BaseFragment<ShopFragmentMainBinding>(ShopFragmentMainBinding::bind, R.layout.shop_fragment_main),
-    RvCategoryView<String>, RvCraftView {
+    RvCategoryView<String>, RvClickView {
 
     private lateinit var viewModel : ShopMainViewModel
 
@@ -82,12 +82,12 @@ class ShopFragmentMain : BaseFragment<ShopFragmentMainBinding>(ShopFragmentMainB
 
         binding.rvNewCraft.layoutManager = GridLayoutManager(activity as MainActivity, 3)
         binding.rvNewCraft.adapter = ClickImageAdapter(activity as MainActivity, this)
-        binding.rvNewCraft.addItemDecoration(ShopRvNewCraftDecoration(activity as MainActivity))
+        binding.rvNewCraft.addItemDecoration(Grid3Decoration(activity as MainActivity))
     }
 
-    override fun craftClick(craftIdx: Int) {
+    override fun itemClick(idx: Int) {
         val intent = Intent(activity as MainActivity, CraftActivity::class.java)
-        intent.putExtra(GlobalApplication.CRAFT_IDX, craftIdx)
+        intent.putExtra(GlobalApplication.CRAFT_IDX, idx)
         startActivity(intent)
     }
 }

@@ -11,9 +11,9 @@ import com.example.songil.page_shop.shop_category.models.CraftDetail
 import com.example.songil.recycler.adapter.Craft1Adapter
 import com.example.songil.recycler.decoration.Craft1Decoration
 import com.example.songil.recycler.rv_interface.RvCraftLikeView
-import com.example.songil.recycler.rv_interface.RvCraftView
+import com.example.songil.recycler.rv_interface.RvClickView
 
-class MyfavoriteActivity : BaseActivity<MydetailActivityBinding>(R.layout.mydetail_activity), RvCraftView, RvCraftLikeView<Int> {
+class MyfavoriteActivity : BaseActivity<MydetailActivityBinding>(R.layout.mydetail_activity), RvClickView, RvCraftLikeView<Int> {
 
     private lateinit var viewModel : MyfavoriteViewModel
 
@@ -42,7 +42,7 @@ class MyfavoriteActivity : BaseActivity<MydetailActivityBinding>(R.layout.mydeta
         viewModel.craftList.observe(this, craftObserver)
     }
 
-    override fun craftClick(craftIdx: Int) {
+    override fun itemClick(idx: Int) {
 
     }
 

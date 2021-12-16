@@ -7,9 +7,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.songil.databinding.ItemImageBinding
 import com.example.songil.page_shop.models.NewCraft
-import com.example.songil.recycler.rv_interface.RvCraftView
+import com.example.songil.recycler.rv_interface.RvClickView
 
-class ClickImageAdapter(private val context : Context, private val view : RvCraftView) : RecyclerView.Adapter<ClickImageAdapter.ViewHolder>() {
+class ClickImageAdapter(private val context : Context, private val view : RvClickView) : RecyclerView.Adapter<ClickImageAdapter.ViewHolder>() {
 
     private val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
     private lateinit var binding : ItemImageBinding
@@ -28,7 +28,7 @@ class ClickImageAdapter(private val context : Context, private val view : RvCraf
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         Glide.with(context).load(dataList[position].thumbNailImg).into(holder.image)
         holder.main.setOnClickListener {
-            view.craftClick(dataList[position].productIdx)
+            view.itemClick(dataList[position].productIdx)
         }
     }
 
