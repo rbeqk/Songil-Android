@@ -16,6 +16,7 @@ class GlobalApplication : Application() {
         const val X_ACCESS_TOKEN = "x-access-token"
         const val USER_IDX = "user-idx"
         const val CRAFT_IDX = "craft-idx"
+        const val STORY_IDX = "story-idx"
         const val IS_FIRST_EXEC = "first_exec"
         lateinit var sRetrofit: Retrofit
         lateinit var globalSharedPreferences: SharedPreferences

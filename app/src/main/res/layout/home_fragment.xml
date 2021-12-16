@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -145,101 +144,18 @@
                     android:fontFamily="@font/montserrat_bold"
                     android:text="@string/talk_with_plus_eng"/>
 
-                <LinearLayout
-                    android:id="@+id/layout_talk_with_1"
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/vp2_talk_with"
                     android:layout_width="match_parent"
-                    android:layout_height="80dp"
-                    app:layout_constraintTop_toBottomOf="@id/tv_talk_with"
+                    android:layout_height="181dp"
                     android:layout_marginTop="28dp"
-                    android:orientation="horizontal"
-                    android:gravity="center"
-                    android:background="@color/songil_2">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_talk_with_1_category"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="6dp"
-                        android:gravity="center"
-                        android:fontFamily="@font/montserrat_bold"
-                        android:textColor="@color/songil_2"
-                        android:background="@color/songil_1"
-                        android:textSize="12sp"
-                        tools:text="QnA"/>
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_talk_with_1_content"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:maxWidth="250dp"
-                        android:layout_marginStart="12dp"
-                        android:fontFamily="@font/spoqahansansneo_regular"
-                        android:maxLines="1"
-                        android:ellipsize="end"
-                        tools:text="집들이 선물로 어떤게 좋을까요?"
-                        android:textColor="@color/songil_1"/>
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_talk_with_1_count"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/songil_4"
-                        android:layout_marginStart="12dp"
-                        android:fontFamily="@font/montserrat_bold"
-                        tools:text="+10"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/layout_talk_with_2"
-                    android:layout_width="match_parent"
-                    android:layout_height="80dp"
-                    app:layout_constraintTop_toBottomOf="@id/layout_talk_with_1"
-                    android:layout_marginTop="1dp"
-                    android:orientation="horizontal"
-                    android:gravity="center"
-                    android:background="@color/songil_2">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_talk_with_2_category"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="6dp"
-                        android:gravity="center"
-                        android:fontFamily="@font/montserrat_bold"
-                        android:textColor="@color/songil_2"
-                        android:background="@color/songil_1"
-                        android:textSize="12sp"
-                        tools:text="AB TEST"/>
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_talk_with_2_content"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:maxWidth="250dp"
-                        android:layout_marginStart="12dp"
-                        android:fontFamily="@font/spoqahansansneo_regular"
-                        android:maxLines="1"
-                        android:ellipsize="end"
-                        tools:text="도자기 시유 중입니다."
-                        android:textColor="@color/songil_1"/>
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_talk_with_2_count"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/songil_4"
-                        android:layout_marginStart="12dp"
-                        android:fontFamily="@font/montserrat_bold"
-                        tools:text="+8"/>
-
-                </LinearLayout>
+                    app:layout_constraintTop_toBottomOf="@id/tv_talk_with"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_hot_story"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/layout_talk_with_2"
+                    app:layout_constraintTop_toBottomOf="@id/vp2_talk_with"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginTop="68dp"

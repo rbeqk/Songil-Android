@@ -8,19 +8,25 @@ import androidx.core.content.ContextCompat
 import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.example.songil.R
 import com.example.songil.config.BaseFragment
+import com.example.songil.data.ClickData
 import com.example.songil.data.ProductSimpleInfo
 import com.example.songil.data.SimpleArticle
+import com.example.songil.data.TalkWith
 import com.example.songil.databinding.HomeFragmentBinding
 import com.example.songil.page_main.MainActivity
 import com.example.songil.page_search.SearchActivity
+import com.example.songil.recycler.adapter.ClickImageAdapter
 import com.example.songil.recycler.adapter.MainTrendCraftAdapter
+import com.example.songil.recycler.decoration.Grid3Decoration
 import com.example.songil.viewPager2.adapter.Vp2MainArticleAdapter
 import com.example.songil.viewPager2.adapter.Vp2MainRecommendAdapter
 import com.example.songil.recycler.decoration.MainTrendDecoration
+import com.example.songil.viewPager2.adapter.Vp2MainTalkWithAdapter
 import com.example.songil.viewPager2.decoration.Vp2MainRecommendDecoration
 
 class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::bind, R.layout.home_fragment){
@@ -69,6 +75,12 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::bind
                 binding.pageCountDot.changeIdx(position)
             }
         })
+
+        binding.rvHotStory.layoutManager = GridLayoutManager(activity, 3)
+        binding.rvHotStory.adapter = ClickImageAdapter(activity as MainActivity, false)
+        binding.rvHotStory.addItemDecoration(Grid3Decoration(activity as MainActivity))
+
+        binding.vp2TalkWith.adapter = Vp2MainTalkWithAdapter(activity as MainActivity)
     }
 
     private fun setObserver(){
@@ -88,6 +100,16 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::bind
             binding.pageCountDot.initialSetting(liveData.size)
         }
         viewModel.articleData.observe(viewLifecycleOwner, articleObserver)
+
+        val hotStoryObserver = Observer<ArrayList<ClickData>>{ liveData ->
+            (binding.rvHotStory.adapter as ClickImageAdapter).applyData(liveData)
+        }
+        viewModel.hotStoryData.observe(viewLifecycleOwner, hotStoryObserver)
+
+        val talkWithObserver = Observer<ArrayList<TalkWith>>{ liveData ->
+            (binding.vp2TalkWith.adapter as Vp2MainTalkWithAdapter).applyData(liveData)
+        }
+        viewModel.talkWithData.observe(viewLifecycleOwner, talkWithObserver)
     }
 
     private fun setSeekBar(){

@@ -2,13 +2,17 @@ package com.example.songil.page_home
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.songil.data.ClickData
 import com.example.songil.data.ProductSimpleInfo
 import com.example.songil.data.SimpleArticle
+import com.example.songil.data.TalkWith
 
 class HomeViewModel : ViewModel() {
     var articleData = MutableLiveData<ArrayList<SimpleArticle>>()
     var trendCraftData = MutableLiveData<ArrayList<ProductSimpleInfo>>()
     var recommendCraftData = MutableLiveData<ArrayList<ProductSimpleInfo>>()
+    var hotStoryData = MutableLiveData<ArrayList<ClickData>>()
+    var talkWithData = MutableLiveData<ArrayList<TalkWith>>()
 
     private fun getArticleData(){
         val fromNetwork = arrayListOf(
@@ -31,8 +35,33 @@ class HomeViewModel : ViewModel() {
         recommendCraftData.value = fromNetwork
     }
 
+    private fun getHotStoryData(){
+        val hotStory = ArrayList<ClickData>()
+        hotStory.add(ClickData(0, "https://cdn.pixabay.com/photo/2021/10/13/07/43/couple-6705694_960_720.jpg"))
+        hotStory.add(ClickData(1, "https://cdn.pixabay.com/photo/2021/12/08/05/13/gyeongbok-palace-6854763_960_720.jpg"))
+        hotStory.add(ClickData(2, "https://cdn.pixabay.com/photo/2021/11/08/14/17/europe-6779227_960_720.jpg"))
+        hotStory.add(ClickData(3, "https://cdn.pixabay.com/photo/2021/11/06/22/05/camels-6774540_960_720.jpg"))
+        hotStory.add(ClickData(4, "https://cdn.pixabay.com/photo/2021/12/11/15/06/northern-lights-6862969_960_720.jpg"))
+        hotStory.add(ClickData(5, "https://cdn.pixabay.com/photo/2021/05/11/06/22/night-sky-6245049_960_720.jpg"))
+        hotStoryData.value = hotStory
+    }
+
+    private fun getTalkWithData(){
+        val talkWith = ArrayList<TalkWith>()
+        talkWith.add(TalkWith("QnA", "집들이 선물로 어떤게 좋을까요?", 0))
+        talkWith.add(TalkWith("AB TEST", "조민지 작가", 1))
+        talkWith.add(TalkWith("QnA", "이런 공예품은 어떻게 검색해야 하나요??", 2))
+        talkWith.add(TalkWith("AB TEST", "프로브 작가", 3))
+        talkWith.add(TalkWith("AB TEST", "조민지 작가", 4))
+        talkWith.add(TalkWith("QnA", "조명 색상 추천해주세요~", 5))
+        talkWith.add(TalkWith("AB TEST", "귣바 :)", 6))
+        talkWithData.value = talkWith
+    }
+
     fun callData(){
         getArticleData()
         getCraftData()
+        getHotStoryData()
+        getTalkWithData()
     }
 }
