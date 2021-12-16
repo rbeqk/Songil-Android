@@ -7,15 +7,16 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.example.songil.R
 import com.example.songil.config.BaseFragment
 import com.example.songil.config.GlobalApplication
+import com.example.songil.data.ClickData
 import com.example.songil.data.Craft2
 import com.example.songil.databinding.ShopFragmentMainBinding
 import com.example.songil.page_craft.CraftActivity
 import com.example.songil.page_main.MainActivity
-import com.example.songil.page_shop.models.NewCraft
 import com.example.songil.page_shop.models.TodayArtistsResult
 import com.example.songil.page_shop.shop_category.ShopActivityCategory
 import com.example.songil.recycler.rv_interface.RvCategoryView
@@ -26,6 +27,7 @@ import com.example.songil.recycler.decoration.ShopCategoryDecoration
 import com.example.songil.recycler.decoration.Grid3Decoration
 import com.example.songil.recycler.decoration.Craft2Decoration
 import com.example.songil.recycler.rv_interface.RvClickView
+import com.example.songil.viewPager2.adapter.Vp2BannerAdapter
 
 class ShopFragmentMain : BaseFragment<ShopFragmentMainBinding>(ShopFragmentMainBinding::bind, R.layout.shop_fragment_main),
     RvCategoryView<String>, RvClickView {
@@ -44,6 +46,8 @@ class ShopFragmentMain : BaseFragment<ShopFragmentMainBinding>(ShopFragmentMainB
         viewModel.tryGetTodayArtists()
         viewModel.tryGetNewCrafts()
         viewModel.tryGetTodayCrafts()
+
+        viewModel.loadData()
     }
 
     override fun categoryClick(data: String) {
@@ -55,7 +59,7 @@ class ShopFragmentMain : BaseFragment<ShopFragmentMainBinding>(ShopFragmentMainB
     private fun setObserver(){
         val todayArtistObserver = Observer<TodayArtistsResult>{ liveData ->
             binding.tvTodayArtisanName.text = getString(R.string.form_artist, liveData.name)
-            Glide.with(activity as MainActivity).load(liveData.profileImgUrl)
+            Glide.with(activity as MainActivity).load(liveData.profileImgUrl).into(binding.ivProfile)
             binding.tvTodayArtisanMajor.text = liveData.major
         }
         viewModel.todayArtist.observe(viewLifecycleOwner, todayArtistObserver)
@@ -65,10 +69,16 @@ class ShopFragmentMain : BaseFragment<ShopFragmentMainBinding>(ShopFragmentMainB
         }
         viewModel.todayCrafts.observe(viewLifecycleOwner, todayCraftObserver)
 
-        val newCraftObserver = Observer<ArrayList<NewCraft>> { liveData ->
+        val newCraftObserver = Observer<ArrayList<ClickData>> { liveData ->
             (binding.rvNewCraft.adapter as ClickImageAdapter).applyData(liveData)
         }
         viewModel.newCrafts.observe(viewLifecycleOwner, newCraftObserver)
+
+        val bannerObserver = Observer<ArrayList<String>>{ liveData ->
+            (binding.vp2Banner.adapter as Vp2BannerAdapter).applyData(liveData)
+            binding.tvBannerCount.text = getString(R.string.form_count, 1, binding.vp2Banner.adapter?.itemCount ?: 5)
+        }
+        viewModel.bannerData.observe(viewLifecycleOwner, bannerObserver)
     }
 
     private fun setRecyclerView(){
@@ -81,8 +91,16 @@ class ShopFragmentMain : BaseFragment<ShopFragmentMainBinding>(ShopFragmentMainB
         binding.rvTodayCraft.addItemDecoration(Craft2Decoration(activity as MainActivity))   // 똑같은 간격이라 그대로 사용
 
         binding.rvNewCraft.layoutManager = GridLayoutManager(activity as MainActivity, 3)
-        binding.rvNewCraft.adapter = ClickImageAdapter(activity as MainActivity, this)
+        binding.rvNewCraft.adapter = ClickImageAdapter(activity as MainActivity)
         binding.rvNewCraft.addItemDecoration(Grid3Decoration(activity as MainActivity))
+
+        binding.vp2Banner.adapter = Vp2BannerAdapter(activity as MainActivity)
+        binding.vp2Banner.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                binding.tvBannerCount.text = getString(R.string.form_count, position + 1, binding.vp2Banner.adapter?.itemCount ?: 5)
+            }
+        })
     }
 
     override fun itemClick(idx: Int) {
