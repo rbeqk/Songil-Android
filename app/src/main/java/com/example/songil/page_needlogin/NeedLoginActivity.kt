@@ -22,6 +22,7 @@ class NeedLoginActivity : BaseActivity<NeedloginActivityBinding>(R.layout.needlo
         // 테스트용!!!
         binding.ivLogo.setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java))
+            finish()
         }
 
 
