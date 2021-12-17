@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.example.songil.R
+import com.example.songil.data.CraftComment
 import com.example.songil.viewPager2.adapter.Vp2ImageAdapter
 import com.example.songil.databinding.ItemCraftCommentBinding
-import com.example.songil.page_craft.models.CraftReview
 
-class CraftCommentAdapter(private val context : Context, private val dataList : ArrayList<CraftReview>) : RecyclerView.Adapter<CraftCommentAdapter.ViewHolder>(){
+class CraftCommentAdapter(private val context : Context, private val commentData : ArrayList<CraftComment> = arrayListOf()) : RecyclerView.Adapter<CraftCommentAdapter.ViewHolder>(){
 
     private val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
     private lateinit var binding : ItemCraftCommentBinding
@@ -33,12 +33,12 @@ class CraftCommentAdapter(private val context : Context, private val dataList : 
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val imageCount = dataList[position].imgs.size
-        holder.nickName.text = dataList[position].userNickName
-        holder.date.text = dataList[position].date
-        holder.review.text = dataList[position].reviewContent
-        holder.photo.adapter = Vp2ImageAdapter(context, dataList[position].imgs)
+        val imageCount = commentData[position].imageUrl?.size ?: 0
+        holder.nickName.text = commentData[position].nickname
+        holder.date.text = commentData[position].createdAt
+        holder.review.text = commentData[position].content
         if (imageCount != 0){
+            holder.photo.adapter = Vp2ImageAdapter(context, commentData[position].imageUrl!!)
             holder.photo.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
@@ -52,5 +52,14 @@ class CraftCommentAdapter(private val context : Context, private val dataList : 
         }
     }
 
-    override fun getItemCount(): Int = dataList.size
+    override fun getItemCount(): Int = commentData.size
+
+    fun updateData(newData : ArrayList<CraftComment>){
+        val prevSize = commentData.size
+        val newSize = newData.size
+        for (i in prevSize until newSize){
+            commentData.add(newData[i])
+        }
+        notifyItemRangeInserted(prevSize, (newSize - prevSize))
+    }
 }

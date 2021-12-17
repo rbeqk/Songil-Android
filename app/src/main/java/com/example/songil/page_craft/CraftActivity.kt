@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import android.view.animation.TranslateAnimation
 import android.widget.Toast
+import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -14,7 +15,7 @@ import com.example.songil.R
 import com.example.songil.config.BaseActivity
 import com.example.songil.config.GlobalApplication
 import com.example.songil.databinding.CraftActivityBinding
-import com.example.songil.page_craft.shbpage_review.CraftFragmentReview
+import com.example.songil.page_craft.subpage_comment.CraftFragmentComment
 import com.example.songil.page_craft.subpage_ask.CraftFragmentAsk
 import com.example.songil.page_craft.subpage_detail.CraftFragmentDetail
 import com.example.songil.page_inquiry.InquiryActivity
@@ -24,7 +25,7 @@ class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity
 
     private lateinit var viewModel : CraftViewModel
     private lateinit var detailFragment : CraftFragmentDetail
-    private lateinit var reviewFragment : CraftFragmentReview
+    private lateinit var reviewFragment : CraftFragmentComment
     private lateinit var askFragment : CraftFragmentAsk
     private lateinit var currentFragment : Fragment
 
@@ -39,6 +40,7 @@ class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity
 
         setObserver()
         setButton()
+        setNestedScrollView()
 
         viewModel.setCraftIdx(idx)
 
@@ -142,6 +144,14 @@ class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity
         }
     }
 
+    private fun setNestedScrollView(){
+        binding.layoutNested.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, _, scrollY, _, _ ->
+            if (currentFragment is CraftFragmentComment && scrollY == v.getChildAt(0).measuredHeight - v.measuredHeight){
+                (currentFragment as CraftFragmentComment).updateComment()
+            }
+        })
+    }
+
     private fun applyToView(){
         Glide.with(this).load(viewModel.productDetailInfo.mainImageUrl).into(binding.ivThumbnail)
         if (viewModel.productDetailInfo.artistImageUrl != null) Glide.with(this).load(viewModel.productDetailInfo.artistImageUrl).into(binding.ivProfile)
@@ -161,9 +171,9 @@ class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity
         askFragment = CraftFragmentAsk(viewModel.productDetailInfo.artistImageUrl, viewModel.productDetailInfo.artistName)
         supportFragmentManager.beginTransaction().add(binding.layoutFragment.id, askFragment).commit()
         supportFragmentManager.beginTransaction().hide(askFragment).commit()
-/*        reviewFragment = CraftFragmentReview(viewModel.reviews)
+        reviewFragment = CraftFragmentComment()
         supportFragmentManager.beginTransaction().add(binding.layoutFragment.id, reviewFragment).commit()
-        supportFragmentManager.beginTransaction().hide(reviewFragment).commit()*/
+        supportFragmentManager.beginTransaction().hide(reviewFragment).commit()
         detailFragment = CraftFragmentDetail(viewModel.productDetailInfo)
         supportFragmentManager.beginTransaction().add(binding.layoutFragment.id, detailFragment).commit()
         currentFragment = detailFragment

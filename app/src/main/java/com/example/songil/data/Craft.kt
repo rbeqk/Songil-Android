@@ -8,6 +8,6 @@ data class ProductDetailInfo(val productIdx : Int, val isNew : String, val mainI
                              val detailImageUrls : ArrayList<String>, val artistIdx : Int, val artistName : String, val artistIntroduction : String, val totalReviewCnt : Int,
                              val artistImageUrl : String? = null)
 
-data class ProductReview(val reviewIdx : Int, val userIdx : Int, val nickname : String, val createAt : String, val imageUrl : ArrayList<String> ?= null, val content : String, val isReported : String)
-
 data class Craft2(val productIdx : Int, val imageUrl : String, val name : String, val artist : String, val price : Int, val isNew : String)
+
+data class CraftComment(val commentIdx : Int, val userIdx : Int, val nickname : String, val createdAt : String, val imageUrl : ArrayList<String>?, val content : String, val isReported : String)
