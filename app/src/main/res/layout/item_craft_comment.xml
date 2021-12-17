@@ -74,8 +74,6 @@
             app:layout_constraintTop_toBottomOf="@id/vp2_photo"
             app:layout_constraintStart_toStartOf="@id/guideline_start"
             app:layout_constraintEnd_toEndOf="@id/guideline_end"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="4dp"
             android:layout_marginTop="12dp"
             android:fontFamily="@font/spoqahansansneo_light"
             tools:text="과실이 가슴이 무한한 아니한 얼마나 군영과 듣는다. 방황하였으며, 얼음과 이 전인 우리 오직 얼마나 우는 피다. 그들은 밝은 우리 노년에게서 구하지 것이다."
