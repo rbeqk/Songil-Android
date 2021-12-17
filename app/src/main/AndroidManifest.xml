@@ -55,6 +55,7 @@
         <activity android:name=".page_imagepicker.ImagePickerActivity"/>
         <activity android:name=".page_artist.ArtistActivity"/>
         <activity android:name=".page_notice.NoticeActivity"/>
+        <activity android:name=".webview_address.WebAddressActivity"/>
     </application>
 
 </manifest>

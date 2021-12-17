@@ -10,4 +10,6 @@ data class ProductDetailInfo(val productIdx : Int, val isNew : String, val mainI
 
 data class Craft2(val productIdx : Int, val imageUrl : String, val name : String, val artist : String, val price : Int, val isNew : String)
 
+data class Craft4(val productIdx : Int, val imageUrl : String, val name : String, val artist : String, val price : Int, val count : Int)
+
 data class CraftComment(val commentIdx : Int, val userIdx : Int, val nickname : String, val createdAt : String, val imageUrl : ArrayList<String>?, val content : String, val isReported : String)
