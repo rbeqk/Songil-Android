@@ -50,21 +50,10 @@
         <activity android:name=".page_shippinginfo.ShippinginfoActivity" android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".page_comment.CommentActivity"/>
         <activity android:name=".page_story.StoryActivity"/>
-        <activity android:name=".page_storywrite.StoryWriteActivity">
-<!--            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
-        </activity>
+        <activity android:name=".page_storywrite.StoryWriteActivity"/>
         <activity android:name=".page_imagepicker.ImagePickerActivity"/>
-        <activity android:name=".page_artist.ArtistActivity">
-<!--            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
-        </activity>
+        <activity android:name=".page_artist.ArtistActivity"/>
+        <activity android:name=".page_notice.NoticeActivity"/>
     </application>
 
 </manifest>

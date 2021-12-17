@@ -1,5 +1,6 @@
 package com.example.songil.page_with
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
@@ -10,6 +11,7 @@ import com.example.songil.R
 import com.example.songil.config.BaseFragment
 import com.example.songil.databinding.WithFragmentMainBinding
 import com.example.songil.page_main.MainActivity
+import com.example.songil.page_notice.NoticeActivity
 import com.example.songil.page_with.with_abtest.WithFragmentAbtest
 import com.example.songil.page_with.with_qna.WithFragmentQna
 import com.example.songil.page_with.with_story.WithFragmentStory
@@ -51,6 +53,11 @@ class WithFragment : BaseFragment<WithFragmentMainBinding>(WithFragmentMainBindi
         binding.btnStory.setOnClickListener { changeFragment(0) }
         binding.btnQna.setOnClickListener { changeFragment(1) }
         binding.btnAbTest.setOnClickListener { changeFragment(2) }
+
+        binding.btnNotice.setOnClickListener {
+            startActivity(Intent(activity as MainActivity, NoticeActivity::class.java))
+            (activity as MainActivity).overridePendingTransition(R.anim.from_right, R.anim.to_left)
+        }
     }
 
     private fun setRecyclerView(){

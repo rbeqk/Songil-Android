@@ -15,3 +15,5 @@ data class ABVoteInfo(val voteImage : String, val totalVoteCnt : Int, val percen
 data class ABTestViewInfo(val abTest : ABTest, var choice : String? = null) // choice 는 투표 전 클릭한 상태를 표현하기 위해 사용되는 변수
 
 data class HotTalk(val category : String, val idx : Int, val title : String, val commentCnt : Int?, val artistImageUrl : String?)
+
+data class WithNotice(val noticeIdx : Int, val userName : String, val notice : String, val deadline : String)
