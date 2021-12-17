@@ -277,6 +277,7 @@
     <string name="do_vote">투표하기</string>
     <string name="do_re_vote">재투표하기</string>
     <string name="closed_voting">마감된 투표입니다.</string>
+    <string name="form_vote_rate">%d표 (%d)</string>
     <string name="register">등록</string>
     <string name="comment_reply">답글</string>
     <string name="writer">작성자</string>
