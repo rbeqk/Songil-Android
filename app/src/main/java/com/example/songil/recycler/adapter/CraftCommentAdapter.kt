@@ -1,6 +1,7 @@
 package com.example.songil.recycler.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,8 @@ import com.example.songil.R
 import com.example.songil.data.CraftComment
 import com.example.songil.viewPager2.adapter.Vp2ImageAdapter
 import com.example.songil.databinding.ItemCraftCommentBinding
+import com.example.songil.page_craft.CraftActivity
+import com.example.songil.page_report.ReportActivity
 
 class CraftCommentAdapter(private val context : Context, private val commentData : ArrayList<CraftComment> = arrayListOf()) : RecyclerView.Adapter<CraftCommentAdapter.ViewHolder>(){
 
@@ -49,6 +52,10 @@ class CraftCommentAdapter(private val context : Context, private val commentData
         } else {
             holder.photo.visibility = View.GONE
             holder.photoCount.visibility = View.GONE
+        }
+        holder.reportBtn.setOnClickListener {
+            holder.itemView.context.startActivity(Intent(context, ReportActivity::class.java))
+            (holder.itemView.context as CraftActivity).overridePendingTransition(R.anim.from_right, R.anim.none)
         }
     }
 

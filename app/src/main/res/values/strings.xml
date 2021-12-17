@@ -71,6 +71,8 @@
     <string name="duplicate_spam">도배 및 스팸</string>
     <string name="self_write">직접 작성 (150자 내외)</string>
     <string name="write_report_reason">신고 사유를 작성해주세요.</string>
+    <string name="report_receive">신고 완료</string>
+    <string name="report_receive_message">의견 감사합니다\n검토 후 빠른 조치하겠습니다</string>
 
     <!-- 주문서 작성 페이지 관련 -->
     <string name="write_order">주문서 작성</string>
