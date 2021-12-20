@@ -12,6 +12,7 @@ import com.example.songil.config.BaseFragment
 import com.example.songil.databinding.WithFragmentMainBinding
 import com.example.songil.page_main.MainActivity
 import com.example.songil.page_notice.NoticeActivity
+import com.example.songil.page_storywrite.StoryWriteActivity
 import com.example.songil.page_with.with_abtest.WithFragmentAbtest
 import com.example.songil.page_with.with_qna.WithFragmentQna
 import com.example.songil.page_with.with_story.WithFragmentStory
@@ -55,8 +56,13 @@ class WithFragment : BaseFragment<WithFragmentMainBinding>(WithFragmentMainBindi
         binding.btnAbTest.setOnClickListener { changeFragment(2) }
 
         binding.btnNotice.setOnClickListener {
-            startActivity(Intent(activity as MainActivity, NoticeActivity::class.java))
-            (activity as MainActivity).overridePendingTransition(R.anim.from_right, R.anim.to_left)
+            (activity as MainActivity).startActivityHorizontal(Intent(activity as MainActivity, NoticeActivity::class.java))
+        }
+
+        binding.btnWrite.setOnClickListener {
+            if (currentFragment is WithFragmentStory){
+                (activity as MainActivity).startActivityHorizontal(Intent(activity as MainActivity, StoryWriteActivity::class.java))
+            }
         }
     }
 

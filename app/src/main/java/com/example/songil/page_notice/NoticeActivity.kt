@@ -26,7 +26,7 @@ class NoticeActivity : BaseActivity<NoticeActivityBinding>(R.layout.notice_activ
 
     private fun setButton(){
         binding.btnBack.setOnClickListener {
-            onBackPressed()
+            onBackPressedHorizontal()
         }
     }
 
@@ -40,10 +40,5 @@ class NoticeActivity : BaseActivity<NoticeActivityBinding>(R.layout.notice_activ
             (binding.rvNotice.adapter as NoticeAdapter).applyData(liveData)
         }
         viewModel.noticeList.observe(this, noticeObserver)
-    }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-        overridePendingTransition(R.anim.from_left_30, R.anim.to_right)
     }
 }

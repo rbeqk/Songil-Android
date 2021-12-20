@@ -81,7 +81,7 @@ class BasketActivity : BaseActivity<ShoppingbasketActivityBinding>(R.layout.shop
             Log.d("test", "payment ${viewModel.itemList}")
         }
         binding.btnBack.setOnClickListener {
-            Log.d("test", "${viewModel.itemList}")
+            onBackPressedHorizontal()
         }
     }
 

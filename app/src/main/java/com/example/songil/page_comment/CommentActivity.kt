@@ -34,6 +34,7 @@ class CommentActivity : BaseActivity<CommentActivityBinding>(R.layout.comment_ac
 
         setEditText()
         setRecyclerView()
+        setButton()
     }
 
     private fun setRecyclerView(){
@@ -54,6 +55,12 @@ class CommentActivity : BaseActivity<CommentActivityBinding>(R.layout.comment_ac
             }
 
         })
+    }
+
+    private fun setButton(){
+        binding.btnBack.setOnClickListener {
+            onBackPressedHorizontal()
+        }
     }
 
     override fun photoItemClick() {

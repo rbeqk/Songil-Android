@@ -8,5 +8,13 @@ import com.example.songil.databinding.StoryActivityBinding
 class StoryActivity : BaseActivity<StoryActivityBinding>(R.layout.story_activity){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        setButton()
+    }
+
+    private fun setButton(){
+        binding.btnBack.setOnClickListener {
+            onBackPressedHorizontal()
+        }
     }
 }

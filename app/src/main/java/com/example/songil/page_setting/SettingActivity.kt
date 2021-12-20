@@ -14,7 +14,7 @@ class SettingActivity : BaseActivity<SettingActivityBinding>(R.layout.setting_ac
 
     private fun setButton(){
         binding.btnBack.setOnClickListener {
-            finish()
+            onBackPressedHorizontal()
         }
     }
 }

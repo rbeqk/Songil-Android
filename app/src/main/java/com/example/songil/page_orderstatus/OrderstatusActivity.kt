@@ -20,6 +20,7 @@ class OrderstatusActivity : BaseActivity<OrderstatusActivityBinding>(R.layout.or
         viewModel = ViewModelProvider(this)[OrderstatusViewModel::class.java]
         setRecyclerView()
         setObserver()
+        setButton()
         viewModel.getData()
     }
 
@@ -33,5 +34,11 @@ class OrderstatusActivity : BaseActivity<OrderstatusActivityBinding>(R.layout.or
             (binding.rvOrders.adapter as OrdersAdapter).applyData(liveData)
         }
         viewModel.ordersData.observe(this, orderStatusObserver)
+    }
+
+    private fun setButton(){
+        binding.btnBack.setOnClickListener {
+            onBackPressedHorizontal()
+        }
     }
 }

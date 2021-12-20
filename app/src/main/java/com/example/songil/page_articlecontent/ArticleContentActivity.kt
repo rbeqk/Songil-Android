@@ -22,6 +22,7 @@ class ArticleContentActivity : BaseActivity<ArticleActivityContentBinding>(R.lay
 
         setRecyclerView()
         setObserver()
+        setButton()
 
         viewModel.tempGetArticle()
     }
@@ -53,5 +54,15 @@ class ArticleContentActivity : BaseActivity<ArticleActivityContentBinding>(R.lay
         binding.tvEditorName.text = viewModel.articleData.editorName
         binding.tvUploadDate.text = viewModel.articleData.createdAt
         binding.tvCategory.text = "인터뷰"
+    }
+
+    private fun setButton(){
+        binding.btnBack.setOnClickListener {
+            onBackPressedHorizontal()
+        }
+
+        binding.btnHome.setOnClickListener {
+            onBackPressedHorizontal()
+        }
     }
 }

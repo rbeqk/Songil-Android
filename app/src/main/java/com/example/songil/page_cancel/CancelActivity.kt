@@ -57,7 +57,7 @@ class CancelActivity : BaseActivity<CancelActivityBinding>(R.layout.cancel_activ
 
     private fun setButton(){
         binding.btnBack.setOnClickListener {
-            finish()
+            onBackPressedHorizontal()
         }
         binding.btnCancel.setOnClickListener {
             val dialogFragment = CancelDialog()

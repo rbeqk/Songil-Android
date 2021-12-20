@@ -35,7 +35,7 @@ class MycommentActivity : BaseActivity<MycommentActivityBinding>(R.layout.mycomm
 
     private fun setButton(){
         binding.btnBack.setOnClickListener {
-            finish()
+            onBackPressedHorizontal()
         }
     }
 }

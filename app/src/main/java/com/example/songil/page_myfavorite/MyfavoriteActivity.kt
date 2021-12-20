@@ -25,6 +25,7 @@ class MyfavoriteActivity : BaseActivity<MydetailActivityBinding>(R.layout.mydeta
         binding.tvTitle.text = "찜한 상품"
         setRecyclerView()
         setObserver()
+        setButton()
 
         viewModel.getCraftData()
     }
@@ -40,6 +41,12 @@ class MyfavoriteActivity : BaseActivity<MydetailActivityBinding>(R.layout.mydeta
             (binding.rvContent.adapter as Craft1Adapter).applyData(liveData)
         }
         viewModel.craftList.observe(this, craftObserver)
+    }
+
+    private fun setButton(){
+        binding.btnBack.setOnClickListener {
+            onBackPressedHorizontal()
+        }
     }
 
     override fun itemClick(idx: Int) {

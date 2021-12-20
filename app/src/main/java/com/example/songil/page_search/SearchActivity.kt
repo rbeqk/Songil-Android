@@ -27,6 +27,7 @@ class SearchActivity : BaseActivity<SearchActivityBinding>(R.layout.search_activ
         supportFragmentManager.beginTransaction().add(binding.layoutFragment.id, searchingFragment).commit()
 
         setEditTextView()
+        setButton()
     }
 
     private fun setEditTextView(){
@@ -52,6 +53,12 @@ class SearchActivity : BaseActivity<SearchActivityBinding>(R.layout.search_activ
                 return@setOnEditorActionListener true
             }
             return@setOnEditorActionListener false
+        }
+    }
+
+    private fun setButton(){
+        binding.btnBack.setOnClickListener {
+            finish()
         }
     }
 }

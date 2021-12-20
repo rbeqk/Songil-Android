@@ -9,6 +9,7 @@ import com.example.songil.databinding.NeedloginActivityBinding
 import com.example.songil.page_login.LoginActivity
 import com.example.songil.page_main.MainActivity
 import com.example.songil.page_signup.SignupActivity
+import com.example.songil.utils.setStatusBarBlack
 
 class NeedLoginActivity : BaseActivity<NeedloginActivityBinding>(R.layout.needlogin_activity) {
 
@@ -16,6 +17,8 @@ class NeedLoginActivity : BaseActivity<NeedloginActivityBinding>(R.layout.needlo
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        setStatusBarBlack(this, true)
 
         isFirst = intent.getBooleanExtra("isFirst", false)
 
@@ -35,22 +38,25 @@ class NeedLoginActivity : BaseActivity<NeedloginActivityBinding>(R.layout.needlo
         if (GlobalApplication.globalSharedPreferences.contains(GlobalApplication.X_ACCESS_TOKEN)){
             if (isFirst){
                 startActivity(Intent(this, MainActivity::class.java))
-                finish()
+                onBackPressedVertical()
             } else {
-                finish()
+                onBackPressedVertical()
             }
         }
     }
 
     fun goToBack(){
-        finish()
+        onBackPressedVertical()
+        //finish()
     }
 
     fun goToLogin(){
-        startActivity(Intent(this, LoginActivity::class.java))
+        startActivityHorizontal(Intent(this, LoginActivity::class.java))
+        //startActivity(Intent(this, LoginActivity::class.java))
     }
 
     fun goToSignUp(){
-        startActivity(Intent(this, SignupActivity::class.java))
+        startActivityHorizontal(Intent(this, SignupActivity::class.java))
+        //startActivity(Intent(this, SignupActivity::class.java))
     }
 }

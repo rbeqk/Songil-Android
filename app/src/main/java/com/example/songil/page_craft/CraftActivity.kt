@@ -140,7 +140,7 @@ class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity
         }
 
         binding.btnBack.setOnClickListener {
-            finish()
+            onBackPressedHorizontal()
         }
     }
 

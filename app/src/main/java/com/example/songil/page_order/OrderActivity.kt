@@ -50,6 +50,10 @@ class OrderActivity : BaseActivity<OrderActivityBinding>(R.layout.order_activity
         binding.btnSearchAddress.setOnClickListener {
             addressResult.launch(Intent(this, WebAddressActivity::class.java))
         }
+
+        binding.btnBack.setOnClickListener {
+            onBackPressedHorizontal()
+        }
     }
 
     private fun setRecyclerView(){

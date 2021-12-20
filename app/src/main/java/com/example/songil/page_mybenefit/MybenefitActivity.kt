@@ -23,10 +23,7 @@ class MybenefitActivity : BaseActivity<MydetailActivityBinding>(R.layout.mydetai
 
         setRecyclerView()
         setObserver()
-
-        binding.btnBack.setOnClickListener {
-            finish()
-        }
+        setButton()
 
         viewModel.getBenefitData()
     }
@@ -44,5 +41,9 @@ class MybenefitActivity : BaseActivity<MydetailActivityBinding>(R.layout.mydetai
         viewModel.benefitDatas.observe(this, benefitObserver)
     }
 
-
+    private fun setButton(){
+        binding.btnBack.setOnClickListener {
+            onBackPressedHorizontal()
+        }
+    }
 }

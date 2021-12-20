@@ -16,5 +16,13 @@ class WithdrawalActivity : BaseActivity<WithdrawalActivityBinding>(R.layout.with
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
+        setButton()
+
+    }
+
+    private fun setButton(){
+        binding.btnBack.setOnClickListener {
+            onBackPressedHorizontal()
+        }
     }
 }

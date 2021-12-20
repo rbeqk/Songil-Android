@@ -59,6 +59,10 @@ class ShopActivityCategory : BaseActivity<ShopActivityCategoryBinding>(R.layout.
             dialogFragment.show(supportFragmentManager, dialogFragment.tag)
         }
 
+        binding.btnBack.setOnClickListener {
+            onBackPressedHorizontal()
+        }
+
         binding.btnShopCategory.setOnClickListener {
             if (binding.rvCategory.visibility != View.VISIBLE){
                 val backgroundAnim = AlphaAnimation(0f, 1f)
@@ -180,7 +184,8 @@ class ShopActivityCategory : BaseActivity<ShopActivityCategoryBinding>(R.layout.
         // data 클릭했을 때 해당 activity 로 이동
         val intent = Intent(this, CraftActivity::class.java)
         intent.putExtra(GlobalApplication.CRAFT_IDX, dataKey)
-        startActivity(intent)
+        //startActivity(intent)
+        startActivityHorizontal(intent)
     }
 
     override fun clickLike(dataKey: Int, position: Int) {

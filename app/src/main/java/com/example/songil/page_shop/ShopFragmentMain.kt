@@ -53,7 +53,8 @@ class ShopFragmentMain : BaseFragment<ShopFragmentMainBinding>(ShopFragmentMainB
     override fun categoryClick(data: String) {
         val intent = Intent(activity as MainActivity, ShopActivityCategory::class.java)
         intent.putExtra("category", data)
-        startActivity(intent)
+        //startActivity(intent)
+        (activity as MainActivity).startActivityHorizontal(intent)
     }
 
     private fun setObserver(){

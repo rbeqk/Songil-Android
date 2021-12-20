@@ -39,6 +39,13 @@ class StoryWriteActivity : BaseActivity<StoryActivityWriteBinding>(R.layout.stor
 
         setRecyclerView()
         setEditText()
+        setButton()
+    }
+
+    private fun setButton(){
+        binding.btnBack.setOnClickListener {
+            onBackPressedHorizontal()
+        }
     }
 
     private fun setEditText(){
