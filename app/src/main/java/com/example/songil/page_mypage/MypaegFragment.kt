@@ -17,9 +17,11 @@ import com.example.songil.page_myfavorite.MyfavoriteActivity
 import com.example.songil.page_needlogin.NeedLoginActivity
 import com.example.songil.page_orderstatus.OrderstatusActivity
 import com.example.songil.page_setting.SettingActivity
+import com.example.songil.popup_logout.LogoutDialog
+import com.example.songil.popup_logout.popup_interface.PopupLogoutView
 import com.example.songil.popup_warning.WarningDialog
 
-class MypaegFragment : BaseFragment<MypageFragmentBinding>(MypageFragmentBinding::bind, R.layout.mypage_fragment){
+class MypaegFragment : BaseFragment<MypageFragmentBinding>(MypageFragmentBinding::bind, R.layout.mypage_fragment), PopupLogoutView{
 
     private lateinit var viewModel: MypageViewModel
 
@@ -66,7 +68,8 @@ class MypaegFragment : BaseFragment<MypageFragmentBinding>(MypageFragmentBinding
         }
 
         binding.tvbtnLogout.setOnClickListener {
-            viewModel.tryLogout()
+            val logoutConfirmDialog = LogoutDialog(this)
+            logoutConfirmDialog.show(childFragmentManager, logoutConfirmDialog.tag)
         }
 
         binding.btnFavoriteProduct.setOnClickListener {
@@ -93,5 +96,9 @@ class MypaegFragment : BaseFragment<MypageFragmentBinding>(MypageFragmentBinding
             val dialogFragment = WarningDialog()
             dialogFragment.show(childFragmentManager, dialogFragment.tag)
         }
+    }
+
+    override fun logout() {
+        viewModel.tryLogout()
     }
 }

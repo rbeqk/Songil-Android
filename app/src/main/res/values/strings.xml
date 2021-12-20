@@ -179,6 +179,9 @@
     <string name="benefit">베네핏</string>
     <string name="change_to_artist_page">작가페이지로 전환</string>
     <string name="zero_integer">0</string>
+    <string name="confirm_logout">로그아웃\n하시겠습니까?</string>
+    <string name="yes">네</string>
+    <string name="no">아니요</string>
 
     <!-- home page 관련 -->
     <string name="trend_craft_eng">TREND CRAFT</string>
