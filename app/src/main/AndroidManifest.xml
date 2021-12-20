@@ -56,6 +56,7 @@
         <activity android:name=".page_artist.ArtistActivity"/>
         <activity android:name=".page_notice.NoticeActivity"/>
         <activity android:name=".webview_address.WebAddressActivity"/>
+        <activity android:name=".page_notification.NotificationActivity"/>
     </application>
 
 </manifest>
