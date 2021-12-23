@@ -27,15 +27,15 @@ class Vp2MainArticleAdapter(private val context : Context) : RecyclerView.Adapte
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.title.text = dataList[position].articleTitle
+        holder.title.text = dataList[position].title
         holder.subTitle.text = dataList[position].editorName
-        when (dataList[position].articleType){
-            "magazine" -> holder.type.text = "매거진"
-            "interview"-> holder.type.text = "인터뷰"
-            "special" -> holder.type.text = "기획전"
+        when (dataList[position].articleCategoryIdx){
+            1-> holder.type.text = "인터뷰"
+            2 -> holder.type.text = "매거진"
+            3 -> holder.type.text = "기획전"
             else -> holder.type.text = "아티클"
         }
-        Glide.with(context).load(dataList[position].articleThumbNail).into(holder.img)
+        Glide.with(context).load(dataList[position].mainImageUrl).into(holder.img)
     }
 
     override fun getItemCount(): Int = dataList.size

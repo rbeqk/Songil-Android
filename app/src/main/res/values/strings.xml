@@ -241,6 +241,7 @@
 
     <!-- 아티클 상세 페이지 관련 -->
     <string name="related_article_eng">RELATED ARTICLE</string>
+    <string name="form_name_by">by. %s</string>
 
     <!-- 아이템이 없는 페이지 관련 -->
     <string name="no_product_yet">아직 등록된 상품이 없어요.</string>

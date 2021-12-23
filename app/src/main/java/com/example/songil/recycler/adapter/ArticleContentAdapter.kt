@@ -68,11 +68,11 @@ class ArticleContentAdapter(private val context : Context) : RecyclerView.Adapte
                     Glide.with(context).load(dataList[position].imageData).into((holder as ImageViewHolder).image)
             }
             else -> {
-                if (dataList[position].productData != null){
-                    (holder as ProductViewHolder).artistName.text = dataList[position].productData!!.artistName
-                    holder.price.text = context.getString(R.string.form_price_won, dataList[position].productData!!.price)
-                    holder.productName.text = dataList[position].productData!!.name
-                    Glide.with(context).load(dataList[position].productData!!.imageUrl).into(holder.productImage)
+                if (dataList[position].craftData != null){
+                    (holder as ProductViewHolder).artistName.text = dataList[position].craftData!!.artistName
+                    holder.price.text = context.getString(R.string.form_price_won, dataList[position].craftData!!.price)
+                    holder.productName.text = dataList[position].craftData!!.name
+                    Glide.with(context).load(dataList[position].craftData!!.mainImageUrl).into(holder.productImage)
                     if (position == dataList.size - 1)
                         holder.line.visibility = View.GONE
                 }

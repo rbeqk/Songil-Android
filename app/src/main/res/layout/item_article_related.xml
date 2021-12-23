@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_photo"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:scaleType="centerCrop"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="#4c000000"/>
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="24dp"
+            android:lines="2"
+            android:maxLines="2"
+            tools:text="을지로의 신진 공예작가"
+            android:ellipsize="end"
+            android:textColor="@color/songil_1"
+            android:lineSpacingExtra="4sp"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_editor"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/tv_title"
+            app:layout_constraintEnd_toEndOf="@id/tv_title"
+            app:layout_constraintTop_toBottomOf="@id/tv_title"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="8dp"
+            tools:text="by. 손길에디터"
+            android:maxLines="1"
+            android:textSize="12sp"
+            android:fontFamily="@font/spoqahansansneo_regular"
+            android:textColor="@color/songil_1"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

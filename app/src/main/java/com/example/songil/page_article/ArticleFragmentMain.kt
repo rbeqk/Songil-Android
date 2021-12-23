@@ -38,8 +38,7 @@ class ArticleFragmentMain : BaseFragment<ArticleFragmentMainBinding>(ArticleFrag
         }
 
         viewModel.articleData.observe(viewLifecycleOwner, articleObserver)
-        //viewModel.tryGetArticleData()
-        viewModel.getArticleData()
+        viewModel.tryGetArticleData()
     }
 
     private fun setViewPager(){

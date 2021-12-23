@@ -16,12 +16,9 @@ class HomeViewModel : ViewModel() {
 
     private fun getArticleData(){
         val fromNetwork = arrayListOf(
-                SimpleArticle("https://pds.joins.com/news/component/joongang_sunday/2010/09/19004519.jpg", "낭만주의가 낳은 고정 관념", "By. 손길", "아티클"),
-                SimpleArticle("https://staccatoh.com/wp-content/uploads/2019/12/UT_9963_resize.jpg", "예술가들과 그들의 공간", "By. 손길", "아티클"),
-                SimpleArticle("https://www.artinsight.co.kr/data/tmp/1905/98f3d9dec6db4f8bddb1faba8cbd1160_W8nnbqTE8MC5U3HD.jpg", "사람 - 진정한 예술가란", "By. 손길", "인터뷰"),
-                SimpleArticle("https://pds.joins.com/news/component/joongang_sunday/2010/09/19004519.jpg", "낭만주의가 낳은 고정 관념", "By. 손길", "아티클"),
-                SimpleArticle("https://staccatoh.com/wp-content/uploads/2019/12/UT_9963_resize.jpg", "예술가들과 그들의 공간", "By. 손길", "아티클"),
-                SimpleArticle("https://www.artinsight.co.kr/data/tmp/1905/98f3d9dec6db4f8bddb1faba8cbd1160_W8nnbqTE8MC5U3HD.jpg", "사람 - 진정한 예술가란", "By. 손길", "인터뷰"))
+                SimpleArticle(articleIdx = 1, articleCategoryIdx = 1, mainImageUrl = "https://pds.joins.com/news/component/joongang_sunday/2010/09/19004519.jpg", title =  "낭만주의가 낳은 고정 관념",editorName =  "By. 손길", editorIdx =  1),
+                SimpleArticle(articleIdx = 2, articleCategoryIdx = 3, mainImageUrl = "https://staccatoh.com/wp-content/uploads/2019/12/UT_9963_resize.jpg", title =  "예술가들과 그들의 공간",editorName =  "By. 손길", editorIdx =  1),
+                SimpleArticle(articleIdx = 3, articleCategoryIdx = 1, mainImageUrl = "https://www.artinsight.co.kr/data/tmp/1905/98f3d9dec6db4f8bddb1faba8cbd1160_W8nnbqTE8MC5U3HD.jpg", title =  "사람 - 진정한 예술가란",editorName =  "By. 손길", editorIdx =  2))
         articleData.value = fromNetwork
     }
 

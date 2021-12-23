@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.songil.config.GlobalApplication
 import com.example.songil.data.SimpleArticle
 import com.example.songil.databinding.ItemArticleTitleVp2Binding
 import com.example.songil.page_articlecontent.ArticleContentActivity
@@ -30,17 +31,18 @@ class Vp2ArticleTitleAdapter(private val context: Context) : RecyclerView.Adapte
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.articleEditor.text = articleList[position].editorName
-        holder.articleTitle.text = articleList[position].articleTitle
-        Glide.with(context).load(articleList[position].articleThumbNail).into(holder.thumbnail)
-        when (articleList[position].articleType){
-            "magazine" -> holder.articleType.text = "매거진"
-            "interview"-> holder.articleType.text = "인터뷰"
-            "special" -> holder.articleType.text = "기획전"
+        holder.articleTitle.text = articleList[position].title
+        Glide.with(context).load(articleList[position].mainImageUrl).into(holder.thumbnail)
+        when (articleList[position].articleCategoryIdx){
+            1-> holder.articleType.text = "인터뷰"
+            2 -> holder.articleType.text = "매거진"
+            3 -> holder.articleType.text = "기획전"
             else -> holder.articleType.text = "아티클"
         }
-        //holder.articleType.text = articleList[position].articleType
         holder.thumbnail.setOnClickListener {
-            context.startActivity(Intent(context, ArticleContentActivity::class.java))
+            val intent = Intent(context, ArticleContentActivity::class.java)
+            intent.putExtra(GlobalApplication.ARTICLE_IDX, articleList[position].articleIdx)
+            context.startActivity(intent)
         }
     }
 
