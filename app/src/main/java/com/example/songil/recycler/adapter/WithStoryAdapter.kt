@@ -1,5 +1,6 @@
 package com.example.songil.recycler.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
@@ -7,8 +8,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.songil.R
+import com.example.songil.config.BaseActivity
+import com.example.songil.config.GlobalApplication
 import com.example.songil.data.FrontStory
 import com.example.songil.databinding.ItemStoryBinding
+import com.example.songil.page_story.StoryActivity
 
 class WithStoryAdapter(diffCallback : DiffUtil.ItemCallback<FrontStory>) : PagingDataAdapter<FrontStory, WithStoryAdapter.FrontStoryViewHolder>(diffCallback) {
 
@@ -22,7 +26,9 @@ class WithStoryAdapter(diffCallback : DiffUtil.ItemCallback<FrontStory>) : Pagin
             holder.title.text = storyItem.title
             holder.userName.text = storyItem.userName
             holder.root.setOnClickListener {
-
+                val intent = Intent(holder.itemView.context, StoryActivity::class.java)
+                intent.putExtra(GlobalApplication.STORY_IDX, 1)
+                (holder.itemView.context as BaseActivity<*>).startActivityHorizontal(intent)
             }
         }
     }

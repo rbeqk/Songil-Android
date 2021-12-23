@@ -1,5 +1,6 @@
 package com.example.songil.recycler.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,8 +9,10 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.songil.R
+import com.example.songil.config.BaseActivity
 import com.example.songil.data.ABTestViewInfo
 import com.example.songil.databinding.ItemAbtestBinding
+import com.example.songil.page_abtest.AbtestActivity
 
 class WithABTestAdapter() : RecyclerView.Adapter<WithABTestAdapter.ABTestViewHolder>(){
 
@@ -30,6 +33,7 @@ class WithABTestAdapter() : RecyclerView.Adapter<WithABTestAdapter.ABTestViewHol
         val layoutB = binding.selectPhotoB
         val rateB = binding.tvRateB
         val checkImageB = binding.ivCheckB
+        val root = binding.root
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ABTestViewHolder {
@@ -42,6 +46,12 @@ class WithABTestAdapter() : RecyclerView.Adapter<WithABTestAdapter.ABTestViewHol
         val abTest = abTestData[position].abTest
 
         val select = abTest.voteInfo?.voteImage // select == null 이면 투표를 아직 안한 상태
+
+        holder.root.setOnClickListener {
+            val intent = Intent(holder.itemView.context, AbtestActivity::class.java)
+            intent.putExtra("idx", 0)
+            (holder.itemView.context as BaseActivity<*>).startActivityHorizontal(intent)
+        }
 
         holder.artistName.text = abTest.artistName
         holder.content.text = abTest.content
