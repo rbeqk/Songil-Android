@@ -19,23 +19,23 @@ class MainActivity : BaseActivity<MainActivityBinding>(R.layout.main_activity){
             when(it.itemId){
                 R.id.bottom_home -> {
                     setStatusBarBlack(this, false)
-                    supportFragmentManager.beginTransaction().replace(binding.layoutFragment.id, HomeFragment()).commit()
+                    supportFragmentManager.beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).replace(binding.layoutFragment.id, HomeFragment()).commit()
                 }
                 R.id.bottom_shop -> {
                     setStatusBarBlack(this, false)
-                    supportFragmentManager.beginTransaction().replace(binding.layoutFragment.id, ShopFragmentMain()).commit()
+                    supportFragmentManager.beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).replace(binding.layoutFragment.id, ShopFragmentMain()).commit()
                 }
                 R.id.bottom_with -> {
                     setStatusBarBlack(this, true)
-                    supportFragmentManager.beginTransaction().replace(binding.layoutFragment.id, WithFragment()).commit()
+                    supportFragmentManager.beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).replace(binding.layoutFragment.id, WithFragment()).commit()
                 }
                 R.id.bottom_article -> {
                     setStatusBarBlack(this, true)
-                    supportFragmentManager.beginTransaction().replace(binding.layoutFragment.id, ArticleFragmentMain()).commit()
+                    supportFragmentManager.beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).replace(binding.layoutFragment.id, ArticleFragmentMain()).commit()
                 }
                 else -> {
                     setStatusBarBlack(this, false)
-                    supportFragmentManager.beginTransaction().replace(binding.layoutFragment.id, MypaegFragment()).commit()
+                    supportFragmentManager.beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).replace(binding.layoutFragment.id, MypaegFragment()).commit()
                 }
             }
             true
