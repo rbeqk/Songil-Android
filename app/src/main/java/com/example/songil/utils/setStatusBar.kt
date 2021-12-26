@@ -40,7 +40,7 @@ fun setStatusBarBlack(activity : Activity, isDark : Boolean){
                 //window.decorView.systemUiVisibility = 0
                 //window.clearFlags(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR)
                 window.decorView.setSystemUiVisibility(window.decorView.getSystemUiVisibility() and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv())
-                window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR)
+                window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR)
                 window.statusBarColor = ContextCompat.getColor(activity, R.color.songil_1)
             }
             else -> {
