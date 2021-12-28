@@ -9,3 +9,5 @@ data class ArticleContentInfo(val index : Int, val type : Int, val textData : St
 data class CraftInArticle(val craftIdx : Int, val name : String, val mainImageUrl : String, val artistName : String, val price : Int)
 
 data class SimpleArticle(val articleIdx : Int = 0, val title : String, val mainImageUrl : String, val editorIdx : Int, val editorName : String, val articleCategoryIdx : Int = 4)
+
+data class ItemArticle(val articleIdx : Int, val title : String, val mainImageUrl : String, val editorIdx : Int, val editorName : String, val createdAt : String, val totalLikeCnt : Int, val isLike : String)

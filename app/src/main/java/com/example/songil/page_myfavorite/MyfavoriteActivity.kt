@@ -6,8 +6,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.songil.R
 import com.example.songil.config.BaseActivity
+import com.example.songil.data.Craft1
 import com.example.songil.databinding.MydetailActivityBinding
-import com.example.songil.page_shop.shop_category.models.CraftDetail
 import com.example.songil.recycler.adapter.Craft1Adapter
 import com.example.songil.recycler.decoration.Craft1Decoration
 import com.example.songil.recycler.rv_interface.RvCraftLikeView
@@ -37,7 +37,7 @@ class MyfavoriteActivity : BaseActivity<MydetailActivityBinding>(R.layout.mydeta
     }
 
     private fun setObserver(){
-        val craftObserver = Observer<ArrayList<CraftDetail>>{ liveData ->
+        val craftObserver = Observer<ArrayList<Craft1>>{ liveData ->
             (binding.rvContent.adapter as Craft1Adapter).applyData(liveData)
         }
         viewModel.craftList.observe(this, craftObserver)

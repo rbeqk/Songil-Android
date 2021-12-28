@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.songil.config.GlobalApplication
+import com.example.songil.data.Craft1
 import com.example.songil.data.Craft2
-import com.example.songil.page_shop.shop_category.models.CraftDetail
 /*import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers*/
 import kotlinx.coroutines.launch
@@ -22,7 +22,7 @@ class ShopCategoryViewModel : ViewModel() {
     var popularResultCode = MutableLiveData<Int>()
     var allCraftResultCode = MutableLiveData<Int>()
 
-    var totalCraftData = ArrayList<CraftDetail>()
+    var totalCraftData = ArrayList<Craft1>()
 
     private val repository = ShopCategoryRepository()
 

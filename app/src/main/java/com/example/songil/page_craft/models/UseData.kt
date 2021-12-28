@@ -7,6 +7,6 @@ data class CraftBaseInfo(val NewOrNot : String, val productName : String, val pr
 
 data class CraftDetailInfo(val productIntro : String, val width : Int, val depth : Int, val height : Int, val caution : String, val imgs : ArrayList<String>)
 
-data class CraftReview(val reviewIdx : Int, val reviewContent : String, val date : String, val userNickName : String, val imgs : ArrayList<String>)
+data class CraftReview(val commentIdx : Int, val content : String, val createdAt : String, val nickname : String, val imageUrl : ArrayList<String>)
 
 data class ProductDetailResult(val infoResult : CraftBaseInfo, val detailResult : CraftDetailInfo, val reviewResults : ArrayList<CraftReview>)

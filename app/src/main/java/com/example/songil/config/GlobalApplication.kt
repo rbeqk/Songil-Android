@@ -31,7 +31,7 @@ class GlobalApplication : Application() {
             Category("기타공예", R.drawable.image_etc_craft),
             Category("전체보기", R.drawable.ic_heart_line_28),
         )
-        val sort = mapOf("price" to "낮은 가격순", "popular" to "인기순", "new" to "최신순", "review" to "리뷰 많은 순")
+        val sort = mapOf("price" to "낮은 가격순", "popular" to "인기순", "new" to "최신순", "comment" to "리뷰 많은 순")
     }
 
     override fun onCreate() {

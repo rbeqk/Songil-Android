@@ -2,19 +2,19 @@ package com.example.songil.page_myfavorite
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.songil.data.Craft1
 import com.example.songil.page_shop.shop_category.models.CraftDetail
 
 class MyfavoriteViewModel : ViewModel() {
-    var craftList = MutableLiveData<ArrayList<CraftDetail>>()
+    var craftList = MutableLiveData<ArrayList<Craft1>>()
 
     fun getCraftData(){
-        val temp = ArrayList<CraftDetail>()
-        temp.add(CraftDetail(1, "test", "https://pds.joins.com/news/component/joongang_sunday/2010/09/19004519.jpg", 12, 1, 5000, "자까", "NEW", 1))
-        temp.add(CraftDetail(2, "이름", "https://pds.joins.com/news/component/joongang_sunday/2010/09/19004519.jpg", 11, 2, 15000, "자까", "NEW", 0))
-        temp.add(CraftDetail(3, "무명", "https://pds.joins.com/news/component/joongang_sunday/2010/09/19004519.jpg", 0, 1, 5000, "자까", "NOT NEW", 0))
-        temp.add(CraftDetail(4, "공간", "https://pds.joins.com/news/component/joongang_sunday/2010/09/19004519.jpg", 3, 3, 25000, "자까", "NEW", 1))
-        temp.add(CraftDetail(5, "휴식", "https://pds.joins.com/news/component/joongang_sunday/2010/09/19004519.jpg", 0, 1, 5000, "자까", "NOT NEW", 0))
-        temp.add(CraftDetail(6, "끈기", "https://pds.joins.com/news/component/joongang_sunday/2010/09/19004519.jpg", 3, 3, 25000, "자까", "NEW", 1))
+        val temp = ArrayList<Craft1>()
+        temp.add(Craft1(1, name = "작품1", mainImageUrl = "https://pds.joins.com/news/component/joongang_sunday/2010/09/19004519.jpg", artistIdx =  1, price = 5000, artistName = "자까", isNew = "N", isSoldOut = "Y", totalLikeCnt = 3, totalCommentCnt = 12, isLike = "Y"))
+        temp.add(Craft1(1, name = "작품2", mainImageUrl = "https://pds.joins.com/news/component/joongang_sunday/2010/09/19004519.jpg", artistIdx =  1, price = 5000, artistName = "자까", isNew = "N", isSoldOut = "Y", totalLikeCnt = 3, totalCommentCnt = 12, isLike = "Y"))
+        temp.add(Craft1(1, name = "작품3", mainImageUrl = "https://pds.joins.com/news/component/joongang_sunday/2010/09/19004519.jpg", artistIdx =  1, price = 5000, artistName = "자까", isNew = "N", isSoldOut = "Y", totalLikeCnt = 3, totalCommentCnt = 12, isLike = "Y"))
+        temp.add(Craft1(1, name = "작품4", mainImageUrl = "https://pds.joins.com/news/component/joongang_sunday/2010/09/19004519.jpg", artistIdx =  1, price = 5000, artistName = "자까", isNew = "N", isSoldOut = "Y", totalLikeCnt = 3, totalCommentCnt = 12, isLike = "Y"))
+        temp.add(Craft1(1, name = "작품5", mainImageUrl = "https://pds.joins.com/news/component/joongang_sunday/2010/09/19004519.jpg", artistIdx =  1, price = 5000, artistName = "자까", isNew = "N", isSoldOut = "Y", totalLikeCnt = 3, totalCommentCnt = 12, isLike = "Y"))
         craftList.value = temp
     }
 }

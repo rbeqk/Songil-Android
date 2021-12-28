@@ -21,14 +21,14 @@ class SortBottomSheetSimple(private val view : PopupSortView, private val sort :
             dismiss()
         }
         binding.tvbtnRecent.setOnClickListener {
-            view.sort("latest")
+            view.sort("new")
             dismiss()
         }
         binding.tvbtnReview.visibility = View.GONE
 
         when(sort){
             "popular" -> binding.ivPopular.visibility = View.VISIBLE
-            "latest" -> binding.ivRecent.visibility = View.VISIBLE
+            "new" -> binding.ivRecent.visibility = View.VISIBLE
         }
 
         return binding.root

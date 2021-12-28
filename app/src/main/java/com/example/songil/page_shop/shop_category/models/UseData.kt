@@ -2,8 +2,8 @@ package com.example.songil.page_shop.shop_category.models
 
 data class CraftSimple(val productIdx : Int, val name : String, val imageUrl : String, val price : Int, val artist : String)
 
-data class CraftDetail(val productIdx : Int, val productName : String, val thumbnailImg : String, var likeCount : Int, var reviewCount : Int,
-                       val price : Int, val artistName : String, val newOrNot : String, var likeOrNot : Int)
+data class CraftDetail(val craftIdx : Int, val name : String, val mainImageUrl : String, var totalLikeCnt : Int, var totalCommentCnt : Int,
+                       val price : Int, val artistName : String, val isNew : String, var isLike : Int, val artistIdx : Int)
 
 data class ProductAllResult(val popularList : ArrayList<CraftSimple>, val productsList : ArrayList<CraftDetail>)
 

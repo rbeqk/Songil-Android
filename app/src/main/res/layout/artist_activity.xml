@@ -15,6 +15,7 @@
         android:background="@color/songil_1">
 
         <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/layout_appbar"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:background="@color/songil_1"
@@ -80,7 +81,8 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.core.widget.NestedScrollView
+        <com.example.songil.custom_layout.StickyNestedScrollView
+            android:id="@+id/layout_main_scroll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/navigation_bar"
@@ -248,74 +250,128 @@
                     android:lineSpacingExtra="4sp"/>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/btn_craft"
-                    android:layout_width="0dp"
-                    android:layout_height="56dp"
+                    android:id="@+id/layout_sticky"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     app:layout_constraintTop_toBottomOf="@id/tv_display_information_value"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/btn_article"
-                    android:layout_marginTop="36dp"
-                    detailActivate="@{viewModel.btnCraftActivate}"
-                    android:onClick="@{() -> viewModel.setBtnActivate(0)}">
+                    android:layout_marginTop="36dp">
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/btn_craft"
+                        android:layout_width="0dp"
+                        android:layout_height="56dp"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/btn_article"
+                        detailActivate="@{viewModel.btnCraftActivate}"
+                        android:onClick="@{() -> viewModel.setBtnActivate(0)}">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/craft_eng"
+                            android:textSize="12sp"
+                            android:fontFamily="@font/montserrat_semibold"/>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_craft_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:layout_marginBottom="10dp"
+                            tools:text="(12)"
+                            android:textSize="12sp"
+                            android:fontFamily="@font/montserrat_medium"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/btn_article"
+                        android:layout_width="0dp"
+                        android:layout_height="56dp"
+                        app:layout_constraintTop_toTopOf="@id/btn_craft"
+                        app:layout_constraintStart_toEndOf="@id/btn_craft"
                         app:layout_constraintEnd_toEndOf="parent"
-                        android:layout_marginTop="10dp"
-                        android:text="@string/craft_eng"
-                        android:textSize="12sp"
-                        android:fontFamily="@font/montserrat_semibold"/>
+                        detailActivate="@{viewModel.btnArticleActivate}"
+                        android:onClick="@{() -> viewModel.setBtnActivate(1)}"
+                        >
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_craft_count"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        android:layout_marginBottom="10dp"
-                        tools:text="(12)"
-                        android:textSize="12sp"
-                        android:fontFamily="@font/montserrat_medium"/>
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_marginTop="10dp"
+                            android:text="@string/article_eng"
+                            android:textSize="12sp"
+                            android:fontFamily="@font/montserrat_semibold"/>
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_article_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:layout_marginBottom="10dp"
+                            tools:text="(12)"
+                            android:textSize="12sp"
+                            android:fontFamily="@font/montserrat_medium"/>
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/btn_article"
-                    android:layout_width="0dp"
-                    android:layout_height="56dp"
-                    app:layout_constraintTop_toTopOf="@id/btn_craft"
-                    app:layout_constraintStart_toEndOf="@id/btn_craft"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    detailActivate="@{viewModel.btnArticleActivate}"
-                    android:onClick="@{() -> viewModel.setBtnActivate(1)}"
-                    >
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        android:layout_marginTop="10dp"
-                        android:text="@string/article_eng"
-                        android:textSize="12sp"
-                        android:fontFamily="@font/montserrat_semibold"/>
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/layout_sort"
+                        android:layout_width="match_parent"
+                        android:layout_height="46dp"
+                        app:layout_constraintTop_toBottomOf="@id/btn_article"
+                        android:background="@color/songil_1">
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_article_count"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        android:layout_marginBottom="10dp"
-                        tools:text="(12)"
-                        android:textSize="12sp"
-                        android:fontFamily="@font/montserrat_medium"/>
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_total_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:layout_marginStart="16dp"
+                            android:fontFamily="@font/spoqahansansneo_regular"
+                            android:textSize="12sp"
+                            tools:text="총 12개 검색 결과"/>
+
+                        <LinearLayout
+                            android:id="@+id/btn_sort"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_marginEnd="16dp"
+                            android:orientation="horizontal"
+                            android:gravity="center">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_sort"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="12sp"
+                                android:fontFamily="@font/spoqahansansneo_regular"
+                                android:text="@string/sort_popular"/>
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="19dp"
+                                android:layout_height="19dp"
+                                android:layout_marginStart="6dp"
+                                android:src="@drawable/ic_icon_down_19"/>
+                        </LinearLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -323,91 +379,11 @@
                     android:id="@+id/layout_fragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/btn_craft"/>
+                    app:layout_constraintTop_toBottomOf="@id/layout_sticky"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </androidx.core.widget.NestedScrollView>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/songil_1"
-            android:layout_marginTop="56dp"
-            android:visibility="gone">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/btn_craft_sticky"
-                android:layout_width="0dp"
-                android:layout_height="56dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/btn_article_sticky"
-                detailActivate="@{viewModel.btnCraftActivate}"
-                android:onClick="@{() -> viewModel.setBtnActivate(0)}">
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/craft_eng"
-                    android:textSize="12sp"
-                    android:fontFamily="@font/montserrat_semibold"/>
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_craft_count_sticky"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_marginBottom="10dp"
-                    tools:text="(12)"
-                    android:textSize="12sp"
-                    android:fontFamily="@font/montserrat_medium"/>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/btn_article_sticky"
-                android:layout_width="0dp"
-                android:layout_height="56dp"
-                app:layout_constraintTop_toTopOf="@id/btn_craft_sticky"
-                app:layout_constraintStart_toEndOf="@id/btn_craft_sticky"
-                app:layout_constraintEnd_toEndOf="parent"
-                detailActivate="@{viewModel.btnArticleActivate}"
-                android:onClick="@{() -> viewModel.setBtnActivate(1)}"
-                >
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/article_eng"
-                    android:textSize="12sp"
-                    android:fontFamily="@font/montserrat_semibold"/>
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_article_count_sticky"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    android:layout_marginBottom="10dp"
-                    tools:text="(12)"
-                    android:textSize="12sp"
-                    android:fontFamily="@font/montserrat_medium"/>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.example.songil.custom_layout.StickyNestedScrollView>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

@@ -28,7 +28,7 @@ class SortBottomSheet(private val view : PopupSortView, private val sort : Strin
             dismiss()
         }
         binding.tvbtnReview.setOnClickListener {
-            view.sort("review")
+            view.sort("comment")
             dismiss()
         }
 
@@ -36,7 +36,7 @@ class SortBottomSheet(private val view : PopupSortView, private val sort : Strin
             "popular" -> binding.ivPopular.visibility = View.VISIBLE
             "price" -> binding.ivLowPrice.visibility = View.VISIBLE
             "new" -> binding.ivRecent.visibility = View.VISIBLE
-            "review" -> binding.ivReview.visibility = View.VISIBLE
+            "comment" -> binding.ivReview.visibility = View.VISIBLE
         }
 
         return binding.root

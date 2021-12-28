@@ -18,8 +18,12 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_is_new"
-            android:layout_width="48dp"
-            android:layout_height="21dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
             android:gravity="center"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

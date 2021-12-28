@@ -48,6 +48,7 @@
     <string name="review_eng">REVIEW</string>
     <string name="form_price_won">%d won</string>
     <string name="new_eng">NEW</string>
+    <string name="soldout_eng">SOLD OUT</string>
     <string name="form_search_result">총 %d개 검색 결과</string>
     <string name="form_number_bracket">(%d)</string>
 
