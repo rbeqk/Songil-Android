@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
         android:name=".config.GlobalApplication"
@@ -21,13 +22,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".page_login.LoginActivity" android:windowSoftInputMode="adjustResize" android:noHistory="true"/>
-        <activity android:name=".test_area.TestActivity">
-<!--            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
-        </activity>
         <activity android:name=".page_signup.SignupActivity" android:windowSoftInputMode="adjustResize">
         </activity>
         <activity android:name=".page_main.MainActivity"/>
@@ -39,7 +33,13 @@
         <activity android:name=".page_basket.BasketActivity"/>
         <activity android:name=".page_mybenefit.MybenefitActivity"/>
         <activity android:name=".page_myfavorite.MyfavoriteActivity"/>
-        <activity android:name=".page_order.OrderActivity"/>
+        <activity android:name=".page_order.OrderActivity">
+<!--            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
+        </activity>
         <activity android:name=".page_orderstatus.OrderstatusActivity"/>
         <activity android:name=".page_mycomment.MycommentActivity"/>
         <activity android:name=".page_setting.SettingActivity"/>
@@ -53,7 +53,13 @@
         <activity android:name=".page_story.StoryActivity"/>
         <activity android:name=".page_storywrite.StoryWriteActivity"/>
         <activity android:name=".page_imagepicker.ImagePickerActivity"/>
-        <activity android:name=".page_artist.ArtistActivity"/>
+        <activity android:name=".page_artist.ArtistActivity">
+ <!--           <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
+        </activity>
         <activity android:name=".page_notice.NoticeActivity"/>
         <activity android:name=".webview_address.WebAddressActivity"/>
         <activity android:name=".page_notification.NotificationActivity"/>
