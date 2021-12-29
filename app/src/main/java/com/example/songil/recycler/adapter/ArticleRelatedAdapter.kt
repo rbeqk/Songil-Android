@@ -1,11 +1,15 @@
 package com.example.songil.recycler.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.songil.config.BaseActivity
+import com.example.songil.config.GlobalApplication
 import com.example.songil.data.SimpleArticle
 import com.example.songil.databinding.ItemArticleRelatedBinding
+import com.example.songil.page_articlecontent.ArticleContentActivity
 
 class ArticleRelatedAdapter : RecyclerView.Adapter<ArticleRelatedAdapter.ArticleRelatedViewHolder>(){
 
@@ -30,7 +34,9 @@ class ArticleRelatedAdapter : RecyclerView.Adapter<ArticleRelatedAdapter.Article
             holder.editor.text = relatedArticleData[position].editorName
             Glide.with(holder.itemView.context).load(relatedArticleData[position].mainImageUrl).into(holder.image)
             holder.root.setOnClickListener {
-
+                val intent = Intent(holder.itemView.context, ArticleContentActivity::class.java)
+                intent.putExtra(GlobalApplication.ARTICLE_IDX, relatedArticleData[position].articleIdx)
+                (holder.itemView.context as BaseActivity<*>).startActivityHorizontal(intent)
             }
         }
     }

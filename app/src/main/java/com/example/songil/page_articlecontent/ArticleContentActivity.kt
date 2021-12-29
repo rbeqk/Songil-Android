@@ -1,5 +1,6 @@
 package com.example.songil.page_articlecontent
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -10,6 +11,7 @@ import com.example.songil.R
 import com.example.songil.config.BaseActivity
 import com.example.songil.config.GlobalApplication
 import com.example.songil.databinding.ArticleActivityContentBinding
+import com.example.songil.page_main.MainActivity
 import com.example.songil.recycler.adapter.ArticleContentAdapter
 import com.example.songil.recycler.adapter.ArticleRelatedAdapter
 import com.example.songil.recycler.decoration.ArticleContentDecoration
@@ -109,7 +111,10 @@ class ArticleContentActivity : BaseActivity<ArticleActivityContentBinding>(R.lay
         }
 
         binding.btnHome.setOnClickListener {
-            onBackPressed()
+            val intent = Intent(this, MainActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
+            //onBackPressed()
+            startActivity(intent)
         }
 
         binding.btnFavorite.setOnClickListener {

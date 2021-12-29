@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.songil.config.BaseActivity
 import com.example.songil.config.GlobalApplication
 import com.example.songil.data.SimpleArticle
 import com.example.songil.databinding.ItemArticleTitleVp2Binding
@@ -42,7 +43,7 @@ class Vp2ArticleTitleAdapter(private val context: Context) : RecyclerView.Adapte
         holder.thumbnail.setOnClickListener {
             val intent = Intent(context, ArticleContentActivity::class.java)
             intent.putExtra(GlobalApplication.ARTICLE_IDX, articleList[position].articleIdx)
-            context.startActivity(intent)
+            (context as BaseActivity<*>).startActivityHorizontal(intent)
         }
     }
 
