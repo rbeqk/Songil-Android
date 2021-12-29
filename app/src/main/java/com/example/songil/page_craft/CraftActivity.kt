@@ -45,8 +45,8 @@ class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity
 
         viewModel.setCraftIdx(idx)
 
-        viewModel.tryGetCraftInfo()
-        //viewModel.tempGetCraftInfo()
+        //viewModel.tryGetCraftInfo()
+        viewModel.tempGetCraftInfo()
 
         /*supportFragmentManager.beginTransaction().add(binding.layoutFragment.id, CraftFragmentDetail()).commit()*/
 
@@ -70,22 +70,22 @@ class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity
         viewModel.resultCode.observe(this, resultCodeObserver)
 
         val fragmentIdxObserver = Observer<Int>{ liveData ->
+            if (binding.layoutNested.getIsHeaderSticky()) {
+                binding.layoutNested.scrollTo(0, binding.lineSticky.y.toInt())
+            }
             when (liveData){
                 0 -> {
-                    supportFragmentManager.beginTransaction().hide(currentFragment).commit()
-                    supportFragmentManager.beginTransaction().show(detailFragment).commit()
+                    supportFragmentManager.beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).hide(currentFragment).show(detailFragment).commit()
                     currentFragment = detailFragment
                     showBuyBtn()
                 }
                 1 -> {
-                    supportFragmentManager.beginTransaction().hide(currentFragment).commit()
-                    supportFragmentManager.beginTransaction().show(reviewFragment).commit()
+                    supportFragmentManager.beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).hide(currentFragment).show(reviewFragment).commit()
                     currentFragment = reviewFragment
                     showBuyBtn()
                 }
                 else -> {
-                    supportFragmentManager.beginTransaction().hide(currentFragment).commit()
-                    supportFragmentManager.beginTransaction().show(askFragment).commit()
+                    supportFragmentManager.beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).hide(currentFragment).show(askFragment).commit()
                     currentFragment = askFragment
                     showInquiryBtn()
                 }
@@ -236,6 +236,10 @@ class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity
         binding.btnShare.visibility = View.VISIBLE
         binding.btnBuy.visibility = View.VISIBLE
         hideAddView()
+    }
+
+    fun getToolbarHeight() : Int {
+        return binding.layoutSticky.height + binding.layoutAppbar.height
     }
 
     override fun finish() {
