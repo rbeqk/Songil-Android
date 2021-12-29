@@ -81,7 +81,7 @@ class BasketActivity : BaseActivity<ShoppingbasketActivityBinding>(R.layout.shop
             Log.d("test", "payment ${viewModel.itemList}")
         }
         binding.btnBack.setOnClickListener {
-            onBackPressedHorizontal()
+            onBackPressed()
         }
     }
 
@@ -109,4 +109,9 @@ class BasketActivity : BaseActivity<ShoppingbasketActivityBinding>(R.layout.shop
 
     // Activity 의 notifyDataChange -> Adapter 에서 Activity 로 데이터 변화 알림
     // Adapter 의 changeData -> Activity 에서 Adapter 로 데이터 변화 알림
+
+    override fun finish() {
+        super.finish()
+        exitHorizontal
+    }
 }

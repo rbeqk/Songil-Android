@@ -38,7 +38,12 @@ class OrderstatusActivity : BaseActivity<OrderstatusActivityBinding>(R.layout.or
 
     private fun setButton(){
         binding.btnBack.setOnClickListener {
-            onBackPressedHorizontal()
+            onBackPressed()
         }
+    }
+
+    override fun finish() {
+        super.finish()
+        exitHorizontal
     }
 }

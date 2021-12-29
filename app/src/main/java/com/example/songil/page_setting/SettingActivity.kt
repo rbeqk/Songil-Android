@@ -24,7 +24,8 @@ class SettingActivity : BaseActivity<SettingActivityBinding>(R.layout.setting_ac
         }
     }
 
-    override fun onBackPressed() {
-        onBackPressedHorizontal()
+    override fun finish() {
+        super.finish()
+        exitHorizontal
     }
 }

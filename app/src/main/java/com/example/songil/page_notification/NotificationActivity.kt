@@ -20,7 +20,8 @@ class NotificationActivity : BaseActivity<NoticeActivityBinding>(R.layout.notice
         }
     }
 
-    override fun onBackPressed() {
-        onBackPressedHorizontal()
+    override fun finish() {
+        super.finish()
+        exitHorizontal
     }
 }

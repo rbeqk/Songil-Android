@@ -26,7 +26,7 @@ class NoticeActivity : BaseActivity<NoticeActivityBinding>(R.layout.notice_activ
 
     private fun setButton(){
         binding.btnBack.setOnClickListener {
-            onBackPressedHorizontal()
+            onBackPressed()
         }
     }
 
@@ -40,5 +40,10 @@ class NoticeActivity : BaseActivity<NoticeActivityBinding>(R.layout.notice_activ
             (binding.rvNotice.adapter as NoticeAdapter).applyData(liveData)
         }
         viewModel.noticeList.observe(this, noticeObserver)
+    }
+
+    override fun finish() {
+        super.finish()
+        exitHorizontal
     }
 }

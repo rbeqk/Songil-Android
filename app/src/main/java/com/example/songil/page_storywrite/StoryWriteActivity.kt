@@ -44,7 +44,7 @@ class StoryWriteActivity : BaseActivity<StoryActivityWriteBinding>(R.layout.stor
 
     private fun setButton(){
         binding.btnBack.setOnClickListener {
-            onBackPressedHorizontal()
+            onBackPressed()
         }
     }
 
@@ -110,5 +110,10 @@ class StoryWriteActivity : BaseActivity<StoryActivityWriteBinding>(R.layout.stor
         intent.putExtra("min", 2)
         intent.putExtra("max", 2)
         imagePickerResult.launch(intent)
+    }
+
+    override fun finish() {
+        super.finish()
+        exitHorizontal
     }
 }

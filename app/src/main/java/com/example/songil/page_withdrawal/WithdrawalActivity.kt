@@ -22,7 +22,12 @@ class WithdrawalActivity : BaseActivity<WithdrawalActivityBinding>(R.layout.with
 
     private fun setButton(){
         binding.btnBack.setOnClickListener {
-            onBackPressedHorizontal()
+            onBackPressed()
         }
+    }
+
+    override fun finish() {
+        super.finish()
+        exitHorizontal
     }
 }

@@ -18,7 +18,8 @@ class QnaActivity : BaseActivity<QnaActivityBinding>(R.layout.qna_activity) {
         }
     }
 
-    override fun onBackPressed() {
-        onBackPressedHorizontal()
+    override fun finish() {
+        super.finish()
+        exitHorizontal
     }
 }

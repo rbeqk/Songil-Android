@@ -45,8 +45,13 @@ class MyfavoriteActivity : BaseActivity<MydetailActivityBinding>(R.layout.mydeta
 
     private fun setButton(){
         binding.btnBack.setOnClickListener {
-            onBackPressedHorizontal()
+            onBackPressed()
         }
+    }
+
+    override fun finish() {
+        super.finish()
+        exitHorizontal
     }
 
     override fun itemClick(idx: Int) {

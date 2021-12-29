@@ -2,6 +2,7 @@ package com.example.songil.page_order
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.Observer
@@ -13,7 +14,14 @@ import com.example.songil.config.GlobalApplication
 import com.example.songil.databinding.OrderActivityBinding
 import com.example.songil.recycler.adapter.Craft4Adapter
 import com.example.songil.webview_address.WebAddressActivity
+import kr.co.bootpay.Bootpay
+import kr.co.bootpay.enums.Method
+import kr.co.bootpay.enums.PG
+import kr.co.bootpay.enums.UX
+import kr.co.bootpay.model.BootExtra
+import kr.co.bootpay.model.BootUser
 
+// 여기 부트페이 테스트 api key 있다. commit 금지
 class OrderActivity : BaseActivity<OrderActivityBinding>(R.layout.order_activity){
 
     private val orderViewModel : OrderViewModel by lazy { ViewModelProvider(this)[OrderViewModel::class.java] }
@@ -52,7 +60,11 @@ class OrderActivity : BaseActivity<OrderActivityBinding>(R.layout.order_activity
         }
 
         binding.btnBack.setOnClickListener {
-            onBackPressedHorizontal()
+            onBackPressed()
+        }
+
+        binding.btnPayment.setOnClickListener {
+            goBootPayRequest()
         }
     }
 
@@ -70,5 +82,33 @@ class OrderActivity : BaseActivity<OrderActivityBinding>(R.layout.order_activity
             }
         }
         orderViewModel.orderFormResult.observe(this, orderFormObserver)
+    }
+
+    private fun goBootPayRequest() {
+        val bootUser = BootUser().setPhone("010-0000-0000")
+        val bootExtra = BootExtra().setQuotas(intArrayOf(0, 2, 3))
+        Bootpay.init(this).setApplicationId("--").setContext(this)
+            .setBootUser(bootUser).setBootExtra(bootExtra).setUX(UX.PG_DIALOG).setPG(PG.KCP).setMethod(Method.CARD)
+            .setName("테스트 상품명").setOrderId("1234").setPrice(1000).onDone { message ->
+                Log.d("done", message)
+            }
+            .onReady { message ->
+                Log.d("ready", message)
+            }
+            .onCancel { message ->
+                Log.d("cancel", message)
+            }
+            .onError{ message ->
+                Log.d("error", message)
+            }
+            .onClose { _ ->
+                Log.d("close", "close")
+            }
+            .request()
+    }
+
+    override fun finish() {
+        super.finish()
+        exitHorizontal
     }
 }

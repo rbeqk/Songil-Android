@@ -105,15 +105,20 @@ class ArticleContentActivity : BaseActivity<ArticleActivityContentBinding>(R.lay
 
     private fun setButton(){
         binding.btnBack.setOnClickListener {
-            onBackPressedHorizontal()
+            onBackPressed()
         }
 
         binding.btnHome.setOnClickListener {
-            onBackPressedHorizontal()
+            onBackPressed()
         }
 
         binding.btnFavorite.setOnClickListener {
             viewModel.tryChangeLikeData()
         }
+    }
+
+    override fun finish() {
+        super.finish()
+        exitHorizontal
     }
 }

@@ -140,7 +140,7 @@ class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity
         }
 
         binding.btnBack.setOnClickListener {
-            onBackPressedHorizontal()
+            onBackPressed()
         }
     }
 
@@ -218,5 +218,10 @@ class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity
         binding.btnShare.visibility = View.VISIBLE
         binding.btnBuy.visibility = View.VISIBLE
         hideAddView()
+    }
+
+    override fun finish() {
+        super.finish()
+        exitHorizontal
     }
 }

@@ -59,7 +59,7 @@ class CommentActivity : BaseActivity<CommentActivityBinding>(R.layout.comment_ac
 
     private fun setButton(){
         binding.btnBack.setOnClickListener {
-            onBackPressedHorizontal()
+            onBackPressed()
         }
     }
 
@@ -68,5 +68,10 @@ class CommentActivity : BaseActivity<CommentActivityBinding>(R.layout.comment_ac
         intent.type = MediaStore.Images.Media.CONTENT_TYPE
         //intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
         getImageFromGallery.launch(intent)
+    }
+
+    override fun finish() {
+        super.finish()
+        exitHorizontal
     }
 }

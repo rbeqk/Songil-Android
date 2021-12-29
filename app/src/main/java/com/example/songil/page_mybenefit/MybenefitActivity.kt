@@ -43,7 +43,12 @@ class MybenefitActivity : BaseActivity<MydetailActivityBinding>(R.layout.mydetai
 
     private fun setButton(){
         binding.btnBack.setOnClickListener {
-            onBackPressedHorizontal()
+            onBackPressed()
         }
+    }
+
+    override fun finish() {
+        super.finish()
+        exitHorizontal
     }
 }

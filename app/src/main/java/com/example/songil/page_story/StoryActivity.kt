@@ -18,7 +18,8 @@ class StoryActivity : BaseActivity<StoryActivityBinding>(R.layout.story_activity
         }
     }
 
-    override fun onBackPressed() {
-        onBackPressedHorizontal()
+    override fun finish() {
+        super.finish()
+        exitHorizontal
     }
 }

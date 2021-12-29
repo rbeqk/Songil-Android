@@ -36,7 +36,7 @@ class ArtistActivity : BaseActivity<ArtistActivityBinding>(R.layout.artist_activ
         setObserver()
         setButton()
 
-        val artistIdx = intent.getIntExtra("artistIdx", 1)
+        val artistIdx = intent.getIntExtra("artistIdx", 0)
         artistViewModel.setArtistIdx(artistIdx)
 
         artistViewModel.tryGetArtistInfo()
@@ -68,6 +68,10 @@ class ArtistActivity : BaseActivity<ArtistActivityBinding>(R.layout.artist_activ
             }
             dialogFragment.show(supportFragmentManager, dialogFragment.tag)
         }
+
+        binding.btnBack.setOnClickListener {
+            onBackPressed()
+        }
     }
 
     private fun setObserver(){
@@ -91,7 +95,7 @@ class ArtistActivity : BaseActivity<ArtistActivityBinding>(R.layout.artist_activ
     }
 
     private fun setNestedScrollView(){
-        binding.layoutMainScroll.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+        binding.layoutMainScroll.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, _, scrollY, _, _ ->
             if (scrollY == v.getChildAt(0).measuredHeight - v.measuredHeight){
                 (currentFragment as ArtistSubpageFragment).updateList()
             }
@@ -122,6 +126,12 @@ class ArtistActivity : BaseActivity<ArtistActivityBinding>(R.layout.artist_activ
         (currentFragment as ArtistSubpageFragment).changeSort(sort)
     }
 
+    override fun finish() {
+        super.finish()
+        overridePendingTransition(R.anim.from_left_30, R.anim.to_right)
+    }
+
+    // 상단 status bar, sticky toolbar 부분의 높이를 리턴 (pixel)
     fun getToolbarHeight() : Int {
         return binding.layoutSticky.height + binding.layoutAppbar.height
     }

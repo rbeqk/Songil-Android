@@ -18,7 +18,8 @@ class AbtestActivity : BaseActivity<AbtestActivityBinding>(R.layout.abtest_activ
         }
     }
 
-    override fun onBackPressed() {
-        onBackPressedHorizontal()
+    override fun finish() {
+        super.finish()
+        exitHorizontal
     }
 }

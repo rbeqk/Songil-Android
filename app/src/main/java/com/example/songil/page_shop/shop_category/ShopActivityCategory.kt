@@ -60,7 +60,7 @@ class ShopActivityCategory : BaseActivity<ShopActivityCategoryBinding>(R.layout.
         }
 
         binding.btnBack.setOnClickListener {
-            onBackPressedHorizontal()
+            onBackPressed()
         }
 
         binding.btnShopCategory.setOnClickListener {
@@ -190,5 +190,10 @@ class ShopActivityCategory : BaseActivity<ShopActivityCategoryBinding>(R.layout.
 
     override fun clickLike(dataKey: Int, position: Int) {
         // data 의 like 버튼을 클릭했을 때, like api 호출
+    }
+
+    override fun finish() {
+        super.finish()
+        exitHorizontal
     }
 }

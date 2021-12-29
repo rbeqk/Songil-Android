@@ -38,15 +38,15 @@ class NeedLoginActivity : BaseActivity<NeedloginActivityBinding>(R.layout.needlo
         if (GlobalApplication.globalSharedPreferences.contains(GlobalApplication.X_ACCESS_TOKEN)){
             if (isFirst){
                 startActivity(Intent(this, MainActivity::class.java))
-                onBackPressedVertical()
+                onBackPressed()
             } else {
-                onBackPressedVertical()
+                onBackPressed()
             }
         }
     }
 
     fun goToBack(){
-        onBackPressedVertical()
+        onBackPressed()
         //finish()
     }
 
@@ -58,5 +58,10 @@ class NeedLoginActivity : BaseActivity<NeedloginActivityBinding>(R.layout.needlo
     fun goToSignUp(){
         startActivityHorizontal(Intent(this, SignupActivity::class.java))
         //startActivity(Intent(this, SignupActivity::class.java))
+    }
+
+    override fun finish() {
+        super.finish()
+        exitVertical
     }
 }
