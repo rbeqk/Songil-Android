@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import android.view.animation.TranslateAnimation
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -44,10 +45,14 @@ class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity
 
         viewModel.setCraftIdx(idx)
 
-        //viewModel.tryGetCraftInfo()
-        viewModel.tempGetCraftInfo()
+        viewModel.tryGetCraftInfo()
+        //viewModel.tempGetCraftInfo()
 
         /*supportFragmentManager.beginTransaction().add(binding.layoutFragment.id, CraftFragmentDetail()).commit()*/
+
+        binding.layoutNested.run {
+            header = binding.layoutSticky
+        }
     }
 
     private fun setObserver(){
@@ -101,6 +106,19 @@ class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity
             }
         }
         viewModel.addCartResult.observe(this, addToCartObserver)
+
+        val inStockObserver = Observer<Boolean>{ liveData ->
+            if (liveData) {
+                binding.btnBuy.text = getString(R.string.buy_eng)
+                binding.layoutEtc.setBackgroundColor(ContextCompat.getColor(this, R.color.songil_2))
+            } else {
+                binding.btnBuy.text = getString(R.string.soldout_eng)
+                binding.layoutEtc.setBackgroundColor(ContextCompat.getColor(this, R.color.g_3))
+            }
+            binding.btnFavorite.isClickable = liveData
+            binding.btnShare.isClickable = liveData
+        }
+        viewModel.inStock.observe(this, inStockObserver)
     }
 
     private fun setButton(){
@@ -162,7 +180,7 @@ class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity
         binding.tvUsage.text = viewModel.productDetailInfo.usage.joinToString(", ")
         binding.tvMaker.text = viewModel.productDetailInfo.artistName
         binding.tvIntroduce.text = viewModel.productDetailInfo.artistIntroduction
-        binding.tvReviewCount.text = getString(R.string.form_number_bracket, viewModel.productDetailInfo.totalReviewCnt)
+        binding.tvReviewCount.text = getString(R.string.form_number_bracket, viewModel.productDetailInfo.totalCommentCnt)
         if (viewModel.productDetailInfo.isNew == "N") binding.tvNew.visibility = View.GONE
         binding.tvMakerCraft.text = getString(R.string.form_artist_craft, viewModel.productDetailInfo.artistName, viewModel.productDetailInfo.name)
     }

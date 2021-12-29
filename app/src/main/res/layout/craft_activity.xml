@@ -21,7 +21,7 @@
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:layout_width="match_parent"
-                android:layout_height="46dp"
+                android:layout_height="56dp"
                 app:contentInsetStart="0dp">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -64,7 +64,7 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.core.widget.NestedScrollView
+        <com.example.songil.custom_layout.StickyNestedScrollView
             android:id="@+id/layout_nested"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -270,85 +270,93 @@
                     tools:text="안녕하세요. 금속공예 작가 조민지입니다."/>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/btn_detail"
-                    android:layout_width="0dp"
-                    android:layout_height="56dp"
+                    android:id="@+id/layout_sticky"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     app:layout_constraintTop_toBottomOf="@id/cv_profile"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/btn_review"
-                    android:layout_marginTop="26dp"
-                    android:onClick="@{() -> viewModel.setBtnActivate(0)}"
-                    detailActivate="@{viewModel.btnDetailActivate}">
+                    android:layout_marginTop="26dp">
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/btn_detail"
+                        android:layout_width="0dp"
+                        android:layout_height="56dp"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/btn_review"
+                        android:onClick="@{() -> viewModel.setBtnActivate(0)}"
+                        detailActivate="@{viewModel.btnDetailActivate}">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:text="@string/detail_eng"
+                            android:textSize="12sp"
+                            android:fontFamily="@font/montserrat_semibold"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/btn_review"
+                        android:layout_width="0dp"
+                        android:layout_height="56dp"
+                        app:layout_constraintTop_toTopOf="@id/btn_detail"
+                        app:layout_constraintStart_toEndOf="@id/btn_detail"
+                        app:layout_constraintEnd_toStartOf="@id/btn_ask"
+                        android:onClick="@{() -> viewModel.setBtnActivate(1)}"
+                        detailActivate="@{viewModel.btnReviewActivate}"
+                        >
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_marginTop="12dp"
+                            android:text="@string/review_eng"
+                            android:textSize="12sp"
+                            android:fontFamily="@font/montserrat_semibold"/>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_review_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:layout_marginBottom="12dp"
+                            tools:text="(12)"
+                            android:textSize="12sp"
+                            android:fontFamily="@font/montserrat_medium"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/btn_ask"
+                        android:layout_width="0dp"
+                        android:layout_height="56dp"
+                        app:layout_constraintTop_toTopOf="@id/btn_detail"
+                        app:layout_constraintStart_toEndOf="@id/btn_review"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        android:text="@string/detail_eng"
-                        android:textSize="12sp"
-                        android:fontFamily="@font/montserrat_semibold"/>
+                        android:onClick="@{() -> viewModel.setBtnActivate(2)}"
+                        detailActivate="@{viewModel.btnAskActivate}">
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:text="@string/one_by_one_ask_eng"
+                            android:textSize="12sp"
+                            android:fontFamily="@font/montserrat_semibold"/>
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/btn_review"
-                    android:layout_width="0dp"
-                    android:layout_height="56dp"
-                    app:layout_constraintTop_toTopOf="@id/btn_detail"
-                    app:layout_constraintStart_toEndOf="@id/btn_detail"
-                    app:layout_constraintEnd_toStartOf="@id/btn_ask"
-                    android:onClick="@{() -> viewModel.setBtnActivate(1)}"
-                    detailActivate="@{viewModel.btnReviewActivate}"
-                    >
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        android:layout_marginTop="12dp"
-                        android:text="@string/review_eng"
-                        android:textSize="12sp"
-                        android:fontFamily="@font/montserrat_semibold"/>
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_review_count"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        android:layout_marginBottom="12dp"
-                        tools:text="(12)"
-                        android:textSize="12sp"
-                        android:fontFamily="@font/montserrat_medium"/>
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/btn_ask"
-                    android:layout_width="0dp"
-                    android:layout_height="56dp"
-                    app:layout_constraintTop_toTopOf="@id/btn_detail"
-                    app:layout_constraintStart_toEndOf="@id/btn_review"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:onClick="@{() -> viewModel.setBtnActivate(2)}"
-                    detailActivate="@{viewModel.btnAskActivate}">
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        android:text="@string/one_by_one_ask_eng"
-                        android:textSize="12sp"
-                        android:fontFamily="@font/montserrat_semibold"/>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -356,12 +364,12 @@
                     android:id="@+id/layout_fragment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/btn_detail"/>
+                    app:layout_constraintTop_toBottomOf="@id/layout_sticky"/>
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </androidx.core.widget.NestedScrollView>
+        </com.example.songil.custom_layout.StickyNestedScrollView>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -530,6 +538,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@id/layout_etc"
                     app:layout_constraintBottom_toBottomOf="@id/layout_etc"
+                    textBtnActivate="@{viewModel.inStock}"
                     android:fontFamily="@font/montserrat_semibold"
                     android:textSize="18sp"
                     android:text="@string/buy_eng"

@@ -5,13 +5,13 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.songil.R
 import com.example.songil.config.BaseFragment
-import com.example.songil.data.ProductDetailInfo
+import com.example.songil.data.CraftDetailInfo
 import com.example.songil.databinding.CraftFragmentDetailBinding
 import com.example.songil.page_craft.CraftActivity
 import com.example.songil.recycler.adapter.SimpleImageAdapter
 import com.example.songil.recycler.decoration.SimpleImageDecoration
 
-class CraftFragmentDetail(private val detailInfo: ProductDetailInfo) : BaseFragment<CraftFragmentDetailBinding>(CraftFragmentDetailBinding::bind, R.layout.craft_fragment_detail) {
+class CraftFragmentDetail(private val detailInfo: CraftDetailInfo) : BaseFragment<CraftFragmentDetailBinding>(CraftFragmentDetailBinding::bind, R.layout.craft_fragment_detail) {
 
     //var tempFlag = true
 
