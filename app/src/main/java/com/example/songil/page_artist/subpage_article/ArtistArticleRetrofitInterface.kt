@@ -8,9 +8,9 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface ArtistArticleRetrofitInterface {
-    @GET("artist/{artistIdx}/articles/page")
+    @GET("artists/{artistIdx}/articles/page")
     suspend fun getArtistArticleCnt(@Path("artistIdx") artistIdx : Int) : Response<ResponseArtistArticleItemCnt>
 
-    @GET("artist/{artistIdx}/articles")
+    @GET("artists/{artistIdx}/articles")
     suspend fun getArticleList(@Path("artistIdx") artistIdx: Int, @Query("page") page : Int, @Query("sort") sort : String) : Response<ResponseArticleList>
 }
