@@ -14,8 +14,9 @@ import com.example.songil.databinding.ItemCraftCommentBinding
 import com.example.songil.page_craft.CraftActivity
 import com.example.songil.page_report.ReportActivity
 
-class CraftCommentAdapter(private val context : Context, private val commentData : ArrayList<CraftComment> = arrayListOf()) : RecyclerView.Adapter<CraftCommentAdapter.ViewHolder>(){
+class CraftCommentAdapter(private val context : Context, inputCommentData : ArrayList<CraftComment> ?= null) : RecyclerView.Adapter<CraftCommentAdapter.ViewHolder>(){
 
+    private val commentData = inputCommentData ?: arrayListOf()
     private val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
     private lateinit var binding : ItemCraftCommentBinding
 
@@ -27,7 +28,6 @@ class CraftCommentAdapter(private val context : Context, private val commentData
         val photoCount = binding.tvPage
         val review = binding.tvReview
         val reportBtn = binding.tvReport
-        val mainLayout = binding.root
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -41,6 +41,8 @@ class CraftCommentAdapter(private val context : Context, private val commentData
         holder.date.text = commentData[position].createdAt
         holder.review.text = commentData[position].content
         if (imageCount != 0){
+            holder.photo.visibility = View.VISIBLE
+            holder.photoCount.visibility = View.VISIBLE
             holder.photo.adapter = Vp2ImageAdapter(context, commentData[position].imageUrl!!)
             holder.photo.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
                 override fun onPageSelected(position: Int) {
@@ -54,19 +56,19 @@ class CraftCommentAdapter(private val context : Context, private val commentData
             holder.photoCount.visibility = View.GONE
         }
         holder.reportBtn.setOnClickListener {
-            holder.itemView.context.startActivity(Intent(context, ReportActivity::class.java))
-            (holder.itemView.context as CraftActivity).overridePendingTransition(R.anim.from_right, R.anim.none)
+            (holder.itemView.context as CraftActivity).startActivityHorizontal(Intent(context, ReportActivity::class.java))
         }
     }
 
     override fun getItemCount(): Int = commentData.size
 
-    fun updateData(newData : ArrayList<CraftComment>){
-        val prevSize = commentData.size
-        val newSize = newData.size
-        for (i in prevSize until newSize){
-            commentData.add(newData[i])
+    fun updateData(newDataSize : Int){
+        if (newDataSize > 0) {
+            notifyItemRangeInserted(commentData.size, newDataSize)
         }
-        notifyItemRangeInserted(prevSize, (newSize - prevSize))
+    }
+
+    fun clearData(){
+        notifyDataSetChanged()
     }
 }

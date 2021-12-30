@@ -7,10 +7,12 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.songil.R
 import com.example.songil.config.BaseFragment
+import com.example.songil.config.GlobalApplication
 import com.example.songil.databinding.CraftFragmentReviewBinding
 import com.example.songil.page_craft.CraftActivity
 import com.example.songil.recycler.adapter.CraftCommentAdapter
 import com.example.songil.recycler.decoration.CraftCommentDecoration
+import com.example.songil.utils.dpToPx
 
 class CraftFragmentComment() : BaseFragment<CraftFragmentReviewBinding>(CraftFragmentReviewBinding::bind, R.layout.craft_fragment_review) {
 
@@ -19,24 +21,44 @@ class CraftFragmentComment() : BaseFragment<CraftFragmentReviewBinding>(CraftFra
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.lifecycleOwner = this
+        binding.viewModel = viewModel
+        viewModel.setCraftIdx((activity as CraftActivity).intent.getIntExtra(GlobalApplication.CRAFT_IDX, 1))
+
         setRecyclerView()
         setObserver()
 
-        viewModel.setNextPage()
-        viewModel.tryGetReview()
+        fitLayoutHeight()
     }
 
     private fun setRecyclerView(){
         binding.rvReview.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-        binding.rvReview.adapter = CraftCommentAdapter(activity as CraftActivity)
+        binding.rvReview.adapter = CraftCommentAdapter(activity as CraftActivity, viewModel.craftCommentList)
         binding.rvReview.addItemDecoration(CraftCommentDecoration(activity as CraftActivity))
     }
 
     private fun setObserver(){
+        val isPhotoObserver = Observer<Boolean>{ _ ->
+            viewModel.tryGetCommentsPageCnt()
+        }
+        viewModel.photoOnly.observe(viewLifecycleOwner, isPhotoObserver)
+
+        val pageCntObserver = Observer<Int>{ liveData ->
+            if (liveData > 0){
+                (binding.rvReview.adapter as CraftCommentAdapter).clearData()
+                if (liveData == 1) {
+                    viewModel.tryGetComments()
+                } else {
+                    viewModel.tryGetCommentFirst()
+                }
+            }
+        }
+        viewModel.craftCommentPageCnt.observe(viewLifecycleOwner, pageCntObserver)
+
         val updateObserver = Observer<Int>{ liveData ->
             when (liveData){
                 200 -> {
-                    (binding.rvReview.adapter as CraftCommentAdapter).updateData(viewModel.craftCommentList)
+                    (binding.rvReview.adapter as CraftCommentAdapter).updateData(viewModel.newDataCnt)
                 }
             }
         }
@@ -44,6 +66,10 @@ class CraftFragmentComment() : BaseFragment<CraftFragmentReviewBinding>(CraftFra
     }
 
     fun updateComment(){
-        viewModel.tryGetReview()
+        viewModel.tryGetComments()
+    }
+
+    private fun fitLayoutHeight(){
+        binding.layoutMain.minHeight = getWindowSize()[1] - (activity as CraftActivity).getToolbarHeight() - getStatusBarHeight() - dpToPx(requireContext(), 56)
     }
 }

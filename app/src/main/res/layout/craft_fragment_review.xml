@@ -2,10 +2,16 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.songil.page_craft.subpage_comment.CraftCommentViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_main"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="560dp">
+        android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.AppCompatCheckBox
             android:id="@+id/cb_check_photo"
@@ -15,6 +21,8 @@
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="16dp"
             android:layout_marginTop="13dp"
+            android:checked="@{viewModel.photoOnly}"
+            android:onClick="@{() -> viewModel.changePhoto()}"
             android:background="@drawable/custom_checkbox_square_20"
             android:button="@android:color/transparent"/>
 
@@ -25,6 +33,7 @@
             app:layout_constraintTop_toTopOf="@id/cb_check_photo"
             app:layout_constraintBottom_toBottomOf="@id/cb_check_photo"
             android:layout_marginStart="10dp"
+            android:onClick="@{() -> viewModel.changePhoto()}"
             android:textSize="12sp"
             android:fontFamily="@font/spoqahansansneo_regular"
             android:text="@string/show_only_photo_review"/>

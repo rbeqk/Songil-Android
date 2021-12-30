@@ -70,23 +70,17 @@ class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity
         viewModel.resultCode.observe(this, resultCodeObserver)
 
         val fragmentIdxObserver = Observer<Int>{ liveData ->
-            if (binding.layoutNested.getIsHeaderSticky()) {
-                binding.layoutNested.scrollTo(0, binding.lineSticky.y.toInt())
-            }
             when (liveData){
                 0 -> {
-                    supportFragmentManager.beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).hide(currentFragment).show(detailFragment).commit()
-                    currentFragment = detailFragment
+                    changeFragment(detailFragment)
                     showBuyBtn()
                 }
                 1 -> {
-                    supportFragmentManager.beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).hide(currentFragment).show(reviewFragment).commit()
-                    currentFragment = reviewFragment
+                    changeFragment(reviewFragment)
                     showBuyBtn()
                 }
                 else -> {
-                    supportFragmentManager.beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).hide(currentFragment).show(askFragment).commit()
-                    currentFragment = askFragment
+                    changeFragment(askFragment)
                     showInquiryBtn()
                 }
             }
@@ -119,6 +113,15 @@ class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity
             binding.btnShare.isClickable = liveData
         }
         viewModel.inStock.observe(this, inStockObserver)
+    }
+
+    private fun changeFragment(targetFragment : Fragment){
+        supportFragmentManager.beginTransaction().hide(currentFragment).commit()
+        if (binding.layoutNested.getIsHeaderSticky()) {
+            binding.layoutNested.scrollTo(0, binding.lineSticky.y.toInt())
+        }
+        supportFragmentManager.beginTransaction().show(targetFragment).commit()
+        currentFragment = targetFragment
     }
 
     private fun setButton(){

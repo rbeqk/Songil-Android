@@ -3,33 +3,99 @@ package com.example.songil.page_craft.subpage_comment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.songil.data.CraftComment
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlin.math.max
 
 class CraftCommentViewModel : ViewModel() {
+    private val repository = CraftCommentRepository()
+
     var updateResult = MutableLiveData<Int>()
     var craftCommentList = ArrayList<CraftComment>()
-    private var nextPage = 0
+    var craftCommentPageCnt = MutableLiveData<Int>()
+    var photoOnly = MutableLiveData<Boolean>(false)
 
-    fun tryGetReview(){
-        if (nextPage > 0){
-            val commentList = ArrayList<CraftComment>()
-            commentList.add(CraftComment(1, 1, "프로브", "2021-12-18 00:47", null, "리뷰 내용입니다.", "N"))
-            commentList.add(CraftComment(1, 1, "프로브", "2021-12-18 01:02", null, "리뷰 내용입니다.", "N"))
-            commentList.add(CraftComment(1, 1, "프로브", "2021-12-18 01:22"
-                , arrayListOf("https://firebasestorage.googleapis.com/v0/b/dietmemory-65737.appspot.com/o/SongileImage%2Fabtest1.png?alt=media&token=f7631dd9-9fb1-4562-a9d7-aba1185ddd19")
-                , "리뷰 내용입니다.", "N"))
-            commentList.add(CraftComment(1, 1, "프로브", "2021-12-18 01:35"
-                , arrayListOf("https://firebasestorage.googleapis.com/v0/b/dietmemory-65737.appspot.com/o/SongileImage%2Fabtest1.png?alt=media&token=f7631dd9-9fb1-4562-a9d7-aba1185ddd19"
-                , "https://firebasestorage.googleapis.com/v0/b/dietmemory-65737.appspot.com/o/SongileImage%2Fabtest2.png?alt=media&token=8e10a64b-3392-45d0-9de7-12fefa90d7cc")
-                , "리뷰 내용입니다.", "N"))
+    var newDataCnt = 0
+    private var requestPage = 0
+    private var craftIdx = 0
 
-            craftCommentList.addAll(commentList)
-            updateResult.value = 200
-            nextPage = max(0, nextPage - 1)
+    fun setCraftIdx(idx : Int) {
+        craftIdx = idx
+    }
+
+    fun tryGetComments(){
+        if (requestPage > 0) {
+            CoroutineScope(Dispatchers.IO).launch {
+                repository.getCraftComments(craftIdx, requestPage, changeTypeToString()).let { response ->
+                    if (response.isSuccessful) {
+                        if (response.body()?.code == 200) {
+                            craftCommentList.addAll(response.body()!!.result.comments)
+                            newDataCnt = response.body()!!.result.comments.size
+                            requestPage = max(0, requestPage - 1)
+                        } else {
+                            newDataCnt = 0
+                        }
+                    }
+                    updateResult.postValue(response.body()?.code ?: -1)
+                }
+            }
         }
     }
 
-    fun setNextPage(){
-        nextPage = 5
+    fun tryGetCommentFirst(){
+        if (requestPage > 0) {
+            CoroutineScope(Dispatchers.IO).launch {
+                var tempDataCnt = 0
+                repository.getCraftComments(craftIdx, requestPage, changeTypeToString()).let { response ->
+                    if (response.isSuccessful) {
+                        if (response.body()?.code == 200) {
+                            craftCommentList.addAll(response.body()!!.result.comments)
+                            tempDataCnt += response.body()!!.result.comments.size
+                            requestPage = max(0, requestPage - 1)
+                        }
+                    }
+                }
+                repository.getCraftComments(craftIdx, requestPage, changeTypeToString()).let { response ->
+                    if (response.isSuccessful) {
+                        if (response.body()?.code == 200) {
+                            craftCommentList.addAll(response.body()!!.result.comments)
+                            tempDataCnt += response.body()!!.result.comments.size
+                            requestPage = max(0, requestPage - 1)
+                        } else {
+                            newDataCnt = 0
+                        }
+                    }
+                    newDataCnt = tempDataCnt
+                    updateResult.postValue(response.body()?.code ?: -1)
+                }
+            }
+        }
+    }
+
+    fun tryGetCommentsPageCnt(){
+        CoroutineScope(Dispatchers.IO).launch {
+            repository.getCraftCommentsPageCnt(craftIdx, changeTypeToString()).let { response ->
+                if (response.isSuccessful){
+                    if (response.body()?.code == 200){
+                        craftCommentList.clear()
+                        requestPage = response.body()!!.result.totalPages
+                        craftCommentPageCnt.postValue(requestPage)
+                    } else {
+                        craftCommentPageCnt.postValue(0)
+                    }
+                } else {
+                    craftCommentPageCnt.postValue(0)
+                }
+            }
+        }
+    }
+
+    fun changePhoto(){
+        photoOnly.value = !photoOnly.value!!
+    }
+
+    private fun changeTypeToString() : String {
+        return if (photoOnly.value == true){ "photo" } else { "all" }
     }
 }
