@@ -305,4 +305,9 @@
 
     <!-- 이미지 picker 페이지 관련 -->
     <string name="image_pick">이미지 선택</string>
+
+
+    <!-- 서버 응답 없음 dialog 관련 -->
+    <string name="socket_time_out">서버로부터 \n데이터를 받지 못했어요</string>
+    <string name="socket_time_out_message">인터넷 상태를 확인해주세요</string>
 </resources>
