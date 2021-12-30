@@ -15,6 +15,7 @@ import com.example.songil.config.GlobalApplication
 import com.example.songil.data.ClickData
 import com.example.songil.data.Craft2
 import com.example.songil.databinding.ShopFragmentMainBinding
+import com.example.songil.page_artist.ArtistActivity
 import com.example.songil.page_craft.CraftActivity
 import com.example.songil.page_main.MainActivity
 import com.example.songil.page_shop.models.TodayArtistsResult
@@ -40,7 +41,7 @@ class ShopFragmentMain : BaseFragment<ShopFragmentMainBinding>(ShopFragmentMainB
         viewModel = ViewModelProvider(this)[ShopMainViewModel::class.java]
 
         setRecyclerView()
-
+        setButton()
         setObserver()
 
         viewModel.tryGetTodayArtists()
@@ -55,6 +56,14 @@ class ShopFragmentMain : BaseFragment<ShopFragmentMainBinding>(ShopFragmentMainB
         intent.putExtra("category", data)
         //startActivity(intent)
         (activity as MainActivity).startActivityHorizontal(intent)
+    }
+
+    private fun setButton(){
+        binding.ivProfile.setOnClickListener {
+            val intent = Intent(activity as MainActivity, ArtistActivity::class.java)
+            intent.putExtra("artistIdx", 1)
+            (activity as MainActivity).startActivityHorizontal(intent)
+        }
     }
 
     private fun setObserver(){
