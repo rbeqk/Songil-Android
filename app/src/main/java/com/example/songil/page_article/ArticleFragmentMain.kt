@@ -10,9 +10,11 @@ import com.example.songil.R
 import com.example.songil.viewPager2.adapter.Vp2ArticleTitleAdapter
 import com.example.songil.viewPager2.decoration.Vp2ArticleDecoration
 import com.example.songil.config.BaseFragment
+import com.example.songil.config.GlobalApplication
 import com.example.songil.data.SimpleArticle
 import com.example.songil.databinding.ArticleFragmentMainBinding
 import com.example.songil.page_main.MainActivity
+import com.example.songil.popup_warning.SocketTimeoutDialog
 import com.example.songil.utils.dpToPx
 import kotlin.math.abs
 
@@ -32,13 +34,25 @@ class ArticleFragmentMain : BaseFragment<ArticleFragmentMainBinding>(ArticleFrag
         setViewPager()
         setSeekBar()
 
+        setObserver()
+
+        viewModel.tryGetArticleData()
+    }
+
+    private fun setObserver(){
         val articleObserver = Observer<ArrayList<SimpleArticle>>{ LiveData ->
             (binding.vp2Article.adapter as Vp2ArticleTitleAdapter).applyData(LiveData)
             pageRangeSize = (progressMax / (LiveData.size - 1))
         }
-
         viewModel.articleData.observe(viewLifecycleOwner, articleObserver)
-        viewModel.tryGetArticleData()
+
+        val articleResultCodeObserver = Observer<Boolean>{ LiveData ->
+            if (LiveData){
+                val socketTimeoutDialog = SocketTimeoutDialog()
+                socketTimeoutDialog.show(childFragmentManager, socketTimeoutDialog.tag)
+            }
+        }
+        viewModel.isSocketTimeout.observe(viewLifecycleOwner, articleResultCodeObserver)
     }
 
     private fun setViewPager(){
