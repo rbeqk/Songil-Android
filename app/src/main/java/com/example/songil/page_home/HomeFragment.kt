@@ -1,9 +1,13 @@
 package com.example.songil.page_home
 
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ShapeDrawable
+import android.graphics.drawable.shapes.RoundRectShape
 import android.os.Bundle
 import android.view.View
 import android.widget.SeekBar
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.widget.NestedScrollView
 import androidx.lifecycle.Observer
@@ -26,6 +30,7 @@ import com.example.songil.recycler.decoration.Grid3Decoration
 import com.example.songil.viewPager2.adapter.Vp2MainArticleAdapter
 import com.example.songil.viewPager2.adapter.Vp2MainRecommendAdapter
 import com.example.songil.recycler.decoration.MainTrendDecoration
+import com.example.songil.utils.dpToPx
 import com.example.songil.viewPager2.adapter.Vp2MainTalkWithAdapter
 import com.example.songil.viewPager2.decoration.Vp2MainRecommendDecoration
 
@@ -63,7 +68,7 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::bind
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 if (!isUser){
-                    binding.seekRecommend.setProgress(position * pageRangeSize, true)
+                    binding.seekRecommend.setProgress(position * pageRangeSize, false)
                 }
             }
         })
@@ -92,6 +97,7 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::bind
         val recommendCraftObserver = Observer<ArrayList<ProductSimpleInfo>>{ liveData ->
             (binding.vp2Recommend.adapter as Vp2MainRecommendAdapter).applyData(liveData)
             pageRangeSize = (progressMax / (liveData.size - 1))
+            changeThumbSize(liveData.size)
         }
         viewModel.recommendCraftData.observe(viewLifecycleOwner, recommendCraftObserver)
 
@@ -128,6 +134,23 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::bind
                 isUser = false
             }
         })
+    }
+
+    // test part
+    private fun changeThumbSize(itemCount : Int){
+        if (itemCount != 0) {
+            val thumbWidth = (getWindowSize()[0] - dpToPx(requireContext(), 24)) / itemCount
+
+            val thumb = ShapeDrawable(RoundRectShape(listOf(2f, 2f, 2f, 2f, 2f, 2f, 2f, 2f).toFloatArray(), null, null))
+            thumb.intrinsicHeight = dpToPx(requireContext(), 4)
+            thumb.intrinsicWidth = thumbWidth
+            thumb.paint.color = Color.BLACK
+            binding.seekRecommend.thumb = thumb
+
+            val seekBarParams = binding.seekRecommend.layoutParams as ConstraintLayout.LayoutParams
+            seekBarParams.setMargins(thumbWidth / 2, dpToPx(requireContext(), 20),  thumbWidth / 2 , 0)
+            binding.seekRecommend.layoutParams = seekBarParams
+        }
     }
 
     private fun setScroll(){

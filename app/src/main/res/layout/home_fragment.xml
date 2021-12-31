@@ -41,7 +41,7 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.core.widget.NestedScrollView
+        <com.example.songil.custom_layout.LockableNestedScrollView
             android:id="@+id/layout_main"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -51,7 +51,8 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:clipChildren="false">
 
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/vp2_main"
@@ -122,8 +123,8 @@
                     android:id="@+id/seek_recommend"
                     app:layout_constraintTop_toBottomOf="@id/vp2_recommend"
                     android:layout_marginTop="20dp"
-                    android:paddingStart="42dp"
-                    android:paddingEnd="42dp"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:progress="0"
@@ -177,7 +178,7 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </androidx.core.widget.NestedScrollView>
+        </com.example.songil.custom_layout.LockableNestedScrollView>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
