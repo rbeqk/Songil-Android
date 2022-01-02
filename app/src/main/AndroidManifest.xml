@@ -62,7 +62,7 @@
         </activity>
         <activity android:name=".page_alarm.AlarmActivity"/>
         <activity android:name=".webview_address.WebAddressActivity"/>
-        <activity android:name=".page_notification.NotificationActivity"/>
+        <activity android:name=".page_notice.NoticeActivity"/>
         <activity android:name=".page_qna.QnaActivity" android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".page_abtest.AbtestActivity" android:windowSoftInputMode="adjustResize"/>
     </application>

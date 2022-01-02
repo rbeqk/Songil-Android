@@ -1,15 +1,15 @@
-package com.example.songil.page_notification
+package com.example.songil.page_notice
 
 import android.os.Bundle
 import com.example.songil.R
 import com.example.songil.config.BaseActivity
-import com.example.songil.databinding.NoticeActivityBinding
+import com.example.songil.databinding.SimpleBaseActivityBinding
 
-class NotificationActivity : BaseActivity<NoticeActivityBinding>(R.layout.notice_activity) {
+class NoticeActivity : BaseActivity<SimpleBaseActivityBinding>(R.layout.simple_base_activity) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding.notice.text = getString(R.string.notice)
+        binding.tvTitle.text = getString(R.string.notice)
 
         setButton()
     }

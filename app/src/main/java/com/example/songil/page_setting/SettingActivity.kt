@@ -5,7 +5,7 @@ import android.os.Bundle
 import com.example.songil.R
 import com.example.songil.config.BaseActivity
 import com.example.songil.databinding.SettingActivityBinding
-import com.example.songil.page_notification.NotificationActivity
+import com.example.songil.page_notice.NoticeActivity
 
 class SettingActivity : BaseActivity<SettingActivityBinding>(R.layout.setting_activity) {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,7 +20,7 @@ class SettingActivity : BaseActivity<SettingActivityBinding>(R.layout.setting_ac
         }
 
         binding.tvbtnNotice.setOnClickListener {
-            startActivityHorizontal(Intent(this, NotificationActivity::class.java))
+            startActivityHorizontal(Intent(this, NoticeActivity::class.java))
         }
     }
 

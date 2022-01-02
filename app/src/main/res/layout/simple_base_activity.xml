@@ -34,7 +34,7 @@
                         android:src="@drawable/ic_back_22"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/notice"
+                        android:id="@+id/tv_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         app:layout_constraintTop_toTopOf="parent"
@@ -58,7 +58,7 @@
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_notice"
+                android:id="@+id/rv_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="parent"
@@ -66,10 +66,6 @@
                 tools:itemCount="5"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
