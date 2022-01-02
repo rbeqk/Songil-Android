@@ -1,4 +1,4 @@
-package com.example.songil.page_comment
+package com.example.songil.page_commentwrite
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,14 +10,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.songil.R
 import com.example.songil.config.BaseActivity
-import com.example.songil.databinding.CommentActivityBinding
+import com.example.songil.databinding.CommentActivityWriteBinding
 import com.example.songil.recycler.adapter.AddPhotoSingleAdapter
 import com.example.songil.recycler.decoration.AddPhotoDecoration
 import com.example.songil.recycler.rv_interface.RvPhotoView
 
-class CommentActivity : BaseActivity<CommentActivityBinding>(R.layout.comment_activity), RvPhotoView {
+class CommentWriteActivity : BaseActivity<CommentActivityWriteBinding>(R.layout.comment_activity_write), RvPhotoView {
 
-    private val viewModel : CommentViewModel by lazy { ViewModelProvider(this)[CommentViewModel::class.java] }
+    private val viewModel : CommentWriteViewModel by lazy { ViewModelProvider(this)[CommentWriteViewModel::class.java] }
 
     private val getImageFromGallery = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){result ->
         val uri = result.data?.data

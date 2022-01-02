@@ -1,9 +1,9 @@
-package com.example.songil.page_comment
+package com.example.songil.page_commentwrite
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class CommentViewModel : ViewModel(){
+class CommentWriteViewModel : ViewModel(){
     var comment = ""
     var commentBtnActivate = MutableLiveData<Boolean>()
 
