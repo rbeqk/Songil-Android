@@ -1,33 +1,37 @@
 package com.example.songil.page_commentwrite
 
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
-import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.songil.R
 import com.example.songil.config.BaseActivity
 import com.example.songil.databinding.CommentActivityWriteBinding
-import com.example.songil.recycler.adapter.AddPhotoSingleAdapter
+import com.example.songil.page_imagepicker.ImagePickerActivity
+import com.example.songil.recycler.adapter.AddPhotoPickerAdapter
 import com.example.songil.recycler.decoration.AddPhotoDecoration
 import com.example.songil.recycler.rv_interface.RvPhotoView
 
 class CommentWriteActivity : BaseActivity<CommentActivityWriteBinding>(R.layout.comment_activity_write), RvPhotoView {
 
     private val viewModel : CommentWriteViewModel by lazy { ViewModelProvider(this)[CommentWriteViewModel::class.java] }
-
-    private val getImageFromGallery = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){result ->
-        val uri = result.data?.data
-        if (uri != null) {
-            (binding.rvPhoto.adapter as AddPhotoSingleAdapter).addPhoto(uri)
-        }
-    }
+    lateinit var imagePickerResult : ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        imagePickerResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+            if (it.resultCode == RESULT_OK){
+                val imageList = it.data?.getStringArrayListExtra("imageList")
+                (binding.rvPhoto.adapter as AddPhotoPickerAdapter).applyData(imageList ?: arrayListOf())
+            }
+        }
 
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
@@ -39,7 +43,7 @@ class CommentWriteActivity : BaseActivity<CommentActivityWriteBinding>(R.layout.
 
     private fun setRecyclerView(){
         binding.rvPhoto.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        binding.rvPhoto.adapter = AddPhotoSingleAdapter(this, this)
+        binding.rvPhoto.adapter = AddPhotoPickerAdapter(this, 3)
         binding.rvPhoto.addItemDecoration(AddPhotoDecoration(this))
     }
 
@@ -63,11 +67,33 @@ class CommentWriteActivity : BaseActivity<CommentActivityWriteBinding>(R.layout.
         }
     }
 
+    private fun moveToImagePicker(){
+        val intent = Intent(this, ImagePickerActivity::class.java)
+        intent.putExtra("min", 1)
+        intent.putExtra("max", 3)
+        imagePickerResult.launch(intent)
+    }
+
+    private fun checkPermissionAndCall(){
+        val permission = ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE)
+        if (permission == PackageManager.PERMISSION_DENIED){
+            requestPermissions(arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE), 1000)
+        } else {
+            moveToImagePicker()
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when(requestCode){
+            1000 -> {
+                moveToImagePicker()
+            }
+        }
+    }
+
     override fun photoItemClick() {
-        val intent = Intent(Intent.ACTION_PICK)
-        intent.type = MediaStore.Images.Media.CONTENT_TYPE
-        //intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-        getImageFromGallery.launch(intent)
+        checkPermissionAndCall()
     }
 
     override fun finish() {
