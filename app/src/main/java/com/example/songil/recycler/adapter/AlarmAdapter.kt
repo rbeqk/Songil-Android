@@ -4,13 +4,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.songil.data.WithNotice
-import com.example.songil.databinding.ItemNoticeBinding
+import com.example.songil.databinding.ItemAlarmBinding
 
-class NoticeAdapter : RecyclerView.Adapter<NoticeAdapter.NoticeViewHolder>(){
+class AlarmAdapter : RecyclerView.Adapter<AlarmAdapter.NoticeViewHolder>(){
 
     private val noticeData = ArrayList<WithNotice>()
 
-    class NoticeViewHolder(binding : ItemNoticeBinding) : RecyclerView.ViewHolder(binding.root){
+    class NoticeViewHolder(binding : ItemAlarmBinding) : RecyclerView.ViewHolder(binding.root){
         val name = binding.tvName
         val notice = binding.tvNotice
         val deadline = binding.tvDeadline
@@ -18,7 +18,7 @@ class NoticeAdapter : RecyclerView.Adapter<NoticeAdapter.NoticeViewHolder>(){
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoticeViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = ItemNoticeBinding.inflate(inflater, parent, false)
+        val binding = ItemAlarmBinding.inflate(inflater, parent, false)
         return NoticeViewHolder(binding)
     }
 

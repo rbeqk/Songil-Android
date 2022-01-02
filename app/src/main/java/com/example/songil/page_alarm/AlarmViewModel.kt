@@ -1,10 +1,10 @@
-package com.example.songil.page_notice
+package com.example.songil.page_alarm
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.songil.data.WithNotice
 
-class NoticeViewModel : ViewModel() {
+class AlarmViewModel : ViewModel() {
     var noticeList = MutableLiveData<ArrayList<WithNotice>>()
 
     fun tryGetNotice(){

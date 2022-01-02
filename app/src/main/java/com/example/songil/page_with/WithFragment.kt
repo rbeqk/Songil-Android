@@ -11,7 +11,7 @@ import com.example.songil.R
 import com.example.songil.config.BaseFragment
 import com.example.songil.databinding.WithFragmentMainBinding
 import com.example.songil.page_main.MainActivity
-import com.example.songil.page_notice.NoticeActivity
+import com.example.songil.page_alarm.AlarmActivity
 import com.example.songil.page_storywrite.StoryWriteActivity
 import com.example.songil.page_with.with_abtest.WithFragmentAbtest
 import com.example.songil.page_with.with_qna.WithFragmentQna
@@ -56,7 +56,7 @@ class WithFragment : BaseFragment<WithFragmentMainBinding>(WithFragmentMainBindi
         binding.btnAbTest.setOnClickListener { changeFragment(2) }
 
         binding.btnNotice.setOnClickListener {
-            (activity as MainActivity).startActivityHorizontal(Intent(activity as MainActivity, NoticeActivity::class.java))
+            (activity as MainActivity).startActivityHorizontal(Intent(activity as MainActivity, AlarmActivity::class.java))
         }
 
         binding.btnWrite.setOnClickListener {

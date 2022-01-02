@@ -60,7 +60,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>-->
         </activity>
-        <activity android:name=".page_notice.NoticeActivity"/>
+        <activity android:name=".page_alarm.AlarmActivity"/>
         <activity android:name=".webview_address.WebAddressActivity"/>
         <activity android:name=".page_notification.NotificationActivity"/>
         <activity android:name=".page_qna.QnaActivity" android:windowSoftInputMode="adjustResize"/>
