@@ -133,6 +133,7 @@
             android:button="@android:color/transparent" />
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_terms_required_usage"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:gravity="center"
@@ -140,7 +141,6 @@
             app:layout_constraintBottom_toBottomOf="@id/cb_terms_required_usage"
             app:layout_constraintStart_toEndOf="@id/cb_terms_required_usage"
             android:layout_marginStart="10dp"
-            android:onClick="@{() -> viewModel.tryGetAgreementDetail(1)}"
             android:text="@string/terms_required_usage"
             android:textSize="14sp"
             android:textColor="@color/songil_2"/>
@@ -167,7 +167,6 @@
             app:layout_constraintTop_toTopOf="@id/cb_terms_required_privacy_policy"
             app:layout_constraintBottom_toBottomOf="@id/cb_terms_required_privacy_policy"
             android:layout_marginStart="10dp"
-            android:onClick="@{() -> viewModel.tryGetAgreementDetail(2)}"
             android:text="@string/terms_required_privacy_policy"
             android:textSize="14sp"
             android:textColor="@color/songil_2"/>
@@ -193,7 +192,6 @@
             app:layout_constraintBottom_toBottomOf="@id/cb_terms_optional_ad"
             app:layout_constraintStart_toEndOf="@id/cb_terms_optional_ad"
             android:layout_marginStart="10dp"
-            android:onClick="@{() -> viewModel.tryGetAgreementDetail(3)}"
             android:text="@string/terms_optional_ad"
             android:textSize="14sp"
             android:textColor="@color/songil_2"/>

@@ -20,11 +20,38 @@ class SignupFragment1() : BaseFragment<SignupFragment1Binding>(SignupFragment1Bi
         binding.viewModel = viewModel
         binding.lifecycleOwner = requireActivity()
 
+        setButton()
+        setObserver()
+    }
+
+    private fun setButton(){
         binding.btnCancel.setOnClickListener {
             viewModel.setFragmentIdx(-1)
         }
 
-        setObserver()
+        binding.tvTermsRequiredUsage.setOnClickListener {
+            val inputStream = resources.assets.open("terms_usage.txt")
+            val size = inputStream.available()
+            val buf = ByteArray(size)
+            inputStream.read(buf)
+            callTermDialog(String(buf))
+        }
+
+        binding.tvTermsRequiredPrivacyPolicy.setOnClickListener {
+            val inputStream = resources.assets.open("terms_privacy_policy.txt")
+            val size = inputStream.available()
+            val buf = ByteArray(size)
+            inputStream.read(buf)
+            callTermDialog(String(buf))
+        }
+
+        binding.tvTermsOptionalAd.setOnClickListener {
+            val inputStream = resources.assets.open("terms_ad.txt")
+            val size = inputStream.available()
+            val buf = ByteArray(size)
+            inputStream.read(buf)
+            callTermDialog(String(buf))
+        }
     }
 
     private fun setObserver(){
@@ -40,5 +67,10 @@ class SignupFragment1() : BaseFragment<SignupFragment1Binding>(SignupFragment1Bi
             }
         }
         viewModel.loadAgreementResult.observe(requireActivity(), agreementDetailObserver)
+    }
+
+    private fun callTermDialog(terms : String){
+        val dialogFragment = TermBottomSheet(terms)
+        dialogFragment.show(childFragmentManager, dialogFragment.tag)
     }
 }
