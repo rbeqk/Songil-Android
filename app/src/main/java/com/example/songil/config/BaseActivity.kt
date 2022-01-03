@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.viewbinding.ViewBinding
 import com.example.songil.R
+import com.example.songil.popup_warning.NeedLoginDialog
 
 abstract class BaseActivity<B : ViewBinding> (@LayoutRes val layoutRes: Int) : AppCompatActivity() {
     protected lateinit var binding : B
@@ -27,4 +28,12 @@ abstract class BaseActivity<B : ViewBinding> (@LayoutRes val layoutRes: Int) : A
         startActivity(intent)
         overridePendingTransition(R.anim.from_right, R.anim.to_left)
     }
+
+    // 로그인이 안된 경우, 호출하게 될 dialog
+    fun callNeedLoginDialog(){
+        val needLoginDialog = NeedLoginDialog()
+        needLoginDialog.show(supportFragmentManager, needLoginDialog.tag)
+    }
+
+    fun isLogin() : Boolean = GlobalApplication.globalSharedPreferences.contains(GlobalApplication.X_ACCESS_TOKEN)
 }
