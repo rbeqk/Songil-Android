@@ -1,6 +1,8 @@
 package com.example.songil.viewPager2.adapter
 
 import android.content.Context
+import android.graphics.Color
+import android.graphics.PorterDuff
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -21,7 +23,6 @@ class Vp2MainRecommendAdapter(private val context: Context) : RecyclerView.Adapt
         val craftName = binding.tvCraftName
         val artistName = binding.tvArtistName
         val price = binding.tvPrice
-        val background = binding.ivBackground
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -33,7 +34,8 @@ class Vp2MainRecommendAdapter(private val context: Context) : RecyclerView.Adapt
         holder.artistName.text = dataList[position].maker
         holder.craftName.text = dataList[position].craftName
         holder.price.text = context.getString(R.string.form_price_won, dataList[position].price)
-        Glide.with(context).load(dataList[position].thumbnail).into(holder.img)
+        Glide.with(context).load(dataList[position].thumbnail).error(R.drawable.logo_songil).into(holder.img)
+        holder.img.setColorFilter(Color.argb(74, 0, 0, 0), PorterDuff.Mode.SRC_ATOP)
     }
 
     override fun getItemCount(): Int = dataList.size
