@@ -41,6 +41,7 @@ class WithFragment : BaseFragment<WithFragmentMainBinding>(WithFragmentMainBindi
     }
 
     private fun setFragment(){
+        childFragmentManager.beginTransaction().add(binding.layoutFragment.id, abtestFragment).hide(abtestFragment).add(binding.layoutFragment.id, qnaFragment).hide(qnaFragment).commit()
         childFragmentManager.beginTransaction().add(binding.layoutFragment.id, storyFragment).commit()
         currentFragment = storyFragment
     }
@@ -84,38 +85,44 @@ class WithFragment : BaseFragment<WithFragmentMainBinding>(WithFragmentMainBindi
     }
 
     override fun sort(sort: String) {
-
+        (currentFragment as WithSubFragmentInterface).sort(sort)
     }
 
     private fun changeFragment(idx : Int){
         when (idx){
             0 -> {
                 if (currentFragment !is WithFragmentStory) {
+                    childFragmentManager.beginTransaction().hide(currentFragment).commit()
                     binding.layoutHotTalk.visibility = View.VISIBLE
                     binding.lineSelectStory.visibility = View.VISIBLE
                     binding.lineSelectQna.visibility = View.INVISIBLE
                     binding.lineSelectAbTest.visibility = View.INVISIBLE
-                    childFragmentManager.beginTransaction().replace(binding.layoutFragment.id, storyFragment).commit()
+                    storyFragment.onShow()
+                    childFragmentManager.beginTransaction().show(storyFragment).commit()
                     currentFragment = storyFragment
                 }
             }
             1 -> {
                 if (currentFragment !is WithFragmentQna) {
+                    childFragmentManager.beginTransaction().hide(currentFragment).commit()
                     binding.layoutHotTalk.visibility = View.VISIBLE
                     binding.lineSelectStory.visibility = View.INVISIBLE
                     binding.lineSelectQna.visibility = View.VISIBLE
                     binding.lineSelectAbTest.visibility = View.INVISIBLE
-                    childFragmentManager.beginTransaction().replace(binding.layoutFragment.id, qnaFragment).commit()
+                    qnaFragment.onShow()
+                    childFragmentManager.beginTransaction().show(qnaFragment).commit()
                     currentFragment = qnaFragment
                 }
             }
             2 -> {
                 if (currentFragment !is WithFragmentAbtest) {
+                    childFragmentManager.beginTransaction().hide(currentFragment).commit()
                     binding.layoutHotTalk.visibility = View.GONE
                     binding.lineSelectStory.visibility = View.INVISIBLE
                     binding.lineSelectQna.visibility = View.INVISIBLE
                     binding.lineSelectAbTest.visibility = View.VISIBLE
-                    childFragmentManager.beginTransaction().replace(binding.layoutFragment.id, abtestFragment).commit()
+                    abtestFragment.onShow()
+                    childFragmentManager.beginTransaction().show(abtestFragment).commit()
                     currentFragment = abtestFragment
                 }
             }

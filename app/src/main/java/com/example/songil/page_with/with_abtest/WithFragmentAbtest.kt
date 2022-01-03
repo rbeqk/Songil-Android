@@ -11,15 +11,15 @@ import com.example.songil.R
 import com.example.songil.config.BaseFragment
 import com.example.songil.data.ABTestViewInfo
 import com.example.songil.databinding.SimpleRecyclerviewFragmentBinding
+import com.example.songil.page_with.WithSubFragmentInterface
 import com.example.songil.recycler.adapter.WithABTestAdapter
 
-class WithFragmentAbtest : BaseFragment<SimpleRecyclerviewFragmentBinding>(SimpleRecyclerviewFragmentBinding::bind, R.layout.simple_recyclerview_fragment) {
+class WithFragmentAbtest : BaseFragment<SimpleRecyclerviewFragmentBinding>(SimpleRecyclerviewFragmentBinding::bind, R.layout.simple_recyclerview_fragment), WithSubFragmentInterface {
 
-    private lateinit var viewModel : WithAbtestViewModel
+    private val viewModel : WithAbtestViewModel by lazy { ViewModelProvider(this)[WithAbtestViewModel::class.java] }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this)[WithAbtestViewModel::class.java]
         setObserver()
         setRecyclerView()
 
@@ -67,6 +67,14 @@ class WithFragmentAbtest : BaseFragment<SimpleRecyclerviewFragmentBinding>(Simpl
         override fun areContentsTheSame(oldItem: ABTestViewInfo, newItem: ABTestViewInfo): Boolean {
             return (oldItem.abTest.voteInfo == newItem.abTest.voteInfo) && (oldItem.abTest.finishInfo == newItem.abTest.finishInfo)
         }
+
+    }
+
+    override fun onShow() {
+        binding.rvContent.scrollToPosition(0)
+    }
+
+    override fun sort(sort: String) {
 
     }
 

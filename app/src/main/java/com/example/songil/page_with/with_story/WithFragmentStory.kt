@@ -11,19 +11,18 @@ import com.example.songil.config.BaseFragment
 import com.example.songil.data.FrontStory
 import com.example.songil.databinding.SimpleRecyclerviewFragmentBinding
 import com.example.songil.page_main.MainActivity
+import com.example.songil.page_with.WithSubFragmentInterface
 import com.example.songil.recycler.adapter.WithStoryAdapter
 import com.example.songil.recycler.decoration.WithStoryDecoration
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class WithFragmentStory : BaseFragment<SimpleRecyclerviewFragmentBinding>(SimpleRecyclerviewFragmentBinding::bind, R.layout.simple_recyclerview_fragment) {
+class WithFragmentStory : BaseFragment<SimpleRecyclerviewFragmentBinding>(SimpleRecyclerviewFragmentBinding::bind, R.layout.simple_recyclerview_fragment), WithSubFragmentInterface {
 
-    private lateinit var viewModel: WithStoryViewModel
+    private val viewModel: WithStoryViewModel by lazy { ViewModelProvider(this)[WithStoryViewModel::class.java] }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        viewModel = ViewModelProvider(this)[WithStoryViewModel::class.java]
 
         setRecyclerView()
 
@@ -48,6 +47,14 @@ class WithFragmentStory : BaseFragment<SimpleRecyclerviewFragmentBinding>(Simple
         override fun areContentsTheSame(oldItem: FrontStory, newItem: FrontStory): Boolean {
             return (oldItem.isLike == newItem.isLike) && (oldItem.likeCount == newItem.likeCount)
         }
+
+    }
+
+    override fun onShow() {
+        binding.rvContent.scrollToPosition(0)
+    }
+
+    override fun sort(sort: String) {
 
     }
 }

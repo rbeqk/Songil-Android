@@ -10,18 +10,17 @@ import com.example.songil.R
 import com.example.songil.config.BaseFragment
 import com.example.songil.data.WithQna
 import com.example.songil.databinding.SimpleRecyclerviewFragmentBinding
+import com.example.songil.page_with.WithSubFragmentInterface
 import com.example.songil.recycler.adapter.PostAdapter
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class WithFragmentQna : BaseFragment<SimpleRecyclerviewFragmentBinding>(SimpleRecyclerviewFragmentBinding::bind, R.layout.simple_recyclerview_fragment){
+class WithFragmentQna : BaseFragment<SimpleRecyclerviewFragmentBinding>(SimpleRecyclerviewFragmentBinding::bind, R.layout.simple_recyclerview_fragment), WithSubFragmentInterface{
 
-    private lateinit var viewModel: WithQnaViewModel
+    private val viewModel: WithQnaViewModel by lazy { ViewModelProvider(this)[WithQnaViewModel::class.java] }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        viewModel = ViewModelProvider(this)[WithQnaViewModel::class.java]
 
         setRecyclerView()
 
@@ -45,6 +44,14 @@ class WithFragmentQna : BaseFragment<SimpleRecyclerviewFragmentBinding>(SimpleRe
         override fun areContentsTheSame(oldItem: WithQna, newItem: WithQna): Boolean {
             return (oldItem.isLike == newItem.isLike) && (oldItem.likeCount == newItem.likeCount)
         }
+
+    }
+
+    override fun onShow() {
+        binding.rvContent.scrollToPosition(0)
+    }
+
+    override fun sort(sort: String) {
 
     }
 }
