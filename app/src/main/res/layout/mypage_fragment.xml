@@ -401,7 +401,7 @@
                     android:text="@string/modify_profile"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvbtn_apply_social_login"
+                    android:id="@+id/tvbtn_modify_password"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     app:layout_constraintTop_toBottomOf="@id/tvbtn_set_profile"
@@ -409,13 +409,13 @@
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
                     isLoginText="@{viewModel.isLogin()}"
-                    android:text="@string/apply_social_login"/>
+                    android:text="@string/modify_password"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvbtn_logout"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    app:layout_constraintTop_toBottomOf="@id/tvbtn_apply_social_login"
+                    app:layout_constraintTop_toBottomOf="@id/tvbtn_modify_password"
                     android:gravity="center_vertical"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
