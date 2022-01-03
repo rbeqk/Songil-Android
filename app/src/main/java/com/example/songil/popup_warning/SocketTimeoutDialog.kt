@@ -2,7 +2,9 @@ package com.example.songil.popup_warning
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,5 +42,35 @@ class SocketTimeoutDialog() : DialogFragment() {
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setSize()
+    }
+
+    private fun setSize(){
+        val layoutParams = binding.layoutMain.layoutParams
+        val size = getWindowSize()
+        layoutParams.height = (size[1] * 4 / 10)
+        layoutParams.width = (size[0] * 7 / 10)
+        binding.layoutMain.layoutParams = layoutParams
+    }
+
+    private fun getWindowSize() : ArrayList<Int> {
+        val height : Int
+        val width : Int
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            val windowMetrics = requireActivity().windowManager.currentWindowMetrics
+            //val insets = windowMetrics.windowInsets.getInsets(WindowInsets.Type.systemBars())
+            height = windowMetrics.bounds.height()
+            width = windowMetrics.bounds.width()
+        } else {
+            val displayMetrics = DisplayMetrics()
+            requireActivity().windowManager.defaultDisplay.getMetrics(displayMetrics)
+            height = displayMetrics.heightPixels
+            width = displayMetrics.widthPixels
+        }
+        return arrayListOf(width, height)
     }
 }
