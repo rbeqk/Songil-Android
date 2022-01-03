@@ -174,18 +174,4 @@ class SignupViewModel : ViewModel() {
             }
         }
     }
-
-    fun tryGetAgreementDetail(agreementIdx : Int){
-        CoroutineScope(Dispatchers.IO).launch {
-            repository.getAgreementDetail(agreementIdx).let { response ->
-                if (response.isSuccessful){
-                    apiMessage = response.body()!!.message!!
-                    if (response.body()!!.code == 200){
-                        agreementContent = response.body()!!.result.content
-                    }
-                    loadAgreementResult.postValue(response.body()!!.code)
-                }
-            }
-        }
-    }
 }
