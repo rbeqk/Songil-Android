@@ -27,6 +27,7 @@ class LockableNestedScrollView(context: Context, attributeSet: AttributeSet?) : 
                 MotionEvent.ACTION_DOWN -> {
                     lastX = ev.x
                     lastY = ev.y
+                    super.onTouchEvent(ev)
                     allowScroll = false
                 }
                 MotionEvent.ACTION_MOVE -> {
