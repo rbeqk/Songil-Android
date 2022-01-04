@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.songil.config.BaseActivity
 import com.example.songil.config.GlobalApplication
 import com.example.songil.data.ClickData
 import com.example.songil.databinding.ItemImageBinding
@@ -34,11 +35,11 @@ class ClickImageAdapter(private val context : Context, private val isCraft : Boo
             if (isCraft) {
                 val intent = Intent(context, CraftActivity::class.java)
                 intent.putExtra(GlobalApplication.CRAFT_IDX, dataList[position].idx)
-                context.startActivity(intent)
+                (context as BaseActivity<*>).startActivityHorizontal(intent)
             } else {
                 val intent = Intent(context, StoryActivity::class.java)
                 intent.putExtra(GlobalApplication.STORY_IDX, dataList[position].idx)
-                context.startActivity(intent)
+                (context as BaseActivity<*>).startActivityHorizontal(intent)
             }
         }
     }
