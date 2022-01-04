@@ -17,3 +17,6 @@ data class ABTestViewInfo(val abTest : ABTest, var choice : String? = null) // c
 data class HotTalk(val category : String, val idx : Int, val title : String, val commentCnt : Int?, val artistImageUrl : String?)
 
 data class WithNotice(val noticeIdx : Int, val userName : String, val notice : String, val deadline : String)
+
+data class WithStory(val storyIdx : Int, val imageUrl : ArrayList<String>, val title : String, val content : String, val userIdx : Int, val userName : String, val userProfile : String?,
+                     val createdAt : String, var totalLikeCount : Int, var isLike : String, val totalCommentCnt : Int, val tag : ArrayList<String>)

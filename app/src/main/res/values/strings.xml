@@ -304,6 +304,10 @@
     <string name="input_tag_message">#태그를 입력하세요.</string>
     <string name="how_to_input_tag">엔터를 누르면 태그가 등록됩니다. (최대 3개)</string>
 
+    <!-- story 상세 페이지 관련 -->
+    <string name="story_title">%s님의 스토리</string>
+
+
     <!-- 이미지 picker 페이지 관련 -->
     <string name="image_pick">이미지 선택</string>
 
