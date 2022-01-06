@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.songil.R
-import com.example.songil.data.ProductSimpleInfo
+import com.example.songil.data.CraftSimpleInfo
 import com.example.songil.databinding.ItemMainRecommendVp2Binding
 
 // 임의로 craftSimple 데이터를 사용합니다!! 아직 서버가 없어요
@@ -16,7 +16,7 @@ class Vp2MainRecommendAdapter(private val context: Context) : RecyclerView.Adapt
 
     private val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
     private lateinit var binding : ItemMainRecommendVp2Binding
-    private val dataList = ArrayList<ProductSimpleInfo>()
+    private val dataList = ArrayList<CraftSimpleInfo>()
 
     class ViewHolder(binding : ItemMainRecommendVp2Binding) : RecyclerView.ViewHolder(binding.root){
         val img = binding.ivThumbnail
@@ -31,16 +31,16 @@ class Vp2MainRecommendAdapter(private val context: Context) : RecyclerView.Adapt
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.artistName.text = dataList[position].maker
+        holder.artistName.text = dataList[position].artist
         holder.craftName.text = dataList[position].craftName
         holder.price.text = context.getString(R.string.form_price_won, dataList[position].price)
-        Glide.with(context).load(dataList[position].thumbnail).error(R.drawable.logo_songil).into(holder.img)
+        Glide.with(context).load(dataList[position].imageUrl).error(R.drawable.logo_songil).into(holder.img)
         holder.img.setColorFilter(Color.argb(74, 0, 0, 0), PorterDuff.Mode.SRC_ATOP)
     }
 
     override fun getItemCount(): Int = dataList.size
 
-    fun applyData(newData : ArrayList<ProductSimpleInfo>){
+    fun applyData(newData : ArrayList<CraftSimpleInfo>){
         dataList.clear()
         dataList.addAll(newData)
         notifyDataSetChanged()

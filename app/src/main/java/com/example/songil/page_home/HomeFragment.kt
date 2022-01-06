@@ -18,7 +18,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example.songil.R
 import com.example.songil.config.BaseFragment
 import com.example.songil.data.ClickData
-import com.example.songil.data.ProductSimpleInfo
+import com.example.songil.data.CraftSimpleInfo
 import com.example.songil.data.SimpleArticle
 import com.example.songil.data.TalkWith
 import com.example.songil.databinding.HomeFragmentBinding
@@ -89,12 +89,12 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::bind
     }
 
     private fun setObserver(){
-        val trendCraftObserver = Observer<ArrayList<ProductSimpleInfo>>{ liveData ->
+        val trendCraftObserver = Observer<ArrayList<CraftSimpleInfo>>{ liveData ->
             (binding.rvTrendCraft.adapter as MainTrendCraftAdapter).applyData(liveData)
         }
         viewModel.trendCraftData.observe(viewLifecycleOwner, trendCraftObserver)
 
-        val recommendCraftObserver = Observer<ArrayList<ProductSimpleInfo>>{ liveData ->
+        val recommendCraftObserver = Observer<ArrayList<CraftSimpleInfo>>{ liveData ->
             (binding.vp2Recommend.adapter as Vp2MainRecommendAdapter).applyData(liveData)
             pageRangeSize = (progressMax / (liveData.size - 1))
             changeThumbSize(liveData.size)

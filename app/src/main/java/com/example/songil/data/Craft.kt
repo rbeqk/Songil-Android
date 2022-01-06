@@ -1,6 +1,6 @@
 package com.example.songil.data
 
-data class ProductSimpleInfo(val craftName : String, val maker : String, val price : Int, val thumbnail : String)
+data class CraftSimpleInfo(val craftName : String, val artist : String, val price : Int, val imageUrl : String, val craftIdx : Int = 0)
 
 data class CraftDetailInfo(val craftIdx : Int, val isNew : String, val isSoldOut : String, val mainImageUrl : String, val name : String,
                            val price : Int, val shippingFee : ArrayList<String>, val material : ArrayList<String>,

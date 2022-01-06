@@ -6,10 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.example.songil.data.ProductSimpleInfo
+import com.example.songil.data.CraftSimpleInfo
 import com.example.songil.databinding.ItemCraft3MycommentBinding
 
-class Craft3MyCommentAdapter(private val context: Context, private val dataList : ArrayList<ProductSimpleInfo>) : RecyclerView.Adapter<Craft3MyCommentAdapter.ViewHolder>() {
+class Craft3MyCommentAdapter(private val context: Context, private val dataList : ArrayList<CraftSimpleInfo>) : RecyclerView.Adapter<Craft3MyCommentAdapter.ViewHolder>() {
 
     private val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
     private lateinit var binding : ItemCraft3MycommentBinding
@@ -29,8 +29,8 @@ class Craft3MyCommentAdapter(private val context: Context, private val dataList 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.productName.text = dataList[position].craftName
-        holder.artistName.text = dataList[position].maker
-        Glide.with(context).load(dataList[position].thumbnail).into(holder.image)
+        holder.artistName.text = dataList[position].artist
+        Glide.with(context).load(dataList[position].imageUrl).into(holder.image)
         holder.writeButton.setOnClickListener {
 
         }
