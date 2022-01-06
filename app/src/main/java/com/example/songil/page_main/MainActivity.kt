@@ -5,6 +5,7 @@ import com.example.songil.R
 import com.example.songil.config.BaseActivity
 import com.example.songil.databinding.MainActivityBinding
 import com.example.songil.page_article.ArticleFragmentMain
+import com.example.songil.page_artistmanage.ArtistManageFragment
 import com.example.songil.page_home.HomeFragment
 import com.example.songil.page_mypage.MypaegFragment
 import com.example.songil.page_shop.ShopFragmentMain
@@ -43,7 +44,8 @@ class MainActivity : BaseActivity<MainActivityBinding>(R.layout.main_activity){
         binding.bottom.selectedItemId = R.id.bottom_home
     }
 
-    fun moveToHome(){
-        binding.bottom.selectedItemId = R.id.bottom_shop
+    fun toggleMyPage(toArtist : Boolean){
+        if (toArtist) { supportFragmentManager.beginTransaction().replace(binding.layoutFragment.id, ArtistManageFragment()).commit() }
+        else { supportFragmentManager.beginTransaction().replace(binding.layoutFragment.id, MypaegFragment()).commit() }
     }
 }

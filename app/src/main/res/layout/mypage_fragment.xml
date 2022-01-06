@@ -440,7 +440,6 @@
                     android:gravity="center_vertical"
                     android:paddingStart="16dp"
                     android:paddingEnd="16dp"
-                    isLoginText="@{viewModel.isLogin()}"
                     android:text="@string/change_to_artist_page"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>

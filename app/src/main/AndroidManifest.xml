@@ -65,6 +65,9 @@
         <activity android:name=".page_notice.NoticeActivity"/>
         <activity android:name=".page_qna.QnaActivity" android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".page_abtest.AbtestActivity" android:windowSoftInputMode="adjustResize"/>
+        <activity android:name=".page_artistmanage.subpage_answer.ArtistManageAnswerActivity"/>
+        <activity android:name=".page_artistmanage.subpage_orderstat.ArtistManageOrderStatActivity"/>
+        <activity android:name=".page_artistmanage.subpage_asklist.ArtistManageAskListActivity"/>
     </application>
 
 </manifest>

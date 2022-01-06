@@ -93,8 +93,9 @@ class MypaegFragment : BaseFragment<MypageFragmentBinding>(MypageFragmentBinding
         }
 
         binding.tvbtnChangeToArtistPage.setOnClickListener {
-            val dialogFragment = WarningDialog()
-            dialogFragment.show(childFragmentManager, dialogFragment.tag)
+            /*val dialogFragment = WarningDialog()
+            dialogFragment.show(childFragmentManager, dialogFragment.tag)*/
+            (activity as MainActivity).toggleMyPage(true)
         }
     }
 
