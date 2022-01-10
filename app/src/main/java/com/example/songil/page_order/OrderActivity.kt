@@ -15,6 +15,7 @@ import com.example.songil.databinding.OrderActivityBinding
 import com.example.songil.recycler.adapter.Craft4Adapter
 import com.example.songil.webview_address.WebAddressActivity
 import kr.co.bootpay.Bootpay
+import kr.co.bootpay.BootpayAnalytics
 import kr.co.bootpay.enums.Method
 import kr.co.bootpay.enums.PG
 import kr.co.bootpay.enums.UX
@@ -36,6 +37,8 @@ class OrderActivity : BaseActivity<OrderActivityBinding>(R.layout.order_activity
             binding.layoutBenefit.visibility =  View.GONE
             binding.spaceCoupon.visibility = View.GONE
         }
+
+        BootpayAnalytics.init(this, "61c91047e38c30001ed2cfd6")
 
         setRecyclerView()
         setObserver()
@@ -85,9 +88,9 @@ class OrderActivity : BaseActivity<OrderActivityBinding>(R.layout.order_activity
     }
 
     private fun goBootPayRequest() {
-        val bootUser = BootUser().setPhone("010-0000-0000")
+        val bootUser = BootUser().setPhone("010-7748-8084")
         val bootExtra = BootExtra().setQuotas(intArrayOf(0, 2, 3))
-        Bootpay.init(this).setApplicationId("--").setContext(this)
+        Bootpay.init(this).setApplicationId("61c91047e38c30001ed2cfd6").setContext(this)
             .setBootUser(bootUser).setBootExtra(bootExtra).setUX(UX.PG_DIALOG).setPG(PG.KCP).setMethod(Method.CARD)
             .setName("테스트 상품명").setOrderId("1234").setPrice(1000).onDone { message ->
                 Log.d("done", message)

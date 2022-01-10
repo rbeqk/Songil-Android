@@ -7,15 +7,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.songil.R
 import com.example.songil.config.BaseActivity
 import com.example.songil.data.Orders
-import com.example.songil.databinding.OrderstatusActivityBinding
+import com.example.songil.databinding.SimpleBaseActivityBinding
 import com.example.songil.recycler.adapter.OrdersAdapter
 
-class OrderstatusActivity : BaseActivity<OrderstatusActivityBinding>(R.layout.orderstatus_activity) {
+class OrderstatusActivity : BaseActivity<SimpleBaseActivityBinding>(R.layout.simple_base_activity) {
 
     private lateinit var viewModel : OrderstatusViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        binding.tvTitle.text = getString(R.string.order_status)
 
         viewModel = ViewModelProvider(this)[OrderstatusViewModel::class.java]
         setRecyclerView()
@@ -25,13 +27,13 @@ class OrderstatusActivity : BaseActivity<OrderstatusActivityBinding>(R.layout.or
     }
 
     private fun setRecyclerView(){
-        binding.rvOrders.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        binding.rvOrders.adapter = OrdersAdapter(this)
+        binding.rvContent.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.rvContent.adapter = OrdersAdapter(this)
     }
 
     private fun setObserver(){
         val orderStatusObserver = Observer<ArrayList<Orders>>{ liveData ->
-            (binding.rvOrders.adapter as OrdersAdapter).applyData(liveData)
+            (binding.rvContent.adapter as OrdersAdapter).applyData(liveData)
         }
         viewModel.ordersData.observe(this, orderStatusObserver)
     }

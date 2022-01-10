@@ -9,9 +9,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.songil.R
+import com.example.songil.config.BaseActivity
 import com.example.songil.data.Order
 import com.example.songil.databinding.ItemOrderStatusBinding
 import com.example.songil.page_cancel.CancelActivity
+import com.example.songil.page_delivery.DeliveryActivity
 import com.example.songil.page_inquiry.InquiryActivity
 
 class OrderStatusAdapter(private val context : Context, private val dataList : ArrayList<Order>) : RecyclerView.Adapter<OrderStatusAdapter.ViewHolder>() {
@@ -48,7 +50,8 @@ class OrderStatusAdapter(private val context : Context, private val dataList : A
             Log.d("order", "코멘트 작성 to ${dataList[position].productIdx}")
         }
         holder.btnDeliveryStatus.setOnClickListener {
-            Log.d("order", "배송 정보 to ${dataList[position].orderStatus}")
+            //Log.d("order", "배송 정보 to ${dataList[position].orderStatus}")
+            (context as BaseActivity<*>).startActivityHorizontal(Intent(context, DeliveryActivity::class.java))
         }
         holder.btnInquiry.setOnClickListener {
             //Log.d("order", "문의 작성 to ${dataList[position].productIdx}")

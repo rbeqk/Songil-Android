@@ -68,6 +68,7 @@
         <activity android:name=".page_artistmanage.subpage_answer.ArtistManageAnswerActivity"/>
         <activity android:name=".page_artistmanage.subpage_orderstat.ArtistManageOrderStatActivity"/>
         <activity android:name=".page_artistmanage.subpage_asklist.ArtistManageAskListActivity"/>
+        <activity android:name=".page_delivery.DeliveryActivity"/>
     </application>
 
 </manifest>
