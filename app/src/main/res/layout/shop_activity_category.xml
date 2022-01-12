@@ -9,146 +9,142 @@
         android:animateLayoutChanges="true">
 
         <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/layout_appbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:elevation="0dp">
 
-            <com.google.android.material.appbar.MaterialToolbar
+            <com.google.android.material.appbar.CollapsingToolbarLayout
                 android:layout_width="match_parent"
-                android:layout_height="46dp"
-                app:contentInsetStart="0dp">
+                android:layout_height="wrap_content"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/navigation_bar"
                     android:layout_width="match_parent"
-                    android:layout_height="46dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="56dp"
+                    android:paddingTop="16dp"
                     android:background="@color/songil_1"
-                    android:elevation="1dp"
-                    android:outlineProvider="none"
-                    app:layout_constraintTop_toTopOf="parent">
+                    app:layout_collapseMode="parallax">
 
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/btn_back"
-                        android:layout_width="22dp"
-                        android:layout_height="22dp"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        android:layout_marginStart="16dp"
-                        android:src="@drawable/ic_back_22"/>
-
-                    <LinearLayout
-                        android:id="@+id/btn_shop_category"
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_this_week_popular"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:includeFontPadding="true"
+                        android:textSize="16sp"
+                        tools:text="이번주 인기 도자공예"/>
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_popular"
+                        android:layout_width="0dp"
+                        android:layout_height="220dp"
+                        android:overScrollMode="never"
+                        app:layout_constraintTop_toBottomOf="@id/tv_this_week_popular"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
-                        android:orientation="horizontal">
+                        android:layout_marginTop="16dp"/>
 
-                        <androidx.appcompat.widget.AppCompatTextView
-                            android:id="@+id/tv_category"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="16sp"
-                            tools:text="도자공예"/>
-
-                        <androidx.appcompat.widget.AppCompatImageView
-                            android:layout_width="19dp"
-                            android:layout_height="19dp"
-                            android:src="@drawable/ic_icon_down_19"
-                            android:layout_marginStart="6dp"/>
-
-                    </LinearLayout>
-
-                    <com.example.songil.custom_view.ShoppingCartButton
-                        android:id="@+id/btn_shoppingbasket"
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/btn_back"
-                        android:layout_marginEnd="16dp"/>
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/btn_search"
-                        android:layout_width="22dp"
-                        android:layout_height="22dp"
-                        app:layout_constraintTop_toTopOf="@id/btn_back"
-                        app:layout_constraintBottom_toBottomOf="@id/btn_back"
-                        app:layout_constraintEnd_toStartOf="@id/btn_shoppingbasket"
-                        android:layout_marginEnd="12dp"
-                        android:src="@drawable/ic_search_22"/>
+                    <View
+                        android:id="@+id/space_popular"
+                        android:layout_width="match_parent"
+                        android:layout_height="8dp"
+                        app:layout_constraintTop_toBottomOf="@id/rv_popular"
+                        android:layout_marginTop="22dp"
+                        android:background="@color/g_1"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
-            </com.google.android.material.appbar.MaterialToolbar>
+                <com.google.android.material.appbar.MaterialToolbar
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:contentInsetStart="0dp"
+                    app:layout_collapseMode="pin">
 
-        </com.google.android.material.appbar.AppBarLayout>
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/navigation_bar"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:background="@color/songil_1"
+                        android:outlineProvider="none"
+                        app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.core.widget.NestedScrollView
-            android:id="@+id/layout_nested"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/songil_1"
-            android:overScrollMode="never"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/btn_back"
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:layout_marginStart="16dp"
+                            android:src="@drawable/ic_back_22"/>
+
+                        <LinearLayout
+                            android:id="@+id/btn_shop_category"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/tv_category"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="16sp"
+                                tools:text="도자공예"/>
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="19dp"
+                                android:layout_height="19dp"
+                                android:src="@drawable/ic_icon_down_19"
+                                android:layout_marginStart="6dp"/>
+
+                        </LinearLayout>
+
+                        <com.example.songil.custom_view.ShoppingCartButton
+                            android:id="@+id/btn_shoppingbasket"
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@id/btn_back"
+                            android:layout_marginEnd="16dp"/>
+
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/btn_search"
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            app:layout_constraintTop_toTopOf="@id/btn_back"
+                            app:layout_constraintBottom_toBottomOf="@id/btn_back"
+                            app:layout_constraintEnd_toStartOf="@id/btn_shoppingbasket"
+                            android:layout_marginEnd="12dp"
+                            android:src="@drawable/ic_search_22"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </com.google.android.material.appbar.MaterialToolbar>
+
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/guideline_start"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintGuide_begin="12dp"
-                    android:orientation="vertical"/>
-
-                <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/guideline_end"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintGuide_end="12dp"
-                    android:orientation="vertical"/>
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_this_week_popular"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="@id/guideline_start"
-                    android:layout_marginTop="16dp"
-                    android:includeFontPadding="true"
-                    android:textSize="16sp"
-                    tools:text="이번주 인기 도자공예"/>
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_popular"
-                    android:layout_width="0dp"
-                    android:layout_height="220dp"
-                    android:overScrollMode="never"
-                    app:layout_constraintTop_toBottomOf="@id/tv_this_week_popular"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginTop="16dp"/>
-
-                <View
-                    android:id="@+id/space_popular"
-                    android:layout_width="match_parent"
-                    android:layout_height="8dp"
-                    app:layout_constraintTop_toBottomOf="@id/rv_popular"
-                    android:layout_marginTop="22dp"
-                    android:background="@color/g_1"/>
+                android:layout_height="wrap_content"
+                android:background="@color/songil_1"
+                android:paddingBottom="16dp">
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_search_result"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/space_popular"
-                    app:layout_constraintStart_toStartOf="@id/guideline_start"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     android:layout_marginTop="16dp"
-                    android:layout_marginStart="4dp"
+                    android:layout_marginStart="12dp"
                     android:textSize="12sp"
                     tools:text="총 12개 검색 결과"/>
 
@@ -158,7 +154,8 @@
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toTopOf="@id/tv_search_result"
                     app:layout_constraintBottom_toBottomOf="@id/tv_search_result"
-                    app:layout_constraintEnd_toEndOf="@id/guideline_end"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="12dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
@@ -179,24 +176,31 @@
 
                 </LinearLayout>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_craft"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:overScrollMode="never"
-                    app:layout_constraintTop_toBottomOf="@id/tv_search_result"
-                    android:layout_marginTop="16dp"
-                    android:nestedScrollingEnabled="false"/>
-
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </androidx.core.widget.NestedScrollView>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/songil_1"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_craft"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:overScrollMode="never"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="16dp"/>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_category"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+            android:paddingTop="56dp">
 
             <View
                 android:id="@+id/category_background"
