@@ -54,4 +54,8 @@ class WithFragmentQna : BaseFragment<SimpleRecyclerviewFragmentBinding>(SimpleRe
     override fun sort(sort: String) {
 
     }
+
+    override fun refresh() {
+
+    }
 }

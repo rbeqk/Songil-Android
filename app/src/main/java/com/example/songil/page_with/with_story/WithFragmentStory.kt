@@ -57,4 +57,8 @@ class WithFragmentStory : BaseFragment<SimpleRecyclerviewFragmentBinding>(Simple
     override fun sort(sort: String) {
 
     }
+
+    override fun refresh() {
+
+    }
 }

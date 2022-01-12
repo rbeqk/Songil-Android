@@ -78,4 +78,8 @@ class WithFragmentAbtest : BaseFragment<SimpleRecyclerviewFragmentBinding>(Simpl
 
     }
 
+    override fun refresh() {
+
+    }
+
 }

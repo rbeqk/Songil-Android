@@ -8,6 +8,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.songil.R
+import com.example.songil.config.BaseActivity
 import com.example.songil.config.BaseFragment
 import com.example.songil.databinding.WithFragmentMainBinding
 import com.example.songil.page_main.MainActivity
@@ -37,6 +38,11 @@ class WithFragment : BaseFragment<WithFragmentMainBinding>(WithFragmentMainBindi
         setRecyclerView()
         setObserver()
 
+        binding.layoutRefresh.setOnRefreshListener {
+            (currentFragment as WithSubFragmentInterface).refresh()
+            binding.layoutRefresh.isRefreshing = false
+        }
+
         viewModel.tryGetHotTalk()
     }
 
@@ -63,6 +69,10 @@ class WithFragment : BaseFragment<WithFragmentMainBinding>(WithFragmentMainBindi
         binding.btnWrite.setOnClickListener {
             if (currentFragment is WithFragmentStory){
                 (activity as MainActivity).startActivityHorizontal(Intent(activity as MainActivity, StoryWriteActivity::class.java))
+            } else {
+                if (!(activity as BaseActivity<*>).isLogin()){
+                    (activity as BaseActivity<*>).callNeedLoginDialog()
+                }
             }
         }
     }
