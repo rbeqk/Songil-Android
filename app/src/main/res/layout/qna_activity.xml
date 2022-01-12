@@ -226,6 +226,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:maxHeight="96dp"
+                android:scrollbars="vertical"
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/shape_rectangle_g1_radius_4"
