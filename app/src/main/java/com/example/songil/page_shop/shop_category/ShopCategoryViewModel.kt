@@ -44,11 +44,9 @@ class ShopCategoryViewModel : ViewModel() {
     private val repository = ShopCategoryRepository()
 
     fun setInit(){
-        viewModelScope.launch {
-            flow = Pager(PagingConfig(pageSize = 10)){
-                Craft1PagingSource(repository, ::startIdxInt, ::isRefresh, ::categoryString, ::sortString)
-            }.flow.cachedIn(viewModelScope)
-        }
+        flow = Pager(PagingConfig(pageSize = 10)){
+            Craft1PagingSource(repository, ::startIdxInt, ::isRefresh, ::categoryString, ::sortString)
+        }.flow.cachedIn(viewModelScope)
     }
 
     fun tempGetStartIdx(){
