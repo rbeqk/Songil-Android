@@ -1,23 +1,22 @@
 package com.example.songil.page_with.with_story
 
+import com.example.songil.config.GlobalApplication
 import com.example.songil.data.FrontStory
 
 class WithStoryRepository {
 
-    fun tempGetStories(pageIdx : Int) : ArrayList<FrontStory>{
-        val temp = arrayListOf<FrontStory>()
+    private val retrofitInterface = GlobalApplication.sRetrofit.create(WithStoryRetrofitInterface::class.java)
 
-        for (i in 19 downTo 0){
-            val tempStory = FrontStory("https://cdn.class101.net/images/07064f5a-c599-4c8b-b77a-a2c0857849ef/original", true, 200, "${i}번째 스토리입니다.", "${pageIdx}페이지")
-            temp.add(tempStory)
-        }
+    suspend fun getStoryPageIdx() = retrofitInterface.getStoryPageIdx("story")
 
-        return if (pageIdx == 20){
-            val temp2 = arrayListOf<FrontStory>()
-            temp2.addAll(temp.subList(10, temp.size - 1))
-            temp2
-        } else {
-            temp
+    suspend fun getStory(pageIdx : Int, sort : String) : ArrayList<FrontStory> {
+        if (pageIdx >= 1){
+            retrofitInterface.getStory("story", sort, pageIdx).let { response ->
+                if (response.isSuccessful){
+                    return response.body()!!.result.story
+                }
+            }
         }
+        return arrayListOf()
     }
 }

@@ -1,17 +1,40 @@
 package com.example.songil.page_with.with_story
 
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.cachedIn
+import com.example.songil.config.BaseViewModel
 import com.example.songil.page_with.with_story.paging.WithStoryPagingSource
+import kotlinx.coroutines.launch
 
-class WithStoryViewModel : ViewModel() {
+class WithStoryViewModel : BaseViewModel() {
     private val repository = WithStoryRepository()
-    // lateinit var flow : Flow<PagingData<FrontStory>>
-    var flow = Pager(PagingConfig(pageSize = 20)){
-        WithStoryPagingSource(repository, 20)
+
+    val startIdx = MutableLiveData<Int>()
+    private val startIdxInt get() = startIdx.value ?: 0
+
+    var sort = "popular"
+    private val sortString get() = sort
+
+    var isRefresh = false
+
+    var flow = Pager(PagingConfig(5)){
+        WithStoryPagingSource(repository, startIdxInt, ::isRefresh, sortString)
     }.flow.cachedIn(viewModelScope)
 
+    fun tryGetStartIdx(){
+        viewModelScope.launch(exceptionHandler) {
+            repository.getStoryPageIdx().let { response ->
+                if (response.isSuccessful){
+                    when (response.body()?.code){
+                        200 -> {
+                            startIdx.postValue(response.body()!!.result.totalPages)
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
