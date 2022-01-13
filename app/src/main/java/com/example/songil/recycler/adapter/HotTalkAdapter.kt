@@ -11,7 +11,7 @@ import com.example.songil.databinding.ItemHottalkQnaBinding
 class HotTalkAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val hotTalkData = ArrayList<HotTalk>()
-    private val qna = 0 // 그 외는 abTest
+    private val category = mapOf(1 to "Qna", 2 to "AB TEST")
 
     class HotTalkQnaViewHolder(binding : ItemHottalkQnaBinding) : RecyclerView.ViewHolder(binding.root){
         val category = binding.tvCategory
@@ -25,13 +25,13 @@ class HotTalkAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (hotTalkData[position].category == "QnA") 0 else 1
+        return hotTalkData[position].categoryIdx
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         return when(viewType){
-            qna -> {
+            1 -> {
                 val binding = ItemHottalkQnaBinding.inflate(inflater, parent, false)
                 HotTalkQnaViewHolder(binding)
             }
@@ -44,15 +44,15 @@ class HotTalkAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder.itemViewType){
-            qna -> {
-                (holder as HotTalkQnaViewHolder).category.text = hotTalkData[position].category
-                holder.commentCount.text = hotTalkData[position].commentCnt.toString()
-                holder.title.text = hotTalkData[position].title
+            1 -> {
+                (holder as HotTalkQnaViewHolder).category.text = category[hotTalkData[position].categoryIdx]
+                holder.commentCount.text = hotTalkData[position].totalCommentCnt.toString()
+                holder.title.text = hotTalkData[position].text
             }
             else -> {
-                (holder as HotTalkAbTestViewHolder).category.text = hotTalkData[position].category
-                holder.artistName.text = hotTalkData[position].title
-                Glide.with(holder.itemView.context).load(hotTalkData[position].artistImageUrl).into(holder.artistImage)
+                (holder as HotTalkAbTestViewHolder).category.text = category[hotTalkData[position].categoryIdx]
+                holder.artistName.text = hotTalkData[position].text
+                Glide.with(holder.itemView.context).load(hotTalkData[position].imageUrl).into(holder.artistImage)
             }
         }
     }

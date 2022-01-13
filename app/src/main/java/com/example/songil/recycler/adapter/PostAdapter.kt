@@ -20,11 +20,11 @@ class PostAdapter(diffCallback : DiffUtil.ItemCallback<WithQna>, private val pos
         val qnaItem = getItem(position)
         if (qnaItem != null){
             holder.title.text = qnaItem.title
-            holder.date.text = qnaItem.date
-            holder.commentCount.text = qnaItem.commentCount.toString()
-            holder.likeCount.text = qnaItem.likeCount.toString()
-            holder.userName.text = qnaItem.name
-            if (qnaItem.isLike) holder.isLike.setImageResource(R.drawable.ic_heart_base_16)
+            holder.date.text = qnaItem.createdAt
+            holder.commentCount.text = qnaItem.totalCommentCnt.toString()
+            holder.likeCount.text = qnaItem.totalLikeCnt.toString()
+            holder.userName.text = qnaItem.userName
+            if (qnaItem.isLike == "Y") holder.isLike.setImageResource(R.drawable.ic_heart_base_16)
             else holder.isLike.setImageResource(R.drawable.ic_heart_line_16)
             holder.content.text = qnaItem.content
             holder.root.setOnClickListener {

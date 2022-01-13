@@ -42,7 +42,7 @@ class WithFragmentQna : BaseFragment<SimpleRecyclerviewFragmentBinding>(SimpleRe
         }
 
         override fun areContentsTheSame(oldItem: WithQna, newItem: WithQna): Boolean {
-            return (oldItem.isLike == newItem.isLike) && (oldItem.likeCount == newItem.likeCount)
+            return (oldItem.isLike == newItem.isLike) && (oldItem.totalLikeCnt == newItem.totalLikeCnt)
         }
 
     }
@@ -55,7 +55,5 @@ class WithFragmentQna : BaseFragment<SimpleRecyclerviewFragmentBinding>(SimpleRe
 
     }
 
-    override fun refresh() {
-
-    }
+    override fun getSort(): String = viewModel.sort
 }

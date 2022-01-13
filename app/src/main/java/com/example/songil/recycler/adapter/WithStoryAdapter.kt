@@ -19,10 +19,10 @@ class WithStoryAdapter(diffCallback : DiffUtil.ItemCallback<FrontStory>) : Pagin
     override fun onBindViewHolder(holder: FrontStoryViewHolder, position: Int) {
         val storyItem = getItem(position)
         if (storyItem != null){
-            Glide.with(holder.itemView.context).load(storyItem.thumbnail).into(holder.image)
-            if (storyItem.isLike) holder.isLike.setImageResource(R.drawable.ic_heart_base_16)
+            Glide.with(holder.itemView.context).load(storyItem.mainImageUrl).into(holder.image)
+            if (storyItem.isLike == "Y") holder.isLike.setImageResource(R.drawable.ic_heart_base_16)
             else holder.isLike.setImageResource(R.drawable.ic_heart_line_16)
-            holder.likeCount.text = storyItem.likeCount.toString()
+            holder.likeCount.text = storyItem.totalLikeCnt.toString()
             holder.title.text = storyItem.title
             holder.userName.text = storyItem.userName
             holder.root.setOnClickListener {
