@@ -9,6 +9,7 @@ import com.example.songil.page_with.with_qna.paging.WithQnaPagingSource
 
 class WithQnaViewModel : ViewModel() {
     private val repository = WithQnaRepository()
+    var sort = "popular"
 
     var flow = Pager(PagingConfig(pageSize = 20)){
         WithQnaPagingSource(repository, 20)

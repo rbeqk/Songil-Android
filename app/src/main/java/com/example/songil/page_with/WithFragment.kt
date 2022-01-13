@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.songil.R
 import com.example.songil.config.BaseActivity
 import com.example.songil.config.BaseFragment
+import com.example.songil.config.GlobalApplication
 import com.example.songil.databinding.WithFragmentMainBinding
 import com.example.songil.page_main.MainActivity
 import com.example.songil.page_alarm.AlarmActivity
@@ -28,7 +29,7 @@ class WithFragment : BaseFragment<WithFragmentMainBinding>(WithFragmentMainBindi
     private val qnaFragment : WithFragmentQna by lazy { WithFragmentQna() }
     private val abtestFragment : WithFragmentAbtest by lazy { WithFragmentAbtest() }
     private val viewModel : WithViewModel by lazy { ViewModelProvider(this)[WithViewModel::class.java] }
-    private lateinit var currentFragment : Fragment
+    private lateinit var currentFragment : WithSubFragmentInterface
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -37,11 +38,6 @@ class WithFragment : BaseFragment<WithFragmentMainBinding>(WithFragmentMainBindi
         setFragment()
         setRecyclerView()
         setObserver()
-
-        binding.layoutRefresh.setOnRefreshListener {
-            (currentFragment as WithSubFragmentInterface).refresh()
-            binding.layoutRefresh.isRefreshing = false
-        }
 
         viewModel.tryGetHotTalk()
     }
@@ -54,7 +50,7 @@ class WithFragment : BaseFragment<WithFragmentMainBinding>(WithFragmentMainBindi
 
     private fun setButton(){
         binding.btnSort.setOnClickListener {
-            val dialog = SortBottomSheetSimple(this)
+            val dialog = SortBottomSheetSimple(this, currentFragment.getSort())
             dialog.show(childFragmentManager, dialog.tag)
         }
 
@@ -95,14 +91,15 @@ class WithFragment : BaseFragment<WithFragmentMainBinding>(WithFragmentMainBindi
     }
 
     override fun sort(sort: String) {
-        (currentFragment as WithSubFragmentInterface).sort(sort)
+        currentFragment.sort(sort)
+        binding.tvSort.text = GlobalApplication.sort[sort]
     }
 
     private fun changeFragment(idx : Int){
         when (idx){
             0 -> {
                 if (currentFragment !is WithFragmentStory) {
-                    childFragmentManager.beginTransaction().hide(currentFragment).commit()
+                    childFragmentManager.beginTransaction().hide(currentFragment as Fragment).commit()
                     binding.layoutHotTalk.visibility = View.VISIBLE
                     binding.lineSelectStory.visibility = View.VISIBLE
                     binding.lineSelectQna.visibility = View.INVISIBLE
@@ -114,7 +111,7 @@ class WithFragment : BaseFragment<WithFragmentMainBinding>(WithFragmentMainBindi
             }
             1 -> {
                 if (currentFragment !is WithFragmentQna) {
-                    childFragmentManager.beginTransaction().hide(currentFragment).commit()
+                    childFragmentManager.beginTransaction().hide(currentFragment as Fragment).commit()
                     binding.layoutHotTalk.visibility = View.VISIBLE
                     binding.lineSelectStory.visibility = View.INVISIBLE
                     binding.lineSelectQna.visibility = View.VISIBLE
@@ -126,7 +123,7 @@ class WithFragment : BaseFragment<WithFragmentMainBinding>(WithFragmentMainBindi
             }
             2 -> {
                 if (currentFragment !is WithFragmentAbtest) {
-                    childFragmentManager.beginTransaction().hide(currentFragment).commit()
+                    childFragmentManager.beginTransaction().hide(currentFragment as Fragment).commit()
                     binding.layoutHotTalk.visibility = View.GONE
                     binding.lineSelectStory.visibility = View.INVISIBLE
                     binding.lineSelectQna.visibility = View.INVISIBLE
@@ -137,6 +134,7 @@ class WithFragment : BaseFragment<WithFragmentMainBinding>(WithFragmentMainBindi
                 }
             }
         }
+        binding.tvSort.text = GlobalApplication.sort[currentFragment.getSort()]
     }
 
 }

@@ -208,6 +208,7 @@
                     android:gravity="center">
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_sort"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="12sp"
@@ -223,19 +224,11 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/layout_refresh"
+        <FrameLayout
+            android:id="@+id/layout_fragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
-
-            <FrameLayout
-                android:id="@+id/layout_fragment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btn_write"

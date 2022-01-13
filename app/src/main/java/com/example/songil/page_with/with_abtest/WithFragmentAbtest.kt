@@ -78,8 +78,6 @@ class WithFragmentAbtest : BaseFragment<SimpleRecyclerviewFragmentBinding>(Simpl
 
     }
 
-    override fun refresh() {
-
-    }
+    override fun getSort(): String = viewModel.sort
 
 }

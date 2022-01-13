@@ -7,6 +7,6 @@ interface WithSubFragmentInterface {
     // call when sort button in WithFragment clicked
     fun sort(sort : String)
 
-    // call when refresh
-    fun refresh()
+    // to call sort in specific fragment
+    fun getSort() : String
 }
