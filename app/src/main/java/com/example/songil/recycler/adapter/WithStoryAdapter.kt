@@ -27,7 +27,7 @@ class WithStoryAdapter(diffCallback : DiffUtil.ItemCallback<FrontStory>) : Pagin
             holder.userName.text = storyItem.userName
             holder.root.setOnClickListener {
                 val intent = Intent(holder.itemView.context, StoryActivity::class.java)
-                intent.putExtra(GlobalApplication.STORY_IDX, 1)
+                intent.putExtra(GlobalApplication.STORY_IDX, storyItem.storyIdx)
                 (holder.itemView.context as BaseActivity<*>).startActivityHorizontal(intent)
             }
         }
