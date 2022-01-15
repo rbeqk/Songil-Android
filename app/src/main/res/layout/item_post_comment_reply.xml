@@ -82,5 +82,17 @@
             android:textColor="@color/g_4"
             tools:text="2021.04.23 20:20"/>
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/btn_report"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/tv_deadline"
+            app:layout_constraintBottom_toBottomOf="@id/tv_deadline"
+            app:layout_constraintEnd_toEndOf="@id/guide_end"
+            android:textSize="12sp"
+            android:textColor="@color/g_4"
+            android:fontFamily="@font/spoqahansansneo_light"
+            android:text="@string/report_with_underline"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

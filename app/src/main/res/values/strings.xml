@@ -127,6 +127,7 @@
     <string name="form_craft_size">%d x %d x %d (cm)</string>
     <string name="show_only_photo_review">포토리뷰만 보기</string>
     <string name="report_with_underline"><u>신고</u></string>
+    <string name="remove_with_underline"><u>삭제</u></string>
     <string name="form_count">%d/%d</string>
     <string name="form_single_count">%d개</string>
     <string name="form_artist_craft">%s / %s</string>

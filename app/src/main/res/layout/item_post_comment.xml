@@ -57,6 +57,17 @@
             tools:text="하이에나"/>
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_is_writer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/tv_name"
+            app:layout_constraintStart_toEndOf="@id/tv_name"
+            android:layout_marginStart="8dp"
+            android:textColor="@color/g_4"
+            android:textSize="12sp"
+            android:text="@string/writer"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_content"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -82,6 +93,7 @@
             tools:text="2021.04.23 20:20"/>
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/btn_reply"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="@id/tv_deadline"
@@ -90,6 +102,20 @@
             android:textSize="12sp"
             android:text="@string/comment_reply"
             android:textColor="@color/g_4"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/btn_report"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/btn_reply"
+            app:layout_constraintBottom_toBottomOf="@id/btn_reply"
+            app:layout_constraintEnd_toEndOf="@id/guide_end"
+            android:textSize="12sp"
+            android:textColor="@color/g_4"
+            android:fontFamily="@font/spoqahansansneo_light"
+            android:text="@string/report_with_underline"/>
+
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_reply"
