@@ -18,16 +18,20 @@ class StoryWriteViewModel : ViewModel() {
     var storyContent = ""
     var storyTag = ""
     var tagList = ArrayList<String>()
-    private val imageList = ArrayList<String>()
-    var writeBtnActivate = MutableLiveData(true)
+
+    private val imagePathList = ArrayList<String>()
+    private val imageFileList = ArrayList<File>()
+
+    var writeBtnActivate = MutableLiveData(false)
     var tagWritable = MutableLiveData(true)
 
     var resultUpload = MutableLiveData<Int>()
 
-    fun tryUploadStory(){
+    // upload story by image file path (local)
+    fun tryUploadStoryUsePath(){
         viewModelScope.launch {
             val fileArray = ArrayList<MultipartBody.Part>()
-            for (image in imageList){
+            for (image in imagePathList){
                 val file = File(image)
                 val requestBody = file.asRequestBody("image/*".toMediaType())
                 fileArray.add(MultipartBody.Part.createFormData("image", file.name, requestBody))
@@ -44,13 +48,42 @@ class StoryWriteViewModel : ViewModel() {
         }
     }
 
+    // upload story by bitmap from imageView
+    fun tryUploadStoryUseFile(){
+        viewModelScope.launch {
+            val fileArray = ArrayList<MultipartBody.Part>()
+            for (file in imageFileList){
+                val requestBody = file.asRequestBody("image/*".toMediaType())
+                fileArray.add(MultipartBody.Part.createFormData("image", file.name, requestBody))
+            }
+            val hashMap = hashMapOf<String, RequestBody>()
+            hashMap["title"] = toPlainRequestBody(storyTitle)
+            hashMap["content"] = toPlainRequestBody(storyContent)
+            val tag = toPlainRequestBody(tagList)
+            repository.uploadStory(hashMap, tag, fileArray).let { response ->
+                if (response.isSuccessful){
+                    resultUpload.postValue(200)
+                }
+            }
+        }
+    }
+
+    fun setFileList(newFileList : ArrayList<File>){
+        imageFileList.clear()
+        imageFileList.addAll(newFileList)
+    }
+
     fun setImageList(newImageList : ArrayList<String>){
-        imageList.clear()
-        imageList.addAll(newImageList)
+        imagePathList.clear()
+        imagePathList.addAll(newImageList)
     }
 
     fun checkAvailable(){
-        writeBtnActivate.value = ((storyTitle != "" && storyContent != "" && tagList.size < 4 && imageList.size > 0))
+        writeBtnActivate.value = ((storyTitle != "" && storyContent != "" && tagList.size < 4 && imagePathList.size > 0))
+    }
+
+    fun getImageLen() : Int {
+        return imagePathList.size
     }
 
     fun checkTagCount(){
