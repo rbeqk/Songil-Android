@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 class StoryViewModel : ViewModel() {
     private val repository = StoryRepository()
     lateinit var storyDetail : WithStory
-    private var storyIdx = 0
+    var storyIdx = 0
 
     var storyDetailResult = MutableLiveData<Int>()
 

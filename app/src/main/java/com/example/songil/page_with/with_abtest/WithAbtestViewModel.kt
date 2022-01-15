@@ -14,6 +14,7 @@ class WithAbtestViewModel : ViewModel() {
     val abTestData = ArrayList<ABTestViewInfo>()
     var loadAbTestResult = MutableLiveData<Int>()
     private var nextPage = 0
+    var sort = "popular"
 
     var flow = Pager(PagingConfig(pageSize = 3)){
         WithAbtestPagingSource(repository, 3)

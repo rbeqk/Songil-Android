@@ -30,7 +30,7 @@ class PostAdapter(diffCallback : DiffUtil.ItemCallback<WithQna>, private val pos
             holder.root.setOnClickListener {
                 if (postType == 0 ){
                     val intent = Intent(holder.itemView.context, QnaActivity::class.java)
-                    intent.putExtra("idx",1)
+                    intent.putExtra(GlobalApplication.QNA_IDX,1)
                     (holder.itemView.context as BaseActivity<*>).startActivityHorizontal(intent)
                 }
                 else {
