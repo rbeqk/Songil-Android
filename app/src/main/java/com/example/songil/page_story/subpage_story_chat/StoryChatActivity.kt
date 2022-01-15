@@ -1,7 +1,6 @@
-package com.example.songil.page_qna
+package com.example.songil.page_story.subpage_story_chat
 
 import android.os.Bundle
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,20 +12,28 @@ import com.example.songil.recycler.adapter.PostAndChatAdapter
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class QnaActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity) {
+class StoryChatActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity) {
 
-    private val viewModel : QnaViewModel by lazy { ViewModelProvider(this)[QnaViewModel::class.java] }
+    private val viewModel : StoryChatViewModel by lazy { ViewModelProvider(this)[StoryChatViewModel::class.java] }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel.qnaIdx = intent.getIntExtra(GlobalApplication.QNA_IDX, 1)
+        binding.layoutRefresh.setOnRefreshListener {
+            (binding.rvComment.adapter as PostAndChatAdapter).refresh()
+            binding.layoutRefresh.isRefreshing = false
+        }
+
+        viewModel.storyIdx = intent.getIntExtra(GlobalApplication.STORY_IDX, 0)
 
         setRecyclerView()
-        setObserver()
         setButton()
 
-        viewModel.getQna()
+        lifecycleScope.launch {
+            viewModel.flow.collectLatest { pagingData ->
+                (binding.rvComment.adapter as PostAndChatAdapter).submitData(pagingData)
+            }
+        }
     }
 
     private fun setRecyclerView(){
@@ -34,24 +41,9 @@ class QnaActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity) {
         binding.rvComment.adapter = PostAndChatAdapter()
     }
 
-    private fun setObserver(){
-        val qnaResult = Observer<Int>{ liveData ->
-            when (liveData){
-                200 -> {
-                    lifecycleScope.launch {
-                        viewModel.flow.collectLatest { pagingData ->
-                            (binding.rvComment.adapter as PostAndChatAdapter).submitData(pagingData)
-                        }
-                    }
-                }
-            }
-        }
-        viewModel.loadQna.observe(this, qnaResult)
-    }
-
     private fun setButton(){
         binding.btnBack.setOnClickListener {
-            onBackPressed()
+            finish()
         }
     }
 

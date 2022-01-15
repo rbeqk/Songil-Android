@@ -1,5 +1,6 @@
 package com.example.songil.page_story
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -11,6 +12,7 @@ import com.example.songil.R
 import com.example.songil.config.BaseActivity
 import com.example.songil.config.GlobalApplication
 import com.example.songil.databinding.StoryActivityBinding
+import com.example.songil.page_story.subpage_story_chat.StoryChatActivity
 import com.example.songil.viewPager2.adapter.Vp2ImageAdapter
 import com.google.android.material.chip.Chip
 
@@ -42,6 +44,12 @@ class StoryActivity : BaseActivity<StoryActivityBinding>(R.layout.story_activity
     private fun setButton(){
         binding.btnBack.setOnClickListener {
             onBackPressed()
+        }
+
+        binding.btnComment.setOnClickListener {
+            val intent = Intent(this, StoryChatActivity::class.java)
+            intent.putExtra(GlobalApplication.STORY_IDX, viewModel.storyIdx)
+            startActivityHorizontal(intent)
         }
     }
 
