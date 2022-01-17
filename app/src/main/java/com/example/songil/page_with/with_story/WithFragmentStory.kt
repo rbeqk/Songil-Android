@@ -1,7 +1,6 @@
 package com.example.songil.page_with.with_story
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -33,15 +32,11 @@ class WithFragmentStory() : BaseFragment<SimpleRecyclerviewFragmentSwipeBinding>
         setRecyclerView()
         setObserver()
 
-        initAndLoad()
-
         binding.layoutRefresh.setOnRefreshListener {
             viewModel.tryGetStartIdx()
-            binding.layoutRefresh.isRefreshing = false
         }
 
         binding.rvContent.setPadding(dpToPx(requireContext(), 14), 0, dpToPx(requireContext(), 14), 0)
-
 
         viewModel.tryGetStartIdx()
     }
@@ -58,7 +53,9 @@ class WithFragmentStory() : BaseFragment<SimpleRecyclerviewFragmentSwipeBinding>
 
     private fun setObserver(){
         val startIdxObserver = Observer<Int>{ _ ->
+            binding.layoutRefresh.isRefreshing = false
             viewModel.isRefresh = true
+            initAndLoad()
             (binding.rvContent.adapter as WithStoryAdapter).refresh()
         }
         viewModel.startIdx.observe(viewLifecycleOwner, startIdxObserver)
@@ -85,9 +82,7 @@ class WithFragmentStory() : BaseFragment<SimpleRecyclerviewFragmentSwipeBinding>
 
     override fun sort(sort: String) {
         viewModel.sort = sort
-        viewModel.isRefresh = true
-        initAndLoad()
-        (binding.rvContent.adapter as WithStoryAdapter).refresh()
+        viewModel.tryGetStartIdx()
     }
 
     override fun getSort(): String = viewModel.sort
