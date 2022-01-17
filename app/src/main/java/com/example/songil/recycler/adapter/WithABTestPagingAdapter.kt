@@ -10,10 +10,23 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.songil.R
-import com.example.songil.data.ABTestViewInfo
+import com.example.songil.data.ABTest
 import com.example.songil.databinding.ItemAbtestBinding
 
-class WithABTestPagingAdapter(diffCallback : DiffUtil.ItemCallback<ABTestViewInfo>) : PagingDataAdapter<ABTestViewInfo, WithABTestPagingAdapter.ABTestViewHolder>(diffCallback){
+class WithABTestPagingAdapter() : PagingDataAdapter<ABTest, WithABTestPagingAdapter.ABTestViewHolder>(diffCallback){
+
+    companion object {
+        val diffCallback = object : DiffUtil.ItemCallback<ABTest>(){
+            override fun areItemsTheSame(oldItem: ABTest, newItem: ABTest): Boolean {
+                return oldItem == newItem
+            }
+
+            override fun areContentsTheSame(oldItem: ABTest, newItem: ABTest): Boolean {
+                return (oldItem.voteInfo == newItem.voteInfo) && (oldItem.finalInfo == newItem.finalInfo)
+            }
+        }
+    }
+
     class ABTestViewHolder(binding : ItemAbtestBinding) : RecyclerView.ViewHolder(binding.root){
         val artistImage = binding.ivProfile
         val artistName = binding.tvName
@@ -32,8 +45,8 @@ class WithABTestPagingAdapter(diffCallback : DiffUtil.ItemCallback<ABTestViewInf
     }
 
     override fun onBindViewHolder(holder: ABTestViewHolder, position: Int) {
-        val abTest = getItem(position)?.abTest
-        var choice = getItem(position)?.choice  // choice 는 투표하기버튼을 누르기 전 상태 (예, A 를 클릭한 상태)를 기록하기 위해 사용
+        val abTest = getItem(position)
+        var choice = getItem(position)?.voteInfo?.voteImage  // choice 는 투표하기버튼을 누르기 전 상태 (예, A 를 클릭한 상태)를 기록하기 위해 사용
 
         if (abTest != null) {
             val select = abTest.voteInfo?.voteImage // select == null 이면 투표를 아직 안한 상태
@@ -75,7 +88,7 @@ class WithABTestPagingAdapter(diffCallback : DiffUtil.ItemCallback<ABTestViewInf
             when {
                 (abTest.isFinished == "Y") -> { // 투표 종료 기간이 지난 경우
                     applyVoteState(holder, true)
-                    applyVote(holder, abTest.finishInfo!!.voteImage, abTest.finishInfo.percent, abTest.finishInfo.totalVoteCnt)
+                    applyVote(holder, abTest.finalInfo!!.voteImage, abTest.finalInfo.percent, abTest.finalInfo.totalVoteCnt)
                 }
                 (select == null) -> { // 투표 가능한 기간 내 투표를 안한 경우
                     applyVoteState(holder, isFinish = false, isVoted = false)

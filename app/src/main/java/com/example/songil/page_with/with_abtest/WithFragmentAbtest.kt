@@ -4,70 +4,58 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.DiffUtil
+import androidx.lifecycle.lifecycleScope
+import androidx.paging.PagingData
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.songil.R
 import com.example.songil.config.BaseFragment
-import com.example.songil.data.ABTestViewInfo
-import com.example.songil.databinding.SimpleRecyclerviewFragmentBinding
+import com.example.songil.databinding.SimpleRecyclerviewFragmentSwipeBinding
 import com.example.songil.page_with.WithSubFragmentInterface
-import com.example.songil.recycler.adapter.WithABTestAdapter
+import com.example.songil.recycler.adapter.WithABTestPagingAdapter
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
-class WithFragmentAbtest : BaseFragment<SimpleRecyclerviewFragmentBinding>(SimpleRecyclerviewFragmentBinding::bind, R.layout.simple_recyclerview_fragment), WithSubFragmentInterface {
+class WithFragmentAbtest : BaseFragment<SimpleRecyclerviewFragmentSwipeBinding>(SimpleRecyclerviewFragmentSwipeBinding::bind, R.layout.simple_recyclerview_fragment_swipe), WithSubFragmentInterface {
 
     private val viewModel : WithAbtestViewModel by lazy { ViewModelProvider(this)[WithAbtestViewModel::class.java] }
+    private var pagingJob : Job? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setObserver()
         setRecyclerView()
 
-        /*lifecycleScope.launch {
-            viewModel.flow.collectLatest { pagingData ->
-                (binding.rvContent.adapter as ABTestAdapter).submitData(pagingData)
-            }
-        }*/
-        viewModel.getPageSize()
-        viewModel.tryGetABTestData()
+        binding.layoutRefresh.setOnRefreshListener {
+            viewModel.tryGetPageCnt()
+        }
+
+        viewModel.tryGetPageCnt()
     }
 
     private fun setObserver(){
-        val abTestResult = Observer<Int>{ liveData ->
-            when (liveData){
-                200 -> {
-                    (binding.rvContent.adapter as WithABTestAdapter).updateList(viewModel.abTestData)
-                }
-            }
+        val pageCntResult = Observer<Int>{ _ ->
+            binding.layoutRefresh.isRefreshing = false
+            viewModel.isRefresh = true
+            initAndLoad()
+            (binding.rvContent.adapter as WithABTestPagingAdapter).refresh()
         }
-        viewModel.loadAbTestResult.observe(viewLifecycleOwner, abTestResult)
+        viewModel.startIdx.observe(viewLifecycleOwner, pageCntResult)
     }
 
     private fun setRecyclerView(){
         binding.rvContent.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        binding.rvContent.adapter = WithABTestAdapter()//ABTestAdapter(AbTestComparator)
-
-        binding.rvContent.addOnScrollListener(object : RecyclerView.OnScrollListener(){
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                val layoutManager = binding.rvContent.layoutManager as LinearLayoutManager
-                val lastVisible = layoutManager.findLastCompletelyVisibleItemPosition()
-                if (lastVisible >= layoutManager.itemCount - 1){
-                    viewModel.tryGetABTestData()
-                }
-            }
-        })
+        binding.rvContent.adapter = WithABTestPagingAdapter()
     }
 
-    object AbTestComparator : DiffUtil.ItemCallback<ABTestViewInfo>(){
-        override fun areItemsTheSame(oldItem: ABTestViewInfo, newItem: ABTestViewInfo): Boolean {
-            return oldItem == newItem
+    private fun initAndLoad(){
+        pagingJob?.cancel()
+        pagingJob = lifecycleScope.launch {
+            (binding.rvContent.adapter as WithABTestPagingAdapter).submitData(PagingData.empty())
+            viewModel.flow.collectLatest { pagingData ->
+                (binding.rvContent.adapter as WithABTestPagingAdapter).submitData(pagingData)
+            }
         }
-
-        override fun areContentsTheSame(oldItem: ABTestViewInfo, newItem: ABTestViewInfo): Boolean {
-            return (oldItem.abTest.voteInfo == newItem.abTest.voteInfo) && (oldItem.abTest.finishInfo == newItem.abTest.finishInfo)
-        }
-
     }
 
     override fun onShow() {
@@ -75,7 +63,8 @@ class WithFragmentAbtest : BaseFragment<SimpleRecyclerviewFragmentBinding>(Simpl
     }
 
     override fun sort(sort: String) {
-
+        viewModel.sort = sort
+        viewModel.tryGetPageCnt()
     }
 
     override fun getSort(): String = viewModel.sort

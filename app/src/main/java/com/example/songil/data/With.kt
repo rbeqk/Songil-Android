@@ -9,7 +9,7 @@ data class TalkWith(val category : String, val title : String, val idx : Int) //
 
 data class ABTest(val abTestIdx : Int, val artistIdx : Int, val artistImageUrl : String?, val artistName : String,
                   val content : String, val imageA : String, val imageB : String, val deadline : String, val totalCommentCnt : Int,
-                  var isFinished  : String, val voteInfo : ABVoteInfo?, val finishInfo : ABVoteInfo?) : Post()
+                  var isFinished : String, val isUserABTest : String, val voteInfo : ABVoteInfo?, val finalInfo : ABVoteInfo?) : Post()
 
 data class ABVoteInfo(val voteImage : String, val totalVoteCnt : Int, val percent : Int)
 
@@ -32,3 +32,5 @@ data class ChatReply(val commentIdx : Int, val userIdx : Int, val userProfile : 
 
 
 sealed class Post()
+
+// 여기 좀 깔끔하게 정리해야 할듯

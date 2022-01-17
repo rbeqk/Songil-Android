@@ -93,7 +93,7 @@ class WithABTestAdapter() : RecyclerView.Adapter<WithABTestAdapter.ABTestViewHol
         when {
             (abTest.isFinished == "Y") -> { // 투표 종료 기간이 지난 경우
                 applyVoteState(holder, true)
-                applyVote(holder, abTest.finishInfo!!.voteImage, abTest.finishInfo.percent, abTest.finishInfo.totalVoteCnt)
+                applyVote(holder, abTest.finalInfo!!.voteImage, abTest.finalInfo.percent, abTest.finalInfo.totalVoteCnt)
             }
             (select == null) -> { // 투표 가능한 기간 내 투표를 안한 경우
                 applyVoteState(holder, isFinish = false, isVoted = false)
