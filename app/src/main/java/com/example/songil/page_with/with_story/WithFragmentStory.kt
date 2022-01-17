@@ -1,6 +1,7 @@
 package com.example.songil.page_with.with_story
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -16,12 +17,15 @@ import com.example.songil.page_main.MainActivity
 import com.example.songil.page_with.WithSubFragmentInterface
 import com.example.songil.recycler.adapter.WithStoryAdapter
 import com.example.songil.recycler.decoration.WithStoryDecoration
+import com.example.songil.utils.dpToPx
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 class WithFragmentStory() : BaseFragment<SimpleRecyclerviewFragmentSwipeBinding>(SimpleRecyclerviewFragmentSwipeBinding::bind, R.layout.simple_recyclerview_fragment_swipe), WithSubFragmentInterface {
 
     private val viewModel: WithStoryViewModel by lazy { ViewModelProvider(this)[WithStoryViewModel::class.java] }
+    private var pagingJob : Job? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -36,11 +40,15 @@ class WithFragmentStory() : BaseFragment<SimpleRecyclerviewFragmentSwipeBinding>
             binding.layoutRefresh.isRefreshing = false
         }
 
+        binding.rvContent.setPadding(dpToPx(requireContext(), 14), 0, dpToPx(requireContext(), 14), 0)
+
+
         viewModel.tryGetStartIdx()
     }
 
     private fun initAndLoad(){
-        lifecycleScope.launch {
+        pagingJob?.cancel()
+        pagingJob = lifecycleScope.launch {
             (binding.rvContent.adapter as WithStoryAdapter).submitData(PagingData.empty())
             viewModel.flow.collectLatest { pagingData ->
                 (binding.rvContent.adapter as WithStoryAdapter).submitData(pagingData)
@@ -78,8 +86,8 @@ class WithFragmentStory() : BaseFragment<SimpleRecyclerviewFragmentSwipeBinding>
     override fun sort(sort: String) {
         viewModel.sort = sort
         viewModel.isRefresh = true
-        (binding.rvContent.adapter as WithStoryAdapter).refresh()
         initAndLoad()
+        (binding.rvContent.adapter as WithStoryAdapter).refresh()
     }
 
     override fun getSort(): String = viewModel.sort
