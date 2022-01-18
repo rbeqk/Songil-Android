@@ -1,8 +1,30 @@
 package com.example.songil.page_with.with_qna
+import com.example.songil.config.GlobalApplication
 import com.example.songil.data.WithQna
 
 class WithQnaRepository {
-    fun tempGetQna(pageIdx : Int) : ArrayList<WithQna>{
+
+    private val retrofit = GlobalApplication.sRetrofit.create(WithQnaRetrofitInterface::class.java)
+
+    suspend fun getQna(pageIdx : Int, sort : String) : ArrayList<WithQna> {
+        val result = retrofit.getQna("qna", sort = sort, page = pageIdx)
+        if (result.isSuccessful){
+            if (result.body()?.code == 200) return result.body()!!.result
+        }
+        return arrayListOf()
+    }
+
+    suspend fun getQnaPageCnt() : Int {
+        val result = retrofit.getQnaPageCnt()
+        if (result.isSuccessful){
+            if (result.body()?.code == 200) {
+                return result.body()!!.result.totalPages
+            }
+        }
+        return -1
+    }
+
+    /*fun tempGetQna(pageIdx : Int) : ArrayList<WithQna>{
         val temp = arrayListOf<WithQna>()
 
         for (i in 19 downTo 0){
@@ -17,5 +39,5 @@ class WithQnaRepository {
         } else {
             temp
         }
-    }
+    }*/
 }

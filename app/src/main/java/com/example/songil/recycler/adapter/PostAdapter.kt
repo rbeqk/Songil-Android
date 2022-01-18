@@ -14,7 +14,20 @@ import com.example.songil.databinding.ItemPostBinding
 import com.example.songil.page_qna.QnaActivity
 import com.example.songil.page_story.StoryActivity
 
-class PostAdapter(diffCallback : DiffUtil.ItemCallback<WithQna>, private val postType : Int = 0) : PagingDataAdapter<WithQna, PostAdapter.WithQnaViewHolder>(diffCallback){
+class PostAdapter(private val postType : Int = 0) : PagingDataAdapter<WithQna, PostAdapter.WithQnaViewHolder>(diffCallback){
+
+    companion object{
+        val diffCallback = object : DiffUtil.ItemCallback<WithQna>(){
+            override fun areItemsTheSame(oldItem: WithQna, newItem: WithQna): Boolean {
+                return oldItem == newItem
+            }
+
+            override fun areContentsTheSame(oldItem: WithQna, newItem: WithQna): Boolean {
+                return (oldItem.isLike == newItem.isLike) && (oldItem.totalLikeCnt == newItem.totalLikeCnt)
+            }
+
+        }
+    }
 
     override fun onBindViewHolder(holder: WithQnaViewHolder, position: Int) {
         val qnaItem = getItem(position)
