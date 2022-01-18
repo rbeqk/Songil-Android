@@ -1,18 +1,17 @@
 package com.example.songil.page_splash
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.songil.config.BaseViewModel
 import com.example.songil.config.GlobalApplication
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class SplashViewModel : ViewModel() {
+class SplashViewModel : BaseViewModel() {
     var autoLoginResultCode = MutableLiveData<Int>()
     private val repository = SplashRepository()
 
     fun tryAutoLogin(){
-        CoroutineScope(Dispatchers.IO).launch {
+         viewModelScope.launch(exceptionHandler) {
             repository.getAutoLogin().let { response ->
                 if (response.isSuccessful){
                     if (response.body()!!.code != 200){

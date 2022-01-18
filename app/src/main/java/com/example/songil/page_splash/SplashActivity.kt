@@ -9,11 +9,13 @@ import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.songil.config.BaseActivity
+import com.example.songil.config.BaseViewModel
 import com.example.songil.config.GlobalApplication
 import com.example.songil.databinding.SplashActivityBinding
 import com.example.songil.page_main.MainActivity
-import com.example.songil.page_needlogin.NeedLoginActivity
+import com.example.songil.popup_warning.SocketTimeoutDialog
 import com.example.songil.utils.setStatusBarBlack
+//import com.example.songil.page_needlogin.NeedLoginActivity
 
 class SplashActivity : BaseActivity<SplashActivityBinding>(R.layout.splash_activity){
 
@@ -35,9 +37,10 @@ class SplashActivity : BaseActivity<SplashActivityBinding>(R.layout.splash_activ
                 val edit = GlobalApplication.globalSharedPreferences.edit()
                 edit.putBoolean(GlobalApplication.IS_FIRST_EXEC, false).apply()
 
-                val intent = Intent(this, NeedLoginActivity::class.java)
+                /*val intent = Intent(this, NeedLoginActivity::class.java)
                 intent.putExtra("isFirst", true)
-                startActivity(intent)
+                startActivity(intent)*/
+                startActivity(Intent(this, MainActivity::class.java))
                 finish()
             } else {
                 viewModel.tryAutoLogin()
@@ -61,6 +64,12 @@ class SplashActivity : BaseActivity<SplashActivityBinding>(R.layout.splash_activ
             }
         }
         viewModel.autoLoginResultCode.observe(this, autoLoginObserver)
+
+        val errorObserver = Observer<BaseViewModel.FetchState>{ _ ->
+            val socketTimeoutDialog = SocketTimeoutDialog()
+            socketTimeoutDialog.show(supportFragmentManager, socketTimeoutDialog.tag)
+        }
+        viewModel.fetchState.observe(this, errorObserver)
     }
 
     private fun logoAnimation(){
