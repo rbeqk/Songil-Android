@@ -16,6 +16,7 @@ class GlobalApplication : Application() {
         const val X_ACCESS_TOKEN = "x-access-token"
         const val USER_IDX = "user-idx"
         const val CRAFT_IDX = "craft-idx"
+        const val ABTEST_IDX = "abtest-idx"
         const val STORY_IDX = "story-idx"
         const val QNA_IDX = "qna-idx"
         const val ARTICLE_IDX = "article-idx"
