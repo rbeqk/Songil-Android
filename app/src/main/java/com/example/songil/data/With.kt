@@ -7,9 +7,9 @@ data class WithQna(val qnaIdx : Int, val userIdx : Int, val userProfile : String
 
 data class TalkWith(val category : String, val title : String, val idx : Int) // home 화면에서 talk with +
 
-data class ABTest(val abTestIdx : Int, val artistIdx : Int, val artistImageUrl : String?, val artistName : String,
-                  val content : String, val imageA : String, val imageB : String, val deadline : String, val totalCommentCnt : Int,
-                  var isFinished : String, val isUserABTest : String, val voteInfo : ABVoteInfo?, val finalInfo : ABVoteInfo?) : Post()
+data class ABTest(val abTestIdx : Int = -1, val artistIdx : Int = -1, val artistImageUrl : String? = null, val artistName : String = "",
+                  val content : String = "", val imageA : String = "", val imageB : String = "", val deadline : String = "", val totalCommentCnt : Int = -1,
+                  var isFinished : String = "", val isUserABTest : String = "", val voteInfo : ABVoteInfo? = null, val finalInfo : ABVoteInfo? = null) : Post()
 
 data class ABVoteInfo(val voteImage : String, val totalVoteCnt : Int, val percent : Int)
 

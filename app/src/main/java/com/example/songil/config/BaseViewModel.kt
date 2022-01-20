@@ -10,7 +10,7 @@ import java.net.UnknownHostException
 abstract class BaseViewModel : ViewModel() {
     enum class FetchState { BAD_INTERNET, PARSE_ERROR, WRONG_CONNECTION, FAIL }
 
-    protected val fetchState = MutableLiveData<FetchState>()
+    val fetchState = MutableLiveData<FetchState>()
 
     protected val exceptionHandler  = CoroutineExceptionHandler { _, throwable ->
         throwable.printStackTrace()

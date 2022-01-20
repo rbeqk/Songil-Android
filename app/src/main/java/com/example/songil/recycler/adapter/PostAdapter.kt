@@ -43,7 +43,7 @@ class PostAdapter(private val postType : Int = 0) : PagingDataAdapter<WithQna, P
             holder.root.setOnClickListener {
                 if (postType == 0 ){
                     val intent = Intent(holder.itemView.context, QnaActivity::class.java)
-                    intent.putExtra(GlobalApplication.QNA_IDX,1)
+                    intent.putExtra(GlobalApplication.QNA_IDX,qnaItem.qnaIdx)
                     (holder.itemView.context as BaseActivity<*>).startActivityHorizontal(intent)
                 }
                 else {
