@@ -69,7 +69,7 @@
         <activity android:name=".page_artistmanage.subpage_orderstat.ArtistManageOrderStatActivity"/>
         <activity android:name=".page_artistmanage.subpage_asklist.ArtistManageAskListActivity"/>
         <activity android:name=".page_delivery.DeliveryActivity"/>
-        <activity android:name=".page_story.subpage_story_chat.StoryChatActivity"/>
+        <activity android:name=".page_story.subpage_story_chat.StoryChatActivity" android:windowSoftInputMode="adjustResize"/>
     </application>
 
 </manifest>

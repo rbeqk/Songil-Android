@@ -25,12 +25,13 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/btn_back"
-                        android:layout_width="22dp"
-                        android:layout_height="22dp"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        app:layout_constraintDimensionRatio="1:1"
+                        android:scaleType="center"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        android:layout_marginStart="16dp"
                         android:src="@drawable/ic_back_22"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -44,6 +45,16 @@
                         android:gravity="center"
                         android:textSize="16sp"
                         android:text="@string/QnA_eng"/>
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/btn_more"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        app:layout_constraintDimensionRatio="1:1"
+                        android:scaleType="center"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:src="@drawable/ic_baseline_more_horiz_22"
+                        app:layout_constraintEnd_toEndOf="parent"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
