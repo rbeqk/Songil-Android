@@ -173,6 +173,7 @@
     <string name="like_article">좋아요한 아티클</string>
     <string name="my_write">내가 쓴 글</string>
     <string name="comment_post">댓글 단 글</string>
+    <string name="chat">댓글</string>
     <string name="setting">설정</string>
     <string name="modify_profile">프로필 수정</string>
     <string name="apply_social_login">소셜 로그인 연동</string>
@@ -297,6 +298,7 @@
     <string name="input_content">내용을 입력하세요.</string>
     <string name="alarm">알림</string>
     <string name="register_ab_test">AB TEST 등록</string>
+    <string name="AB_TEST_title">%s의 AB TEST</string>
     <string name="response_date">응답기간</string>
     <string name="until_receive_survey">까지 설문받기</string>
     <string name="until">까지</string>
@@ -306,6 +308,8 @@
     <string name="tag">태그</string>
     <string name="input_tag_message">#태그를 입력하세요.</string>
     <string name="how_to_input_tag">엔터를 누르면 태그가 등록됩니다. (최대 3개)</string>
+    <string name="comment_remove_content">삭제된 댓글입니다.</string>
+    <string name="comment_remove_user">(삭제)</string>
 
     <!-- story 상세 페이지 관련 -->
     <string name="story_title">%s님의 스토리</string>
