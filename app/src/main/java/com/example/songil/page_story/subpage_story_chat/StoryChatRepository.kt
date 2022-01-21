@@ -2,6 +2,7 @@ package com.example.songil.page_story.subpage_story_chat
 
 import com.example.songil.config.GlobalApplication
 import com.example.songil.data.Chat
+import com.example.songil.page_story.subpage_story_chat.models.RequestWriteComment
 import com.example.songil.repository.PostRepository
 
 class StoryChatRepository : PostRepository() {
@@ -17,6 +18,22 @@ class StoryChatRepository : PostRepository() {
             }
         }
         return arrayListOf()
+    }
+
+    suspend fun writeChat(postIdx : Int, parentIdx : Int?, comment : String) : Int {
+        val result = retrofitInterface.postStoryChat(postIdx, RequestWriteComment(parentIdx, comment))
+        if (result.isSuccessful){
+            return result.body()!!.code
+        }
+        return -1
+    }
+
+    suspend fun deleteChat(commentIdx : Int) : Int {
+        val response = retrofitInterface.deleteStoryChat(commentIdx)
+        if (response.isSuccessful){
+            return response.body()!!.code
+        }
+        return -1
     }
 
 }

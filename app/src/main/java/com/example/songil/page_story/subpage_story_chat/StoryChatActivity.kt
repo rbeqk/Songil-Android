@@ -1,6 +1,8 @@
 package com.example.songil.page_story.subpage_story_chat
 
 import android.os.Bundle
+import android.view.inputmethod.InputMethodManager
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -9,12 +11,15 @@ import com.example.songil.config.BaseActivity
 import com.example.songil.config.GlobalApplication
 import com.example.songil.databinding.ChatActivityBinding
 import com.example.songil.recycler.adapter.PostAndChatAdapter
+import com.example.songil.recycler.rv_interface.RvPostAndChatView
+import com.example.songil.utils.softKeyboardCallback.KeyboardVisibilityUtils
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class StoryChatActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity) {
+class StoryChatActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity), RvPostAndChatView {
 
     private val viewModel : StoryChatViewModel by lazy { ViewModelProvider(this)[StoryChatViewModel::class.java] }
+    private lateinit var keyboardVisibilityUtils : KeyboardVisibilityUtils
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,31 +29,103 @@ class StoryChatActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activi
             binding.layoutRefresh.isRefreshing = false
         }
 
+        binding.tvTitle.text = getString(R.string.chat)
+
         viewModel.storyIdx = intent.getIntExtra(GlobalApplication.STORY_IDX, 0)
 
         setRecyclerView()
         setButton()
+        setObserver()
 
         lifecycleScope.launch {
             viewModel.flow.collectLatest { pagingData ->
                 (binding.rvComment.adapter as PostAndChatAdapter).submitData(pagingData)
             }
         }
+
+        keyboardVisibilityUtils = KeyboardVisibilityUtils(window, onShowKeyboard = {
+
+        }, onHideKeyboard = {
+            (binding.rvComment.adapter as PostAndChatAdapter).setPointPosition(null)
+            viewModel.replyPointIdx = null
+            binding.etComment.hint = ""
+        })
+
+    }
+
+    override fun onDestroy() {
+        keyboardVisibilityUtils.detachKeyboardListeners()
+        super.onDestroy()
+    }
+
+    private fun setObserver(){
+        val commentRegisterResult = Observer<Int>{ liveData ->
+            when (liveData){
+                200 -> {
+                    (binding.rvComment.adapter as PostAndChatAdapter).refresh()
+                    binding.etComment.setText("")
+                    (binding.rvComment.adapter as PostAndChatAdapter).setPointPosition(null)
+                    viewModel.replyPointIdx = null
+                    val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(binding.etComment.windowToken, 0)
+                }
+            }
+            binding.btnRegister.isClickable = true
+        }
+        viewModel.registerResult.observe(this, commentRegisterResult)
+
+        val deleteCommentResult = Observer<Int>{ liveData ->
+            when (liveData){
+                200 -> {
+                    (binding.rvComment.adapter as PostAndChatAdapter).refresh()
+                }
+            }
+        }
+        viewModel.deleteCommentResult.observe(this, deleteCommentResult)
     }
 
     private fun setRecyclerView(){
         binding.rvComment.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        binding.rvComment.adapter = PostAndChatAdapter()
+        binding.rvComment.adapter = PostAndChatAdapter(this)
     }
 
     private fun setButton(){
         binding.btnBack.setOnClickListener {
             finish()
         }
+
+        binding.btnRegister.setOnClickListener {
+            viewModel.tryWriteComment(binding.etComment.text.toString())
+            binding.btnRegister.isClickable = false
+        }
     }
 
     override fun finish() {
         super.finish()
         exitHorizontal
+    }
+
+    override fun clickReply(parentIdx: Int, userName : String?) {
+        if (viewModel.replyPointIdx == parentIdx){
+            viewModel.replyPointIdx = null
+            binding.etComment.hint = ""
+            val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(binding.etComment.windowToken, 0)
+        }
+        else {
+            binding.etComment.requestFocus()
+            val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.showSoftInput(binding.etComment, 0)
+            viewModel.replyPointIdx = parentIdx
+            userName?.let { binding.etComment.hint = getString(R.string.reply_to, it) }
+        }
+    }
+
+    override fun removeChat(commentIdx: Int) {
+        viewModel.tryDeleteComment(commentIdx)
+    }
+
+    override fun reportChat(commentIdx: Int) {
+
     }
 }
