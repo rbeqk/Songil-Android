@@ -3,6 +3,7 @@ package com.example.songil.page_qna
 import com.example.songil.config.GlobalApplication
 import com.example.songil.data.Chat
 import com.example.songil.data.WithQna
+import com.example.songil.page_qna.models.RequestWriteComment
 import com.example.songil.repository.PostRepository
 
 class QnaRepository : PostRepository() {
@@ -29,5 +30,21 @@ class QnaRepository : PostRepository() {
             }
         }
         return null
+    }
+
+    suspend fun writeChat(postIdx : Int, parentIdx : Int?, comment : String) : Int{
+        val result = retrofitInterface.postQnaChat(postIdx, RequestWriteComment(parentIdx, comment))
+        if (result.isSuccessful){
+            return result.body()!!.code
+        }
+        return -1
+    }
+
+    suspend fun deleteChat(commentIdx : Int) : Int{
+        val result = retrofitInterface.deleteQnaChat(commentIdx)
+        if (result.isSuccessful){
+            return result.body()!!.code
+        }
+        return -1
     }
 }
