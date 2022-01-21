@@ -1,5 +1,6 @@
 package com.example.songil.recycler.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,8 +11,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.songil.R
+import com.example.songil.config.BaseActivity
+import com.example.songil.config.GlobalApplication
 import com.example.songil.data.ABTest
 import com.example.songil.databinding.ItemAbtestBinding
+import com.example.songil.page_abtest.AbtestActivity
 
 class WithABTestPagingAdapter() : PagingDataAdapter<ABTest, WithABTestPagingAdapter.ABTestViewHolder>(diffCallback){
 
@@ -42,6 +46,7 @@ class WithABTestPagingAdapter() : PagingDataAdapter<ABTest, WithABTestPagingAdap
         val layoutB = binding.selectPhotoB
         val rateB = binding.tvRateB
         val checkImageB = binding.ivCheckB
+        val root = binding.root
     }
 
     override fun onBindViewHolder(holder: ABTestViewHolder, position: Int) {
@@ -58,7 +63,11 @@ class WithABTestPagingAdapter() : PagingDataAdapter<ABTest, WithABTestPagingAdap
             if (abTest.artistImageUrl != null) Glide.with(holder.itemView.context).load(abTest.artistImageUrl).into(holder.artistImage)
             Glide.with(holder.itemView.context).load(abTest.imageA).into(holder.photoA)
             Glide.with(holder.itemView.context).load(abTest.imageB).into(holder.photoB)
-
+            holder.root.setOnClickListener {
+                val intent = Intent(holder.itemView.context, AbtestActivity::class.java)
+                intent.putExtra(GlobalApplication.ABTEST_IDX, abTest.abTestIdx)
+                (holder.itemView.context as BaseActivity<*>).startActivityHorizontal(intent)
+            }
             holder.photoA.setOnClickListener {
                 if (select == null) {
                     if (choice == "A") {
