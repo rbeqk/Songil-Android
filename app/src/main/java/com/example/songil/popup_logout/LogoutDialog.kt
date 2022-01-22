@@ -10,11 +10,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import androidx.fragment.app.DialogFragment
-import com.example.songil.databinding.PopupLogoutBinding
+import com.example.songil.databinding.PopupYesOrNoBinding
 import com.example.songil.popup_logout.popup_interface.PopupLogoutView
 
 class LogoutDialog(private val logoutView : PopupLogoutView) : DialogFragment() {
-    private var _binding : PopupLogoutBinding ?= null
+    private var _binding : PopupYesOrNoBinding ?= null
     private val binding get() = _binding!!
 
     override fun onResume() {
@@ -22,8 +22,8 @@ class LogoutDialog(private val logoutView : PopupLogoutView) : DialogFragment() 
         setSize()
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        _binding = PopupLogoutBinding.inflate(LayoutInflater.from(context))
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        _binding = PopupYesOrNoBinding.inflate(LayoutInflater.from(context))
 
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
