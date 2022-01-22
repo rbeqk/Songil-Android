@@ -21,6 +21,8 @@ class GlobalApplication : Application() {
         const val QNA_IDX = "qna-idx"
         const val ARTICLE_IDX = "article-idx"
         const val IS_FIRST_EXEC = "first_exec"
+        const val REPORT_TARGET = "report_target"
+        const val TARGET_IDX = "target-idx"
         lateinit var sRetrofit: Retrofit
         lateinit var globalSharedPreferences: SharedPreferences
         val categoryList = arrayListOf<Category>(

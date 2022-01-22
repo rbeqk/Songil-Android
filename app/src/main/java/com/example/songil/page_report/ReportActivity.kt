@@ -3,13 +3,17 @@ package com.example.songil.page_report
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import androidx.appcompat.widget.AppCompatCheckBox
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.songil.R
 import com.example.songil.config.BaseActivity
+import com.example.songil.config.GlobalApplication
+import com.example.songil.config.ReportTarget
 import com.example.songil.databinding.ReportActivityBinding
 import com.example.songil.popup_report.ReportDialog
+import com.example.songil.popup_warning.SocketTimeoutDialog
 
 class ReportActivity : BaseActivity<ReportActivityBinding>(R.layout.report_activity) {
 
@@ -21,6 +25,17 @@ class ReportActivity : BaseActivity<ReportActivityBinding>(R.layout.report_activ
 
         binding.viewModel = reportViewModel
         binding.lifecycleOwner = this
+
+        val target = intent.getSerializableExtra(GlobalApplication.REPORT_TARGET)
+        val targetIdx = intent.getIntExtra(GlobalApplication.TARGET_IDX, -1)
+        if (target != null){
+            target as ReportTarget
+            reportViewModel.setTarget(target, targetIdx)
+        } else {
+            Log.d("ReportActivity", "target is empty")
+            finish()
+            exitHorizontal
+        }
 
         checkBoxList.addAll(arrayListOf(binding.cbProfanity, binding.cbPr, binding.cbIllegal, binding.cbObscenity, binding.cbExtrusion, binding.cbSpam, binding.cbSelfWrite))
 
@@ -34,8 +49,8 @@ class ReportActivity : BaseActivity<ReportActivityBinding>(R.layout.report_activ
             onBackPressed()
         }
         binding.btnReport.setOnClickListener {
-            val dialogFragment = ReportDialog()
-            dialogFragment.show(supportFragmentManager, dialogFragment.tag)
+            reportViewModel.tryReport()
+            reportViewModel.reportButtonActivate.value = false
         }
     }
 
@@ -60,10 +75,24 @@ class ReportActivity : BaseActivity<ReportActivityBinding>(R.layout.report_activ
             binding.etReason.isEnabled = (liveData == (checkBoxList.size - 1))
         }
         reportViewModel.reasonIdx.observe(this, idxObserver)
+
+        val reportResultObserver = Observer<Boolean>{ liveData ->
+            reportViewModel.checkContent()
+            if (liveData){
+                val dialogFragment = ReportDialog()
+                dialogFragment.show(supportFragmentManager, dialogFragment.tag)
+            } else {
+                val dialogFragment = SocketTimeoutDialog()
+                dialogFragment.show(supportFragmentManager, dialogFragment.tag)
+            }
+        }
+        reportViewModel.reportSuccess.observe(this, reportResultObserver)
+
+
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
+    override fun finish() {
+        super.finish()
         overridePendingTransition(R.anim.none, R.anim.to_right)
     }
 }

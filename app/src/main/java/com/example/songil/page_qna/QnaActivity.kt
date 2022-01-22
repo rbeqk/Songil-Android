@@ -1,5 +1,6 @@
 package com.example.songil.page_qna
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
 import androidx.lifecycle.Observer
@@ -9,7 +10,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.songil.R
 import com.example.songil.config.BaseActivity
 import com.example.songil.config.GlobalApplication
+import com.example.songil.config.ReportTarget
 import com.example.songil.databinding.ChatActivityBinding
+import com.example.songil.page_report.ReportActivity
 import com.example.songil.recycler.adapter.PostAndChatAdapter
 import com.example.songil.recycler.rv_interface.RvPostAndChatView
 import com.example.songil.utils.softKeyboardCallback.KeyboardVisibilityUtils
@@ -143,6 +146,9 @@ class QnaActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity), R
     }
 
     override fun reportChat(commentIdx: Int) {
-
+        val intent = Intent(this, ReportActivity::class.java)
+        intent.putExtra(GlobalApplication.TARGET_IDX, commentIdx)
+        intent.putExtra(GlobalApplication.REPORT_TARGET, ReportTarget.QNA_COMMENT)
+        startActivityHorizontal(intent)
     }
 }
