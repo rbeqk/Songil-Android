@@ -4,7 +4,9 @@ import com.example.songil.config.GlobalApplication
 import com.example.songil.data.Chat
 import com.example.songil.data.WithQna
 import com.example.songil.page_qna.models.RequestWriteComment
+import com.example.songil.page_qna.models.ResponseQnaLike
 import com.example.songil.repository.PostRepository
+import retrofit2.Response
 
 class QnaRepository : PostRepository() {
 
@@ -46,5 +48,14 @@ class QnaRepository : PostRepository() {
             return result.body()!!.code
         }
         return -1
+    }
+
+    suspend fun changeQnaLike(qnaIdx : Int) : Response<ResponseQnaLike> {
+        val result = retrofitInterface.patchQnaLike(qnaIdx)
+        if (result.isSuccessful){
+            return result
+        } else {
+            throw UnknownError()
+        }
     }
 }

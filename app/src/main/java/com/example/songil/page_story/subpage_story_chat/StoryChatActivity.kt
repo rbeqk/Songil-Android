@@ -134,4 +134,6 @@ class StoryChatActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activi
         intent.putExtra(GlobalApplication.REPORT_TARGET, ReportTarget.STORY_COMMENT)
         startActivityHorizontal(intent)
     }
+
+    override fun clickLikeBtn() { /* empty function, only qna activity use this function */ }
 }

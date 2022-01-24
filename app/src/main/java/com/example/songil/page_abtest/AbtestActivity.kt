@@ -147,4 +147,6 @@ class AbtestActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity)
         intent.putExtra(GlobalApplication.REPORT_TARGET, ReportTarget.ABTEST_COMMENT)
         startActivityHorizontal(intent)
     }
+
+    override fun clickLikeBtn() { /* empty function, only qna activity use this function */ }
 }

@@ -20,7 +20,7 @@ data class HotTalk(val categoryIdx : Int, val idx : Int, val text : String, val 
 data class WithNotice(val noticeIdx : Int, val userName : String, val notice : String, val deadline : String)
 
 data class WithStory(val storyIdx : Int, val imageUrl : ArrayList<String>, val title : String, val content : String, val userIdx : Int, val userName : String, val userProfile : String?,
-                     val createdAt : String, val isUserStory : String, var totalLikeCount : Int, var isLike : String, val totalCommentCnt : Int, val tag : ArrayList<String>)
+                     val createdAt : String, val isUserStory : String, var totalLikeCnt : Int, var isLike : String, val totalCommentCnt : Int, val tag : ArrayList<String>)
 
 // qna, story 등에서 보이는 댓글들
 data class Chat(val commentIdx : Int, val userIdx : Int, val userProfile : String?, val userName : String,

@@ -33,13 +33,13 @@ class PostAndChatAdapter(private val view : RvPostAndChatView) : PagingDataAdapt
         val diffCallback = object : DiffUtil.ItemCallback<Post>() {
             override fun areItemsTheSame(oldItem: Post, newItem: Post): Boolean {
                 return if (oldItem is Chat && newItem is Chat){
-                    (oldItem.commentIdx == newItem.commentIdx)
+                    (oldItem == newItem)
                 } else (oldItem is ABTest && newItem is ABTest) || (oldItem is WithQna && newItem is WithQna)
             }
 
             override fun areContentsTheSame(oldItem: Post, newItem: Post): Boolean {
                 return if (oldItem is Chat && newItem is Chat){
-                    (oldItem.isDeleted == newItem.isDeleted)
+                    (oldItem.isDeleted == newItem.isDeleted && oldItem.reComment == newItem.reComment)
                 }
                 else if (oldItem is WithQna && newItem is WithQna) {
                     (oldItem.totalCommentCnt == newItem.totalCommentCnt && oldItem.totalLikeCnt == newItem.totalLikeCnt
@@ -73,6 +73,14 @@ class PostAndChatAdapter(private val view : RvPostAndChatView) : PagingDataAdapt
                             holder.itemView.context.getString(R.string.cancel_write_reply)
                         } else {
                             holder.itemView.context.getString(R.string.comment_reply)
+                        }
+                    }
+                    if (payload == "like" && headerIdx != null){
+                        val item = getItem(headerIdx!!)
+                        if (holder is QnaViewHolder){
+                            item as WithQna
+                            holder.favCnt.text = item.totalLikeCnt.toString()
+                            holder.icFav.setImageResource(if (item.isLike == "Y") R.drawable.ic_heart_base_16 else R.drawable.ic_heart_line_16)
                         }
                     }
                 }
@@ -134,8 +142,7 @@ class PostAndChatAdapter(private val view : RvPostAndChatView) : PagingDataAdapt
                     holder.commentCnt.text = item.totalCommentCnt.toString()
                     holder.favCnt.text = item.totalLikeCnt.toString()
                     holder.favBtn.setOnClickListener {
-                        item.isLike = if (item.isLike == "Y") "N" else "Y"
-                        notifyItemChanged(position)
+                        view.clickLikeBtn()
                     }
                 }
                 is AbTestViewHolder -> {

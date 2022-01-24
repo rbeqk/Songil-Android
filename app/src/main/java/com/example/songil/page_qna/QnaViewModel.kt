@@ -24,6 +24,7 @@ class QnaViewModel : BaseViewModel() {
 
     var commentResult = MutableLiveData<Int>()
     var deleteCommentResult = MutableLiveData<Int>()
+    var changeLikeResult = MutableLiveData<Boolean>()
 
     var flow = Pager(PagingConfig(pageSize = 10)){
         PostAndCommentPagingSource(repository, qnaIdx)
@@ -54,6 +55,19 @@ class QnaViewModel : BaseViewModel() {
     fun tryRemoveComment(commentIdx : Int){
         viewModelScope.launch(exceptionHandler) {
             deleteCommentResult.postValue(repository.deleteChat(commentIdx))
+        }
+    }
+
+    fun tryToggleLike(){
+        viewModelScope.launch(exceptionHandler) {
+            val result = repository.changeQnaLike(qnaIdx)
+            if (result.body()?.code == 200){
+                qna.totalLikeCnt = result.body()!!.result.totalLikeCnt
+                qna.isLike = result.body()!!.result.isLike
+                changeLikeResult.postValue(true)
+            } else {
+                changeLikeResult.postValue(false)
+            }
         }
     }
 

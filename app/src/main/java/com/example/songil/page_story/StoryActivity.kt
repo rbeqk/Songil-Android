@@ -2,6 +2,7 @@ package com.example.songil.page_story
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -12,11 +13,16 @@ import com.example.songil.R
 import com.example.songil.config.BaseActivity
 import com.example.songil.config.GlobalApplication
 import com.example.songil.databinding.StoryActivityBinding
+import com.example.songil.page_report.ReportActivity
 import com.example.songil.page_story.subpage_story_chat.StoryChatActivity
+import com.example.songil.page_storywrite.StoryWriteActivity
+import com.example.songil.popup_more.MoreBottomSheet
+import com.example.songil.popup_more.popup_interface.PopupMoreView
+import com.example.songil.popup_remove.popup_interface.PopupRemoveView
 import com.example.songil.viewPager2.adapter.Vp2ImageAdapter
 import com.google.android.material.chip.Chip
 
-class StoryActivity : BaseActivity<StoryActivityBinding>(R.layout.story_activity){
+class StoryActivity : BaseActivity<StoryActivityBinding>(R.layout.story_activity), PopupMoreView, PopupRemoveView {
 
     private val viewModel : StoryViewModel by lazy { ViewModelProvider(this)[StoryViewModel::class.java] }
 
@@ -39,6 +45,14 @@ class StoryActivity : BaseActivity<StoryActivityBinding>(R.layout.story_activity
             }
         }
         viewModel.storyDetailResult.observe(this, getStoryObserver)
+
+        val patchLikeObserver = Observer<Boolean>{ liveData ->
+            if (liveData){
+                applyLikeData()
+            }
+            binding.btnFavorite.isClickable = true
+        }
+        viewModel.likeResult.observe(this, patchLikeObserver)
     }
 
     private fun setButton(){
@@ -51,6 +65,16 @@ class StoryActivity : BaseActivity<StoryActivityBinding>(R.layout.story_activity
             intent.putExtra(GlobalApplication.STORY_IDX, viewModel.storyIdx)
             startActivityHorizontal(intent)
         }
+
+        binding.btnFavorite.setOnClickListener {
+            viewModel.tryToggleLike()
+            binding.btnFavorite.isClickable = false
+        }
+
+        binding.btnMore.setOnClickListener {
+            val moreBottomSheet = MoreBottomSheet(this, (viewModel.storyDetail.isUserStory == "Y"))
+            moreBottomSheet.show(supportFragmentManager, moreBottomSheet.tag)
+        }
     }
 
     private fun applyView(){
@@ -62,7 +86,7 @@ class StoryActivity : BaseActivity<StoryActivityBinding>(R.layout.story_activity
         binding.tvUploadDate.text = storyData.createdAt
         binding.tvStoryContent.text = storyData.content
         Glide.with(this).load(storyData.userProfile).fallback(R.drawable.ic_with_full_gray_32).into(binding.ivWriterThumbnail)
-        setFavBtn(storyData.isLike, storyData.totalLikeCount)
+        applyLikeData()
         binding.tvCommentCount.text = storyData.totalCommentCnt.toString()
         setChip(storyData.tag)
         if (storyData.imageUrl.size <= 1) { binding.tvImageCnt.visibility = View.INVISIBLE }
@@ -79,19 +103,14 @@ class StoryActivity : BaseActivity<StoryActivityBinding>(R.layout.story_activity
         })
     }
 
-    private fun setFavBtn(isLike : String, likeCount : Int){
-        if (isLike == "Y"){
-            binding.btnFavorite.setImageResource(R.drawable.ic_heart_base_16)
-            binding.btnFavorite.setOnClickListener {
-                setFavBtn("N", likeCount - 1)
-            }
+    private fun applyLikeData(){
+        if (viewModel.storyDetail.isLike == "Y"){
+            binding.ivFavorite.setImageResource(R.drawable.ic_heart_base_16)
         } else {
-            binding.btnFavorite.setImageResource(R.drawable.ic_heart_line_16)
-            binding.btnFavorite.setOnClickListener {
-                setFavBtn("Y", likeCount + 1)
-            }
+            binding.ivFavorite.setImageResource(R.drawable.ic_heart_line_16)
         }
-        binding.tvFavoriteCount.text = likeCount.toString()
+        Log.d("totalLikeCnt", "${viewModel.storyDetail.totalLikeCnt}")
+        binding.tvFavoriteCount.text = viewModel.storyDetail.totalLikeCnt.toString()
     }
 
     private fun setChip(tags : ArrayList<String>){
@@ -112,4 +131,24 @@ class StoryActivity : BaseActivity<StoryActivityBinding>(R.layout.story_activity
         super.finish()
         exitHorizontal
     }
+
+    override fun bottomSheetModifyClick() {
+        val intent = Intent(this, StoryWriteActivity::class.java)
+        intent.putExtra(GlobalApplication.STORY_IDX, -1)
+        startActivityHorizontal(intent)
+    }
+
+    override fun bottomSheetRemoveClick() {
+
+    }
+
+    override fun bottomSheetReportClick() { // 일단 아직 게시글 신고는 api가 없네?
+        val intent = Intent(this, ReportActivity::class.java)
+        startActivityHorizontal(intent)
+    }
+
+    override fun popupRemoveClick() {
+
+    }
+
 }

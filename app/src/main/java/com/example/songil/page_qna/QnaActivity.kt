@@ -99,6 +99,15 @@ class QnaActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity), R
             }
         }
         viewModel.deleteCommentResult.observe(this, removeCommentResult)
+
+        val changeLikeObserver = Observer<Boolean>{ liveData ->
+            if (liveData){
+                if ((binding.rvComment.adapter as PostAndChatAdapter).itemCount > 0) {
+                    (binding.rvComment.adapter as PostAndChatAdapter).notifyItemChanged(0, "like")
+                }
+            }
+        }
+        viewModel.changeLikeResult.observe(this, changeLikeObserver)
     }
 
     private fun setButton(){
@@ -150,5 +159,9 @@ class QnaActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity), R
         intent.putExtra(GlobalApplication.TARGET_IDX, commentIdx)
         intent.putExtra(GlobalApplication.REPORT_TARGET, ReportTarget.QNA_COMMENT)
         startActivityHorizontal(intent)
+    }
+
+    override fun clickLikeBtn() {
+        viewModel.tryToggleLike()
     }
 }
