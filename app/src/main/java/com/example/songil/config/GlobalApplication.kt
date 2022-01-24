@@ -23,6 +23,7 @@ class GlobalApplication : Application() {
         const val IS_FIRST_EXEC = "first_exec"
         const val REPORT_TARGET = "report_target"
         const val TARGET_IDX = "target-idx"
+        const val WRITE_TYPE = "write-type"
         lateinit var sRetrofit: Retrofit
         lateinit var globalSharedPreferences: SharedPreferences
         val categoryList = arrayListOf<Category>(

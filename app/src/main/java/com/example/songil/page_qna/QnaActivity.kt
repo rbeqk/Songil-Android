@@ -2,7 +2,10 @@ package com.example.songil.page_qna
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.inputmethod.InputMethodManager
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -11,18 +14,25 @@ import com.example.songil.R
 import com.example.songil.config.BaseActivity
 import com.example.songil.config.GlobalApplication
 import com.example.songil.config.ReportTarget
+import com.example.songil.config.WriteType
 import com.example.songil.databinding.ChatActivityBinding
+import com.example.songil.page_qnawrite.QnaWriteActivity
 import com.example.songil.page_report.ReportActivity
+import com.example.songil.popup_more.MoreBottomSheet
+import com.example.songil.popup_more.popup_interface.PopupMoreView
+import com.example.songil.popup_remove.RemoveDialog
+import com.example.songil.popup_remove.popup_interface.PopupRemoveView
 import com.example.songil.recycler.adapter.PostAndChatAdapter
 import com.example.songil.recycler.rv_interface.RvPostAndChatView
 import com.example.songil.utils.softKeyboardCallback.KeyboardVisibilityUtils
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class QnaActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity), RvPostAndChatView {
+class QnaActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity), RvPostAndChatView, PopupMoreView, PopupRemoveView {
 
     private val viewModel : QnaViewModel by lazy { ViewModelProvider(this)[QnaViewModel::class.java] }
     private lateinit var keyboardVisibilityUtils : KeyboardVisibilityUtils
+    private lateinit var writeResult : ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +47,12 @@ class QnaActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity), R
         setRecyclerView()
         setObserver()
         setButton()
+
+        writeResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
+            if (result.resultCode == RESULT_OK){
+                viewModel.getQna()
+            }
+        }
 
         lifecycleScope.launch {
             viewModel.flow.collectLatest { pagingData ->
@@ -108,6 +124,15 @@ class QnaActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity), R
             }
         }
         viewModel.changeLikeResult.observe(this, changeLikeObserver)
+
+        val removeQnaResult = Observer<Boolean> { liveData ->
+            if (liveData){
+                finish()
+            } else {
+                Log.d("QnaActivity", "remove qna on failure")
+            }
+        }
+        viewModel.deleteQnaResult.observe(this, removeQnaResult)
     }
 
     private fun setButton(){
@@ -118,6 +143,11 @@ class QnaActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity), R
         binding.btnRegister.setOnClickListener {
             viewModel.tryWriteComment(binding.etComment.text.toString())
             binding.btnRegister.isClickable = false
+        }
+
+        binding.btnMore.setOnClickListener {
+            val moreBottomSheet = MoreBottomSheet(this, (viewModel.getIsWriter()))
+            moreBottomSheet.show(supportFragmentManager, moreBottomSheet.tag)
         }
     }
 
@@ -163,5 +193,26 @@ class QnaActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity), R
 
     override fun clickLikeBtn() {
         viewModel.tryToggleLike()
+    }
+
+    override fun bottomSheetModifyClick() {
+        val intent = Intent(this, QnaWriteActivity::class.java)
+        intent.putExtra(GlobalApplication.WRITE_TYPE, WriteType.MODIFY)
+        intent.putExtra(GlobalApplication.TARGET_IDX, viewModel.qnaIdx)
+        writeResult.launch(intent)
+        overridePendingTransition(R.anim.from_right, R.anim.to_left)
+    }
+
+    override fun bottomSheetRemoveClick() {
+        val dialog = RemoveDialog(this)
+        dialog.show(supportFragmentManager, dialog.tag)
+    }
+
+    override fun bottomSheetReportClick() {
+
+    }
+
+    override fun popupRemoveClick() {
+        viewModel.tryRemoveQna()
     }
 }

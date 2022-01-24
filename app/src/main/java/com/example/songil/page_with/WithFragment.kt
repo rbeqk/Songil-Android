@@ -1,8 +1,11 @@
 package com.example.songil.page_with
 
+import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -11,9 +14,11 @@ import com.example.songil.R
 import com.example.songil.config.BaseActivity
 import com.example.songil.config.BaseFragment
 import com.example.songil.config.GlobalApplication
+import com.example.songil.config.WriteType
 import com.example.songil.databinding.WithFragmentMainBinding
 import com.example.songil.page_main.MainActivity
 import com.example.songil.page_alarm.AlarmActivity
+import com.example.songil.page_qnawrite.QnaWriteActivity
 import com.example.songil.page_storywrite.StoryWriteActivity
 import com.example.songil.page_with.with_abtest.WithFragmentAbtest
 import com.example.songil.page_with.with_qna.WithFragmentQna
@@ -30,6 +35,17 @@ class WithFragment : BaseFragment<WithFragmentMainBinding>(WithFragmentMainBindi
     private val abtestFragment : WithFragmentAbtest by lazy { WithFragmentAbtest() }
     private val viewModel : WithViewModel by lazy { ViewModelProvider(this)[WithViewModel::class.java] }
     private lateinit var currentFragment : WithSubFragmentInterface
+    private lateinit var writeResult : ActivityResultLauncher<Intent>
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        writeResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
+            if (result.resultCode == RESULT_OK){
+                currentFragment.reload()
+            }
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -63,11 +79,29 @@ class WithFragment : BaseFragment<WithFragmentMainBinding>(WithFragmentMainBindi
         }
 
         binding.btnWrite.setOnClickListener {
-            if (currentFragment is WithFragmentStory){
-                (activity as MainActivity).startActivityHorizontal(Intent(activity as MainActivity, StoryWriteActivity::class.java))
+            if (!(activity as BaseActivity<*>).isLogin()){
+                (activity as BaseActivity<*>).callNeedLoginDialog()
             } else {
-                if (!(activity as BaseActivity<*>).isLogin()){
-                    (activity as BaseActivity<*>).callNeedLoginDialog()
+                when (currentFragment) {
+                    is WithFragmentStory -> {
+                        //(activity as MainActivity).startActivityHorizontal(Intent(activity as MainActivity, StoryWriteActivity::class.java))
+                        val intent = Intent(activity as MainActivity, StoryWriteActivity::class.java)
+                        intent.putExtra(GlobalApplication.WRITE_TYPE, WriteType.NEW)
+                        writeResult.launch(intent)
+                        (activity as MainActivity).overridePendingTransition(R.anim.from_right, R.anim.to_left)
+                    }
+                    is WithFragmentQna -> {
+                        val intent = Intent(activity as MainActivity, QnaWriteActivity::class.java)
+                        intent.putExtra(GlobalApplication.WRITE_TYPE, WriteType.NEW)
+                        writeResult.launch(intent)
+                        (activity as MainActivity).overridePendingTransition(R.anim.from_right, R.anim.to_left)
+                    }
+                    is WithFragmentAbtest -> {
+
+                    }
+                    else -> {
+
+                    }
                 }
             }
         }

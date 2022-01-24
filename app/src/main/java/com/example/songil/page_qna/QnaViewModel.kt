@@ -25,6 +25,7 @@ class QnaViewModel : BaseViewModel() {
     var commentResult = MutableLiveData<Int>()
     var deleteCommentResult = MutableLiveData<Int>()
     var changeLikeResult = MutableLiveData<Boolean>()
+    var deleteQnaResult = MutableLiveData<Boolean>()
 
     var flow = Pager(PagingConfig(pageSize = 10)){
         PostAndCommentPagingSource(repository, qnaIdx)
@@ -71,4 +72,18 @@ class QnaViewModel : BaseViewModel() {
         }
     }
 
+    fun getIsWriter() : Boolean {
+        return getQna.isUserQnA == "Y"
+    }
+
+    fun tryRemoveQna() {
+        viewModelScope.launch(exceptionHandler) {
+            val result = repository.deleteQna(qnaIdx)
+            if (result.body()?.code == 200){
+                deleteQnaResult.postValue(true)
+            } else {
+                deleteQnaResult.postValue(false)
+            }
+        }
+    }
 }

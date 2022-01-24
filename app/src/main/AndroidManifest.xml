@@ -33,13 +33,7 @@
         <activity android:name=".page_basket.BasketActivity"/>
         <activity android:name=".page_mybenefit.MybenefitActivity"/>
         <activity android:name=".page_myfavorite.MyfavoriteActivity"/>
-        <activity android:name=".page_order.OrderActivity">
-<!--            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
-        </activity>
+        <activity android:name=".page_order.OrderActivity"/>
         <activity android:name=".page_orderstatus.OrderstatusActivity"/>
         <activity android:name=".page_mycomment.MycommentActivity"/>
         <activity android:name=".page_setting.SettingActivity"/>
@@ -53,13 +47,7 @@
         <activity android:name=".page_story.StoryActivity"/>
         <activity android:name=".page_storywrite.StoryWriteActivity"/>
         <activity android:name=".page_imagepicker.ImagePickerActivity"/>
-        <activity android:name=".page_artist.ArtistActivity">
- <!--           <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
-        </activity>
+        <activity android:name=".page_artist.ArtistActivity"/>
         <activity android:name=".page_alarm.AlarmActivity"/>
         <activity android:name=".webview_address.WebAddressActivity"/>
         <activity android:name=".page_notice.NoticeActivity"/>
@@ -70,6 +58,7 @@
         <activity android:name=".page_artistmanage.subpage_asklist.ArtistManageAskListActivity"/>
         <activity android:name=".page_delivery.DeliveryActivity"/>
         <activity android:name=".page_story.subpage_story_chat.StoryChatActivity" android:windowSoftInputMode="adjustResize"/>
+        <activity android:name=".page_qnawrite.QnaWriteActivity" android:windowSoftInputMode="adjustResize"/>
     </application>
 
 </manifest>

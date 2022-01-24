@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.songil.page_qnawrite.QnaWriteViewModel" />
+    </data>
+
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -61,10 +67,11 @@
                 android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:gravity="center"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="12dp"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="16dp"
                 android:textSize="16sp"
                 android:text="@string/title"/>
 
@@ -72,10 +79,11 @@
                 android:id="@+id/et_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="@id/tv_title"
-                app:layout_constraintBottom_toBottomOf="@id/tv_title"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toEndOf="@id/tv_title"
                 app:layout_constraintEnd_toEndOf="parent"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginStart="20dp"
                 android:background="@color/songil_1"
@@ -83,20 +91,21 @@
                 android:fontFamily="@font/spoqahansansneo_light"
                 android:textColor="@color/g_4"
                 android:textColorHint="@color/g_4"
+                android:text="@={viewModel.title}"
                 android:hint="@string/input_title"/>
 
             <View
                 android:id="@+id/line_title"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                app:layout_constraintTop_toBottomOf="@id/tv_title"
-                android:background="@color/g_2"
-                android:layout_marginTop="20dp"/>
+                app:layout_constraintTop_toBottomOf="@id/et_title"
+                android:background="@color/g_2"/>
 
             <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/line_title">
+                android:layout_height="0dp"
+                app:layout_constraintTop_toBottomOf="@id/line_title"
+                app:layout_constraintBottom_toBottomOf="parent">
 
                 <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/et_content"
@@ -108,6 +117,7 @@
                     android:textColorHint="@color/g_4"
                     android:fontFamily="@font/spoqahansansneo_light"
                     android:textSize="14sp"
+                    android:text="@={viewModel.content}"
                     tools:text="ㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ\nㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏㅏ"
                     android:maxLines="15"
                     android:padding="20dp"/>
@@ -123,6 +133,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:text="@string/write_post"
             android:fontFamily="@font/spoqahansansneo_bold"
+            textBtnActivate="@{viewModel.writeBtnActivate}"
             android:textSize="16sp"
             android:layout_gravity="bottom"
             android:gravity="center"/>

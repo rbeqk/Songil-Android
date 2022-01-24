@@ -1,5 +1,6 @@
 package com.example.songil.page_qna
 
+import com.example.songil.config.BaseResponse
 import com.example.songil.config.GlobalApplication
 import com.example.songil.data.Chat
 import com.example.songil.data.WithQna
@@ -57,5 +58,11 @@ class QnaRepository : PostRepository() {
         } else {
             throw UnknownError()
         }
+    }
+
+    suspend fun deleteQna(qnaIdx : Int) : Response<BaseResponse> {
+        val result = retrofitInterface.deleteQna(qnaIdx)
+        if (result.isSuccessful) return result
+        else throw UnknownError()
     }
 }

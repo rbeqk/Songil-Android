@@ -15,6 +15,9 @@ interface QnaRetrofitInterface {
     @GET("with/qna/{qnaIdx}")
     suspend fun getQna(@Path("qnaIdx") qnaIdx: Int) : Response<ResponseQna>
 
+    @DELETE("with/qna/{qnaIdx}")
+    suspend fun deleteQna(@Path("qnaIdx") qnaIdx : Int) : Response<BaseResponse>
+
     @POST("with/qna/{qnaIdx}/comments")
     suspend fun postQnaChat(@Path("qnaIdx") qnaIdx : Int, @Body params : RequestWriteComment) : Response<BaseResponse>
 
