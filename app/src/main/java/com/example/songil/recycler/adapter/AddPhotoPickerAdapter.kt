@@ -49,7 +49,7 @@ class AddPhotoPickerAdapter(private val view : RvPhotoView, private val max : In
                 holder.removeBtn.visibility = View.VISIBLE
                 holder.removeBtn.setOnClickListener {
                     imageList.removeAt(position)
-                    bitmapList.removeAt(position)
+                    bitmapList.clear()
                     notifyDataSetChanged()
                     view.photoItemRemove()
                 }
