@@ -4,6 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -12,6 +14,7 @@ import com.bumptech.glide.Glide
 import com.example.songil.R
 import com.example.songil.config.BaseActivity
 import com.example.songil.config.GlobalApplication
+import com.example.songil.config.WriteType
 import com.example.songil.databinding.StoryActivityBinding
 import com.example.songil.page_report.ReportActivity
 import com.example.songil.page_story.subpage_story_chat.StoryChatActivity
@@ -25,15 +28,23 @@ import com.google.android.material.chip.Chip
 class StoryActivity : BaseActivity<StoryActivityBinding>(R.layout.story_activity), PopupMoreView, PopupRemoveView {
 
     private val viewModel : StoryViewModel by lazy { ViewModelProvider(this)[StoryViewModel::class.java] }
+    private lateinit var writeResult : ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val storyIdx = intent.getIntExtra(GlobalApplication.STORY_IDX, 1)
+        viewModel.storyIdx = storyIdx
+
+        writeResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
+            if (result.resultCode == RESULT_OK){
+                viewModel.tryGetStoryDetail()
+            }
+        }
 
         setButton()
         setObserver()
-        viewModel.tryGetStoryDetail(storyIdx)
+        viewModel.tryGetStoryDetail()
     }
 
     private fun setObserver(){
@@ -134,8 +145,10 @@ class StoryActivity : BaseActivity<StoryActivityBinding>(R.layout.story_activity
 
     override fun bottomSheetModifyClick() {
         val intent = Intent(this, StoryWriteActivity::class.java)
-        intent.putExtra(GlobalApplication.STORY_IDX, -1)
-        startActivityHorizontal(intent)
+        intent.putExtra(GlobalApplication.WRITE_TYPE, WriteType.MODIFY)
+        intent.putExtra(GlobalApplication.TARGET_IDX, viewModel.storyIdx)
+        writeResult.launch(intent)
+        overridePendingTransition(R.anim.from_right, R.anim.to_left)
     }
 
     override fun bottomSheetRemoveClick() {

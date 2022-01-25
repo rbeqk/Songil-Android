@@ -15,8 +15,7 @@ class StoryViewModel : BaseViewModel() {
     var likeResult = MutableLiveData<Boolean>()
     var removeResult = MutableLiveData<Boolean>()
 
-    fun tryGetStoryDetail(inputStoryIdx : Int = 0){
-        storyIdx = inputStoryIdx
+    fun tryGetStoryDetail(){
         viewModelScope.launch(exceptionHandler) {
             repository.getStoryDetail(storyIdx).let { response ->
                 if (response.isSuccessful){
