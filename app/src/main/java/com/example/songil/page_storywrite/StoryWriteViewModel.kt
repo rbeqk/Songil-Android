@@ -3,6 +3,8 @@ package com.example.songil.page_storywrite
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.songil.config.BaseViewModel
+import com.example.songil.page_story.StoryRepository
+import com.example.songil.page_storywrite.models.TagAndUrl
 import com.example.songil.utils.toPlainRequestBody
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaType
@@ -12,7 +14,11 @@ import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 
 class StoryWriteViewModel : BaseViewModel() {
-    private val repository = StoryWriteRepository()
+    private val storyWriteRepository = StoryWriteRepository()
+    private val storyRepository = StoryRepository()
+
+    // 스토리 수정시 원본 스토리의 story idx
+    var storyIdx = -1
 
     var storyTitle = ""
     var storyContent = ""
@@ -25,10 +31,25 @@ class StoryWriteViewModel : BaseViewModel() {
     var writeBtnActivate = MutableLiveData(false)
     var tagWritable = MutableLiveData(true)
 
+    var getStoryResult = MutableLiveData<TagAndUrl>()
+
     var resultUpload = MutableLiveData<Int>()
 
+    fun tryGetStory(){
+        viewModelScope.launch(exceptionHandler) {
+            val result = storyRepository.getStoryDetail(storyIdx)
+            if (result.body()?.code == 200){
+                val storyInfo = result.body()!!.result
+                storyTitle = storyInfo.title
+                storyContent = storyInfo.content
+                setImageUriList(storyInfo.imageUrl)
+                getStoryResult.postValue(TagAndUrl(storyInfo.tag, storyInfo.imageUrl))
+            }
+        }
+    }
+
     fun tryUploadStory(){
-        viewModelScope.launch {
+        viewModelScope.launch(exceptionHandler) {
             val fileArray = ArrayList<MultipartBody.Part>()
             for (file in imageFileList){
                 val requestBody = file.asRequestBody("image/*".toMediaType())
@@ -38,7 +59,7 @@ class StoryWriteViewModel : BaseViewModel() {
             hashMap["title"] = toPlainRequestBody(storyTitle)
             hashMap["content"] = toPlainRequestBody(storyContent)
             val tag = toPlainRequestBody(tagList)
-            repository.uploadStory(hashMap, tag, fileArray).let { response ->
+            storyWriteRepository.uploadStory(hashMap, tag, fileArray).let { response ->
                 if (response.isSuccessful){
                     resultUpload.postValue(response.body()?.code ?: -1)
                 } else {
@@ -65,6 +86,8 @@ class StoryWriteViewModel : BaseViewModel() {
         imageFileList.clear()
         imageFileList.addAll(fileList)
     }
+
+    fun getImageUriList() = imageUriList
 
     // remove image file after upload story
     fun clearFiles(){
