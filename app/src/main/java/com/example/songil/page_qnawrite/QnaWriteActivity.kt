@@ -70,9 +70,9 @@ class QnaWriteActivity : BaseActivity<QnaActivityWriteBinding>(R.layout.qna_acti
         }
         viewModel.writeQnaResult.observe(this, qnaWriteResultObserver)
 
-        val loadQnaResultObserver = Observer<BodyQnaWrite>{ liveData ->
-            binding.etTitle.setText(liveData.title)
-            binding.etContent.setText(liveData.content)
+        val loadQnaResultObserver = Observer<Boolean>{ liveData ->
+            if (liveData)
+                binding.invalidateAll()
         }
         viewModel.loadQnaResult.observe(this, loadQnaResultObserver)
 

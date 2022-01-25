@@ -3,7 +3,6 @@ package com.example.songil.page_qnawrite
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.songil.config.BaseViewModel
-import com.example.songil.page_qnawrite.models.BodyQnaWrite
 import kotlinx.coroutines.launch
 
 class QnaWriteViewModel : BaseViewModel() {
@@ -13,7 +12,7 @@ class QnaWriteViewModel : BaseViewModel() {
     var content = ""
     var writeBtnActivate = MutableLiveData(false)
     var writeQnaResult = MutableLiveData<Boolean>()
-    var loadQnaResult = MutableLiveData<BodyQnaWrite>()
+    var loadQnaResult = MutableLiveData<Boolean>()
     var qnaIdx = -1
 
     fun checkActivate(){
@@ -34,7 +33,9 @@ class QnaWriteViewModel : BaseViewModel() {
     fun tryGetQna(){
         viewModelScope.launch(exceptionHandler) {
             val result = repository.getQna(qnaIdx)
-            loadQnaResult.postValue(BodyQnaWrite(result.title, result.content))
+            title = result.title
+            content = result.content
+            loadQnaResult.postValue(true)
         }
     }
 
