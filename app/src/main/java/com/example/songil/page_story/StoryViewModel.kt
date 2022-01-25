@@ -32,9 +32,9 @@ class StoryViewModel : BaseViewModel() {
     fun tryToggleLike() {
         viewModelScope.launch {
             val result = repository.getStoryLike(storyIdx)
-            if (result != null){
-                storyDetail.isLike = result.isLike
-                storyDetail.totalLikeCnt = result.totalLikeCnt
+            if (result.body()?.code == 200){
+                storyDetail.isLike = result.body()!!.result.isLike
+                storyDetail.totalLikeCnt = result.body()!!.result.totalLikeCnt
                 likeResult.postValue(true)
             } else {
                 likeResult.postValue(false)
@@ -45,7 +45,8 @@ class StoryViewModel : BaseViewModel() {
 
     fun tryDeleteStory(){
         viewModelScope.launch {
-            removeResult.postValue(repository.delStory(storyIdx))
+            val result = repository.delStory(storyIdx)
+            removeResult.postValue(result.body()?.code == 200)
         }
     }
 
