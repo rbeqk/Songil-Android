@@ -18,8 +18,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.songil.R
 import com.example.songil.config.BaseActivity
+import com.example.songil.config.GlobalApplication
+import com.example.songil.config.WriteType
 import com.example.songil.databinding.StoryActivityWriteBinding
 import com.example.songil.page_imagepicker.ImagePickerActivity
+import com.example.songil.page_storywrite.models.TagAndUrl
 import com.example.songil.recycler.adapter.AddPhotoPickerAdapter
 import com.example.songil.recycler.decoration.AddPhotoDecoration
 import com.example.songil.recycler.rv_interface.RvPhotoView
@@ -33,6 +36,8 @@ class StoryWriteActivity : BaseActivity<StoryActivityWriteBinding>(R.layout.stor
     private val activity = this
     lateinit var imagePickerResult : ActivityResultLauncher<Intent>
 
+    private lateinit var isNew : WriteType
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -42,7 +47,7 @@ class StoryWriteActivity : BaseActivity<StoryActivityWriteBinding>(R.layout.stor
         imagePickerResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
             if (it.resultCode == RESULT_OK){
                 val imageList = it.data?.getStringArrayListExtra("imageList")
-                (binding.rvPhoto.adapter as AddPhotoPickerAdapter).applyData(imageList ?: arrayListOf())
+                (binding.rvPhoto.adapter as AddPhotoPickerAdapter).applyData()
                 viewModel.setImageUriList(imageList ?: arrayListOf()) /*changeUriToPath(imageList)*/
             }
             viewModel.checkAvailable()
@@ -52,6 +57,12 @@ class StoryWriteActivity : BaseActivity<StoryActivityWriteBinding>(R.layout.stor
         setRecyclerView()
         setEditText()
         setButton()
+
+        isNew = (intent.getSerializableExtra(GlobalApplication.WRITE_TYPE) as WriteType)
+        viewModel.storyIdx = intent.getIntExtra(GlobalApplication.TARGET_IDX, -1)
+        if (isNew == WriteType.MODIFY && viewModel.storyIdx != -1){
+            viewModel.tryGetStory()
+        }
     }
 
     private fun setObserver(){
@@ -59,6 +70,8 @@ class StoryWriteActivity : BaseActivity<StoryActivityWriteBinding>(R.layout.stor
             viewModel.checkAvailable()
             if (liveData == 200){
                 viewModel.clearFiles()
+                val intent = Intent(this, BaseActivity::class.java)
+                setResult(RESULT_OK, intent)
                 finish()
             }
         }
@@ -72,6 +85,16 @@ class StoryWriteActivity : BaseActivity<StoryActivityWriteBinding>(R.layout.stor
             }
         }
         viewModel.tagWritable.observe(this, tagEditVisibleObserver)
+
+        val getStoryObserver = Observer<TagAndUrl>{ liveData ->
+            for (tag in liveData.tagList){
+                addChip(tag)
+            }
+            (binding.rvPhoto.adapter as AddPhotoPickerAdapter).applyData()
+            viewModel.checkAvailable()
+            binding.invalidateAll()
+        }
+        viewModel.getStoryResult.observe(this, getStoryObserver)
     }
 
     private fun setButton(){
@@ -148,12 +171,16 @@ class StoryWriteActivity : BaseActivity<StoryActivityWriteBinding>(R.layout.stor
 
     private fun setRecyclerView(){
         binding.rvPhoto.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        binding.rvPhoto.adapter = AddPhotoPickerAdapter(this, 3)
+        binding.rvPhoto.adapter = AddPhotoPickerAdapter(this, 3, viewModel.getImageUriList())
         binding.rvPhoto.addItemDecoration(AddPhotoDecoration(this))
     }
 
     override fun photoItemClick() {
         checkPermissionAndCall()
+    }
+
+    override fun photoItemRemove() {
+        viewModel.checkAvailable()
     }
 
     private fun checkPermissionAndCall(){

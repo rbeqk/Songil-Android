@@ -96,6 +96,8 @@ class CommentWriteActivity : BaseActivity<CommentActivityWriteBinding>(R.layout.
         checkPermissionAndCall()
     }
 
+    override fun photoItemRemove() { /* do nothing */}
+
     override fun finish() {
         super.finish()
         exitHorizontal

@@ -13,9 +13,8 @@ import com.example.songil.databinding.ItemAddPhotoBinding
 import com.example.songil.recycler.rv_interface.RvPhotoView
 import kotlin.math.min
 
-class AddPhotoPickerAdapter(private val view : RvPhotoView, private val max : Int = 3) : RecyclerView.Adapter<AddPhotoPickerAdapter.AddPhotoPickerViewHolder>(){
+class AddPhotoPickerAdapter(private val view : RvPhotoView, private val max : Int = 3, private val imageList : ArrayList<String> = ArrayList()) : RecyclerView.Adapter<AddPhotoPickerAdapter.AddPhotoPickerViewHolder>(){
 
-    private val imageList = ArrayList<String>()
     private val bitmapList = ArrayList<Bitmap>()
 
     class AddPhotoPickerViewHolder(binding :ItemAddPhotoBinding) : RecyclerView.ViewHolder(binding.root){
@@ -52,6 +51,7 @@ class AddPhotoPickerAdapter(private val view : RvPhotoView, private val max : In
                     imageList.removeAt(position)
                     bitmapList.removeAt(position)
                     notifyDataSetChanged()
+                    view.photoItemRemove()
                 }
             }
             position == imageList.size -> {
@@ -71,6 +71,11 @@ class AddPhotoPickerAdapter(private val view : RvPhotoView, private val max : In
     fun applyData(newImageList : ArrayList<String>){
         imageList.clear()
         imageList.addAll(newImageList)
+        bitmapList.clear()
+        notifyDataSetChanged()
+    }
+
+    fun applyData(){
         bitmapList.clear()
         notifyDataSetChanged()
     }
