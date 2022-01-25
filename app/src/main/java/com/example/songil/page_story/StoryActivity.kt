@@ -2,7 +2,6 @@ package com.example.songil.page_story
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -100,8 +99,11 @@ class StoryActivity : BaseActivity<StoryActivityBinding>(R.layout.story_activity
         applyLikeData()
         binding.tvCommentCount.text = storyData.totalCommentCnt.toString()
         setChip(storyData.tag)
+        binding.tvImageCnt.text = getString(R.string.form_count, 1, storyData.imageUrl.size)
         if (storyData.imageUrl.size <= 1) { binding.tvImageCnt.visibility = View.INVISIBLE }
-        else { binding.tvImageCnt.text = getString(R.string.form_count, 1, storyData.tag.size)}
+        else {
+            binding.tvImageCnt.visibility = View.VISIBLE
+        }
     }
 
     private fun setViewPager(imageList : ArrayList<String>){
@@ -120,7 +122,6 @@ class StoryActivity : BaseActivity<StoryActivityBinding>(R.layout.story_activity
         } else {
             binding.ivFavorite.setImageResource(R.drawable.ic_heart_line_16)
         }
-        Log.d("totalLikeCnt", "${viewModel.storyDetail.totalLikeCnt}")
         binding.tvFavoriteCount.text = viewModel.storyDetail.totalLikeCnt.toString()
     }
 
