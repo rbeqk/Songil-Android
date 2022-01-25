@@ -3,6 +3,7 @@ package com.example.songil.page_storywrite
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.songil.config.BaseViewModel
+import com.example.songil.config.WriteType
 import com.example.songil.page_story.StoryRepository
 import com.example.songil.page_storywrite.models.TagAndUrl
 import com.example.songil.utils.toPlainRequestBody
@@ -48,7 +49,7 @@ class StoryWriteViewModel : BaseViewModel() {
         }
     }
 
-    fun tryUploadStory(){
+    fun tryUploadStory(isNew : WriteType = WriteType.NEW){
         viewModelScope.launch(exceptionHandler) {
             val fileArray = ArrayList<MultipartBody.Part>()
             for (file in imageFileList){
@@ -59,11 +60,13 @@ class StoryWriteViewModel : BaseViewModel() {
             hashMap["title"] = toPlainRequestBody(storyTitle)
             hashMap["content"] = toPlainRequestBody(storyContent)
             val tag = toPlainRequestBody(tagList)
-            storyWriteRepository.uploadStory(hashMap, tag, fileArray).let { response ->
-                if (response.isSuccessful){
+            if (isNew == WriteType.NEW) {
+                storyWriteRepository.uploadStory(hashMap, tag, fileArray).let { response ->
                     resultUpload.postValue(response.body()?.code ?: -1)
-                } else {
-                    resultUpload.postValue(-1)
+                }
+            } else {
+                storyWriteRepository.modifyStory(storyIdx, hashMap, tag, fileArray).let { response ->
+                    resultUpload.postValue(response.body()?.code ?: -1)
                 }
             }
         }

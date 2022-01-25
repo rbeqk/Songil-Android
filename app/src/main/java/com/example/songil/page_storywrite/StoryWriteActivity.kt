@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
@@ -18,6 +19,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.songil.R
 import com.example.songil.config.BaseActivity
+import com.example.songil.config.BaseViewModel
 import com.example.songil.config.GlobalApplication
 import com.example.songil.config.WriteType
 import com.example.songil.databinding.StoryActivityWriteBinding
@@ -95,6 +97,12 @@ class StoryWriteActivity : BaseActivity<StoryActivityWriteBinding>(R.layout.stor
             binding.invalidateAll()
         }
         viewModel.getStoryResult.observe(this, getStoryObserver)
+
+        val errorObserver = Observer<BaseViewModel.FetchState>{ liveData ->
+            Log.d("errorHandling", "$liveData")
+            viewModel.checkAvailable()
+        }
+        viewModel.fetchState.observe(this, errorObserver)
     }
 
     private fun setButton(){
@@ -112,7 +120,7 @@ class StoryWriteActivity : BaseActivity<StoryActivityWriteBinding>(R.layout.stor
                     fileList.add(file)
                 }
                 viewModel.setFiles(fileList)
-                viewModel.tryUploadStory()
+                viewModel.tryUploadStory(isNew)
             }
         }
     }
