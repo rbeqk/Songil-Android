@@ -1,8 +1,8 @@
 package com.example.songil.page_storywrite
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.songil.config.BaseViewModel
 import com.example.songil.utils.toPlainRequestBody
 import kotlinx.coroutines.launch
 import okhttp3.MediaType.Companion.toMediaType
@@ -11,7 +11,7 @@ import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 
-class StoryWriteViewModel : ViewModel() {
+class StoryWriteViewModel : BaseViewModel() {
     private val repository = StoryWriteRepository()
 
     var storyTitle = ""
@@ -19,37 +19,15 @@ class StoryWriteViewModel : ViewModel() {
     var storyTag = ""
     var tagList = ArrayList<String>()
 
-    private val imagePathList = ArrayList<String>()
-    private val imageFileList = ArrayList<File>()
+    private val imageUriList = ArrayList<String>()
+    private val imageFileList = ArrayList<File>() // story upload 이후 생성한 이미지 파일을 삭제할 때 사용
 
     var writeBtnActivate = MutableLiveData(false)
     var tagWritable = MutableLiveData(true)
 
     var resultUpload = MutableLiveData<Int>()
 
-    // upload story by image file path (local)
-    fun tryUploadStoryUsePath(){
-        viewModelScope.launch {
-            val fileArray = ArrayList<MultipartBody.Part>()
-            for (image in imagePathList){
-                val file = File(image)
-                val requestBody = file.asRequestBody("image/*".toMediaType())
-                fileArray.add(MultipartBody.Part.createFormData("image", file.name, requestBody))
-            }
-            val hashMap = hashMapOf<String, RequestBody>()
-            hashMap["title"] = toPlainRequestBody(storyTitle)
-            hashMap["content"] = toPlainRequestBody(storyContent)
-            val tag = toPlainRequestBody(tagList)
-            repository.uploadStory(hashMap, tag, fileArray).let { response ->
-                if (response.isSuccessful){
-                    resultUpload.postValue(200)
-                }
-            }
-        }
-    }
-
-    // upload story by bitmap from imageView
-    fun tryUploadStoryUseFile(){
+    fun tryUploadStory(){
         viewModelScope.launch {
             val fileArray = ArrayList<MultipartBody.Part>()
             for (file in imageFileList){
@@ -62,31 +40,38 @@ class StoryWriteViewModel : ViewModel() {
             val tag = toPlainRequestBody(tagList)
             repository.uploadStory(hashMap, tag, fileArray).let { response ->
                 if (response.isSuccessful){
-                    resultUpload.postValue(200)
+                    resultUpload.postValue(response.body()?.code ?: -1)
+                } else {
+                    resultUpload.postValue(-1)
                 }
             }
         }
     }
 
-    fun setFileList(newFileList : ArrayList<File>){
-        imageFileList.clear()
-        imageFileList.addAll(newFileList)
-    }
-
-    fun setImageList(newImageList : ArrayList<String>){
-        imagePathList.clear()
-        imagePathList.addAll(newImageList)
+    fun setImageUriList(newImageUriList : ArrayList<String>){
+        imageUriList.clear()
+        imageUriList.addAll(newImageUriList)
     }
 
     fun checkAvailable(){
-        writeBtnActivate.value = ((storyTitle != "" && storyContent != "" && tagList.size < 4 && imagePathList.size > 0))
-    }
-
-    fun getImageLen() : Int {
-        return imagePathList.size
+        writeBtnActivate.value = ((storyTitle != "" && storyContent != "" && tagList.size < 4 && imageUriList.size > 0))
     }
 
     fun checkTagCount(){
         tagWritable.value = (tagList.size in 0..2)
+    }
+
+    fun setFiles(fileList : ArrayList<File>){
+        imageFileList.clear()
+        imageFileList.addAll(fileList)
+    }
+
+    // remove image file after upload story
+    fun clearFiles(){
+        for (file in imageFileList){
+            if (file.exists()){
+                file.delete()
+            }
+        }
     }
 }

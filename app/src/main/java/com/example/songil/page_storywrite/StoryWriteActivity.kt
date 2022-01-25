@@ -3,7 +3,6 @@ package com.example.songil.page_storywrite
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -13,9 +12,9 @@ import android.view.inputmethod.InputMethodManager
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
-import androidx.core.net.toUri
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.songil.R
 import com.example.songil.config.BaseActivity
@@ -26,10 +25,12 @@ import com.example.songil.recycler.decoration.AddPhotoDecoration
 import com.example.songil.recycler.rv_interface.RvPhotoView
 import com.example.songil.utils.createFileFromBitmap
 import com.google.android.material.chip.Chip
+import kotlinx.coroutines.launch
 import java.io.File
 
 class StoryWriteActivity : BaseActivity<StoryActivityWriteBinding>(R.layout.story_activity_write), RvPhotoView{
     private val viewModel : StoryWriteViewModel by lazy { ViewModelProvider(this)[StoryWriteViewModel::class.java] }
+    private val activity = this
     lateinit var imagePickerResult : ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,7 +43,7 @@ class StoryWriteActivity : BaseActivity<StoryActivityWriteBinding>(R.layout.stor
             if (it.resultCode == RESULT_OK){
                 val imageList = it.data?.getStringArrayListExtra("imageList")
                 (binding.rvPhoto.adapter as AddPhotoPickerAdapter).applyData(imageList ?: arrayListOf())
-                viewModel.setImageList(changeUriToPath(imageList))
+                viewModel.setImageUriList(imageList ?: arrayListOf()) /*changeUriToPath(imageList)*/
             }
             viewModel.checkAvailable()
         }
@@ -55,7 +56,9 @@ class StoryWriteActivity : BaseActivity<StoryActivityWriteBinding>(R.layout.stor
 
     private fun setObserver(){
         val uploadResultObserver = Observer<Int>{ liveData ->
+            viewModel.checkAvailable()
             if (liveData == 200){
+                viewModel.clearFiles()
                 finish()
             }
         }
@@ -77,14 +80,22 @@ class StoryWriteActivity : BaseActivity<StoryActivityWriteBinding>(R.layout.stor
         }
 
         binding.btnRegister.setOnClickListener {
-            viewModel.setFileList(changeBitmapToFile())
-            viewModel.tryUploadStoryUseFile()
-            //viewModel.tryUploadStoryUsePath()
+            viewModel.writeBtnActivate.value = false
+            lifecycleScope.launch {
+                val bitmapList = (binding.rvPhoto.adapter as AddPhotoPickerAdapter).getBitmapList()
+                val fileList = ArrayList<File>()
+                for (i in 0 until bitmapList.size){
+                    val file = createFileFromBitmap(bitmapList[i], activity, i)
+                    fileList.add(file)
+                }
+                viewModel.setFiles(fileList)
+                viewModel.tryUploadStory()
+            }
         }
     }
 
     private fun setEditText(){
-        binding.etTag.setOnEditorActionListener { v, actionId, _ ->
+        binding.etTag.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE || binding.cgTag.childCount < 3){
                 addChip(binding.etTag.text.toString())
                 viewModel.checkAvailable()
@@ -168,35 +179,6 @@ class StoryWriteActivity : BaseActivity<StoryActivityWriteBinding>(R.layout.stor
         intent.putExtra("min", 1)
         intent.putExtra("max", 3)
         imagePickerResult.launch(intent)
-    }
-
-    // image uri 를 path 로 변경, 이거 별도로 빼도 될거 같다.
-    private fun changeUriToPath(uriList : ArrayList<String>?) : ArrayList<String>{
-        val pathList = ArrayList<String>()
-        if (uriList == null){
-            return pathList
-        }
-
-        for (uriString in uriList){
-            val uri = uriString.toUri()
-            val cursor = contentResolver.query(uri, null, null, null, null)
-            cursor?.moveToNext()
-            pathList.add(cursor!!.getString(cursor.getColumnIndex("_data")))
-            cursor.close()
-        }
-        return pathList
-    }
-
-    // recyclerView 에 있는 child item 의 imageView 에서 bitmap 가져오는 함수
-    private fun changeBitmapToFile() : ArrayList<File>{
-        val fileArray = ArrayList<File>()
-        for (i in 0 until viewModel.getImageLen()){
-            val holder = binding.rvPhoto.getChildViewHolder(binding.rvPhoto.getChildAt(i))
-            val drawable = (holder as AddPhotoPickerAdapter.AddPhotoPickerViewHolder).image.drawable
-            val bitmap = (drawable as BitmapDrawable).bitmap
-            fileArray.add(createFileFromBitmap(bitmap, this, i))
-        }
-        return fileArray
     }
 
     override fun finish() {

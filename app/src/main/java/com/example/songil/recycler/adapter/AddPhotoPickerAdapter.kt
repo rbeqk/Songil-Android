@@ -1,10 +1,14 @@
 package com.example.songil.recycler.adapter
 
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 import com.example.songil.databinding.ItemAddPhotoBinding
 import com.example.songil.recycler.rv_interface.RvPhotoView
 import kotlin.math.min
@@ -12,6 +16,7 @@ import kotlin.math.min
 class AddPhotoPickerAdapter(private val view : RvPhotoView, private val max : Int = 3) : RecyclerView.Adapter<AddPhotoPickerAdapter.AddPhotoPickerViewHolder>(){
 
     private val imageList = ArrayList<String>()
+    private val bitmapList = ArrayList<Bitmap>()
 
     class AddPhotoPickerViewHolder(binding :ItemAddPhotoBinding) : RecyclerView.ViewHolder(binding.root){
         val image = binding.ivPhoto
@@ -34,10 +39,18 @@ class AddPhotoPickerAdapter(private val view : RvPhotoView, private val max : In
             position < imageList.size -> {
                 holder.root.visibility = View.VISIBLE
                 holder.addBtn.visibility = View.GONE
-                Glide.with(holder.itemView.context).load(imageList[position]).into(holder.image)
+                Glide.with(holder.itemView.context).asBitmap().load(imageList[position]).into(object : CustomTarget<Bitmap>() {
+                    override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                        holder.image.setImageBitmap(resource)
+                        bitmapList.add(resource)
+                    }
+
+                    override fun onLoadCleared(placeholder: Drawable?) {}
+                })
                 holder.removeBtn.visibility = View.VISIBLE
                 holder.removeBtn.setOnClickListener {
                     imageList.removeAt(position)
+                    bitmapList.removeAt(position)
                     notifyDataSetChanged()
                 }
             }
@@ -58,6 +71,9 @@ class AddPhotoPickerAdapter(private val view : RvPhotoView, private val max : In
     fun applyData(newImageList : ArrayList<String>){
         imageList.clear()
         imageList.addAll(newImageList)
+        bitmapList.clear()
         notifyDataSetChanged()
     }
+
+    fun getBitmapList() = bitmapList
 }
