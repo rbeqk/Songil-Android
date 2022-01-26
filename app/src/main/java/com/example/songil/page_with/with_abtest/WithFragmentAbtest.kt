@@ -12,11 +12,12 @@ import com.example.songil.config.BaseFragment
 import com.example.songil.databinding.SimpleRecyclerviewFragmentSwipeBinding
 import com.example.songil.page_with.WithSubFragmentInterface
 import com.example.songil.recycler.adapter.WithABTestPagingAdapter
+import com.example.songil.recycler.rv_interface.RvAbTestView
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class WithFragmentAbtest : BaseFragment<SimpleRecyclerviewFragmentSwipeBinding>(SimpleRecyclerviewFragmentSwipeBinding::bind, R.layout.simple_recyclerview_fragment_swipe), WithSubFragmentInterface {
+class WithFragmentAbtest : BaseFragment<SimpleRecyclerviewFragmentSwipeBinding>(SimpleRecyclerviewFragmentSwipeBinding::bind, R.layout.simple_recyclerview_fragment_swipe), WithSubFragmentInterface, RvAbTestView {
 
     private val viewModel : WithAbtestViewModel by lazy { ViewModelProvider(this)[WithAbtestViewModel::class.java] }
     private var pagingJob : Job? = null
@@ -41,11 +42,18 @@ class WithFragmentAbtest : BaseFragment<SimpleRecyclerviewFragmentSwipeBinding>(
             (binding.rvContent.adapter as WithABTestPagingAdapter).refresh()
         }
         viewModel.startIdx.observe(viewLifecycleOwner, pageCntResult)
+
+        val voteResult = Observer<Boolean>{ liveData ->
+            if (liveData){
+                (binding.rvContent.adapter as WithABTestPagingAdapter).refresh()
+            }
+        }
+        viewModel.voteResult.observe(viewLifecycleOwner, voteResult)
     }
 
     private fun setRecyclerView(){
         binding.rvContent.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        binding.rvContent.adapter = WithABTestPagingAdapter()
+        binding.rvContent.adapter = WithABTestPagingAdapter(this)
     }
 
     private fun initAndLoad(){
@@ -68,5 +76,17 @@ class WithFragmentAbtest : BaseFragment<SimpleRecyclerviewFragmentSwipeBinding>(
     }
 
     override fun getSort(): String = viewModel.sort
+
+    override fun reload() {
+        initAndLoad()
+    }
+
+    override fun vote(abTestIdx: Int, vote: String) {
+        viewModel.tryVote(abTestIdx, vote)
+    }
+
+    override fun cancelVote(abTestIdx: Int) {
+        viewModel.tryCancelVote(abTestIdx)
+    }
 
 }

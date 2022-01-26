@@ -12,7 +12,9 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 class AbtestViewModel : BaseViewModel() {
-    private val repository = AbtestRepository()
+    private val abtestRepository = AbtestRepository()
+    private val voteRepository = AbtestVoteRepository()
+
     var abtestIdx = 0
     var loadAbtest = MutableLiveData<Int>()
     private var abTest = ABTest()
@@ -23,13 +25,15 @@ class AbtestViewModel : BaseViewModel() {
     var commentResult = MutableLiveData<Int>()
     var deleteCommentResult = MutableLiveData<Int>()
 
+    var voteResult = MutableLiveData<Boolean>()
+
     var flow = Pager(PagingConfig(pageSize = 10)) {
-        PostAndCommentPagingSource(repository, abtestIdx)
+        PostAndCommentPagingSource(abtestRepository, abtestIdx)
     }.flow.map { it.insertHeaderItem(item = getAbtest) }
 
     fun tryGetAbtest(){
         viewModelScope.launch(exceptionHandler) {
-            val abtestResult = repository.getAbtest(abtestIdx)
+            val abtestResult = abtestRepository.getAbtest(abtestIdx)
             abTest = abtestResult
             loadAbtest.postValue(200)
         }
@@ -38,7 +42,7 @@ class AbtestViewModel : BaseViewModel() {
     fun tryWriteComment(comment : String){
         viewModelScope.launch(exceptionHandler) {
             if (comment != ""){
-                commentResult.postValue(repository.writeChat(abtestIdx, replyPointIdx, comment))
+                commentResult.postValue(abtestRepository.writeChat(abtestIdx, replyPointIdx, comment))
             }
             tryGetAbtest()
         }
@@ -46,7 +50,21 @@ class AbtestViewModel : BaseViewModel() {
 
     fun tryDeleteComment(commentIdx : Int){
         viewModelScope.launch(exceptionHandler) {
-            deleteCommentResult.postValue(repository.deleteChat(commentIdx))
+            deleteCommentResult.postValue(abtestRepository.deleteChat(commentIdx))
+        }
+    }
+
+    fun tryVote(abTestIdx : Int, vote : String){
+        viewModelScope.launch(exceptionHandler) {
+            val result = voteRepository.vote(abTestIdx, vote)
+            voteResult.postValue(result.body()?.code == 200)
+        }
+    }
+
+    fun tryCancelVote(abTestIdx : Int){
+        viewModelScope.launch(exceptionHandler) {
+            val result = voteRepository.cancelVote(abTestIdx)
+            voteResult.postValue(result.body()?.code == 200)
         }
     }
 }

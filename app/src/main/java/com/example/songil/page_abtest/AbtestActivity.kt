@@ -113,6 +113,13 @@ class AbtestActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity)
             }
         }
         viewModel.deleteCommentResult.observe(this, deleteCommentResult)
+
+        val voteResult = Observer<Boolean>{ liveData ->
+            if (liveData){
+                viewModel.tryGetAbtest()
+            }
+        }
+        viewModel.voteResult.observe(this, voteResult)
     }
 
     override fun finish() {
@@ -149,4 +156,12 @@ class AbtestActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity)
     }
 
     override fun clickLikeBtn() { /* empty function, only qna activity use this function */ }
+
+    override fun vote(abTestIdx: Int, vote: String) {
+        viewModel.tryVote(abTestIdx, vote)
+    }
+
+    override fun cancelVote(abTestIdx: Int) {
+        viewModel.tryCancelVote(abTestIdx)
+    }
 }
