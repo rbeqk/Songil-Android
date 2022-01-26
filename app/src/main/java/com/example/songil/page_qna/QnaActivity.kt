@@ -195,6 +195,10 @@ class QnaActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity), R
         viewModel.tryToggleLike()
     }
 
+    override fun vote(abTestIdx: Int, vote: String) { /* empty function, only ab-test activity use this function */ }
+
+    override fun cancelVote(abTestIdx: Int) { /* empty function, only ab-test activity use this function */ }
+
     override fun bottomSheetModifyClick() {
         val intent = Intent(this, QnaWriteActivity::class.java)
         intent.putExtra(GlobalApplication.WRITE_TYPE, WriteType.MODIFY)

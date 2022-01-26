@@ -136,4 +136,6 @@ class StoryChatActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activi
     }
 
     override fun clickLikeBtn() { /* empty function, only qna activity use this function */ }
+    override fun vote(abTestIdx: Int, vote: String) { /* empty function, only ab-test activity use this function */ }
+    override fun cancelVote(abTestIdx: Int) { /* empty function, only ab-test activity use this function */ }
 }

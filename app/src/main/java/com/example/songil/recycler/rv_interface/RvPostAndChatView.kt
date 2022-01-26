@@ -10,4 +10,9 @@ interface RvPostAndChatView {
 
     // header qna
     fun clickLikeBtn()
+
+    // header ab-test
+    fun vote(abTestIdx : Int, vote : String)
+
+    fun cancelVote(abTestIdx : Int)
 }
