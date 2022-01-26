@@ -45,7 +45,7 @@ class WithABTestAdapter() : RecyclerView.Adapter<WithABTestAdapter.ABTestViewHol
     override fun onBindViewHolder(holder: ABTestViewHolder, position: Int) {
         val abTest = abTestData[position].abTest
 
-        val select = abTest.voteInfo?.voteImage // select == null 이면 투표를 아직 안한 상태
+        val select = abTest.voteInfo?.vote // select == null 이면 투표를 아직 안한 상태
 
         holder.root.setOnClickListener {
             val intent = Intent(holder.itemView.context, AbtestActivity::class.java)
@@ -93,14 +93,14 @@ class WithABTestAdapter() : RecyclerView.Adapter<WithABTestAdapter.ABTestViewHol
         when {
             (abTest.isFinished == "Y") -> { // 투표 종료 기간이 지난 경우
                 applyVoteState(holder, true)
-                applyVote(holder, abTest.finalInfo!!.voteImage, abTest.finalInfo.percent, abTest.finalInfo.totalVoteCnt)
+                applyVote(holder, abTest.finalInfo!!.vote, abTest.finalInfo.percent, abTest.finalInfo.totalVoteCnt)
             }
             (select == null) -> { // 투표 가능한 기간 내 투표를 안한 경우
                 applyVoteState(holder, isFinish = false, isVoted = false)
             }
             else -> { // 투표 가능한 기간 내 투표를 완료한 경우
                 applyVoteState(holder, isFinish = false, isVoted = true)
-                applyVote(holder, abTest.voteInfo.voteImage, abTest.voteInfo.percent, abTest.voteInfo.totalVoteCnt)
+                applyVote(holder, abTest.voteInfo.vote, abTest.voteInfo.percent, abTest.voteInfo.totalVoteCnt)
             }
         }
 

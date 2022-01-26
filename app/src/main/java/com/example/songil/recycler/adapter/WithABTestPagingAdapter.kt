@@ -16,8 +16,9 @@ import com.example.songil.config.GlobalApplication
 import com.example.songil.data.ABTest
 import com.example.songil.databinding.ItemAbtestBinding
 import com.example.songil.page_abtest.AbtestActivity
+import com.example.songil.recycler.rv_interface.RvAbTestView
 
-class WithABTestPagingAdapter() : PagingDataAdapter<ABTest, WithABTestPagingAdapter.ABTestViewHolder>(diffCallback){
+class WithABTestPagingAdapter(private val view : RvAbTestView) : PagingDataAdapter<ABTest, WithABTestPagingAdapter.ABTestViewHolder>(diffCallback){
 
     companion object {
         val diffCallback = object : DiffUtil.ItemCallback<ABTest>(){
@@ -51,10 +52,10 @@ class WithABTestPagingAdapter() : PagingDataAdapter<ABTest, WithABTestPagingAdap
 
     override fun onBindViewHolder(holder: ABTestViewHolder, position: Int) {
         val abTest = getItem(position)
-        var choice = getItem(position)?.voteInfo?.voteImage  // choice 는 투표하기버튼을 누르기 전 상태 (예, A 를 클릭한 상태)를 기록하기 위해 사용
+        var choice = getItem(position)?.voteInfo?.vote  // choice 는 투표하기버튼을 누르기 전 상태 (예, A 를 클릭한 상태)를 기록하기 위해 사용
 
         if (abTest != null) {
-            val select = abTest.voteInfo?.voteImage // select == null 이면 투표를 아직 안한 상태
+            val select = abTest.voteInfo?.vote // select == null 이면 투표를 아직 안한 상태
 
             holder.artistName.text = abTest.artistName
             holder.content.text = abTest.content
@@ -96,15 +97,23 @@ class WithABTestPagingAdapter() : PagingDataAdapter<ABTest, WithABTestPagingAdap
             // 투표 상태 (종료, 투표완료, 투표 안함)에 따라 차이점 구현
             when {
                 (abTest.isFinished == "Y") -> { // 투표 종료 기간이 지난 경우
-                    applyVoteState(holder, true)
-                    applyVote(holder, abTest.finalInfo!!.voteImage, abTest.finalInfo.percent, abTest.finalInfo.totalVoteCnt)
+                    applyVoteState(holder, isFinish = true, isVoted = false)
+                    applyVote(holder, abTest.finalInfo!!.vote, abTest.finalInfo.percent, abTest.finalInfo.totalVoteCnt)
                 }
                 (select == null) -> { // 투표 가능한 기간 내 투표를 안한 경우
+                    holder.layoutA.visibility = View.GONE
+                    holder.layoutB.visibility = View.GONE
                     applyVoteState(holder, isFinish = false, isVoted = false)
+                    holder.voteBtn.setOnClickListener {
+                        if (choice != null) view.vote(abTest.abTestIdx, choice!!)
+                    }
                 }
                 else -> { // 투표 가능한 기간 내 투표를 완료한 경우
                     applyVoteState(holder, isFinish = false, isVoted = true)
-                    applyVote(holder, abTest.voteInfo.voteImage, abTest.voteInfo.percent, abTest.voteInfo.totalVoteCnt)
+                    applyVote(holder, abTest.voteInfo.vote, abTest.voteInfo.percent, abTest.voteInfo.totalVoteCnt)
+                    holder.voteBtn.setOnClickListener {
+                        view.cancelVote(abTest.abTestIdx)
+                    }
                 }
             }
 
@@ -127,7 +136,7 @@ class WithABTestPagingAdapter() : PagingDataAdapter<ABTest, WithABTestPagingAdap
         view.isClickable = enable
     }
 
-    private fun applyVoteState(holder : ABTestViewHolder, isFinish : Boolean, isVoted : Boolean = false){
+    private fun applyVoteState(holder : ABTestViewHolder, isFinish : Boolean, isVoted : Boolean){
         when {
             isFinish -> {   // 투표 종료, 이 경우 투표 여부는 상관하지 않음
                 setTextButtonState(false, holder.voteBtn)
@@ -161,14 +170,21 @@ class WithABTestPagingAdapter() : PagingDataAdapter<ABTest, WithABTestPagingAdap
     }
 
     private fun applyVote(holder : ABTestViewHolder, select : String, percent : Int, count : Int){
-        if (select == "A"){
-            holder.layoutA.visibility = View.VISIBLE
-            holder.layoutB.visibility = View.GONE
-            holder.rateA.text = holder.itemView.context.getString(R.string.form_vote_rate, percent, count)
-        } else {
-            holder.layoutA.visibility = View.GONE
-            holder.layoutB.visibility = View.VISIBLE
-            holder.rateB.text = holder.itemView.context.getString(R.string.form_vote_rate, percent, count)
+        when (select) {
+            "A" -> {
+                holder.layoutA.visibility = View.VISIBLE
+                holder.layoutB.visibility = View.GONE
+                holder.rateA.text = holder.itemView.context.getString(R.string.form_vote_rate, percent, count)
+            }
+            "B" -> {
+                holder.layoutA.visibility = View.GONE
+                holder.layoutB.visibility = View.VISIBLE
+                holder.rateB.text = holder.itemView.context.getString(R.string.form_vote_rate, percent, count)
+            }
+            else -> {
+                holder.layoutA.visibility = View.GONE
+                holder.layoutB.visibility = View.GONE
+            }
         }
     }
 }

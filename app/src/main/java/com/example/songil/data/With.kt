@@ -11,7 +11,7 @@ data class ABTest(val abTestIdx : Int = -1, val artistIdx : Int = -1, val artist
                   val content : String = "", val imageA : String = "", val imageB : String = "", val deadline : String = "", val totalCommentCnt : Int = -1,
                   var isFinished : String = "", val isUserABTest : String = "", val voteInfo : ABVoteInfo? = null, val finalInfo : ABVoteInfo? = null) : Post()
 
-data class ABVoteInfo(val voteImage : String, val totalVoteCnt : Int, val percent : Int)
+data class ABVoteInfo(val vote : String, val totalVoteCnt : Int, val percent : Int)
 
 data class ABTestViewInfo(val abTest : ABTest, var choice : String? = null) // choice 는 투표 전 클릭한 상태를 표현하기 위해 사용되는 변수
 

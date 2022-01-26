@@ -148,7 +148,7 @@ class PostAndChatAdapter(private val view : RvPostAndChatView) : PagingDataAdapt
                 is AbTestViewHolder -> {
                     headerIdx = position
                     item as ABTest
-                    var choice = item.voteInfo?.voteImage
+                    var choice = item.voteInfo?.vote
                     holder.artistName.text = item.artistName
                     holder.content.text = item.content
                     holder.date.text = item.deadline
@@ -183,14 +183,22 @@ class PostAndChatAdapter(private val view : RvPostAndChatView) : PagingDataAdapt
                     when {
                         (item.isFinished == "Y") -> { // 투표 종료 기간이 지난 경우
                             applyVoteState(holder, true)
-                            applyVote(holder, item.finalInfo!!.voteImage, item.finalInfo.percent, item.finalInfo.totalVoteCnt)
+                            applyVote(holder, item.finalInfo!!.vote, item.finalInfo.percent, item.finalInfo.totalVoteCnt)
                         }
                         (item.voteInfo == null) -> { // 투표 가능한 기간 내 투표를 안한 경우
+                            holder.layoutA.visibility = View.GONE
+                            holder.layoutB.visibility = View.GONE
                             applyVoteState(holder, isFinish = false, isVoted = false)
+                            holder.voteBtn.setOnClickListener {
+                                if (choice != null) view.vote(item.abTestIdx, choice!!)
+                            }
                         }
                         else -> { // 투표 가능한 기간 내 투표를 완료한 경우
                             applyVoteState(holder, isFinish = false, isVoted = true)
-                            applyVote(holder, item.voteInfo.voteImage, item.voteInfo.percent, item.voteInfo.totalVoteCnt)
+                            applyVote(holder, item.voteInfo.vote, item.voteInfo.percent, item.voteInfo.totalVoteCnt)
+                            holder.voteBtn.setOnClickListener {
+                                 view.cancelVote(item.abTestIdx)
+                            }
                         }
                     }
                 }
@@ -279,14 +287,21 @@ class PostAndChatAdapter(private val view : RvPostAndChatView) : PagingDataAdapt
     }
 
     private fun applyVote(holder : AbTestViewHolder, select : String, percent : Int, count : Int){
-        if (select == "A"){
-            holder.layoutA.visibility = View.VISIBLE
-            holder.layoutB.visibility = View.GONE
-            holder.rateA.text = holder.itemView.context.getString(R.string.form_vote_rate, percent, count)
-        } else {
-            holder.layoutA.visibility = View.GONE
-            holder.layoutB.visibility = View.VISIBLE
-            holder.rateB.text = holder.itemView.context.getString(R.string.form_vote_rate, percent, count)
+        when (select) {
+            "A" -> {
+                holder.layoutA.visibility = View.VISIBLE
+                holder.layoutB.visibility = View.GONE
+                holder.rateA.text = holder.itemView.context.getString(R.string.form_vote_rate, percent, count)
+            }
+            "B" -> {
+                holder.layoutA.visibility = View.GONE
+                holder.layoutB.visibility = View.VISIBLE
+                holder.rateB.text = holder.itemView.context.getString(R.string.form_vote_rate, percent, count)
+            }
+            else -> {
+                holder.layoutA.visibility = View.GONE
+                holder.layoutB.visibility = View.GONE
+            }
         }
     }
 }
