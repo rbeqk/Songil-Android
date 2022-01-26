@@ -20,6 +20,7 @@ import com.example.songil.page_story.subpage_story_chat.StoryChatActivity
 import com.example.songil.page_storywrite.StoryWriteActivity
 import com.example.songil.popup_more.MoreBottomSheet
 import com.example.songil.popup_more.popup_interface.PopupMoreView
+import com.example.songil.popup_remove.RemoveDialog
 import com.example.songil.popup_remove.popup_interface.PopupRemoveView
 import com.example.songil.viewPager2.adapter.Vp2ImageAdapter
 import com.google.android.material.chip.Chip
@@ -63,6 +64,13 @@ class StoryActivity : BaseActivity<StoryActivityBinding>(R.layout.story_activity
             binding.btnFavorite.isClickable = true
         }
         viewModel.likeResult.observe(this, patchLikeObserver)
+
+        val removeStoryObserver = Observer<Boolean>{ liveData ->
+            if (liveData){
+                finish()
+            }
+        }
+        viewModel.removeResult.observe(this, removeStoryObserver)
     }
 
     private fun setButton(){
@@ -153,7 +161,8 @@ class StoryActivity : BaseActivity<StoryActivityBinding>(R.layout.story_activity
     }
 
     override fun bottomSheetRemoveClick() {
-
+        val dialog = RemoveDialog(this)
+        dialog.show(supportFragmentManager, dialog.tag)
     }
 
     override fun bottomSheetReportClick() { // 일단 아직 게시글 신고는 api가 없네?
@@ -162,7 +171,7 @@ class StoryActivity : BaseActivity<StoryActivityBinding>(R.layout.story_activity
     }
 
     override fun popupRemoveClick() {
-
+        viewModel.tryDeleteStory()
     }
 
 }
