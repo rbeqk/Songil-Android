@@ -2,6 +2,7 @@ package com.example.songil.config
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -33,6 +34,10 @@ abstract class BaseActivity<B : ViewBinding> (@LayoutRes val layoutRes: Int) : A
     fun callNeedLoginDialog(){
         val needLoginDialog = NeedLoginDialog()
         needLoginDialog.show(supportFragmentManager, needLoginDialog.tag)
+    }
+
+    fun showSimpleToastMessage(message : String){
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     fun isLogin() : Boolean = GlobalApplication.globalSharedPreferences.contains(GlobalApplication.X_ACCESS_TOKEN)
