@@ -2,77 +2,100 @@ package com.example.songil.page_signup
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.example.songil.R
 import com.example.songil.config.BaseActivity
-import com.example.songil.config.BaseFragment
+import com.example.songil.config.SignUpProcess
 import com.example.songil.databinding.SignupActivityBinding
+import com.example.songil.page_signup.models.SignUpInfo
+import com.example.songil.page_signup.subpage_authcode.SignupAuthcodeFragment
+import com.example.songil.page_signup.subpage_email.SignupEmailFragment
+import com.example.songil.page_signup.subpage_nickname.SignupNicknameFragment
+import com.example.songil.page_signup.subpage_password.SignupPasswordFragment
+import com.example.songil.page_signup.subpage_password_confirm.SignupPasswordConfirmFragment
+import com.example.songil.page_signup.subpage_term.SignupTermFragment
 
 class SignupActivity : BaseActivity<SignupActivityBinding>(R.layout.signup_activity){
 
-    private lateinit var viewModel: SignupViewModel
-    private lateinit var fragment1 : SignupFragment1
-    private lateinit var fragment2: SignupFragment2
-    private lateinit var fragment3: SignupFragment3
-    private lateinit var fragment4: SignupFragment4
+    private val signupInfo = SignUpInfo()
+    private val termFragment : SignupTermFragment by lazy { SignupTermFragment(signupInfo) }
+    private val emailFragment: SignupEmailFragment by lazy { SignupEmailFragment(signupInfo) }
+    private val authcodeFragment: SignupAuthcodeFragment by lazy { SignupAuthcodeFragment(signupInfo) }
+    private val passwordFragment: SignupPasswordFragment by lazy { SignupPasswordFragment(signupInfo) }
+    private val passwordConfirmFragment : SignupPasswordConfirmFragment by lazy { SignupPasswordConfirmFragment(signupInfo) }
+    private val nicknameFragment : SignupNicknameFragment by lazy { SignupNicknameFragment(signupInfo) }
+
     private lateinit var currentFragment : Fragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding.lifecycleOwner = this
-        viewModel = ViewModelProvider(this).get(SignupViewModel::class.java)
 
         setFragments()
-        setObserver()
+    }
+
+    override fun finish() {
+        super.finish()
+        exitHorizontal
     }
 
     private fun setFragments(){
-        fragment1 = SignupFragment1()
-        fragment2 = SignupFragment2()
-        fragment3 = SignupFragment3()
-        fragment4 = SignupFragment4()
-
-        supportFragmentManager.beginTransaction().add(binding.layoutFragment.id, fragment4).commit()
-        supportFragmentManager.beginTransaction().hide(fragment4).commit()
-        supportFragmentManager.beginTransaction().add(binding.layoutFragment.id, fragment3).commit()
-        supportFragmentManager.beginTransaction().hide(fragment3).commit()
-        supportFragmentManager.beginTransaction().add(binding.layoutFragment.id, fragment2).commit()
-        supportFragmentManager.beginTransaction().hide(fragment2).commit()
-        supportFragmentManager.beginTransaction().add(binding.layoutFragment.id, fragment1).commit()
-        supportFragmentManager.beginTransaction().hide(fragment1).commit()
-        currentFragment = fragment1
+        supportFragmentManager.beginTransaction().add(binding.layoutFragment.id, nicknameFragment).commit()
+        supportFragmentManager.beginTransaction().hide(nicknameFragment).commit()
+        supportFragmentManager.beginTransaction().add(binding.layoutFragment.id, passwordConfirmFragment).commit()
+        supportFragmentManager.beginTransaction().hide(passwordConfirmFragment).commit()
+        supportFragmentManager.beginTransaction().add(binding.layoutFragment.id, passwordFragment).commit()
+        supportFragmentManager.beginTransaction().hide(passwordFragment).commit()
+        supportFragmentManager.beginTransaction().add(binding.layoutFragment.id, authcodeFragment).commit()
+        supportFragmentManager.beginTransaction().hide(authcodeFragment).commit()
+        supportFragmentManager.beginTransaction().add(binding.layoutFragment.id, emailFragment).commit()
+        supportFragmentManager.beginTransaction().hide(emailFragment).commit()
+        supportFragmentManager.beginTransaction().add(binding.layoutFragment.id, termFragment).commit()
+        currentFragment = termFragment
     }
 
-    override fun onBackPressed() {
-        fragment3.stopTimer()
-        super.onBackPressed()
-    }
 
-    private fun setObserver(){
-        val fragmentObserver = Observer<Int>{ liveData ->
-            when (liveData){
-                -1 -> { finish() }
-                0 -> { changeFragment(fragment1) }
-                1 -> { changeFragment(fragment2) }
-                2 -> {
-                    changeFragment(fragment3)
-                    fragment3.fragmentShow()
-                }
-                3 -> {
-                    changeFragment(fragment4)
-                    fragment4.fragmentShow()
-                }
-                else -> { finish() }
+
+    // call in subpage fragments
+    fun changeFragment(process : SignUpProcess){
+        when (process){
+            SignUpProcess.CANCEL -> {
+                SignupRepository.removeInstance()
+                finish()
+            }
+            SignUpProcess.COMPLETE -> {
+                SignupRepository.removeInstance()
+                finish()
+            }
+            SignUpProcess.AUTH_CODE -> {
+                supportFragmentManager.beginTransaction().hide(currentFragment).show(authcodeFragment).commit()
+                authcodeFragment.onShow()
+                currentFragment = authcodeFragment
+            }
+            SignUpProcess.EMAIL -> {
+                supportFragmentManager.beginTransaction().hide(currentFragment).show(emailFragment).commit()
+                emailFragment.onShow()
+                currentFragment = emailFragment
+            }
+            SignUpProcess.NICKNAME -> {
+                supportFragmentManager.beginTransaction().hide(currentFragment).show(nicknameFragment).commit()
+                nicknameFragment.onShow()
+                currentFragment = nicknameFragment
+            }
+            SignUpProcess.PASSWORD -> {
+                supportFragmentManager.beginTransaction().hide(currentFragment).show(passwordFragment).commit()
+                passwordFragment.onShow()
+                currentFragment = passwordFragment
+            }
+            SignUpProcess.PASSWORD_CONFIRM -> {
+                supportFragmentManager.beginTransaction().hide(currentFragment).show(passwordConfirmFragment).commit()
+                passwordConfirmFragment.onShow()
+                currentFragment = passwordConfirmFragment
+            }
+            SignUpProcess.TERM -> {
+                supportFragmentManager.beginTransaction().hide(currentFragment).show(termFragment).commit()
+                currentFragment = termFragment
             }
         }
-        viewModel.fragmentIdx.observe(this, fragmentObserver)
-    }
-
-    private fun changeFragment(fragment : Fragment){
-        supportFragmentManager.beginTransaction().hide(currentFragment).commit()
-        supportFragmentManager.beginTransaction().show(fragment).commit()
-        currentFragment = fragment
     }
 }

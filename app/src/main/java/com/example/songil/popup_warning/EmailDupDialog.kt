@@ -13,7 +13,7 @@ import androidx.fragment.app.DialogFragment
 import com.example.songil.R
 import com.example.songil.databinding.PopupWarningBinding
 
-class PhoneDupDialog() : DialogFragment() {
+class EmailDupDialog() : DialogFragment() {
     private var _binding : PopupWarningBinding?= null
     private val binding get() = _binding!!
 
@@ -30,8 +30,8 @@ class PhoneDupDialog() : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.tvWarning.text = getString(R.string.duplicate_phone_number)
-        binding.tvMessage.text = getString(R.string.duplicate_phone_number_message)
+        binding.tvWarning.text = getString(R.string.duplicate_email)
+        binding.tvMessage.text = getString(R.string.duplicate_email_message)
         binding.btnClose.text = getString(R.string.return_to_start)
 
         binding.btnClose.setOnClickListener {

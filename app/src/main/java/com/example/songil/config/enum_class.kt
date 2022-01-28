@@ -7,3 +7,7 @@ enum class ReportTarget {
 enum class WriteType {
     NEW, MODIFY
 }
+
+enum class SignUpProcess {
+    TERM, EMAIL, AUTH_CODE, PASSWORD, PASSWORD_CONFIRM, NICKNAME, COMPLETE, CANCEL
+}

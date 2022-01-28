@@ -5,7 +5,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.songil.page_signup.SignupViewModel" />
+            type="com.example.songil.page_signup.subpage_term.SignupTermViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -29,10 +29,11 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/btn_cancel"
-            android:layout_width="22dp"
-            android:layout_height="46dp"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:scaleType="center"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            app:layout_constraintEnd_toEndOf="parent"
             android:src="@drawable/ic_clear"
             android:tint="@color/songil_2"/>
 
@@ -171,42 +172,17 @@
             android:textSize="14sp"
             android:textColor="@color/songil_2"/>
 
-        <androidx.appcompat.widget.AppCompatCheckBox
-            android:id="@+id/cb_terms_optional_ad"
-            android:layout_width="26dp"
-            android:layout_height="26dp"
-            app:layout_constraintStart_toStartOf="@id/guideline_start"
-            app:layout_constraintTop_toBottomOf="@id/cb_terms_required_privacy_policy"
-            android:layout_marginTop="10dp"
-            android:checked="@{viewModel.terms4}"
-            android:onClick="@{() -> viewModel.checkAll(3)}"
-            android:background="@drawable/custom_checkbox_nobackground"
-            android:button="@android:color/transparent" />
-
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_terms_optional_ad"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:gravity="center"
-            app:layout_constraintTop_toTopOf="@id/cb_terms_optional_ad"
-            app:layout_constraintBottom_toBottomOf="@id/cb_terms_optional_ad"
-            app:layout_constraintStart_toEndOf="@id/cb_terms_optional_ad"
-            android:layout_marginStart="10dp"
-            android:text="@string/terms_optional_ad"
-            android:textSize="14sp"
-            android:textColor="@color/songil_2"/>
-
-        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/btn_next"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            textBtnActivate="@{viewModel.btn1Activate}"
             android:fontFamily="@font/spoqahansansneo_bold"
+            textBtnActivate="@{viewModel.btnActivate}"
             android:text="@string/confirmation"
-            android:onClick="@{() -> viewModel.setFragmentIdx(1)}"
             android:textSize="16sp"
             android:gravity="center"/>
 
-   </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

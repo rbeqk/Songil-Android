@@ -1,19 +1,51 @@
 package com.example.songil.page_signup
 
+import com.example.songil.config.BaseResponse
 import com.example.songil.config.GlobalApplication
 import com.example.songil.page_signup.models.RequestAuth
 import com.example.songil.page_signup.models.RequestSignUp
+import com.example.songil.page_signup.models.ResponseSignUp
+import retrofit2.Response
 
-class SignupRepository {
-    private val signupRetrofitInterface = GlobalApplication.sRetrofit.create(SignupRetrofitInterface::class.java)
+class SignupRepository private constructor() {
+    companion object {
+        @Volatile private var INSTANCE : SignupRepository ?= null
 
-    suspend fun setAuthNumber(phoneNumber: String) = signupRetrofitInterface.postAuth(RequestAuth(phoneNumber))
+        private val signupRetrofitInterface = GlobalApplication.sRetrofit.create(SignupRetrofitInterface::class.java)
 
-    suspend fun tryCheckAuthNumber(phoneNumber: String, authNumber : String) = signupRetrofitInterface.getAuth(phoneNumber, authNumber)
+        fun getInstance() : SignupRepository =
+            INSTANCE ?: synchronized(this){
+                INSTANCE ?: SignupRepository().also { INSTANCE = it }
+            }
 
-    suspend fun trySignUp(phoneNumber: String, nickname : String) = signupRetrofitInterface.postSignUp(RequestSignUp(phoneNumber, nickname))
+        fun removeInstance() {
+            INSTANCE ?: synchronized(this){
+                INSTANCE = null
+            }
+        }
+    }
 
-    suspend fun tryCheckPhoneDuplicate(phoneNumber: String) = signupRetrofitInterface.getDuplicateCheck(phone = phoneNumber)
+    suspend fun issueAuthCode(email : String) : Response<BaseResponse>{
+        val response = signupRetrofitInterface.postAuth(RequestAuth(email))
+        if (response.isSuccessful) return response
+        else throw UnknownError()
+    }
 
-    suspend fun tryCheckNickName(nickname: String) = signupRetrofitInterface.getDuplicateCheck(nickname = nickname)
+    suspend fun checkAuthCode(email : String, authCode : String) : Response<BaseResponse> {
+        val response = signupRetrofitInterface.getAuthCheck(email, authCode)
+        if (response.isSuccessful) return response
+        else throw UnknownError()
+    }
+
+    suspend fun checkNickname(nickname : String) : Response<BaseResponse> {
+        val response = signupRetrofitInterface.getNicknameDuplicateCheck(nickname)
+        if (response.isSuccessful) return response
+        else throw UnknownError()
+    }
+
+    suspend fun signup(signupInfo : RequestSignUp) : Response<ResponseSignUp> {
+        val response = signupRetrofitInterface.postSignUp(signupInfo)
+        if (response.isSuccessful) return response
+        else throw UnknownError()
+    }
 }
