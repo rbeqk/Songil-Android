@@ -2,16 +2,15 @@
     <string name="app_name">Songil</string>
     <string name="motto">당신의 일상에 공예를 더해보세요</string>
     <!-- 로그인 페이지 관련 -->
+    <string name="login">로그인</string>
     <string name="auth_phoneNumber">번호 인증</string> <!-- 사용 안할 예정 -->
     <string name="login_with_phoneNumber">전화번호를 이용해\n로그인해주세요.</string> <!-- 사용 안할 예정 -->
     <string name="input_phoneNumber_without_hyphen">( - 없이 숫자만 입력 )</string> <!-- 사용 안할 예정 -->
     <string name="receive_auth_number">인증문자 받기</string> <!-- 사용 안할 예정 -->
     <string name="input_auth_number">인증번호를 입력해주세요.</string> <!-- 사용 안할 예정 -->
     <string name="additional_message_input_auth_number">번호 인증만 하면 로그인이 끝나요!</string> <!-- 사용 안할 예정 -->
-    <string name="receive_again">다시받기</string>
     <string name="do_login">로그인 하기</string>
-    <string name="do_auth">인증하기</string>
-    <string name="remain_time_with_time">남은시간 %d:%02d</string>
+    <string name="input_password">비밀번호를\n입력해주세요.</string>
 
     <!-- 회원가입 페이지 관련 -->
     <string name="songil_welcome">안녕하세요. 손길입니다.</string>
@@ -27,12 +26,15 @@
     <string name="confirmation">확인</string>
     <string name="input_email_address">이메일 주소를\n입력해주세요.</string>
     <string name="receive_auth_code">인증 코드 받기</string>
+    <string name="receive_again">다시받기</string>
     <string name="input_auth_code">인증 코드를 입력해주세요.</string>
+    <string name="do_auth">인증하기</string>
+    <string name="remain_time_with_time">남은시간 %d:%02d</string>
     <string name="additional_message_input_auth_code">입력하신 메일로 인증코드를 보냈어요!</string>
     <string name="input_phoneNumber">전화번호를 입력해주세요.</string> <!-- 사용 안할 예정 -->
     <string name="additional_message_input_phoneNumber">본인 인증을 위해 필요합니다.</string> <!-- 사용 안할 예정 -->
     <string name="additional_message_input_auth_number_signup">번호 인증만 하면 가입이 끝나요!</string> <!-- 사용 안할 예정 -->
-    <string name="input_password">비밀번호를 설정해주세요.</string>
+    <string name="set_password">비밀번호를 설정해주세요.</string>
     <string name="complete_input">입력 완료</string>
     <string name="password_rule">영문, 숫자, 특수기호가 포함된 9자 이상</string>
     <string name="available_password">사용가능한 비밀번호입니다.</string>
