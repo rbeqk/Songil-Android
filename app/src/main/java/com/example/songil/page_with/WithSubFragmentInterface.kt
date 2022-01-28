@@ -9,4 +9,7 @@ interface WithSubFragmentInterface {
 
     // to call sort in specific fragment
     fun getSort() : String
+
+    // call after write post
+    fun reload()
 }

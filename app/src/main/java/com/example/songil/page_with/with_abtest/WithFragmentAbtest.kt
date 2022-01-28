@@ -78,7 +78,7 @@ class WithFragmentAbtest : BaseFragment<SimpleRecyclerviewFragmentSwipeBinding>(
     override fun getSort(): String = viewModel.sort
 
     override fun reload() {
-        initAndLoad()
+        (binding.rvContent.adapter as WithABTestPagingAdapter).refresh()
     }
 
     override fun vote(abTestIdx: Int, vote: String) {

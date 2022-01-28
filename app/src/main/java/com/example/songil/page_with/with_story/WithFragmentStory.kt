@@ -86,4 +86,8 @@ class WithFragmentStory() : BaseFragment<SimpleRecyclerviewFragmentSwipeBinding>
     }
 
     override fun getSort(): String = viewModel.sort
+
+    override fun reload() {
+        (binding.rvContent.adapter as WithStoryAdapter).refresh()
+    }
 }

@@ -1,6 +1,6 @@
 package com.example.songil.page_with
 
-import android.app.Activity.RESULT_OK
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -37,13 +37,24 @@ class WithFragment : BaseFragment<WithFragmentMainBinding>(WithFragmentMainBindi
     private lateinit var currentFragment : WithSubFragmentInterface
     private lateinit var writeResult : ActivityResultLauncher<Intent>
 
+    private var isFirst = true
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         writeResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
-            if (result.resultCode == RESULT_OK){
-                currentFragment.reload()
+            if (result.resultCode == Activity.RESULT_OK){
+                /* do something after post uploaded */
             }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (isFirst){
+            isFirst = false
+        } else {
+            currentFragment.reload()
         }
     }
 
@@ -84,7 +95,6 @@ class WithFragment : BaseFragment<WithFragmentMainBinding>(WithFragmentMainBindi
             } else {
                 when (currentFragment) {
                     is WithFragmentStory -> {
-                        //(activity as MainActivity).startActivityHorizontal(Intent(activity as MainActivity, StoryWriteActivity::class.java))
                         val intent = Intent(activity as MainActivity, StoryWriteActivity::class.java)
                         intent.putExtra(GlobalApplication.WRITE_TYPE, WriteType.NEW)
                         writeResult.launch(intent)

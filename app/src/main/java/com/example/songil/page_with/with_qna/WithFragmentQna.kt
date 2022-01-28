@@ -69,4 +69,8 @@ class WithFragmentQna : BaseFragment<SimpleRecyclerviewFragmentSwipeBinding>(Sim
     }
 
     override fun getSort(): String = viewModel.sort
+
+    override fun reload() {
+        (binding.rvContent.adapter as PostAdapter).refresh()
+    }
 }
