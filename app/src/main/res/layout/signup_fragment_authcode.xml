@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.songil.page_signup.SignupViewModel" />
+            type="com.example.songil.page_signup.subpage_authcode.SignupAuthcodeViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,79 +28,87 @@
             app:layout_constraintGuide_end="20dp"
             android:orientation="vertical"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_auth_phoneNumber"
-            app:layout_constraintTop_toTopOf="parent"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_navigation"
             android:layout_width="match_parent"
-            android:layout_height="46dp"
-            android:textSize="16sp"
-            android:gravity="center"
-            android:text="@string/auth_phoneNumber"/>
+            android:layout_height="?attr/actionBarSize"
+            app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/btn_back"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            app:layout_constraintTop_toTopOf="@id/tv_auth_phoneNumber"
-            app:layout_constraintBottom_toBottomOf="@id/tv_auth_phoneNumber"
-            app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="16dp"
-            android:src="@drawable/ic_arrow_back"
-            android:tint="@color/black"/>
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/btn_back"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintStart_toStartOf="parent"
+                android:scaleType="center"
+                android:src="@drawable/ic_back_22"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:textSize="16sp"
+                android:text="@string/signup"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_input_auth_number"
-            app:layout_constraintTop_toBottomOf="@id/tv_auth_phoneNumber"
+            android:id="@+id/tv_input_auth_code"
+            app:layout_constraintTop_toBottomOf="@id/layout_navigation"
             app:layout_constraintStart_toStartOf="@id/guideline_start"
             android:gravity="center_vertical"
             android:layout_marginTop="88dp"
             android:layout_width="wrap_content"
             android:layout_height="32dp"
-            android:text="@string/input_auth_number"
+            android:text="@string/input_auth_code"
             android:fontFamily="@font/spoqahansansneo_bold"
             android:textSize="20sp"/>
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_additional_message_input_auth_number"
+            android:id="@+id/tv_additional_message_input_auth_code"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/tv_input_auth_number"
+            app:layout_constraintTop_toBottomOf="@id/tv_input_auth_code"
             app:layout_constraintStart_toStartOf="@id/guideline_start"
             android:layout_marginTop="6dp"
-            android:text="@string/additional_message_input_auth_number_signup"/>
+            android:text="@string/additional_message_input_auth_code"/>
 
 
         <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/et_auth_number"
+            android:id="@+id/et_auth_code"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textSize="20sp"
+            android:paddingBottom="12dp"
+            android:paddingTop="12dp"
             tools:text="1124"
-            android:text="@={viewModel.inputAuthNumber}"
-            app:layout_constraintTop_toBottomOf="@id/tv_additional_message_input_auth_number"
+            android:text="@={viewModel.inputAuthcode}"
+            app:layout_constraintTop_toBottomOf="@id/tv_additional_message_input_auth_code"
             app:layout_constraintStart_toStartOf="@id/guideline_start"
             app:layout_constraintEnd_toStartOf="@id/btn_receive_again"
             android:textCursorDrawable="@drawable/cursor_gray"
             android:layout_marginEnd="28dp"
             android:background="@android:color/transparent"
-            android:layout_marginTop="48dp"/>
+            android:layout_marginTop="36dp"/>
 
         <View
-            android:id="@+id/line_et_auth_number"
+            android:id="@+id/line_et_auth_code"
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:background="@color/g_4"
-            app:layout_constraintTop_toBottomOf="@id/et_auth_number"
-            android:layout_marginTop="12dp"
+            app:layout_constraintTop_toBottomOf="@id/et_auth_code"
             app:layout_constraintStart_toStartOf="@id/guideline_start"
-            app:layout_constraintEnd_toEndOf="@id/et_auth_number"/>
+            app:layout_constraintEnd_toEndOf="@id/et_auth_code"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/btn_receive_again"
             android:layout_width="72dp"
             android:layout_height="35dp"
-            app:layout_constraintTop_toTopOf="@id/et_auth_number"
-            app:layout_constraintBottom_toBottomOf="@id/line_et_auth_number"
+            app:layout_constraintTop_toTopOf="@id/et_auth_code"
+            app:layout_constraintBottom_toBottomOf="@id/line_et_auth_code"
             app:layout_constraintEnd_toEndOf="@id/guideline_end"
             android:background="@drawable/shape_text_button_black"
             android:text="@string/receive_again"
@@ -136,7 +144,7 @@
             android:layout_height="56dp"
             app:layout_constraintBottom_toBottomOf="parent"
             android:fontFamily="@font/spoqahansansneo_bold"
-            textBtnActivate="@{viewModel.btn3Activate}"
+            textBtnActivate="@{viewModel.btnActivate}"
             android:text="@string/do_auth"
             android:textSize="16sp"
             android:gravity="center"/>
