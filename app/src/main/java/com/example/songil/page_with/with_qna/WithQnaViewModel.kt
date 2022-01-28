@@ -21,7 +21,7 @@ class WithQnaViewModel : BaseViewModel() {
     var isRefresh = false
 
     var flow = Pager(PagingConfig(pageSize = 20)){
-        WithQnaPagingSource(repository, startIdxInt, ::isRefresh, sort)
+        WithQnaPagingSource(repository, startIdxInt, ::isRefresh, sortString)
     }.flow.cachedIn(viewModelScope)
 
     fun tryGetPageCnt(){

@@ -20,7 +20,7 @@ class WithStoryViewModel : BaseViewModel() {
 
     var isRefresh = false
 
-    var flow = Pager(PagingConfig(5)){
+    var flow = Pager(PagingConfig(10)){
         WithStoryPagingSource(repository, startIdxInt, ::isRefresh, sortString)
     }.flow.cachedIn(viewModelScope)
 

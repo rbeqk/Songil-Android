@@ -35,6 +35,7 @@ class SignupActivity : BaseActivity<SignupActivityBinding>(R.layout.signup_activ
     }
 
     override fun finish() {
+        SignupRepository.removeInstance()
         super.finish()
         exitHorizontal
     }
@@ -60,11 +61,9 @@ class SignupActivity : BaseActivity<SignupActivityBinding>(R.layout.signup_activ
     fun changeFragment(process : SignUpProcess){
         when (process){
             SignUpProcess.CANCEL -> {
-                SignupRepository.removeInstance()
                 finish()
             }
             SignUpProcess.COMPLETE -> {
-                SignupRepository.removeInstance()
                 finish()
             }
             SignUpProcess.AUTH_CODE -> {
