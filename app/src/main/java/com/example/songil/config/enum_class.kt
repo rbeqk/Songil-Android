@@ -11,3 +11,7 @@ enum class WriteType {
 enum class SignUpProcess {
     TERM, EMAIL, AUTH_CODE, PASSWORD, PASSWORD_CONFIRM, NICKNAME, COMPLETE, CANCEL
 }
+
+enum class LoginProcess {
+    EMAIL, PASSWORD, COMPLETE, CANCEL
+}

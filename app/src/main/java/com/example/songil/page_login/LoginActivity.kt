@@ -2,92 +2,59 @@ package com.example.songil.page_login
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.songil.R
 import com.example.songil.config.BaseActivity
+import com.example.songil.config.LoginProcess
 import com.example.songil.databinding.LoginActivityBinding
+import com.example.songil.page_login.models.LoginInfo
+import com.example.songil.page_login.subpage_password.LoginPasswordFragment
+import com.example.songil.page_login.sugpage_email.LoginEmailFragment
 
 class LoginActivity : BaseActivity<LoginActivityBinding>(R.layout.login_activity) {
 
-    private lateinit var viewModel : LoginViewModel
-    private val fragment1 : LoginFragment1 by lazy { LoginFragment1() }
-    private val fragment2 : LoginFragment2 by lazy { LoginFragment2() }
+    private val loginInfo = LoginInfo()
+    private val emailFragment : LoginEmailFragment by lazy { LoginEmailFragment(loginInfo) }
+    private val passwordFragment : LoginPasswordFragment by lazy { LoginPasswordFragment(loginInfo) }
     private lateinit var currentFragment : Fragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding.lifecycleOwner = this
-
-        viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
-
-        //supportFragmentManager.beginTransaction().add(binding.layoutFragment.id, LoginFragment1()).commit()
         setFragments()
-        setObserver()
     }
 
-    override fun onBackPressed() {
-        fragment2.stopTimer()
-        super.onBackPressed()
-    }
-
-    private fun goToAuthFragment() {
-        //supportFragmentManager.beginTransaction().replace(binding.layoutFragment.id, LoginFragment2()).commit()
-        supportFragmentManager.beginTransaction().hide(fragment1).commit()
-        supportFragmentManager.beginTransaction().show(fragment2).commit()
-        fragment2.onShow()
-        currentFragment = fragment2
-    }
-
-    fun backToPhoneNumberFragment() {
-        //supportFragmentManager.beginTransaction().replace(binding.layoutFragment.id, LoginFragment1()).commit()
-        supportFragmentManager.beginTransaction().hide(fragment2).commit()
-        supportFragmentManager.beginTransaction().show(fragment1).commit()
-        currentFragment = fragment1
-    }
-
-    fun finishWithResult(isLogin : Boolean = false){
-        // 로그인 성공시 추가적인 작업이 있을 수 있다.
-        finish()
+    override fun finish() {
+        super.finish()
+        exitHorizontal
     }
 
     private fun setFragments(){
-        supportFragmentManager.beginTransaction().add(binding.layoutFragment.id, fragment2).commit()
-        supportFragmentManager.beginTransaction().hide(fragment2).commit()
-        supportFragmentManager.beginTransaction().add(binding.layoutFragment.id, fragment1).commit()
-        currentFragment = fragment1
+        supportFragmentManager.beginTransaction().add(binding.layoutFragment.id, passwordFragment).commit()
+        supportFragmentManager.beginTransaction().hide(passwordFragment).commit()
+        supportFragmentManager.beginTransaction().add(binding.layoutFragment.id, emailFragment).commit()
+        currentFragment = emailFragment
     }
 
-    private fun setObserver(){
-        val loginResultObserver = Observer<Int> { liveData ->
-            when (liveData){
-                200 -> {
-                    fragment2.stopTimer()
-                    finishWithResult(true)
-                }
-                else -> {
-
-                }
+    fun changeFragment(loginProcess: LoginProcess){
+        when (loginProcess) {
+            LoginProcess.CANCEL -> {
+                finish()
+            }
+            LoginProcess.COMPLETE -> {
+                showSimpleToastMessage(getString(R.string.toast_login_success))
+                finish()
+            }
+            LoginProcess.EMAIL -> {
+                supportFragmentManager.beginTransaction().hide(currentFragment).show(emailFragment).commit()
+                emailFragment.onShow()
+                currentFragment = emailFragment
+            }
+            LoginProcess.PASSWORD -> {
+                supportFragmentManager.beginTransaction().hide(currentFragment).show(passwordFragment).commit()
+                passwordFragment.onShow()
+                currentFragment = passwordFragment
             }
         }
-        viewModel.loginResultCode.observe(this, loginResultObserver)
-
-        val authResultCode = Observer<Int> { liveData ->
-            when(liveData){
-                200 -> {
-                    if (currentFragment is LoginFragment1){
-                        goToAuthFragment()
-                    }
-                    fragment2.startTimer()
-                }
-                else -> {
-                    if (currentFragment is LoginFragment1){
-                        (currentFragment as LoginFragment1).applyApiResultMessage(viewModel.apiResultMessage)
-                    }
-                }
-            }
-        }
-        viewModel.authResultCode.observe(this, authResultCode)
     }
 }
