@@ -22,7 +22,7 @@ class WithQnaViewModel : BaseViewModel() {
 
     var flow = Pager(PagingConfig(pageSize = 20)){
         WithQnaPagingSource(repository, startIdxInt, ::isRefresh, sortString)
-    }.flow.cachedIn(viewModelScope)
+    }.flow
 
     fun tryGetPageCnt(){
         viewModelScope.launch(exceptionHandler) {

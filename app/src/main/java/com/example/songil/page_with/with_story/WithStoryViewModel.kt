@@ -22,7 +22,7 @@ class WithStoryViewModel : BaseViewModel() {
 
     var flow = Pager(PagingConfig(10)){
         WithStoryPagingSource(repository, startIdxInt, ::isRefresh, sortString)
-    }.flow.cachedIn(viewModelScope)
+    }.flow
 
     fun tryGetStartIdx(){
         viewModelScope.launch(exceptionHandler) {
