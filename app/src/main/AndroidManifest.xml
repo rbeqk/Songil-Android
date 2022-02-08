@@ -13,6 +13,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_songil_round"
         android:supportsRtl="true"
+        android:largeHeap="true"
         android:theme="@style/Theme.Songil">
         <activity android:name=".page_splash.SplashActivity">
             <intent-filter>
@@ -59,6 +60,7 @@
         <activity android:name=".page_delivery.DeliveryActivity"/>
         <activity android:name=".page_story.subpage_story_chat.StoryChatActivity" android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".page_qnawrite.QnaWriteActivity" android:windowSoftInputMode="adjustResize"/>
+        <activity android:name=".page_abtestwrite.AbtestWriteActivity" android:windowSoftInputMode="adjustResize"/>
     </application>
 
 </manifest>
