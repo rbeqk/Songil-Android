@@ -9,11 +9,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.viewbinding.ViewBinding
 import com.example.songil.R
 import com.example.songil.popup_warning.NeedLoginDialog
+import com.example.songil.utils.LoadingDialog
 
 abstract class BaseActivity<B : ViewBinding> (@LayoutRes val layoutRes: Int) : AppCompatActivity() {
     protected lateinit var binding : B
     protected val exitVertical by lazy { overridePendingTransition(R.anim.none, R.anim.to_bottom) }
     protected val exitHorizontal by lazy { overridePendingTransition(R.anim.from_left_30, R.anim.to_right) }
+    lateinit var mLoadingDialog : LoadingDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,4 +43,15 @@ abstract class BaseActivity<B : ViewBinding> (@LayoutRes val layoutRes: Int) : A
     }
 
     fun isLogin() : Boolean = GlobalApplication.globalSharedPreferences.contains(GlobalApplication.X_ACCESS_TOKEN)
+
+    fun showLoadingDialog(){
+        mLoadingDialog = LoadingDialog(this)
+        mLoadingDialog.show()
+    }
+
+    fun dismissLoadingDialog(){
+        if (mLoadingDialog.isShowing){
+            mLoadingDialog.dismiss()
+        }
+    }
 }
