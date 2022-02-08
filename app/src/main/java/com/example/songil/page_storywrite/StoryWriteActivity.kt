@@ -30,6 +30,7 @@ import com.example.songil.recycler.decoration.AddPhotoDecoration
 import com.example.songil.recycler.rv_interface.RvPhotoView
 import com.example.songil.utils.createFileFromBitmap
 import com.google.android.material.chip.Chip
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.File
 
@@ -70,6 +71,7 @@ class StoryWriteActivity : BaseActivity<StoryActivityWriteBinding>(R.layout.stor
     private fun setObserver(){
         val uploadResultObserver = Observer<Int>{ liveData ->
             viewModel.checkAvailable()
+            dismissLoadingDialog()
             if (liveData == 200){
                 viewModel.clearFiles()
                 val intent = Intent(this, BaseActivity::class.java)
@@ -101,6 +103,7 @@ class StoryWriteActivity : BaseActivity<StoryActivityWriteBinding>(R.layout.stor
         val errorObserver = Observer<BaseViewModel.FetchState>{ liveData ->
             Log.d("errorHandling", "$liveData")
             viewModel.checkAvailable()
+            dismissLoadingDialog()
         }
         viewModel.fetchState.observe(this, errorObserver)
     }
@@ -112,15 +115,20 @@ class StoryWriteActivity : BaseActivity<StoryActivityWriteBinding>(R.layout.stor
 
         binding.btnRegister.setOnClickListener {
             viewModel.writeBtnActivate.value = false
-            lifecycleScope.launch {
-                val bitmapList = (binding.rvPhoto.adapter as AddPhotoPickerAdapter).getBitmapList()
-                val fileList = ArrayList<File>()
-                for (i in 0 until bitmapList.size){
-                    val file = createFileFromBitmap(bitmapList[i], activity, i)
-                    fileList.add(file)
+            showLoadingDialog()
+            lifecycleScope.launch(Dispatchers.Default) {
+                try {
+                    val bitmapList = (binding.rvPhoto.adapter as AddPhotoPickerAdapter).getBitmapList()
+                    val fileList = ArrayList<File>()
+                    for (i in 0 until bitmapList.size){
+                        val file = createFileFromBitmap(bitmapList[i], activity, i)
+                        fileList.add(file)
+                    }
+                    viewModel.setFiles(fileList)
+                    viewModel.tryUploadStory(isNew)
+                } catch (e : OutOfMemoryError) {
+                    dismissLoadingDialog()
                 }
-                viewModel.setFiles(fileList)
-                viewModel.tryUploadStory(isNew)
             }
         }
     }
