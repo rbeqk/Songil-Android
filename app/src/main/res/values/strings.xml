@@ -347,5 +347,9 @@
     <!-- 배송현황 관련 -->
     <string name="time">시간</string>
     <string name="current_position">현재 위치</string>
+
+    <!-- date picker 관련 -->
+    <string name="cancel">취소</string>
+    <string name="decision">결정</string>
     
 </resources>

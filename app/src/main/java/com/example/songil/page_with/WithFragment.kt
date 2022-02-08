@@ -16,6 +16,7 @@ import com.example.songil.config.BaseFragment
 import com.example.songil.config.GlobalApplication
 import com.example.songil.config.WriteType
 import com.example.songil.databinding.WithFragmentMainBinding
+import com.example.songil.page_abtestwrite.AbtestWriteActivity
 import com.example.songil.page_main.MainActivity
 import com.example.songil.page_alarm.AlarmActivity
 import com.example.songil.page_qnawrite.QnaWriteActivity
@@ -107,7 +108,9 @@ class WithFragment : BaseFragment<WithFragmentMainBinding>(WithFragmentMainBindi
                         (activity as MainActivity).overridePendingTransition(R.anim.from_right, R.anim.to_left)
                     }
                     is WithFragmentAbtest -> {
-
+                        val intent = Intent(activity as MainActivity, AbtestWriteActivity::class.java)
+                        intent.putExtra(GlobalApplication.WRITE_TYPE, WriteType.NEW)
+                        (activity as MainActivity).startActivityHorizontal(intent)
                     }
                     else -> {
 
