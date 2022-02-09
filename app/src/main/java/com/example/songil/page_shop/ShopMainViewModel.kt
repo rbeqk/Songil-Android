@@ -1,60 +1,40 @@
 package com.example.songil.page_shop
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.songil.config.BaseViewModel
 import com.example.songil.data.ClickData
 import com.example.songil.data.Craft2
+import com.example.songil.page_shop.models.ShopMainBanner
 import com.example.songil.page_shop.models.TodayArtistsResult
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class ShopMainViewModel : ViewModel() {
+class ShopMainViewModel : BaseViewModel() {
     private val repository = ShopMainRepository()
 
     var todayArtist = MutableLiveData<TodayArtistsResult>()
     var todayCrafts = MutableLiveData<ArrayList<Craft2>>()
     var newCrafts = MutableLiveData<ArrayList<ClickData>>()
-    var bannerData = MutableLiveData<ArrayList<String>>()
+    var bannerData = MutableLiveData<ArrayList<ShopMainBanner>>()
 
-    fun tryGetTodayArtists(){
-        CoroutineScope(Dispatchers.IO).launch {
-/*            repository.getTodayArtists().let { response ->
-                if (response.isSuccessful){
-                    if (response.body()!!.code == 1000){
-                        todayArtist.postValue(response.body()!!.result)
-                    }
-                }
-            }*/
+    fun tryGetShopMain(){
+        viewModelScope.launch(exceptionHandler) {
+            val result = repository.getShopMainData().body()!!
+            val newCraft = ArrayList<ClickData>()
+            for (craft in result.result.newCraft){
+                newCraft.add(ClickData(craft.craftIdx, craft.mainImageUrl))
+            }
+            newCrafts.postValue(newCraft)
+            bannerData.postValue(result.result.banner)
+            todayCrafts.postValue(result.result.todayCraft)
+            todayArtist.postValue(result.result.todayArtist)
         }
     }
 
-    fun tryGetTodayCrafts(){
-        CoroutineScope(Dispatchers.IO).launch {
-/*            repository.getTodayCrafts().let { response ->
-                if (response.isSuccessful){
-                    if (response.body()!!.code == 1000){
-                        todayCrafts.postValue(response.body()!!.result)
-                    }
-                }
-            }*/
-        }
-    }
 
-    fun tryGetNewCrafts(){
-        CoroutineScope(Dispatchers.IO).launch {
-/*            repository.getNewCrafts().let { response ->
-                if (response.isSuccessful){
-                    if (response.body()!!.code == 1000){
-                        newCrafts.postValue(response.body()!!.result)
-                    }
-                }
-            }*/
-        }
-    }
 
-    private fun tempGetTodayArtists(){
-        val artistInfo = TodayArtistsResult("이택", "https://cdn.pixabay.com/photo/2020/10/14/03/18/man-5653200_960_720.jpg", "금속 공예")
+    /*private fun tempGetTodayArtists(){
+        val artistInfo = TodayArtistsResult(1, "이택", "https://cdn.pixabay.com/photo/2020/10/14/03/18/man-5653200_960_720.jpg", "금속 공예")
         todayArtist.value = artistInfo
     }
 
@@ -87,5 +67,5 @@ class ShopMainViewModel : ViewModel() {
         tempGetNewCrafts()
         tempGetTodayCrafts()
         tempGetBannerData()
-    }
+    }*/
 }

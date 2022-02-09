@@ -11,6 +11,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.example.songil.R
 import com.example.songil.config.BaseFragment
+import com.example.songil.config.BaseViewModel
 import com.example.songil.config.GlobalApplication
 import com.example.songil.data.ClickData
 import com.example.songil.data.Craft2
@@ -18,8 +19,10 @@ import com.example.songil.databinding.ShopFragmentMainBinding
 import com.example.songil.page_artist.ArtistActivity
 import com.example.songil.page_craft.CraftActivity
 import com.example.songil.page_main.MainActivity
+import com.example.songil.page_shop.models.ShopMainBanner
 import com.example.songil.page_shop.models.TodayArtistsResult
 import com.example.songil.page_shop.shop_category.ShopActivityCategory
+import com.example.songil.popup_warning.SocketTimeoutDialog
 import com.example.songil.recycler.rv_interface.RvCategoryView
 import com.example.songil.recycler.adapter.ShopCategoryAdapter
 import com.example.songil.recycler.adapter.ClickImageAdapter
@@ -44,32 +47,31 @@ class ShopFragmentMain : BaseFragment<ShopFragmentMainBinding>(ShopFragmentMainB
         setButton()
         setObserver()
 
-        viewModel.tryGetTodayArtists()
-        viewModel.tryGetNewCrafts()
-        viewModel.tryGetTodayCrafts()
-
-        viewModel.loadData()
+        viewModel.tryGetShopMain()
+        //viewModel.loadData()
     }
 
     override fun categoryClick(data: String) {
         val intent = Intent(activity as MainActivity, ShopActivityCategory::class.java)
         intent.putExtra("category", data)
-        //startActivity(intent)
         (activity as MainActivity).startActivityHorizontal(intent)
     }
 
     private fun setButton(){
         binding.ivProfile.setOnClickListener {
-            val intent = Intent(activity as MainActivity, ArtistActivity::class.java)
-            intent.putExtra("artistIdx", 1)
-            (activity as MainActivity).startActivityHorizontal(intent)
+            val artistIdx = viewModel.todayArtist.value?.artistIdx
+            if(artistIdx != null){
+                val intent = Intent(activity as MainActivity, ArtistActivity::class.java)
+                intent.putExtra("artistIdx", artistIdx)
+                (activity as MainActivity).startActivityHorizontal(intent)
+            }
         }
     }
 
     private fun setObserver(){
         val todayArtistObserver = Observer<TodayArtistsResult>{ liveData ->
-            binding.tvTodayArtisanName.text = getString(R.string.form_artist, liveData.name)
-            Glide.with(activity as MainActivity).load(liveData.profileImgUrl).into(binding.ivProfile)
+            binding.tvTodayArtisanName.text = getString(R.string.form_artist, liveData.artistName)
+            Glide.with(activity as MainActivity).load(liveData.imageUrl).into(binding.ivProfile)
             binding.tvTodayArtisanMajor.text = liveData.major
         }
         viewModel.todayArtist.observe(viewLifecycleOwner, todayArtistObserver)
@@ -84,11 +86,17 @@ class ShopFragmentMain : BaseFragment<ShopFragmentMainBinding>(ShopFragmentMainB
         }
         viewModel.newCrafts.observe(viewLifecycleOwner, newCraftObserver)
 
-        val bannerObserver = Observer<ArrayList<String>>{ liveData ->
+        val bannerObserver = Observer<ArrayList<ShopMainBanner>>{ liveData ->
             (binding.vp2Banner.adapter as Vp2BannerAdapter).applyData(liveData)
             binding.tvBannerCount.text = getString(R.string.form_count, 1, binding.vp2Banner.adapter?.itemCount ?: 5)
         }
         viewModel.bannerData.observe(viewLifecycleOwner, bannerObserver)
+
+        val errorObserver = Observer<BaseViewModel.FetchState>() {
+            val errorDialog = SocketTimeoutDialog()
+            errorDialog.show(childFragmentManager, errorDialog.tag)
+        }
+        viewModel.fetchState.observe(viewLifecycleOwner, errorObserver)
     }
 
     private fun setRecyclerView(){
@@ -116,6 +124,6 @@ class ShopFragmentMain : BaseFragment<ShopFragmentMainBinding>(ShopFragmentMainB
     override fun itemClick(idx: Int) {
         val intent = Intent(activity as MainActivity, CraftActivity::class.java)
         intent.putExtra(GlobalApplication.CRAFT_IDX, idx)
-        startActivity(intent)
+        (activity as MainActivity).startActivityHorizontal(intent)
     }
 }

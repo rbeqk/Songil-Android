@@ -30,11 +30,11 @@ class Craft2Adapter(private val context: Context, private val view : RvClickView
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        Glide.with(context).load(dataList[position].imageUrl).into(holder.image)
-        holder.maker.text = dataList[position].artist
+        Glide.with(context).load(dataList[position].mainImageUrl).into(holder.image)
+        holder.maker.text = dataList[position].artistName
         holder.price.text = context.getString(R.string.form_price_won, dataList[position].price)
         holder.layoutMain.setOnClickListener {
-            view.itemClick(dataList[position].productIdx)
+            view.itemClick(dataList[position].craftIdx)
         }
         holder.craftName.text = dataList[position].name
     }

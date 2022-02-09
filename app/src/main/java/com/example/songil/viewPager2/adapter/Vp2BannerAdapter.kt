@@ -6,12 +6,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.songil.databinding.ItemBannerVp2Binding
+import com.example.songil.page_shop.models.ShopMainBanner
 
 class Vp2BannerAdapter(private val context : Context) : RecyclerView.Adapter<Vp2BannerAdapter.BannerViewHolder>() {
 
     private val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
     private lateinit var binding : ItemBannerVp2Binding
-    private val bannerImageData = ArrayList<String>()
+    private val bannerImageData = ArrayList<ShopMainBanner>()
 
     class BannerViewHolder(binding : ItemBannerVp2Binding) : RecyclerView.ViewHolder(binding.root){
         val image = binding.ivImage
@@ -23,12 +24,12 @@ class Vp2BannerAdapter(private val context : Context) : RecyclerView.Adapter<Vp2
     }
 
     override fun onBindViewHolder(holder: BannerViewHolder, position: Int) {
-        Glide.with(context).load(bannerImageData[position]).into(holder.image)
+        Glide.with(context).load(bannerImageData[position].imageUrl).into(holder.image)
     }
 
     override fun getItemCount(): Int = bannerImageData.size
 
-    fun applyData(newData : ArrayList<String>){
+    fun applyData(newData : ArrayList<ShopMainBanner>){
         bannerImageData.clear()
         bannerImageData.addAll(newData)
         notifyDataSetChanged()

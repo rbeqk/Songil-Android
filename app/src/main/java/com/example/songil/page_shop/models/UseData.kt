@@ -1,7 +1,11 @@
 package com.example.songil.page_shop.models
 
-data class TodayArtistsResult(val name : String, val profileImgUrl : String, val major : String)
+import com.example.songil.data.Craft2
 
-data class NewCraft(val productIdx : Int, val thumbNailImg : String)
+data class TodayArtistsResult(val artistIdx : Int, val artistName : String, val imageUrl : String, val major : String)
 
-data class TodayCraft(val productIdx : Int, val name : String, val price : Int, val artist : String, val imageUrl: String)
+data class NewCraft(val craftIdx : Int, val mainImageUrl : String)
+
+data class ShopMainBanner(val bannerIdx : Int, val imageUrl : String)
+
+data class ShopMainData(val banner : ArrayList<ShopMainBanner>, val todayCraft : ArrayList<Craft2>, val todayArtist : TodayArtistsResult, val newCraft : ArrayList<NewCraft>)

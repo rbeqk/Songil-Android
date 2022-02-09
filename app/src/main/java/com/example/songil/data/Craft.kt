@@ -9,7 +9,7 @@ data class CraftDetailInfo(val craftIdx : Int, val isNew : String, val isSoldOut
                            val detailImageUrls : ArrayList<String>, val artistIdx : Int, val artistName : String, val artistIntroduction : String, val totalCommentCnt : Int,
                            val artistImageUrl : String? = null)
 
-data class Craft2(val productIdx : Int, val imageUrl : String, val name : String, val artist : String, val price : Int, val isNew : String)
+data class Craft2(val craftIdx : Int, val mainImageUrl : String, val name : String, val artistName : String, val price : Int, val isNew : String)
 
 data class Craft4(val productIdx : Int, val imageUrl : String, val name : String, val artist : String, val price : Int, val count : Int)
 
