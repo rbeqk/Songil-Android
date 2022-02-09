@@ -28,9 +28,9 @@ class Craft3MyCommentAdapter(private val context: Context, private val dataList 
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.productName.text = dataList[position].craftName
-        holder.artistName.text = dataList[position].artist
-        Glide.with(context).load(dataList[position].imageUrl).into(holder.image)
+        holder.productName.text = dataList[position].name
+        holder.artistName.text = dataList[position].artistName
+        Glide.with(context).load(dataList[position].mainImageUrl).into(holder.image)
         holder.writeButton.setOnClickListener {
 
         }

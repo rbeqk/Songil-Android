@@ -5,7 +5,7 @@ data class FrontStory(val mainImageUrl : String, val isLike : String, val totalL
 data class WithQna(val qnaIdx : Int, val userIdx : Int, val userProfile : String?, val userName : String, val title : String, val content : String,
                    val createdAt : String, val isUserQnA : String, var totalLikeCnt : Int, var isLike : String, var totalCommentCnt : Int) : Post()
 
-data class TalkWith(val category : String, val title : String, val idx : Int) // home 화면에서 talk with +
+data class TalkWith(val categoryIdx : Int, val text : String, val idx : Int) // home 화면에서 talk with +
 
 data class ABTest(val abTestIdx : Int = -1, val artistIdx : Int = -1, val artistImageUrl : String? = null, val artistName : String = "",
                   val content : String = "", val imageA : String = "", val imageB : String = "", val deadline : String = "", val totalCommentCnt : Int = -1,

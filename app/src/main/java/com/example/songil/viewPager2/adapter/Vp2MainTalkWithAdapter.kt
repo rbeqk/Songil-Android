@@ -1,13 +1,18 @@
 package com.example.songil.viewPager2.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.songil.R
+import com.example.songil.config.BaseActivity
+import com.example.songil.config.GlobalApplication
 import com.example.songil.data.TalkWith
 import com.example.songil.databinding.ItemMainTalkWithBinding
+import com.example.songil.page_abtest.AbtestActivity
+import com.example.songil.page_qna.QnaActivity
 import kotlin.math.ceil
 
 class Vp2MainTalkWithAdapter(private val context : Context) : RecyclerView.Adapter<Vp2MainTalkWithAdapter.MainTalkWithViewHolder>(){
@@ -33,17 +38,33 @@ class Vp2MainTalkWithAdapter(private val context : Context) : RecyclerView.Adapt
     override fun onBindViewHolder(holder: MainTalkWithViewHolder, position: Int) {
         val topPosition = position * 2
         val bottomPosition = position * 2 + 1
-        holder.topTitle.text = dataList[topPosition].title
-        holder.topCategory.text = dataList[topPosition].category
+        holder.topTitle.text = dataList[topPosition].text
+        holder.topCategory.text = if (dataList[topPosition].categoryIdx == 1) "QnA" else "AB TEST"
         holder.topRoot.setOnClickListener {
-
+            if (dataList[topPosition].categoryIdx == 1){
+                val intent = Intent(context, QnaActivity::class.java)
+                intent.putExtra(GlobalApplication.QNA_IDX, dataList[topPosition].idx)
+                (context as BaseActivity<*>).startActivityHorizontal(intent)
+            } else {
+                val intent = Intent(context, AbtestActivity::class.java)
+                intent.putExtra(GlobalApplication.ABTEST_IDX, dataList[topPosition].idx)
+                (context as BaseActivity<*>).startActivityHorizontal(intent)
+            }
         }
 
         if (bottomPosition < dataList.size) {
-            holder.bottomTitle.text = dataList[bottomPosition].title
-            holder.bottomCategory.text = dataList[bottomPosition].category
+            holder.bottomTitle.text = dataList[bottomPosition].text
+            holder.bottomCategory.text = if (dataList[topPosition].categoryIdx == 1) "QnA" else "AB TEST"
             holder.bottomRoot.setOnClickListener {
-
+                if (dataList[bottomPosition].categoryIdx == 1){
+                    val intent = Intent(context, QnaActivity::class.java)
+                    intent.putExtra(GlobalApplication.QNA_IDX, dataList[bottomPosition].idx)
+                    (context as BaseActivity<*>).startActivityHorizontal(intent)
+                } else {
+                    val intent = Intent(context, AbtestActivity::class.java)
+                    intent.putExtra(GlobalApplication.ABTEST_IDX, dataList[bottomPosition].idx)
+                    (context as BaseActivity<*>).startActivityHorizontal(intent)
+                }
             }
         } else {
             holder.bottomCategory.visibility = View.GONE

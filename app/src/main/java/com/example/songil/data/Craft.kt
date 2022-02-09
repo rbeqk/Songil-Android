@@ -1,6 +1,7 @@
 package com.example.songil.data
 
-data class CraftSimpleInfo(val craftName : String, val artist : String, val price : Int, val imageUrl : String, val craftIdx : Int = 0)
+// home 에서만 사용되는듯?
+data class CraftSimpleInfo(val craftIdx : Int = 0, val mainImageUrl : String, val name : String, val artistIdx : Int, val artistName : String, val price : Int ?= null, val isNew : String ?= null)
 
 data class CraftDetailInfo(val craftIdx : Int, val isNew : String, val isSoldOut : String, val mainImageUrl : String, val name : String,
                            val price : Int, val shippingFee : ArrayList<String>, val material : ArrayList<String>,
