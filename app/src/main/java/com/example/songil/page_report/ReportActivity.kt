@@ -31,6 +31,7 @@ class ReportActivity : BaseActivity<ReportActivityBinding>(R.layout.report_activ
         if (target != null){
             target as ReportTarget
             reportViewModel.setTarget(target, targetIdx)
+            setTitleText(target)
         } else {
             Log.d("ReportActivity", "target is empty")
             finish()
@@ -42,6 +43,24 @@ class ReportActivity : BaseActivity<ReportActivityBinding>(R.layout.report_activ
         setEditText()
         setObserver()
         setButton()
+    }
+
+    private fun setTitleText(target : ReportTarget){
+        if (target == ReportTarget.ABTEST_COMMENT || target == ReportTarget.QNA_COMMENT || target == ReportTarget.STORY_COMMENT || target == ReportTarget.ARTICLE_COMMENT)  {
+            binding.navigationBar.text = getString(R.string.report_comment)
+        }
+        else if (target == ReportTarget.STORY)  {
+            binding.navigationBar.text = getString(R.string.report_story)
+        }
+        else if(target == ReportTarget.ABTEST)  {
+            binding.navigationBar.text = getString(R.string.report_abtest)
+        }
+        else if (target == ReportTarget.QNA)  {
+            binding.navigationBar.text = getString(R.string.report_qna)
+        }
+        else if (target == ReportTarget.ARTICLE) {
+            binding.navigationBar.text = getString(R.string.report_article)
+        }
     }
 
     private fun setButton(){
@@ -93,6 +112,6 @@ class ReportActivity : BaseActivity<ReportActivityBinding>(R.layout.report_activ
 
     override fun finish() {
         super.finish()
-        overridePendingTransition(R.anim.none, R.anim.to_right)
+        exitHorizontal
     }
 }
