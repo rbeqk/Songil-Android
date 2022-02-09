@@ -74,6 +74,11 @@
     <!-- 신고 페이지 관련 -->
     <string name="do_report">신고하기</string>
     <string name="report_review">후기 신고하기</string>
+    <string name="report_comment">댓글 신고하기</string>
+    <string name="report_qna">QnA 신고하기</string>
+    <string name="report_story">스토리 신고하기</string>
+    <string name="report_abtest">AB TEST 신고하기</string>
+    <string name="report_article">아티클 신고하기</string>
     <string name="reason_of_report">신고사유</string>
     <string name="profanity_and_slander">욕설 및 비방</string>
     <string name="pr_and_commercial">홍보 및 영리목적</string>
@@ -250,7 +255,7 @@
     <string name="write_comment">코멘트 작성</string>
     <string name="comment">코멘트</string>
     <string name="photo">사진</string>
-    <string name="photo_maximum_message">최대 3장 업로드 가능</string>
+    <string name="photo_maximum_message">최소 1장, 최대 3장 업로드 가능</string>
     <string name="complete_write">작성 완료</string>
     <string name="write_comment_hint">코멘트를 작성해주세요.</string>
 

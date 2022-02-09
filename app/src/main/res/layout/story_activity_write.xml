@@ -217,7 +217,7 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/photo_count_ab_test"
+                        android:text="@string/photo_maximum_message"
                         app:layout_constraintStart_toEndOf="@id/tv_photo"
                         app:layout_constraintTop_toTopOf="@id/tv_photo"
                         app:layout_constraintBottom_toBottomOf="@id/tv_photo"
