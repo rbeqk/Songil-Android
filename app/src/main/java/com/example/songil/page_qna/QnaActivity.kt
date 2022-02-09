@@ -213,7 +213,10 @@ class QnaActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity), R
     }
 
     override fun bottomSheetReportClick() {
-
+        val intent = Intent(this, ReportActivity::class.java)
+        intent.putExtra(GlobalApplication.REPORT_TARGET, ReportTarget.QNA)
+        intent.putExtra(GlobalApplication.TARGET_IDX, viewModel.qnaIdx)
+        startActivityHorizontal(intent)
     }
 
     override fun popupRemoveClick() {

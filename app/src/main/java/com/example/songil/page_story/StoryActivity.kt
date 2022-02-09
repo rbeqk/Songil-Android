@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide
 import com.example.songil.R
 import com.example.songil.config.BaseActivity
 import com.example.songil.config.GlobalApplication
+import com.example.songil.config.ReportTarget
 import com.example.songil.config.WriteType
 import com.example.songil.databinding.StoryActivityBinding
 import com.example.songil.page_report.ReportActivity
@@ -165,8 +166,10 @@ class StoryActivity : BaseActivity<StoryActivityBinding>(R.layout.story_activity
         dialog.show(supportFragmentManager, dialog.tag)
     }
 
-    override fun bottomSheetReportClick() { // 일단 아직 게시글 신고는 api가 없네?
+    override fun bottomSheetReportClick() {
         val intent = Intent(this, ReportActivity::class.java)
+        intent.putExtra(GlobalApplication.REPORT_TARGET, ReportTarget.STORY)
+        intent.putExtra(GlobalApplication.TARGET_IDX, viewModel.storyIdx)
         startActivityHorizontal(intent)
     }
 

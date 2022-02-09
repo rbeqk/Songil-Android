@@ -11,20 +11,20 @@ interface ReportRetrofitInterface {
     @POST("with/stories/comments/{commentIdx}/reported")
     suspend fun postStoryCommentReport(@Path("commentIdx") commentIdx : Int, @Body params : ReportData) : Response<BaseResponse>
 
-    @POST("")
-    suspend fun postStoryReport(@Path("commentIdx") commentIdx : Int, @Body params : ReportData) : Response<BaseResponse>
+    @POST("with/stories/{storyIdx}/reported")
+    suspend fun postStoryReport(@Path("storyIdx") storyIdx : Int, @Body params : ReportData) : Response<BaseResponse>
 
     @POST("with/qna/comments/{commentIdx}/reported")
     suspend fun postQnACommentReport(@Path("commentIdx") commentIdx : Int, @Body params : ReportData) : Response<BaseResponse>
 
-    @POST("")
-    suspend fun postQnAReport(@Path("commentIdx") commentIdx : Int, @Body params : ReportData) : Response<BaseResponse>
+    @POST("with/qna/{qnaIdx}/reported")
+    suspend fun postQnAReport(@Path("qnaIdx") qnaIdx : Int, @Body params : ReportData) : Response<BaseResponse>
 
     @POST("with/ab-test/comments/{commentIdx}/reported")
     suspend fun postAbtestCommentReport(@Path("commentIdx") commentIdx : Int, @Body params : ReportData) : Response<BaseResponse>
 
-    @POST("")
-    suspend fun postAbtestReport(@Path("commentIdx") commentIdx : Int, @Body params : ReportData) : Response<BaseResponse>
+    @POST("with/ab-test/{abTestIdx}/reported")
+    suspend fun postAbtestReport(@Path("abTestIdx") commentIdx : Int, @Body params : ReportData) : Response<BaseResponse>
 
     @POST("")
     suspend fun postArticleReport(@Path("commentIdx") commentIdx : Int, @Body params : ReportData) : Response<BaseResponse>

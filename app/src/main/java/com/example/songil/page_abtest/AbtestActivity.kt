@@ -3,6 +3,8 @@ package com.example.songil.page_abtest
 import android.content.Intent
 import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -11,8 +13,14 @@ import com.example.songil.R
 import com.example.songil.config.BaseActivity
 import com.example.songil.config.GlobalApplication
 import com.example.songil.config.ReportTarget
+import com.example.songil.config.WriteType
 import com.example.songil.databinding.ChatActivityBinding
+import com.example.songil.page_abtestwrite.AbtestWriteActivity
 import com.example.songil.page_report.ReportActivity
+import com.example.songil.popup_more.MoreBottomSheet
+import com.example.songil.popup_more.popup_interface.PopupMoreView
+import com.example.songil.popup_remove.RemoveDialog
+import com.example.songil.popup_remove.popup_interface.PopupRemoveView
 import com.example.songil.recycler.adapter.PostAndChatAdapter
 import com.example.songil.recycler.rv_interface.RvPostAndChatView
 import com.example.songil.utils.softKeyboardCallback.KeyboardVisibilityUtils
@@ -20,10 +28,11 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 // Qna activity 와 99% 동일함, 나중에 리팩토링시 통합하는 작업 수행 예정
-class AbtestActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity), RvPostAndChatView {
+class AbtestActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity), RvPostAndChatView, PopupMoreView, PopupRemoveView {
 
     private val viewModel : AbtestViewModel by lazy { ViewModelProvider(this)[AbtestViewModel::class.java] }
     private lateinit var keyboardVisibilityUtils : KeyboardVisibilityUtils
+    private lateinit var writeResult : ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +47,12 @@ class AbtestActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity)
         setRecyclerView()
         setButton()
         setObserver()
+
+        writeResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
+            if (result.resultCode == RESULT_OK){
+                viewModel.tryGetAbtest()
+            }
+        }
 
         lifecycleScope.launch {
             viewModel.flow.collectLatest { pagingData ->
@@ -75,6 +90,11 @@ class AbtestActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity)
         binding.btnRegister.setOnClickListener {
             viewModel.tryWriteComment(binding.etComment.text.toString())
             binding.btnRegister.isClickable = false
+        }
+
+        binding.btnMore.setOnClickListener {
+            val moreBottomSheet = MoreBottomSheet(this, (viewModel.getAbtest.isUserABTest == "Y"))
+            moreBottomSheet.show(supportFragmentManager, moreBottomSheet.tag)
         }
     }
 
@@ -163,5 +183,29 @@ class AbtestActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity)
 
     override fun cancelVote(abTestIdx: Int) {
         viewModel.tryCancelVote(abTestIdx)
+    }
+
+    override fun bottomSheetModifyClick() {
+        val intent = Intent(this, AbtestWriteActivity::class.java)
+        intent.putExtra(GlobalApplication.WRITE_TYPE, WriteType.MODIFY)
+        intent.putExtra(GlobalApplication.TARGET_IDX, viewModel.abtestIdx)
+        writeResult.launch(intent)
+        overridePendingTransition(R.anim.from_right, R.anim.to_left)
+    }
+
+    override fun bottomSheetRemoveClick() {
+        val dialog = RemoveDialog(this)
+        dialog.show(supportFragmentManager, dialog.tag)
+    }
+
+    override fun bottomSheetReportClick() {
+        val intent = Intent(this, ReportActivity::class.java)
+        intent.putExtra(GlobalApplication.REPORT_TARGET, ReportTarget.ABTEST)
+        intent.putExtra(GlobalApplication.TARGET_IDX, viewModel.abtestIdx)
+        startActivityHorizontal(intent)
+    }
+
+    override fun popupRemoveClick() {
+
     }
 }
