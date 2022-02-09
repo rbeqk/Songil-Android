@@ -19,4 +19,7 @@ interface AbtestRetrofitInterface {
 
     @DELETE("with/ab-test/ocomments/{commentIdx}")
     suspend fun deleteAbtestChat(@Path("commentIdx") commentIdx : Int) : Response<BaseResponse>
+
+    @DELETE("with/ab-test/{abTestIdx}")
+    suspend fun deleteAbTest(@Path("abTestIdx") abTestIdx : Int) : Response<BaseResponse>
 }

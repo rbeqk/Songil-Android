@@ -1,11 +1,13 @@
 package com.example.songil.page_abtest
 
+import com.example.songil.config.BaseResponse
 import com.example.songil.config.GlobalApplication
 import com.example.songil.data.ABTest
 import com.example.songil.data.Chat
 import com.example.songil.page_abtest.model.RequestWriteComment
 import com.example.songil.repository.PostRepository
 import retrofit2.HttpException
+import retrofit2.Response
 
 class AbtestRepository : PostRepository() {
 
@@ -41,5 +43,11 @@ class AbtestRepository : PostRepository() {
             return response.body()!!.code
         }
         return -1
+    }
+
+    suspend fun deleteAbTest(abTestIdx : Int) : Response<BaseResponse> {
+        val result = retrofitInterface.deleteAbTest(abTestIdx)
+        if (result.isSuccessful) return result
+        else throw UnknownError()
     }
 }

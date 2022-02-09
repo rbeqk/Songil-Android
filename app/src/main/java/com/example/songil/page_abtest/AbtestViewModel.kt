@@ -26,6 +26,7 @@ class AbtestViewModel : BaseViewModel() {
     var deleteCommentResult = MutableLiveData<Int>()
 
     var voteResult = MutableLiveData<Boolean>()
+    var deleteResult = MutableLiveData<Int>()
 
     var flow = Pager(PagingConfig(pageSize = 10)) {
         PostAndCommentPagingSource(abtestRepository, abtestIdx)
@@ -65,6 +66,13 @@ class AbtestViewModel : BaseViewModel() {
         viewModelScope.launch(exceptionHandler) {
             val result = voteRepository.cancelVote(abTestIdx)
             voteResult.postValue(result.body()?.code == 200)
+        }
+    }
+
+    fun tryDeleteAbTest(){
+        viewModelScope.launch(exceptionHandler) {
+            val result = abtestRepository.deleteAbTest(abtestIdx)
+            deleteResult.postValue(result.body()?.code ?: -1)
         }
     }
 }

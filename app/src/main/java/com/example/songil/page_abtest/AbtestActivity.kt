@@ -140,6 +140,15 @@ class AbtestActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity)
             }
         }
         viewModel.voteResult.observe(this, voteResult)
+
+        val deleteObserver = Observer<Int>{ liveData ->
+            when (liveData){
+                200 -> {
+                    finish()
+                }
+            }
+        }
+        viewModel.deleteResult.observe(this, deleteObserver)
     }
 
     override fun finish() {
@@ -206,6 +215,6 @@ class AbtestActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity)
     }
 
     override fun popupRemoveClick() {
-
+        viewModel.tryDeleteAbTest()
     }
 }
