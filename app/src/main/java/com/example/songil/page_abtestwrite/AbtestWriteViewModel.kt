@@ -33,6 +33,7 @@ class AbtestWriteViewModel : BaseViewModel() {
 
     var resultUpload = MutableLiveData<Int>()
     var resultLoad = MutableLiveData<Int>()
+    var resultModify = MutableLiveData<Int>()
 
     fun tryGetAbtest() {
         viewModelScope.launch (exceptionHandler){
@@ -44,6 +45,9 @@ class AbtestWriteViewModel : BaseViewModel() {
                 day = date[2]
             }
             abtestContent = result.content
+            imageUriList.clear()
+            imageUriList.add(result.imageA)
+            imageUriList.add(result.imageB)
             resultLoad.postValue(200)
 
         }
@@ -72,7 +76,8 @@ class AbtestWriteViewModel : BaseViewModel() {
 
     fun tryModifyAbTest(){
         viewModelScope.launch(exceptionHandler) {
-
+            val result = abtestWriteRepository.modifyAbTest(abtestIdx, abtestContent)
+            resultModify.postValue(result.body()?.code ?: -1)
         }
     }
 
@@ -81,6 +86,16 @@ class AbtestWriteViewModel : BaseViewModel() {
     fun checkAvailable(){
         writeBtnActivate.value = ( (dateConfirmBtnActivate.value == true) && imageUriList.size == 2 && abtestContent != "")
     }
+
+    fun checkDateWhenLoad(){
+        val tempYear = year.toIntOrNull()
+        val tempMonth = month.toIntOrNull()
+        val tempDay = day.toIntOrNull()
+        if (tempYear != null && tempMonth != null && tempDay != null){
+            checkDate(tempYear, tempMonth, tempDay)
+        }
+    }
+
 
     fun checkDate(inputYear : Int, inputMonth : Int, inputDay : Int) {
         val inputCalendar = Calendar.getInstance().apply {

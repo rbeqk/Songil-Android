@@ -1,6 +1,8 @@
 package com.example.songil.page_abtestwrite
 
+import com.example.songil.config.BaseResponse
 import com.example.songil.config.GlobalApplication
+import com.example.songil.page_abtestwrite.model.AbTestContent
 import com.example.songil.page_abtestwrite.model.ResponseUploadAbTest
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -11,6 +13,12 @@ class AbtestWriteRepository {
 
     suspend fun uploadAbTest(data : HashMap<String, RequestBody>, image : ArrayList<MultipartBody.Part>) : Response<ResponseUploadAbTest> {
         val result = retrofitInterface.postAbTest(data, image)
+        if (result.isSuccessful) return result
+        else throw UnknownError()
+    }
+
+    suspend fun modifyAbTest(abTestIdx : Int, content : String) : Response<BaseResponse> {
+        val result = retrofitInterface.patchAbTest(abTestIdx, AbTestContent(content))
         if (result.isSuccessful) return result
         else throw UnknownError()
     }

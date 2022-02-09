@@ -16,6 +16,7 @@ import kotlin.math.min
 class AddPhotoPickerAdapter(private val view : RvPhotoView, private val max : Int = 3, private val imageList : ArrayList<String> = ArrayList()) : RecyclerView.Adapter<AddPhotoPickerAdapter.AddPhotoPickerViewHolder>(){
 
     private val bitmapList = ArrayList<Bitmap>()
+    private var isNewWrite : Boolean = true
 
     class AddPhotoPickerViewHolder(binding :ItemAddPhotoBinding) : RecyclerView.ViewHolder(binding.root){
         val image = binding.ivPhoto
@@ -46,7 +47,7 @@ class AddPhotoPickerAdapter(private val view : RvPhotoView, private val max : In
 
                     override fun onLoadCleared(placeholder: Drawable?) {}
                 })
-                holder.removeBtn.visibility = View.VISIBLE
+                holder.removeBtn.visibility = if (isNewWrite) View.VISIBLE else View.GONE
                 holder.removeBtn.setOnClickListener {
                     imageList.removeAt(position)
                     bitmapList.clear()
@@ -77,6 +78,11 @@ class AddPhotoPickerAdapter(private val view : RvPhotoView, private val max : In
 
     fun applyData(){
         bitmapList.clear()
+        notifyDataSetChanged()
+    }
+
+    fun setModifyMode(){
+        isNewWrite = false
         notifyDataSetChanged()
     }
 

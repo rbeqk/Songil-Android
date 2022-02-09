@@ -67,6 +67,7 @@ class AbtestWriteActivity : BaseActivity<AbtestActivityWriteBinding>(R.layout.ab
         viewModel.abtestIdx = intent.getIntExtra(GlobalApplication.TARGET_IDX, -1)
         if (isNew == WriteType.MODIFY && viewModel.abtestIdx != -1){
             setModifyStat()
+            (binding.rvPhoto.adapter as AddPhotoPickerAdapter).setModifyMode()
             viewModel.tryGetAbtest()
         }
     }
@@ -91,6 +92,8 @@ class AbtestWriteActivity : BaseActivity<AbtestActivityWriteBinding>(R.layout.ab
 
         val getAbtestObserver = Observer<Int>{ _ ->
             binding.invalidateAll()
+            (binding.rvPhoto.adapter as AddPhotoPickerAdapter).applyData()
+            viewModel.checkDateWhenLoad()
         }
         viewModel.resultLoad.observe(this, getAbtestObserver)
 
@@ -102,6 +105,19 @@ class AbtestWriteActivity : BaseActivity<AbtestActivityWriteBinding>(R.layout.ab
             }
         }
         viewModel.dateConfirmBtnActivate.observe(this, dateConfirmBtnStatObserver)
+
+        val modifyObserver = Observer<Int>{ liveData ->
+            viewModel.checkAvailable()
+            dismissLoadingDialog()
+            when (liveData){
+                200 -> {
+                    val intent = Intent(this, BaseActivity::class.java)
+                    setResult(RESULT_OK, intent)
+                    finish()
+                }
+            }
+        }
+        viewModel.resultModify.observe(this, modifyObserver)
 
         val errorObserver = Observer<BaseViewModel.FetchState>{ liveData ->
             Log.d("errorHandling", "$liveData")
@@ -161,17 +177,21 @@ class AbtestWriteActivity : BaseActivity<AbtestActivityWriteBinding>(R.layout.ab
             viewModel.writeBtnActivate.value = false
             showLoadingDialog()
             lifecycleScope.launch(Dispatchers.Default) {
-                try {
-                    val bitmapList = (binding.rvPhoto.adapter as AddPhotoPickerAdapter).getBitmapList()
-                    val fileList = ArrayList<File>()
-                    for (i in 0 until bitmapList.size){
-                        val file = createFileFromBitmap(bitmapList[i], activity, i)
-                        fileList.add(file)
+                if (isNew == WriteType.NEW){
+                    try {
+                        val bitmapList = (binding.rvPhoto.adapter as AddPhotoPickerAdapter).getBitmapList()
+                        val fileList = ArrayList<File>()
+                        for (i in 0 until bitmapList.size){
+                            val file = createFileFromBitmap(bitmapList[i], activity, i)
+                            fileList.add(file)
+                        }
+                        viewModel.setFiles(fileList)
+                        viewModel.tryUploadAbTest()
+                    } catch(e : OutOfMemoryError){
+                        dismissLoadingDialog()
                     }
-                    viewModel.setFiles(fileList)
-                    viewModel.tryUploadAbTest()
-                } catch(e : OutOfMemoryError){
-                    dismissLoadingDialog()
+                } else {
+                    viewModel.tryModifyAbTest()
                 }
             }
         }
