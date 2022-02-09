@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.example.songil.R
 import com.example.songil.config.BaseFragment
+import com.example.songil.config.BaseViewModel
 import com.example.songil.data.ClickData
 import com.example.songil.data.CraftSimpleInfo
 import com.example.songil.data.TalkWith
@@ -24,6 +25,7 @@ import com.example.songil.databinding.HomeFragmentBinding
 import com.example.songil.page_home.models.HomeArticle
 import com.example.songil.page_main.MainActivity
 import com.example.songil.page_search.SearchActivity
+import com.example.songil.popup_warning.SocketTimeoutDialog
 import com.example.songil.recycler.adapter.ClickImageAdapter
 import com.example.songil.recycler.adapter.MainTrendCraftAdapter
 import com.example.songil.recycler.decoration.Grid3Decoration
@@ -53,12 +55,10 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::bind
         setSeekBar()
         setObserver()
 
-        //viewModel.callData()
         viewModel.tryGetHomeData()
     }
 
     private fun setRecyclerView(){
-        //binding.rvHotStory.layoutManager = GridLayoutManager(activity as MainActivity, 3)
         binding.rvTrendCraft.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
         binding.rvTrendCraft.adapter = MainTrendCraftAdapter(activity as MainActivity)
         binding.rvTrendCraft.addItemDecoration(MainTrendDecoration(activity as MainActivity))
@@ -117,6 +117,12 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::bind
             (binding.vp2TalkWith.adapter as Vp2MainTalkWithAdapter).applyData(liveData)
         }
         viewModel.talkWithData.observe(viewLifecycleOwner, talkWithObserver)
+
+        val errorObserver = Observer<BaseViewModel.FetchState>{ _ ->
+            val socketTimeoutDialog = SocketTimeoutDialog()
+            socketTimeoutDialog.show(childFragmentManager, socketTimeoutDialog.tag)
+        }
+        viewModel.fetchState.observe(viewLifecycleOwner, errorObserver)
     }
 
     private fun setSeekBar(){
