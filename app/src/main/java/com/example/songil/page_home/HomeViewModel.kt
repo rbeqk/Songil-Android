@@ -1,33 +1,52 @@
 package com.example.songil.page_home
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.songil.config.BaseViewModel
 import com.example.songil.data.ClickData
 import com.example.songil.data.CraftSimpleInfo
-import com.example.songil.data.SimpleArticle
 import com.example.songil.data.TalkWith
+import com.example.songil.page_home.models.HomeArticle
+import kotlinx.coroutines.launch
 
-class HomeViewModel : ViewModel() {
-    var articleData = MutableLiveData<ArrayList<SimpleArticle>>()
+class HomeViewModel : BaseViewModel() {
+
+    private val repository = HomeRepository()
+    var articleData = MutableLiveData<ArrayList<HomeArticle>>()
     var trendCraftData = MutableLiveData<ArrayList<CraftSimpleInfo>>()
     var recommendCraftData = MutableLiveData<ArrayList<CraftSimpleInfo>>()
     var hotStoryData = MutableLiveData<ArrayList<ClickData>>()
     var talkWithData = MutableLiveData<ArrayList<TalkWith>>()
 
-    private fun getArticleData(){
+    fun tryGetHomeData(){
+        viewModelScope.launch(exceptionHandler) {
+            val result = repository.getHomeData()
+            val clickData = ArrayList<ClickData>()
+            for (data in result.body()!!.result.hotStory){
+                clickData.add(ClickData(data.Idx, data.mainImageUrl))
+            }
+            hotStoryData.postValue(clickData)
+            articleData.postValue(result.body()!!.result.article)
+            trendCraftData.postValue(result.body()!!.result.trendCraft)
+            recommendCraftData.postValue(result.body()!!.result.recommend)
+            talkWithData.postValue(result.body()!!.result.talkWith)
+        }
+    }
+
+    /*private fun getArticleData(){
         val fromNetwork = arrayListOf(
-                SimpleArticle(articleIdx = 1, articleCategoryIdx = 1, mainImageUrl = "https://pds.joins.com/news/component/joongang_sunday/2010/09/19004519.jpg", title =  "낭만주의가 낳은 고정 관념",editorName =  "By. 손길", editorIdx =  1),
-                SimpleArticle(articleIdx = 2, articleCategoryIdx = 3, mainImageUrl = "https://staccatoh.com/wp-content/uploads/2019/12/UT_9963_resize.jpg", title =  "예술가들과 그들의 공간",editorName =  "By. 손길", editorIdx =  1),
-                SimpleArticle(articleIdx = 3, articleCategoryIdx = 1, mainImageUrl = "https://www.artinsight.co.kr/data/tmp/1905/98f3d9dec6db4f8bddb1faba8cbd1160_W8nnbqTE8MC5U3HD.jpg", title =  "사람 - 진정한 예술가란",editorName =  "By. 손길", editorIdx =  2))
+                HomeArticle(articleIdx = 1, categoryIdx = 1, mainImageUrl = "https://pds.joins.com/news/component/joongang_sunday/2010/09/19004519.jpg", title =  "낭만주의가 낳은 고정 관념",summary =  "By. 손길"),
+                HomeArticle(articleIdx = 2, categoryIdx = 3, mainImageUrl = "https://staccatoh.com/wp-content/uploads/2019/12/UT_9963_resize.jpg", title =  "예술가들과 그들의 공간",summary =  "By. 손길"),
+                HomeArticle(articleIdx = 3, categoryIdx = 1, mainImageUrl = "https://www.artinsight.co.kr/data/tmp/1905/98f3d9dec6db4f8bddb1faba8cbd1160_W8nnbqTE8MC5U3HD.jpg", title =  "사람 - 진정한 예술가란",summary =  "By. 손길"))
         articleData.value = fromNetwork
     }
 
     private fun getCraftData(){
         val fromNetwork = ArrayList<CraftSimpleInfo>()
-        fromNetwork.add(CraftSimpleInfo("화병", "브런치", 38000, "https://t1.daumcdn.net/thumb/R720x0/?fname=http://t1.daumcdn.net/brunch/service/user/2xEY/image/UVy3A7kOAnJVm_HaMW9vPWFyf-0.jpg"))
-        fromNetwork.add(CraftSimpleInfo("접시", "호미", 38000, "https://images.homify.com/c_fill,f_auto,q_0,w_740/v1439386593/p/photo/image/494903/IMG_0005_1_COEdit.jpg"))
-        fromNetwork.add(CraftSimpleInfo("목공예", "대림", 38000, "https://lh3.googleusercontent.com/proxy/wmpLg0_6tDlhPQzRw5LnsO-iWSQ-7yVw2vyPJPDI6LsRPPUVOHvvKbcLi9X3Q3w2gVu1C7dzEu3OaG7AOqloBPAIdzfiqcx_r8p1cU8lv4-rsyxB0WiuT1UXseThGsAr2AXkHNRClD4"))
-        fromNetwork.add(CraftSimpleInfo("금속", "백일", 38000, "https://cdn.class101.net/images/07064f5a-c599-4c8b-b77a-a2c0857849ef/original"))
+        fromNetwork.add(CraftSimpleInfo(name = "화병", artistName = "브런치", price = 38000, mainImageUrl = "https://t1.daumcdn.net/thumb/R720x0/?fname=http://t1.daumcdn.net/brunch/service/user/2xEY/image/UVy3A7kOAnJVm_HaMW9vPWFyf-0.jpg", artistIdx = 1))
+        fromNetwork.add(CraftSimpleInfo(name ="접시", artistName = "호미", price =38000, mainImageUrl = "https://images.homify.com/c_fill,f_auto,q_0,w_740/v1439386593/p/photo/image/494903/IMG_0005_1_COEdit.jpg", artistIdx = 1))
+        fromNetwork.add(CraftSimpleInfo(name ="목공예", artistName = "대림", price =38000, mainImageUrl = "https://lh3.googleusercontent.com/proxy/wmpLg0_6tDlhPQzRw5LnsO-iWSQ-7yVw2vyPJPDI6LsRPPUVOHvvKbcLi9X3Q3w2gVu1C7dzEu3OaG7AOqloBPAIdzfiqcx_r8p1cU8lv4-rsyxB0WiuT1UXseThGsAr2AXkHNRClD4", artistIdx = 1))
+        fromNetwork.add(CraftSimpleInfo(name ="금속", artistName = "백일", price =38000, mainImageUrl = "https://cdn.class101.net/images/07064f5a-c599-4c8b-b77a-a2c0857849ef/original", artistIdx = 1))
         trendCraftData.value = fromNetwork
         recommendCraftData.value = fromNetwork
     }
@@ -45,13 +64,13 @@ class HomeViewModel : ViewModel() {
 
     private fun getTalkWithData(){
         val talkWith = ArrayList<TalkWith>()
-        talkWith.add(TalkWith("QnA", "집들이 선물로 어떤게 좋을까요?", 0))
-        talkWith.add(TalkWith("AB TEST", "조민지 작가", 1))
-        talkWith.add(TalkWith("QnA", "이런 공예품은 어떻게 검색해야 하나요??", 2))
-        talkWith.add(TalkWith("AB TEST", "프로브 작가", 3))
-        talkWith.add(TalkWith("AB TEST", "조민지 작가", 4))
-        talkWith.add(TalkWith("QnA", "조명 색상 추천해주세요~", 5))
-        talkWith.add(TalkWith("AB TEST", "귣바 :)", 6))
+        talkWith.add(TalkWith(1, "집들이 선물로 어떤게 좋을까요?", 0))
+        talkWith.add(TalkWith(2, "조민지 작가", 1))
+        talkWith.add(TalkWith(1, "이런 공예품은 어떻게 검색해야 하나요??", 2))
+        talkWith.add(TalkWith(2, "프로브 작가", 3))
+        talkWith.add(TalkWith(2, "조민지 작가", 4))
+        talkWith.add(TalkWith(1, "조명 색상 추천해주세요~", 5))
+        talkWith.add(TalkWith(2, "귣바 :)", 6))
         talkWithData.value = talkWith
     }
 
@@ -60,5 +79,5 @@ class HomeViewModel : ViewModel() {
         getCraftData()
         getHotStoryData()
         getTalkWithData()
-    }
+    }*/
 }

@@ -19,9 +19,9 @@ import com.example.songil.R
 import com.example.songil.config.BaseFragment
 import com.example.songil.data.ClickData
 import com.example.songil.data.CraftSimpleInfo
-import com.example.songil.data.SimpleArticle
 import com.example.songil.data.TalkWith
 import com.example.songil.databinding.HomeFragmentBinding
+import com.example.songil.page_home.models.HomeArticle
 import com.example.songil.page_main.MainActivity
 import com.example.songil.page_search.SearchActivity
 import com.example.songil.recycler.adapter.ClickImageAdapter
@@ -53,7 +53,8 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::bind
         setSeekBar()
         setObserver()
 
-        viewModel.callData()
+        //viewModel.callData()
+        viewModel.tryGetHomeData()
     }
 
     private fun setRecyclerView(){
@@ -101,7 +102,7 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::bind
         }
         viewModel.recommendCraftData.observe(viewLifecycleOwner, recommendCraftObserver)
 
-        val articleObserver = Observer<ArrayList<SimpleArticle>>{ liveData ->
+        val articleObserver = Observer<ArrayList<HomeArticle>>{ liveData ->
             (binding.vp2Main.adapter as Vp2MainArticleAdapter).applyData(liveData)
             binding.pageCountDot.initialSetting(liveData.size)
         }
@@ -154,7 +155,7 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::bind
     }
 
     private fun setScroll(){
-        binding.layoutMain.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { v, scrollX, scrollY, oldScrollX, oldScrollY ->
+        binding.layoutMain.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { _, _, scrollY, _, _ ->
             if (scrollY >= binding.vp2Main.bottom){
                 binding.btnSearch.setColorFilter(ContextCompat.getColor(requireContext(), R.color.songil_2))
             } else {
