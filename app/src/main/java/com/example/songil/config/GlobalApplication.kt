@@ -27,14 +27,14 @@ class GlobalApplication : Application() {
         lateinit var sRetrofit: Retrofit
         lateinit var globalSharedPreferences: SharedPreferences
         val categoryList = arrayListOf<Category>(
-            Category("도자공예", R.drawable.image_ceramic_craft),
-            Category("유리공예", R.drawable.image_glass_craft),
-            Category("금속공예", R.drawable.image_metal_craft),
-            Category("목공예", R.drawable.image_wood_craft),
-            Category("섬유공예", R.drawable.image_textile_craft),
-            Category("가죽공예", R.drawable.image_leather_craft),
-            Category("기타공예", R.drawable.image_etc_craft),
-            Category("전체보기", R.drawable.ic_heart_line_28),
+            Category(1,"도자공예", R.drawable.image_ceramic_craft),
+            Category(2,"유리공예", R.drawable.image_glass_craft),
+            Category(3,"금속공예", R.drawable.image_metal_craft),
+            Category(4,"목공예", R.drawable.image_wood_craft),
+            Category(5,"섬유공예", R.drawable.image_textile_craft),
+            Category(6,"가죽공예", R.drawable.image_leather_craft),
+            Category(7,"기타공예", R.drawable.image_etc_craft),
+            Category(8,"전체보기", R.drawable.ic_heart_line_28),
         )
         val sort = mapOf("price" to "낮은 가격순", "popular" to "인기순", "new" to "최신순", "comment" to "리뷰 많은 순")
     }

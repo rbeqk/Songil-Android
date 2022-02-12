@@ -34,7 +34,7 @@ import com.example.songil.recycler.rv_interface.RvClickView
 import com.example.songil.viewPager2.adapter.Vp2BannerAdapter
 
 class ShopFragmentMain : BaseFragment<ShopFragmentMainBinding>(ShopFragmentMainBinding::bind, R.layout.shop_fragment_main),
-    RvCategoryView<String>, RvClickView {
+    RvCategoryView<Int>, RvClickView {
 
     private lateinit var viewModel : ShopMainViewModel
 
@@ -51,7 +51,7 @@ class ShopFragmentMain : BaseFragment<ShopFragmentMainBinding>(ShopFragmentMainB
         //viewModel.loadData()
     }
 
-    override fun categoryClick(data: String) {
+    override fun categoryClick(data: Int) {
         val intent = Intent(activity as MainActivity, ShopActivityCategory::class.java)
         intent.putExtra("category", data)
         (activity as MainActivity).startActivityHorizontal(intent)

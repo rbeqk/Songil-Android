@@ -10,7 +10,7 @@ import com.example.songil.config.GlobalApplication
 import com.example.songil.databinding.ItemShopCategoryTextBinding
 import com.example.songil.recycler.rv_interface.RvCategoryView
 
-class ShopCategoryTextAdapter(private val context : Context, private val view : RvCategoryView<String>) : RecyclerView.Adapter<ShopCategoryTextAdapter.ViewHolder>() {
+class ShopCategoryTextAdapter(private val context : Context, private val view : RvCategoryView<Int>) : RecyclerView.Adapter<ShopCategoryTextAdapter.ViewHolder>() {
 
     private var currentCategory = ""
     private val dataList = GlobalApplication.categoryList
@@ -36,7 +36,7 @@ class ShopCategoryTextAdapter(private val context : Context, private val view : 
             holder.categoryName.setTextColor(ContextCompat.getColor(context, R.color.songil_2))
         }
         holder.categoryName.setOnClickListener {
-            view.categoryClick(dataList[position].category)
+            view.categoryClick(dataList[position].categoryIdx)
         }
     }
 

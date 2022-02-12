@@ -8,6 +8,7 @@ import android.view.animation.TranslateAnimation
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.PagingData
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.songil.R
@@ -26,6 +27,7 @@ import com.example.songil.recycler.decoration.Craft2Decoration
 import com.example.songil.recycler.rv_interface.RvCategoryView
 import com.example.songil.recycler.rv_interface.RvCraftLikeView
 import com.example.songil.recycler.rv_interface.RvClickView
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -34,8 +36,9 @@ import kotlinx.coroutines.launch
 // RvCraftView -> 이번주 인기 공예 recyclerView 에서 아이템 클릭시 호출할 함수 정의
 // RvCraftLikeView -> 전체 상품을 표시하는 recyclerView 에서 아이템 클릭시, 그리고 좋아요 클릭시 호출할 함수 정의
 class ShopActivityCategory : BaseActivity<ShopActivityCategoryBinding>(R.layout.shop_activity_category),
-    RvCategoryView<String>, PopupSortView, RvClickView, RvCraftLikeView<Int> {
+    RvCategoryView<Int>, PopupSortView, RvClickView, RvCraftLikeView<Int> {
 
+    private var pagingJob : Job ?= null
     private lateinit var viewModel : ShopCategoryViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,44 +51,28 @@ class ShopActivityCategory : BaseActivity<ShopActivityCategoryBinding>(R.layout.
         setObserver()
 
         val intent = intent
-        viewModel.setCategory(intent.getStringExtra("category") ?: "도자공예")
+        viewModel.setCategory(intent.getIntExtra("category", 1))
 
         viewModel.tryGetPopular()
 
         viewModel.setInit()
-        viewModel.tempGetStartIdx()
-
-        lifecycleScope.launch {
-            viewModel.flow.collectLatest { pagingData ->
-                (binding.rvCraft.adapter as Craft1PagingAdapter).submitData(pagingData)
-            }
-        }
+        viewModel.tryGetStartIdx()
     }
 
-    // category recyclerview 에서 실행될 함수
-    override fun categoryClick(data: String) {
+    // call when select category in category recyclerview
+    override fun categoryClick(data: Int) {
         viewModel.setCategory(data)
 
-        val backgroundAnim = AlphaAnimation(1f, 0f)
-        backgroundAnim.duration = 350
-        backgroundAnim.fillAfter = false
-        binding.categoryBackground.animation = backgroundAnim
-        binding.categoryBackground.visibility = View.GONE
+        hideCategorySelectView()
 
-        val anim = TranslateAnimation(0f, 0f, 0f, -1 * binding.rvCategory.height.toFloat())
-        anim.duration = 350
-        anim.fillAfter = false
-        binding.rvCategory.animation = anim
-        binding.rvCategory.visibility = View.GONE
-
-        viewModel.tempGetStartIdx()
+        viewModel.tryGetStartIdx()
 
         viewModel.tryGetPopular()
     }
 
-    // sort popup 에서 실행될 함수
+    // call when select sort in sort bottomSheet
     override fun sort(sort: String) {
-        viewModel.tempGetStartIdx()
+        viewModel.tryGetStartIdx()
         viewModel.changeSort(sort)
     }
 
@@ -106,7 +93,7 @@ class ShopActivityCategory : BaseActivity<ShopActivityCategoryBinding>(R.layout.
 
         binding.rvCraft.layoutManager = GridLayoutManager(this, 2)
         binding.rvCraft.adapter = Craft1PagingAdapter()
-        binding.rvCraft.addItemDecoration(Craft1Decoration(this))
+        binding.rvCraft.addItemDecoration(Craft1Decoration(this, paging = true))
     }
 
     private fun setObserver(){
@@ -122,10 +109,24 @@ class ShopActivityCategory : BaseActivity<ShopActivityCategoryBinding>(R.layout.
         }
         viewModel.sort.observe(this, sortObserver)
 
-        val startIdxObserver = Observer<Int>{ _ ->
-            (binding.rvCraft.adapter as Craft1PagingAdapter).refresh()
+        val startIdxObserver = Observer<Int>{ liveData ->
+            lifecycleScope.launch { (binding.rvCraft.adapter as Craft1PagingAdapter).submitData( PagingData.empty()) }
+            if (liveData == 0){
+                clearJob()
+            } else {
+                restartJob()
+            }
         }
         viewModel.startIdx.observe(this, startIdxObserver)
+
+        val popularObserver = Observer<Int>{ liveData ->
+            when(liveData){
+                200 -> {
+                    (binding.rvPopular.adapter as Craft2Adapter).applyData(viewModel.popularCrafts)
+                }
+            }
+        }
+        viewModel.popularResultCode.observe(this, popularObserver)
     }
 
     private fun setButton(){
@@ -140,42 +141,55 @@ class ShopActivityCategory : BaseActivity<ShopActivityCategoryBinding>(R.layout.
 
         binding.btnShopCategory.setOnClickListener {
             if (binding.rvCategory.visibility != View.VISIBLE){
-                val backgroundAnim = AlphaAnimation(0f, 1f)
-                backgroundAnim.duration = 350
-                backgroundAnim.fillAfter = true
-                binding.categoryBackground.animation = backgroundAnim
-                binding.categoryBackground.visibility = View.VISIBLE
-
-                val anim = TranslateAnimation(0f, 0f, -1 * binding.rvCategory.height.toFloat(), 0f)
-                anim.duration = 350
-                anim.fillAfter = true
-                binding.rvCategory.animation = anim
-                binding.rvCategory.visibility = View.VISIBLE
+                showCategorySelectView()
             } else {
-                val backgroundAnim = AlphaAnimation(1f, 0f)
-                backgroundAnim.duration = 350
-                backgroundAnim.fillAfter = false
-                binding.categoryBackground.animation = backgroundAnim
-                binding.categoryBackground.visibility = View.GONE
-
-                val anim = TranslateAnimation(0f, 0f, 0f, -1 * binding.rvCategory.height.toFloat())
-                anim.duration = 350
-                anim.fillAfter = false
-                binding.rvCategory.animation = anim
-                binding.rvCategory.visibility = View.GONE
+                hideCategorySelectView()
             }
         }
-        binding.categoryBackground.setOnClickListener { val backgroundAnim = AlphaAnimation(1f, 0f)
-            backgroundAnim.duration = 350
-            backgroundAnim.fillAfter = false
-            binding.categoryBackground.animation = backgroundAnim
-            binding.categoryBackground.visibility = View.GONE
+        binding.categoryBackground.setOnClickListener {
+            hideCategorySelectView()
+        }
+    }
 
-            val anim = TranslateAnimation(0f, 0f, 0f, -1 * binding.rvCategory.height.toFloat())
-            anim.duration = 350
-            anim.fillAfter = false
-            binding.rvCategory.animation = anim
-            binding.rvCategory.visibility = View.GONE }
+    private fun showCategorySelectView(){
+        val backgroundAnim = AlphaAnimation(0f, 1f)
+        backgroundAnim.duration = 350
+        backgroundAnim.fillAfter = true
+        binding.categoryBackground.animation = backgroundAnim
+        binding.categoryBackground.visibility = View.VISIBLE
+
+        val anim = TranslateAnimation(0f, 0f, -1 * binding.rvCategory.height.toFloat(), 0f)
+        anim.duration = 350
+        anim.fillAfter = true
+        binding.rvCategory.animation = anim
+        binding.rvCategory.visibility = View.VISIBLE
+    }
+
+    private fun hideCategorySelectView(){
+        val backgroundAnim = AlphaAnimation(1f, 0f)
+        backgroundAnim.duration = 350
+        backgroundAnim.fillAfter = false
+        binding.categoryBackground.animation = backgroundAnim
+        binding.categoryBackground.visibility = View.GONE
+
+        val anim = TranslateAnimation(0f, 0f, 0f, -1 * binding.rvCategory.height.toFloat())
+        anim.duration = 350
+        anim.fillAfter = false
+        binding.rvCategory.animation = anim
+        binding.rvCategory.visibility = View.GONE
+    }
+
+    private fun clearJob(){
+        pagingJob?.cancel()
+    }
+
+    private fun restartJob(){
+        pagingJob?.cancel()
+        pagingJob = lifecycleScope.launch {
+            viewModel.flow.collectLatest { pagingData ->
+                (binding.rvCraft.adapter as Craft1PagingAdapter).submitData(pagingData)
+            }
+        }
     }
 
     // 이걸로 바꿀예정

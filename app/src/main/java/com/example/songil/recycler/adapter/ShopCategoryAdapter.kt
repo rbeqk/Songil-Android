@@ -8,7 +8,7 @@ import com.example.songil.config.GlobalApplication
 import com.example.songil.databinding.ItemShopCategoryBinding
 import com.example.songil.recycler.rv_interface.RvCategoryView
 
-class ShopCategoryAdapter(context: Context, private val view : RvCategoryView<String>) : RecyclerView.Adapter<ShopCategoryAdapter.ViewHolder>() {
+class ShopCategoryAdapter(context: Context, private val view : RvCategoryView<Int>) : RecyclerView.Adapter<ShopCategoryAdapter.ViewHolder>() {
     private val dataList = GlobalApplication.categoryList
     private lateinit var binding: ItemShopCategoryBinding
     private val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -28,7 +28,7 @@ class ShopCategoryAdapter(context: Context, private val view : RvCategoryView<St
         holder.categoryName.text = dataList[position].category
         holder.imageView.setImageResource(dataList[position].categoryIcon)
         holder.layoutMain.setOnClickListener{
-            view.categoryClick(dataList[position].category)
+            view.categoryClick(dataList[position].categoryIdx)
         }
     }
 

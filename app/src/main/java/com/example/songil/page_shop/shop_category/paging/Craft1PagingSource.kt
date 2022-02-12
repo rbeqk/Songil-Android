@@ -10,7 +10,7 @@ import kotlin.reflect.KMutableProperty0
 class Craft1PagingSource(private val repository : ShopCategoryRepository,
                          private var startIdx : KMutableProperty0<Int>,
                          private var isInit : KMutableProperty0<Boolean>,
-                         private var category : KMutableProperty0<String>,
+                         private var category : KMutableProperty0<Int>,
                          private var sort : KMutableProperty0<String>)
     : PagingSource<Int, Craft1>(){
 
@@ -29,11 +29,11 @@ class Craft1PagingSource(private val repository : ShopCategoryRepository,
             } else {
                 pageIdx = params.key ?: startIdx.get()
             }
-            val response = repository.tempPagingDetailData(category.get(), sort.get(), pageIdx)
+            val response = repository.tryGetProductAll(category = category.get(), filter = sort.get(), page = pageIdx)//tempPagingDetailData(category.get(), sort.get(), pageIdx)
             val nextKey = if (pageIdx <= 1) null else pageIdx - 1
             val prevKey = if (pageIdx == startIdx.get()) null else pageIdx + 1
             LoadResult.Page(
-                    data = response,
+                    data = response.body()!!.result.crafts,
                     prevKey = prevKey,
                     nextKey = nextKey
             )

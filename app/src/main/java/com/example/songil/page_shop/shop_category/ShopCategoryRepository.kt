@@ -2,26 +2,30 @@ package com.example.songil.page_shop.shop_category
 
 import com.example.songil.config.GlobalApplication
 import com.example.songil.data.Craft1
-import com.example.songil.page_shop.shop_category.models.CraftDetail
+import com.example.songil.page_shop.shop_category.models.ResponseCategoryCraft
+import com.example.songil.page_shop.shop_category.models.ResponsePopularCraft
+import com.example.songil.page_shop.shop_category.models.ResponseStartPageIdx
+import retrofit2.Response
 
 class ShopCategoryRepository {
-    private val shopCategoryRetrofitInter = GlobalApplication.sRetrofit.create(ShopCategoryRetrofitInterface::class.java)
+    private val retrofitInterface = GlobalApplication.sRetrofit.create(ShopCategoryRetrofitInterface::class.java)
 
-    suspend fun getProductAll(category : String, filter : String = "popular", page : Int = 1) = shopCategoryRetrofitInter.postAllProduct(category, page, filter)
+    suspend fun tryGetProductAll(category : Int, filter : String = "popular", page : Int = 1) : Response<ResponseCategoryCraft> {
+        val result = retrofitInterface.getCategoryCraft(categoryIdx = category, page = page, sort = filter)
+        if (result.isSuccessful) return result
+        else throw UnknownError()
+    }
 
-    suspend fun tempPagingDetailData(category : String = GlobalApplication.categoryList[0].category, filter : String = "popular", page : Int = 1) : ArrayList<Craft1> {
-        // 일단 20개
-        return if (page <= 0){
-            arrayListOf()
-        }
-        else {
-            val temp = ArrayList<Craft1>()
-            for (i in 0 until 10){
-                val tempIdx = page * 5 + i
-                temp.add(Craft1(1, name = "${category}_${filter}_${tempIdx}", mainImageUrl = "https://pds.joins.com/news/component/joongang_sunday/2010/09/19004519.jpg", artistIdx =  1, price = 5000, artistName = "프로브", isNew = "N", isSoldOut = "Y", totalLikeCnt = page, totalCommentCnt = page, isLike = "Y"))
-            }
-            temp
-        }
+    suspend fun getStartIdx(category : Int) : Response<ResponseStartPageIdx> {
+        val result = retrofitInterface.getStartPageIdx(categoryIdx = category)
+        if (result.isSuccessful) return result
+        else throw UnknownError()
+    }
+
+    suspend fun getPopularCraft(categoryIdx : Int) : Response<ResponsePopularCraft> {
+        val result = retrofitInterface.getPopularCraft(categoryIdx)
+        if (result.isSuccessful) return result
+        else throw UnknownError()
     }
 
 }
