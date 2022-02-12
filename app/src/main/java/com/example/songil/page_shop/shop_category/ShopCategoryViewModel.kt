@@ -9,7 +9,7 @@ import com.example.songil.config.BaseViewModel
 import com.example.songil.config.GlobalApplication
 import com.example.songil.data.Craft1
 import com.example.songil.data.Craft2
-import com.example.songil.page_shop.shop_category.paging.Craft1PagingSource
+import com.example.songil.page_shop.shop_category.paging.ShopCategoryCraftsPagingSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
@@ -35,7 +35,7 @@ class ShopCategoryViewModel : BaseViewModel() {
 
     fun setInit(){
         flow = Pager(PagingConfig(pageSize = 10)){
-            Craft1PagingSource(repository, ::startIdxInt, ::isRefresh, ::categoryIdx, ::sortString)
+            ShopCategoryCraftsPagingSource(repository, ::startIdxInt, ::isRefresh, ::categoryIdx, ::sortString)
         }.flow
     }
 

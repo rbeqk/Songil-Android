@@ -7,11 +7,11 @@ import com.example.songil.page_shop.shop_category.ShopCategoryRepository
 import java.lang.Exception
 import kotlin.reflect.KMutableProperty0
 
-class Craft1PagingSource(private val repository : ShopCategoryRepository,
-                         private var startIdx : KMutableProperty0<Int>,
-                         private var isInit : KMutableProperty0<Boolean>,
-                         private var category : KMutableProperty0<Int>,
-                         private var sort : KMutableProperty0<String>)
+class ShopCategoryCraftsPagingSource(private val repository : ShopCategoryRepository,
+                                     private var startIdx : KMutableProperty0<Int>,
+                                     private var isInit : KMutableProperty0<Boolean>,
+                                     private var category : KMutableProperty0<Int>,
+                                     private var sort : KMutableProperty0<String>)
     : PagingSource<Int, Craft1>(){
 
     override fun getRefreshKey(state: PagingState<Int, Craft1>): Int? {
