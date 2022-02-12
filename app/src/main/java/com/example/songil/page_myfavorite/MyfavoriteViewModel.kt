@@ -3,7 +3,6 @@ package com.example.songil.page_myfavorite
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.songil.data.Craft1
-import com.example.songil.page_shop.shop_category.models.CraftDetail
 
 class MyfavoriteViewModel : ViewModel() {
     var craftList = MutableLiveData<ArrayList<Craft1>>()
