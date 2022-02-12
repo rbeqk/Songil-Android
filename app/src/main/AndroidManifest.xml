@@ -33,7 +33,7 @@
         <activity android:name=".page_inquiry.InquiryActivity" android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".page_basket.BasketActivity"/>
         <activity android:name=".page_mybenefit.MybenefitActivity"/>
-        <activity android:name=".page_myfavorite.MyfavoriteActivity"/>
+        <activity android:name=".page_myfavorite_craft.MyFavoriteCraftActivity"/>
         <activity android:name=".page_order.OrderActivity"/>
         <activity android:name=".page_orderstatus.OrderstatusActivity"/>
         <activity android:name=".page_mycomment.MycommentActivity"/>

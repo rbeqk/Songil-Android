@@ -8,18 +8,16 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.songil.R
 import com.example.songil.config.BaseFragment
 import com.example.songil.config.GlobalApplication
-//import com.example.songil.config.GlobalApplication
 import com.example.songil.databinding.MypageFragmentBinding
 import com.example.songil.page_main.MainActivity
 import com.example.songil.page_mybenefit.MybenefitActivity
 import com.example.songil.page_mycomment.MycommentActivity
-import com.example.songil.page_myfavorite.MyfavoriteActivity
+import com.example.songil.page_myfavorite_craft.MyFavoriteCraftActivity
 import com.example.songil.page_needlogin.NeedLoginActivity
 import com.example.songil.page_orderstatus.OrderstatusActivity
 import com.example.songil.page_setting.SettingActivity
 import com.example.songil.popup_logout.LogoutDialog
 import com.example.songil.popup_logout.popup_interface.PopupLogoutView
-import com.example.songil.popup_warning.WarningDialog
 
 class MypaegFragment : BaseFragment<MypageFragmentBinding>(MypageFragmentBinding::bind, R.layout.mypage_fragment), PopupLogoutView{
 
@@ -73,7 +71,7 @@ class MypaegFragment : BaseFragment<MypageFragmentBinding>(MypageFragmentBinding
         }
 
         binding.btnFavoriteProduct.setOnClickListener {
-            (activity as MainActivity).startActivityHorizontal(Intent(activity as MainActivity, MyfavoriteActivity::class.java))
+            (activity as MainActivity).startActivityHorizontal(Intent(activity as MainActivity, MyFavoriteCraftActivity::class.java))
             //startActivity(Intent(activity as MainActivity, MyfavoriteActivity::class.java))
         }
 
