@@ -356,5 +356,7 @@
     <!-- date picker 관련 -->
     <string name="cancel">취소</string>
     <string name="decision">결정</string>
-    
+
+    <string name="empty_my_favorite">아직 좋아요한 상품이 없어요.</string>
+
 </resources>
