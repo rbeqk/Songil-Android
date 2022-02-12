@@ -12,6 +12,7 @@ import com.example.songil.databinding.MypageFragmentBinding
 import com.example.songil.page_main.MainActivity
 import com.example.songil.page_mybenefit.MybenefitActivity
 import com.example.songil.page_mycomment.MycommentActivity
+import com.example.songil.page_myfavorite_article.MyFavoriteArticleActivity
 import com.example.songil.page_myfavorite_craft.MyFavoriteCraftActivity
 import com.example.songil.page_needlogin.NeedLoginActivity
 import com.example.songil.page_orderstatus.OrderstatusActivity
@@ -94,6 +95,10 @@ class MypaegFragment : BaseFragment<MypageFragmentBinding>(MypageFragmentBinding
             /*val dialogFragment = WarningDialog()
             dialogFragment.show(childFragmentManager, dialogFragment.tag)*/
             (activity as MainActivity).toggleMyPage(true)
+        }
+
+        binding.tvbtnLikeArticle.setOnClickListener {
+            (activity as MainActivity).startActivityHorizontal(Intent(activity as MainActivity, MyFavoriteArticleActivity::class.java))
         }
     }
 
