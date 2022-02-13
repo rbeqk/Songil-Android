@@ -14,6 +14,7 @@ import com.example.songil.databinding.MydetailActivityBinding
 import com.example.songil.popup_warning.SocketTimeoutDialog
 import com.example.songil.recycler.adapter.Craft1PagingAdapter
 import com.example.songil.recycler.decoration.Craft1Decoration
+import com.example.songil.utils.dpToPx
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -49,6 +50,7 @@ class MyFavoriteCraftActivity : BaseActivity<MydetailActivityBinding>(R.layout.m
         binding.rvContent.layoutManager = GridLayoutManager(this, 2)
         binding.rvContent.adapter = Craft1PagingAdapter()
         binding.rvContent.addItemDecoration(Craft1Decoration(this, true))
+        binding.rvContent.setPadding(dpToPx(this, 12), 0, dpToPx(this, 12), 0)
     }
 
     private fun setObserver(){
@@ -56,6 +58,7 @@ class MyFavoriteCraftActivity : BaseActivity<MydetailActivityBinding>(R.layout.m
             binding.layoutRefresh.isRefreshing = false
             if (liveData == 0) {
                 binding.viewEmpty.root.visibility = View.VISIBLE
+                clearJob()
             } else {
                 binding.viewEmpty.root.visibility = View.GONE
                 if ((binding.rvContent.adapter as Craft1PagingAdapter).itemCount > 0){

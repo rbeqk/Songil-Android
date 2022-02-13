@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.songil.R
 import com.example.songil.config.BaseActivity
 import com.example.songil.config.GlobalApplication
@@ -54,7 +55,7 @@ class Craft1PagingAdapter() : PagingDataAdapter<Craft1, Craft1PagingAdapter.Craf
                 intent.putExtra(GlobalApplication.CRAFT_IDX, craft.craftIdx)
                 (holder.itemView.context as BaseActivity<*>).startActivityHorizontal(intent)
             }
-            //Glide.with(context).load(dataList[position].thumbnailImg).into(holder.image)
+            Glide.with(holder.itemView.context).load(craft.mainImageUrl).into(holder.image)
             holder.craftName.text = craft.name
             holder.artistName.text = craft.artistName
             holder.price.text = holder.itemView.context.getString(R.string.form_price_won, craft.price)
