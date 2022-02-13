@@ -62,6 +62,7 @@
         <activity android:name=".page_qnawrite.QnaWriteActivity" android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".page_abtestwrite.AbtestWriteActivity" android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".page_myfavorite_article.MyFavoriteArticleActivity"/>
+        <activity android:name=".page_mypage_about_post.MyPagePostActivity"/>
     </application>
 
 </manifest>

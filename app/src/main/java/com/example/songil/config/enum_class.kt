@@ -15,3 +15,7 @@ enum class SignUpProcess {
 enum class LoginProcess {
     EMAIL, PASSWORD, COMPLETE, CANCEL
 }
+
+enum class MyPageActivityType {
+    FAVORITE_POST, COMMENT_POST, MY_POST
+}

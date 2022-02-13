@@ -33,7 +33,7 @@ data class ChatReply(val commentIdx : Int, val userIdx : Int, val userProfile : 
 // post (ab-test, qna) 가 header 이고, chat 이 content 인 postAndChatAdapter 에서 사용하기 위해 만든 클래스
 sealed class HeaderPost()
 
-data class BasePost(val idx : Int, val categoryIdx : Int, val mainImageUrl: String?, val title : String?, val content : String, val name : String, val createdAt: String,
-                    val totalLikeCnt: Int?, val isLike : String?, val totalCommentCnt: Int)
+data class Post(val idx : Int, val categoryIdx : Int, val mainImageUrl: String?, val title : String?, val content : String, val name : String, val createdAt: String,
+                val totalLikeCnt: Int?, val isLike : String?, val totalCommentCnt: Int)
 
 // 여기 좀 깔끔하게 정리해야 할듯

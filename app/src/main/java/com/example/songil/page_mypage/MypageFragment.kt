@@ -8,12 +8,14 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.songil.R
 import com.example.songil.config.BaseFragment
 import com.example.songil.config.GlobalApplication
+import com.example.songil.config.MyPageActivityType
 import com.example.songil.databinding.MypageFragmentBinding
 import com.example.songil.page_main.MainActivity
 import com.example.songil.page_mybenefit.MybenefitActivity
 import com.example.songil.page_mycomment.MycommentActivity
 import com.example.songil.page_myfavorite_article.MyFavoriteArticleActivity
 import com.example.songil.page_myfavorite_craft.MyFavoriteCraftActivity
+import com.example.songil.page_mypage_about_post.MyPagePostActivity
 import com.example.songil.page_needlogin.NeedLoginActivity
 import com.example.songil.page_orderstatus.OrderstatusActivity
 import com.example.songil.page_setting.SettingActivity
@@ -37,7 +39,7 @@ class MypageFragment : BaseFragment<MypageFragmentBinding>(MypageFragmentBinding
     private fun setObserver(){
         val loginChangeObserver = Observer<Boolean>{ liveData ->
             if (liveData){
-                binding.tvNickname.text = "API 연결 필요"
+                binding.tvNickname.text = "Need API"
             } else {
                 binding.tvNickname.text = "로그인해 주세요"
             }
@@ -59,6 +61,23 @@ class MypageFragment : BaseFragment<MypageFragmentBinding>(MypageFragmentBinding
             }
         }
 
+        binding.tvbtnLikePost.setOnClickListener {
+            val intent = Intent(activity as MainActivity, MyPagePostActivity::class.java)
+            intent.putExtra("MyPageActivityType", MyPageActivityType.FAVORITE_POST)
+            (activity as MainActivity).startActivityHorizontal(intent)
+        }
+
+        binding.tvbtnMyWrite.setOnClickListener {
+            val intent = Intent(activity as MainActivity, MyPagePostActivity::class.java)
+            intent.putExtra("MyPageActivityType", MyPageActivityType.MY_POST)
+            (activity as MainActivity).startActivityHorizontal(intent)
+        }
+
+        binding.tvbtnCommentPost.setOnClickListener {
+            val intent = Intent(activity as MainActivity, MyPagePostActivity::class.java)
+            intent.putExtra("MyPageActivityType", MyPageActivityType.COMMENT_POST)
+            (activity as MainActivity).startActivityHorizontal(intent)
+        }
 
         binding.btnBenefit.setOnClickListener {
             (activity as MainActivity).startActivityHorizontal(Intent(activity as MainActivity, MybenefitActivity::class.java))

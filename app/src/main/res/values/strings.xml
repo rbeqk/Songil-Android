@@ -359,5 +359,8 @@
 
     <string name="empty_my_favorite">아직 좋아요한 상품이 없어요.</string>
     <string name="empty_my_favorite_article">아직 좋아요한 아티클이 없어요.</string>
+    <string name="empty_my_favorite_post">아직 좋아요한 글이 없어요.</string>
+    <string name="empty_my_comment_post">아직 댓글단 글이 없어요.</string>
+    <string name="empty_my_wrote_post">아직 작성한 글이 없어요.</string>
 
 </resources>
