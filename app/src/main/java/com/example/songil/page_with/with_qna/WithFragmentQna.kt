@@ -11,7 +11,7 @@ import com.example.songil.R
 import com.example.songil.config.BaseFragment
 import com.example.songil.databinding.SimpleRecyclerviewFragmentSwipeBinding
 import com.example.songil.page_with.WithSubFragmentInterface
-import com.example.songil.recycler.adapter.PostAdapter
+import com.example.songil.recycler.adapter.WithQnaPagingAdapter
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -39,7 +39,7 @@ class WithFragmentQna : BaseFragment<SimpleRecyclerviewFragmentSwipeBinding>(Sim
             binding.layoutRefresh.isRefreshing = false
             viewModel.isRefresh = true
             initAndLoad()
-            (binding.rvContent.adapter as PostAdapter).refresh()
+            (binding.rvContent.adapter as WithQnaPagingAdapter).refresh()
         }
         viewModel.startIdx.observe(viewLifecycleOwner, pageCntResult)
     }
@@ -47,16 +47,16 @@ class WithFragmentQna : BaseFragment<SimpleRecyclerviewFragmentSwipeBinding>(Sim
     private fun initAndLoad(){
         pagingJob?.cancel()
         pagingJob = lifecycleScope.launch {
-            (binding.rvContent.adapter as PostAdapter).submitData(PagingData.empty())
+            (binding.rvContent.adapter as WithQnaPagingAdapter).submitData(PagingData.empty())
             viewModel.flow.collectLatest { pagingData ->
-                (binding.rvContent.adapter as PostAdapter).submitData(pagingData)
+                (binding.rvContent.adapter as WithQnaPagingAdapter).submitData(pagingData)
             }
         }
     }
 
     private fun setRecyclerView(){
         binding.rvContent.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        binding.rvContent.adapter = PostAdapter()
+        binding.rvContent.adapter = WithQnaPagingAdapter()
     }
 
     override fun onShow() {
@@ -71,6 +71,6 @@ class WithFragmentQna : BaseFragment<SimpleRecyclerviewFragmentSwipeBinding>(Sim
     override fun getSort(): String = viewModel.sort
 
     override fun reload() {
-        (binding.rvContent.adapter as PostAdapter).refresh()
+        (binding.rvContent.adapter as WithQnaPagingAdapter).refresh()
     }
 }

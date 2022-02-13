@@ -14,7 +14,7 @@ import com.example.songil.databinding.ItemPostBinding
 import com.example.songil.page_qna.QnaActivity
 import com.example.songil.page_story.StoryActivity
 
-class PostAdapter(private val postType : Int = 0) : PagingDataAdapter<WithQna, PostAdapter.WithQnaViewHolder>(diffCallback){
+class WithQnaPagingAdapter(private val postType : Int = 0) : PagingDataAdapter<WithQna, WithQnaPagingAdapter.WithQnaViewHolder>(diffCallback){
 
     companion object{
         val diffCallback = object : DiffUtil.ItemCallback<WithQna>(){
