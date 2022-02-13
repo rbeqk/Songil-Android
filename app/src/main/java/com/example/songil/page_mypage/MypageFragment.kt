@@ -20,7 +20,7 @@ import com.example.songil.page_setting.SettingActivity
 import com.example.songil.popup_logout.LogoutDialog
 import com.example.songil.popup_logout.popup_interface.PopupLogoutView
 
-class MypaegFragment : BaseFragment<MypageFragmentBinding>(MypageFragmentBinding::bind, R.layout.mypage_fragment), PopupLogoutView{
+class MypageFragment : BaseFragment<MypageFragmentBinding>(MypageFragmentBinding::bind, R.layout.mypage_fragment), PopupLogoutView{
 
     private lateinit var viewModel: MypageViewModel
 

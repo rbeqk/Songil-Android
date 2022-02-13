@@ -7,7 +7,7 @@ import com.example.songil.databinding.MainActivityBinding
 import com.example.songil.page_article.ArticleFragmentMain
 import com.example.songil.page_artistmanage.ArtistManageFragment
 import com.example.songil.page_home.HomeFragment
-import com.example.songil.page_mypage.MypaegFragment
+import com.example.songil.page_mypage.MypageFragment
 import com.example.songil.page_shop.ShopFragmentMain
 import com.example.songil.page_with.WithFragment
 import com.example.songil.utils.setStatusBarBlack
@@ -36,7 +36,7 @@ class MainActivity : BaseActivity<MainActivityBinding>(R.layout.main_activity){
                 }
                 else -> {
                     setStatusBarBlack(this, false)
-                    supportFragmentManager.beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).replace(binding.layoutFragment.id, MypaegFragment()).commit()
+                    supportFragmentManager.beginTransaction().setCustomAnimations(R.anim.fade_in, R.anim.fade_out).replace(binding.layoutFragment.id, MypageFragment()).commit()
                 }
             }
             true
@@ -46,6 +46,6 @@ class MainActivity : BaseActivity<MainActivityBinding>(R.layout.main_activity){
 
     fun toggleMyPage(toArtist : Boolean){
         if (toArtist) { supportFragmentManager.beginTransaction().replace(binding.layoutFragment.id, ArtistManageFragment()).commit() }
-        else { supportFragmentManager.beginTransaction().replace(binding.layoutFragment.id, MypaegFragment()).commit() }
+        else { supportFragmentManager.beginTransaction().replace(binding.layoutFragment.id, MypageFragment()).commit() }
     }
 }
