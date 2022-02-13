@@ -55,7 +55,6 @@ class MypaegFragment : BaseFragment<MypageFragmentBinding>(MypageFragmentBinding
 
         binding.tvNickname.setOnClickListener {
             if (!GlobalApplication.globalSharedPreferences.contains(GlobalApplication.X_ACCESS_TOKEN)){
-                //startActivity(Intent(activity as MainActivity, NeedLoginActivity::class.java))
                 (activity as MainActivity).startActivityVertical(Intent(activity as MainActivity, NeedLoginActivity::class.java))
             }
         }
@@ -63,7 +62,6 @@ class MypaegFragment : BaseFragment<MypageFragmentBinding>(MypageFragmentBinding
 
         binding.btnBenefit.setOnClickListener {
             (activity as MainActivity).startActivityHorizontal(Intent(activity as MainActivity, MybenefitActivity::class.java))
-            //startActivity(Intent(activity as MainActivity, MybenefitActivity::class.java))
         }
 
         binding.tvbtnLogout.setOnClickListener {
@@ -73,22 +71,18 @@ class MypaegFragment : BaseFragment<MypageFragmentBinding>(MypageFragmentBinding
 
         binding.btnFavoriteProduct.setOnClickListener {
             (activity as MainActivity).startActivityHorizontal(Intent(activity as MainActivity, MyFavoriteCraftActivity::class.java))
-            //startActivity(Intent(activity as MainActivity, MyfavoriteActivity::class.java))
         }
 
         binding.btnOrderStatus.setOnClickListener {
             (activity as MainActivity).startActivityHorizontal(Intent(activity as MainActivity, OrderstatusActivity::class.java))
-            //startActivity(Intent(activity as MainActivity, OrderstatusActivity::class.java))
         }
 
         binding.btnMyComment.setOnClickListener {
             (activity as MainActivity).startActivityHorizontal(Intent(activity as MainActivity, MycommentActivity::class.java))
-            //startActivity(Intent(activity as MainActivity, MycommentActivity::class.java))
         }
 
         binding.btnSetting.setOnClickListener {
             (activity as MainActivity).startActivityHorizontal(Intent(activity as MainActivity, SettingActivity::class.java))
-            //startActivity(Intent(activity as MainActivity, SettingActivity::class.java))
         }
 
         binding.tvbtnChangeToArtistPage.setOnClickListener {

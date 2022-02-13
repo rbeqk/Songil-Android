@@ -6,3 +6,5 @@ data class Order(val orderIdx : Int, val productName : String, val productThumbn
 data class OrderForm(val craft : ArrayList<Craft4>, var recipient : String = "", var phoneNumber : String = "",
                      var zipCode : String = "", var address : String ="", var detailAddress : String ="", val havePoint : Int = 0,
                      var usePoint : Int = 0, var useCouponIdx : Int ?= null)
+
+data class Orders(val date : String, val orderList : ArrayList<Order>)
