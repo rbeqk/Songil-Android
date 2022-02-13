@@ -13,7 +13,7 @@ import com.bumptech.glide.Glide
 import com.example.songil.R
 import com.example.songil.data.ABTest
 import com.example.songil.data.Chat
-import com.example.songil.data.Post
+import com.example.songil.data.HeaderPost
 import com.example.songil.data.WithQna
 import com.example.songil.databinding.ItemAbtestBinding
 import com.example.songil.databinding.ItemPostCommentBinding
@@ -23,21 +23,21 @@ import com.example.songil.recycler.viewholder.AbTestViewHolder
 import com.example.songil.recycler.viewholder.PostCommentViewHolder
 import com.example.songil.recycler.viewholder.QnaViewHolder
 
-class PostAndChatAdapter(private val view : RvPostAndChatView) : PagingDataAdapter<Post, RecyclerView.ViewHolder>(diffCallback) {
+class PostAndChatAdapter(private val view : RvPostAndChatView) : PagingDataAdapter<HeaderPost, RecyclerView.ViewHolder>(diffCallback) {
 
     // 대댓글 추가할 때 어떤 댓글에 대댓글을 작성할지 표시하기 위해 사용
     private var pointPosition : Int? = null
     private var headerIdx : Int ?= null
 
     companion object {
-        val diffCallback = object : DiffUtil.ItemCallback<Post>() {
-            override fun areItemsTheSame(oldItem: Post, newItem: Post): Boolean {
+        val diffCallback = object : DiffUtil.ItemCallback<HeaderPost>() {
+            override fun areItemsTheSame(oldItem: HeaderPost, newItem: HeaderPost): Boolean {
                 return if (oldItem is Chat && newItem is Chat){
                     (oldItem == newItem)
                 } else (oldItem is ABTest && newItem is ABTest) || (oldItem is WithQna && newItem is WithQna)
             }
 
-            override fun areContentsTheSame(oldItem: Post, newItem: Post): Boolean {
+            override fun areContentsTheSame(oldItem: HeaderPost, newItem: HeaderPost): Boolean {
                 return if (oldItem is Chat && newItem is Chat){
                     (oldItem.isDeleted == newItem.isDeleted && oldItem.reComment == newItem.reComment)
                 }
