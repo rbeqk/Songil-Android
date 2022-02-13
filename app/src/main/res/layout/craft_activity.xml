@@ -508,7 +508,6 @@
                         app:layout_constraintEnd_toStartOf="@id/btn_share"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        android:src="@drawable/ic_heart_line_28"
                         android:tint="@color/songil_1"/>
 
                     <androidx.appcompat.widget.AppCompatImageView

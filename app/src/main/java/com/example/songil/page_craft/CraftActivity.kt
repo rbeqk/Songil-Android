@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide
 import com.example.songil.R
 import com.example.songil.config.BaseActivity
 import com.example.songil.config.GlobalApplication
+import com.example.songil.data.LikeData
 import com.example.songil.databinding.CraftActivityBinding
 import com.example.songil.page_craft.subpage_comment.CraftFragmentComment
 import com.example.songil.page_craft.subpage_ask.CraftFragmentAsk
@@ -44,11 +45,7 @@ class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity
         setNestedScrollView()
 
         viewModel.setCraftIdx(idx)
-
-        //viewModel.tryGetCraftInfo()
-        viewModel.tempGetCraftInfo()
-
-        /*supportFragmentManager.beginTransaction().add(binding.layoutFragment.id, CraftFragmentDetail()).commit()*/
+        viewModel.tryGetCraftInfo()
 
         binding.layoutNested.run {
             header = binding.layoutSticky
@@ -95,7 +92,6 @@ class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity
 
         val addToCartObserver = Observer<Int>{ liveData ->
             if (liveData == 1000){
-                /*hideAddView()*/
                 clearBottomButtonState()
             }
         }
@@ -113,6 +109,12 @@ class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity
             binding.btnShare.isClickable = liveData
         }
         viewModel.inStock.observe(this, inStockObserver)
+
+        val likeObserver = Observer<LikeData>{liveData ->
+            Log.d("call", "$liveData")
+            binding.btnFavorite.setBackgroundResource(if (liveData.isLike == "Y") R.drawable.ic_heart_base_28 else R.drawable.ic_heart_line_28)
+        }
+        viewModel.likeData.observe(this, likeObserver)
     }
 
     private fun changeFragment(targetFragment : Fragment){
@@ -136,7 +138,7 @@ class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity
         }
 
         binding.btnFavorite.setOnClickListener {
-            Log.d("btnFav", "click")
+            viewModel.tryToggleLike()
         }
 
         binding.btnShare.setOnClickListener {

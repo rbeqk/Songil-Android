@@ -1,13 +1,13 @@
 package com.example.songil.page_craft
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.songil.config.BaseViewModel
 import com.example.songil.data.CraftDetailInfo
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import com.example.songil.data.LikeData
 import kotlinx.coroutines.launch
 
-class CraftViewModel : ViewModel() {
+class CraftViewModel : BaseViewModel() {
     private val repository = CraftRepository()
 
     var resultCode = MutableLiveData<Int>()
@@ -18,7 +18,7 @@ class CraftViewModel : ViewModel() {
     lateinit var productDetailInfo : CraftDetailInfo
 
     // 구매 버튼 활성화 여부
-    var inStock = MutableLiveData<Boolean>(false)
+    var inStock = MutableLiveData(false)
 
     // detail, review, 1:1 ask fragment 로 전환하는 버튼의 활성화 여부, 그리고 현재 보여주는 fragment 의 idx
     var btnDetailActivate = MutableLiveData<Boolean>()
@@ -32,6 +32,9 @@ class CraftViewModel : ViewModel() {
     // 장바구니 추가 호출 확인용
     var addCartResult = MutableLiveData<Int>()
 
+    // 좋아요 데이터
+    var likeData = MutableLiveData<LikeData>()
+
     init {
         btnDetailActivate.value = true
         btnReviewActivate.value = false
@@ -39,13 +42,14 @@ class CraftViewModel : ViewModel() {
     }
 
     fun tryGetCraftInfo(){
-        CoroutineScope(Dispatchers.IO).launch {
+        viewModelScope.launch(exceptionHandler) {
             repository.getDetailCraftInfo(craftIdx).let { response ->
                 if (response.isSuccessful){
                     if (response.body()!!.code == 200){
                         itemCount.postValue(1)
                         inStock.postValue(response.body()?.result?.isSoldOut == "N")
                         productDetailInfo = response.body()!!.result
+                        likeData.postValue(LikeData(response.body()?.result?.isLike ?: "N", 0))
                     }
                     message = response.body()!!.message!!
                     resultCode.postValue(response.body()?.code ?: -1)
@@ -54,22 +58,17 @@ class CraftViewModel : ViewModel() {
         }
     }
 
-    fun tempGetCraftInfo(){
-        productDetailInfo = CraftDetailInfo(1, "Y", "Y" ,"https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTA3MjFfMjQz%2FMDAxNjI2ODMwMzY4NDc4.idg1-Q4qxqxCSg-e4259B4Syr8Z05OmJ0YhupJdtPtwg.pZW6_b8MetkF9vp2s9sy9nada6Gj1JlgSD3akClUQyMg.JPEG.myohan6%2FDSC_2498.JPG&type=a340",
-                "물결화병", 38000, arrayListOf("50000원 이하 5000원", "50000~100000원 2500원", "100000원 이상 무료"),
-                arrayListOf("유리"), arrayListOf("시각적 만족감"), "물결화병에 대한 설명이\n들어갈 예정입니다.\n\n문의는 1:1 ask를 사용해주세요", "15x16x15(cm)", arrayListOf("유의사항1", "유의사항2"),
-                arrayListOf("https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTA5MTBfMjEz%2FMDAxNjMxMjYyMTM1MDM2.-SRY3A7o4aSsLjMVqm8h2nEZQcLDowaxwG2vDgBw76Ig.fqAqJK87AzAfvX-NLNk3bpeUt-Ibk8VufXOpYZo05PIg.JPEG.redjudy%2F%25C4%25AB%25B5%25E5%25C1%25F6%25B0%25A9_%25BA%25B0%25B9%25E3_%25283%2529.JPG&type=a340",
-                        "https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMTA3MjFfMjQz%2FMDAxNjI2ODMwMzY4NDc4.idg1-Q4qxqxCSg-e4259B4Syr8Z05OmJ0YhupJdtPtwg.pZW6_b8MetkF9vp2s9sy9nada6Gj1JlgSD3akClUQyMg.JPEG.myohan6%2FDSC_2498.JPG&type=a340"), 1,
-                "조민지 작가", "조민지 작가에 대한 소개입니다.", 12)
-        resultCode.postValue(200)
-
-        itemCount.postValue(1)
+    fun tryToggleLike(){
+        viewModelScope.launch(exceptionHandler){
+            val result = repository.toggleLike(craftIdx)
+            if (result.body()?.code == 200){
+                likeData.postValue(LikeData(result.body()!!.result.isLike, result.body()!!.result.totalLikeCnt))
+            }
+        }
     }
 
-
-
     fun tryAddToCart(){
-        CoroutineScope(Dispatchers.IO).launch {
+        viewModelScope.launch(exceptionHandler) {
             repository.addToCart(craftIdx, itemCount.value!!).let { response ->
                 if (response.isSuccessful){
                     addCartResult.postValue(response.body()!!.code)
