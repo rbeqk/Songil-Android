@@ -6,12 +6,24 @@ import androidx.core.content.ContextCompat
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.songil.R
-import com.example.songil.data.Craft3
+import com.example.songil.data.Ask
 import com.example.songil.databinding.ItemCraft3ArtistBinding
 
-class Craft3ArtistAdapter(diffCallback : DiffUtil.ItemCallback<Craft3>, private val onclick : (Int) -> Unit) : PagingDataAdapter<Craft3, Craft3ArtistAdapter.Craft3ArtistViewHolder>(diffCallback){
+class Craft3ArtistAdapter(private val onclick : (Int) -> Unit) : PagingDataAdapter<Ask, Craft3ArtistAdapter.Craft3ArtistViewHolder>(diffCallback){
+
+    companion object {
+        private val diffCallback = object : DiffUtil.ItemCallback<Ask>() {
+            override fun areItemsTheSame(oldItem: Ask, newItem: Ask): Boolean {
+                return (oldItem.askIdx == newItem.askIdx)
+            }
+
+            override fun areContentsTheSame(oldItem: Ask, newItem: Ask): Boolean {
+                return (oldItem.status == newItem.status)
+            }
+        }
+    }
+
     class Craft3ArtistViewHolder(binding : ItemCraft3ArtistBinding) : RecyclerView.ViewHolder(binding.root){
         val image = binding.ivCraft
         val name = binding.tvCraftName
@@ -24,16 +36,18 @@ class Craft3ArtistAdapter(diffCallback : DiffUtil.ItemCallback<Craft3>, private 
         val data = getItem(position)
         if (data != null){
             holder.name.text = data.name
-            holder.artistName.text = data.artistName
+            holder.artistName.text = data.nickname
             holder.date.text = data.createdAt
-            Glide.with(holder.itemView.context).load(data.imageUrl).fallback(R.drawable.ic_with_full_gray_32).into(holder.image)
-            if (data.writable=="Y"){
+            //Glide.with(holder.itemView.context).load(data.imageUrl).fallback(R.drawable.ic_with_full_gray_32).into(holder.image)
+            if (data.status == 1){
                 holder.writeBtn.isClickable = true
+                holder.writeBtn.text = holder.itemView.context.getString(R.string.do_answer)
                 holder.writeBtn.setBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.songil_2))
                 holder.writeBtn.setOnClickListener {
                     onclick(position)
                 }
             } else {
+                holder.writeBtn.text = holder.itemView.context.getString(R.string.complete_answer)
                 holder.writeBtn.isClickable = false
                 holder.writeBtn.setBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.g_3))
             }
@@ -47,7 +61,7 @@ class Craft3ArtistAdapter(diffCallback : DiffUtil.ItemCallback<Craft3>, private 
     }
 
     fun applyChange(position : Int){
-        getItem(position)?.writable = "N"
+        getItem(position)?.status = 2
         notifyItemChanged(position)
     }
 }

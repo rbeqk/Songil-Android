@@ -1,24 +1,23 @@
 package com.example.songil.page_artistmanage.subpage_asklist
 
-import com.example.songil.data.Craft3
+import com.example.songil.config.GlobalApplication
+import com.example.songil.page_artistmanage.subpage_asklist.models.ResponseArtistAskPageCnt
+import com.example.songil.page_artistmanage.subpage_asklist.models.ResponseAskList
+import retrofit2.Response
 
 
 class ArtistManageAskListRepository {
-    fun tempGetAskList(pageIdx : Int) : ArrayList<Craft3>{
-        val fromNetwork = ArrayList<Craft3>()
-        return if (pageIdx == 10){
-            fromNetwork.add(Craft3(1, "https://t1.daumcdn.net/thumb/R720x0/?fname=http://t1.daumcdn.net/brunch/service/user/2xEY/image/UVy3A7kOAnJVm_HaMW9vPWFyf-0.jpg", "아이템${pageIdx}_1", "작가${pageIdx}", "2021.04.23", "Y"))
-            fromNetwork.add(Craft3(2, "https://t1.daumcdn.net/thumb/R720x0/?fname=http://t1.daumcdn.net/brunch/service/user/2xEY/image/UVy3A7kOAnJVm_HaMW9vPWFyf-0.jpg", "아이템${pageIdx}_2", "작가${pageIdx}", "2021.04.23", "Y"))
-            fromNetwork
-        } else {
-            fromNetwork.add(Craft3(1, "https://t1.daumcdn.net/thumb/R720x0/?fname=http://t1.daumcdn.net/brunch/service/user/2xEY/image/UVy3A7kOAnJVm_HaMW9vPWFyf-0.jpg", "아이템${pageIdx}_1", "작가${pageIdx}", "2021.04.23", "Y"))
-            fromNetwork.add(Craft3(2, "https://t1.daumcdn.net/thumb/R720x0/?fname=http://t1.daumcdn.net/brunch/service/user/2xEY/image/UVy3A7kOAnJVm_HaMW9vPWFyf-0.jpg", "아이템${pageIdx}_2", "작가${pageIdx}", "2021.04.23", "Y"))
-            fromNetwork.add(Craft3(1, "https://t1.daumcdn.net/thumb/R720x0/?fname=http://t1.daumcdn.net/brunch/service/user/2xEY/image/UVy3A7kOAnJVm_HaMW9vPWFyf-0.jpg", "아이템${pageIdx}_3", "작가${pageIdx}", "2021.04.23", "Y"))
-            fromNetwork.add(Craft3(2, "https://t1.daumcdn.net/thumb/R720x0/?fname=http://t1.daumcdn.net/brunch/service/user/2xEY/image/UVy3A7kOAnJVm_HaMW9vPWFyf-0.jpg", "아이템${pageIdx}_4", "작가${pageIdx}", "2021.04.23", "N"))
-            fromNetwork.add(Craft3(1, "https://t1.daumcdn.net/thumb/R720x0/?fname=http://t1.daumcdn.net/brunch/service/user/2xEY/image/UVy3A7kOAnJVm_HaMW9vPWFyf-0.jpg", "아이템${pageIdx}_5", "작가${pageIdx}", "2021.04.23", "N"))
-            fromNetwork.add(Craft3(2, "https://t1.daumcdn.net/thumb/R720x0/?fname=http://t1.daumcdn.net/brunch/service/user/2xEY/image/UVy3A7kOAnJVm_HaMW9vPWFyf-0.jpg", "아이템${pageIdx}_6", "작가${pageIdx}", "2021.04.23", "N"))
-            fromNetwork
-        }
+    private val retrofit = GlobalApplication.sRetrofit.create(ArtistManageAskRetrofitInterface::class.java)
 
+    suspend fun getTotalPageCnt() : Response<ResponseArtistAskPageCnt>{
+        val result = retrofit.getTotalPageCnt()
+        if (result.isSuccessful) return result
+        else throw UnknownError()
+    }
+
+    suspend fun getAskList(pageIdx : Int) : Response<ResponseAskList>{
+        val result = retrofit.getAskList(page = pageIdx)
+        if (result.isSuccessful) return result
+        else throw UnknownError()
     }
 }

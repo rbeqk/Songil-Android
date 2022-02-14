@@ -164,6 +164,7 @@
     <string name="inquiry_answer">문의 답변하기</string>
     <string name="form_craft_nickname">%s / %s</string>
     <string name="do_answer">답변하기</string>
+    <string name="complete_answer">답변완료</string>
     <string name="hint_answer">답변 내용을 작성해주세요.</string>
 
     <!-- bottom navigation 관련 -->
