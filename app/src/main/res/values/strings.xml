@@ -79,6 +79,7 @@
     <string name="report_story">스토리 신고하기</string>
     <string name="report_abtest">AB TEST 신고하기</string>
     <string name="report_article">아티클 신고하기</string>
+    <string name="report_craft_comment">코멘트 신고하기</string>
     <string name="reason_of_report">신고사유</string>
     <string name="profanity_and_slander">욕설 및 비방</string>
     <string name="pr_and_commercial">홍보 및 영리목적</string>
