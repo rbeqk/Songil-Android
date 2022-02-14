@@ -3,23 +3,29 @@ package com.example.songil.page_inquiry
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.songil.R
 import com.example.songil.config.BaseActivity
+import com.example.songil.config.BaseViewModel
+import com.example.songil.config.GlobalApplication
 import com.example.songil.databinding.InquiryActivityBinding
 import com.example.songil.popup_inquiry.InquiryDialog
 
 class InquiryActivity : BaseActivity<InquiryActivityBinding>(R.layout.inquiry_activity) {
-    private lateinit var viewModel : InquiryViewModel
+    private val viewModel : InquiryViewModel by lazy { ViewModelProvider(this, InquiryViewModel.InquiryViewModelFactory(craftIdx))[InquiryViewModel::class.java] }
+    private var craftIdx = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel = ViewModelProvider(this)[InquiryViewModel::class.java]
+        craftIdx = intent.getIntExtra(GlobalApplication.CRAFT_IDX, 0)
+
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
 
         setButton()
+        setObserver()
 
         binding.etContent.addTextChangedListener(object:TextWatcher{
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -27,11 +33,36 @@ class InquiryActivity : BaseActivity<InquiryActivityBinding>(R.layout.inquiry_ac
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
             override fun afterTextChanged(s: Editable?) {
-                viewModel.changeTextLength()
+                viewModel.changeTextCntTextView()
+                viewModel.checkTextSizeInRange()
             }
         })
+    }
 
+    private fun setObserver(){
+        val inquiryResultObserver = Observer<Boolean>{ liveData ->
+            viewModel.checkTextSizeInRange()
+            if (liveData) {
+                val dialogFragment = InquiryDialog()
+                dialogFragment.show(supportFragmentManager, dialogFragment.tag)
+            } else {
+                showSimpleToastMessage("네트워크 에러, 잠시 후에 실행해주세요")
+            }
+        }
+        viewModel.inquiryResult.observe(this, inquiryResultObserver)
 
+        val errorObserver = Observer<BaseViewModel.FetchState> {
+            viewModel.checkTextSizeInRange()
+            val errorString = "에러 발생 : " + when(it){
+                BaseViewModel.FetchState.BAD_INTERNET -> { "BAD_INTERNET" }
+                BaseViewModel.FetchState.FAIL -> { "FAIL"}
+                BaseViewModel.FetchState.WRONG_CONNECTION -> { "WRONG_CONNECTION"}
+                BaseViewModel.FetchState.PARSE_ERROR -> { "PARSE_ERROR"}
+                null -> {"UNKNOWN_ERROR"}
+            }
+            showSimpleToastMessage(errorString)
+        }
+        viewModel.fetchState.observe(this, errorObserver)
     }
 
     private fun setButton(){
@@ -39,8 +70,8 @@ class InquiryActivity : BaseActivity<InquiryActivityBinding>(R.layout.inquiry_ac
             finish()
         }
         binding.btnRegister.setOnClickListener {
-            val dialogFragment = InquiryDialog()
-            dialogFragment.show(supportFragmentManager, dialogFragment.tag)
+            viewModel.buttonActivate.value = false
+            viewModel.trySendInquiry()
         }
     }
 }

@@ -151,7 +151,7 @@ class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity
 
         binding.btnBuyNow.setOnClickListener {
             Log.d("btnBuyNow", "click")
-            startActivity(Intent(this, OrderActivity::class.java))
+            startActivityHorizontal(Intent(this, OrderActivity::class.java))
         }
 
         binding.btnAddToCart.setOnClickListener {
@@ -159,7 +159,13 @@ class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity
         }
 
         binding.layoutContract.setOnClickListener {
-            startActivity(Intent(this, InquiryActivity::class.java))
+            if (GlobalApplication.checkIsLogin()) {
+                val intent = Intent(this, InquiryActivity::class.java)
+                intent.putExtra(GlobalApplication.CRAFT_IDX, viewModel.productDetailInfo.craftIdx)
+                startActivityHorizontal(intent)
+            } else {
+                callNeedLoginDialog()
+            }
         }
 
         binding.btnBack.setOnClickListener {
