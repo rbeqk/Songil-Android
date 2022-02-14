@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.songil.R
 import com.example.songil.data.Benefit
 import com.example.songil.databinding.ItemCouponBinding
 
@@ -19,6 +20,7 @@ class BenefitAdapter(private val context : Context) : RecyclerView.Adapter<Benef
         val benefitName = binding.tvBenefitName
         val benefitDate = binding.tvBenefitDate
         val benefitInfo = binding.tvBenefitInformation
+        val discountInfo = binding.tvBenefitDiscountInfo
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -27,15 +29,17 @@ class BenefitAdapter(private val context : Context) : RecyclerView.Adapter<Benef
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.benefitName.text = dataList[position].benefitName
-        holder.benefitDate.text = dataList[position].benefitDeadline
-        holder.benefitInfo.text = dataList[position].benefitDescription
-        Glide.with(context).load(dataList[position].benefitThumbnail).into(holder.image)
+        holder.benefitName.text = dataList[position].title
+        holder.benefitDate.text = context.getString(R.string.benefit_date, dataList[position].deadline)
+        holder.benefitInfo.text = dataList[position].detailInfo
+        Glide.with(context).load(dataList[position].imageUrl).into(holder.image)
+        holder.discountInfo.text = dataList[position].discountInfo
     }
 
     override fun getItemCount(): Int = dataList.size
 
     fun applyData(newData : ArrayList<Benefit>){
+        dataList.clear()
         dataList.addAll(newData)
         notifyDataSetChanged()
     }

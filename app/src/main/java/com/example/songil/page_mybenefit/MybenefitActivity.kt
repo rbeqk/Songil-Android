@@ -1,6 +1,7 @@
 package com.example.songil.page_mybenefit
 
 import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,13 +20,19 @@ class MybenefitActivity : BaseActivity<MydetailActivityBinding>(R.layout.mydetai
 
         viewModel = ViewModelProvider(this)[MybenefitViewModel::class.java]
 
-        binding.tvTitle.text = "보유 베네핏"
+        binding.tvTitle.text = getString(R.string.my_benefit)
+        binding.viewEmpty.tvEmptyTarget.text = getString(R.string.empty_my_benefit)
 
         setRecyclerView()
         setObserver()
         setButton()
 
-        viewModel.getBenefitData()
+        binding.layoutRefresh.setOnRefreshListener {
+            viewModel.tryGetMyBenefit()
+        }
+
+        //viewModel.tryGetMyBenefit()
+        viewModel.tempGetBenefitData()
     }
 
     private fun setRecyclerView(){
@@ -36,6 +43,12 @@ class MybenefitActivity : BaseActivity<MydetailActivityBinding>(R.layout.mydetai
 
     private fun setObserver(){
         val benefitObserver = Observer<ArrayList<Benefit>>{ liveData ->
+            binding.layoutRefresh.isRefreshing = false
+            if (liveData.size == 0){
+                binding.viewEmpty.root.visibility = View.VISIBLE
+            } else {
+                binding.viewEmpty.root.visibility = View.GONE
+            }
             (binding.rvContent.adapter as BenefitAdapter).applyData(liveData)
         }
         viewModel.benefitDatas.observe(this, benefitObserver)
