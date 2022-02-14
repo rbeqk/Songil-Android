@@ -61,6 +61,9 @@ class ReportActivity : BaseActivity<ReportActivityBinding>(R.layout.report_activ
         else if (target == ReportTarget.ARTICLE) {
             binding.navigationBar.text = getString(R.string.report_article)
         }
+        else if (target == ReportTarget.CRAFT_COMMENT){
+            binding.navigationBar.text = getString(R.string.report_craft_comment)
+        }
     }
 
     private fun setButton(){

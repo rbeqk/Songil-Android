@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.example.songil.R
+import com.example.songil.config.GlobalApplication
+import com.example.songil.config.ReportTarget
 import com.example.songil.data.CraftComment
 import com.example.songil.viewPager2.adapter.Vp2ImageAdapter
 import com.example.songil.databinding.ItemCraftCommentBinding
@@ -58,7 +60,10 @@ class CraftCommentAdapter(private val context : Context, inputCommentData : Arra
             holder.photoCount.visibility = View.GONE
         }
         holder.reportBtn.setOnClickListener {
-            (holder.itemView.context as CraftActivity).startActivityHorizontal(Intent(context, ReportActivity::class.java))
+            val intent = Intent(context, ReportActivity::class.java)
+            intent.putExtra(GlobalApplication.REPORT_TARGET, ReportTarget.CRAFT_COMMENT)
+            intent.putExtra(GlobalApplication.TARGET_IDX, commentData[position].commentIdx)
+            (holder.itemView.context as CraftActivity).startActivityHorizontal(intent)
         }
         if (commentData[position].isReported == "Y"){
             holder.contentLayout.visibility = View.INVISIBLE

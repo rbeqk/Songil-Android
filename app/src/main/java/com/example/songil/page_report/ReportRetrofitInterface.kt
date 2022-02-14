@@ -32,6 +32,6 @@ interface ReportRetrofitInterface {
     @POST("")
     suspend fun postArticleCommentReport(@Path("commentIdx") commentIdx : Int, @Body params : ReportData) : Response<BaseResponse>
 
-    @POST("")
+    @POST("shop/crafts/comments/{commentIdx}/reported")
     suspend fun postCraftCommentReport(@Path("commentIdx") commentIdx : Int, @Body params : ReportData) : Response<BaseResponse>
 }
