@@ -189,6 +189,7 @@
     <string name="like_article">좋아요한 아티클</string>
     <string name="my_write">내가 쓴 글</string>
     <string name="comment_post">댓글 단 글</string>
+    <string name="my_benefit">보유 베네핏</string>
     <string name="chat">댓글</string>
     <string name="setting">설정</string>
     <string name="modify_profile">프로필 수정</string>
@@ -202,6 +203,10 @@
     <string name="modify_password">비밀번호 재설정</string>
     <string name="yes">네</string>
     <string name="no">아니요</string>
+    <string name="complete_modify">수정 완료</string>
+    <string name="change_photo"><u>사진 바꾸기</u></string>
+    <string name="nickname">닉네임</string>
+    <string name="benefit_date">~%s</string>
 
     <!-- home page 관련 -->
     <string name="trend_craft_eng">TREND CRAFT</string>
@@ -362,5 +367,6 @@
     <string name="empty_my_favorite_post">아직 좋아요한 글이 없어요.</string>
     <string name="empty_my_comment_post">아직 댓글단 글이 없어요.</string>
     <string name="empty_my_wrote_post">아직 작성한 글이 없어요.</string>
+    <string name="empty_my_benefit">보유한 베네핏이 없어요.</string>
 
 </resources>
