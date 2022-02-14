@@ -26,7 +26,7 @@ class GlobalApplication : Application() {
         const val WRITE_TYPE = "write-type"
         lateinit var sRetrofit: Retrofit
         lateinit var globalSharedPreferences: SharedPreferences
-        val categoryList = arrayListOf<Category>(
+        val categoryList = arrayListOf(
             Category(1,"도자공예", R.drawable.image_ceramic_craft),
             Category(2,"유리공예", R.drawable.image_glass_craft),
             Category(3,"금속공예", R.drawable.image_metal_craft),
@@ -37,6 +37,10 @@ class GlobalApplication : Application() {
             Category(8,"전체보기", R.drawable.ic_heart_line_28),
         )
         val sort = mapOf("price" to "낮은 가격순", "popular" to "인기순", "new" to "최신순", "comment" to "리뷰 많은 순")
+
+        fun checkIsLogin() : Boolean{
+            return globalSharedPreferences.contains(X_ACCESS_TOKEN)
+        }
     }
 
     override fun onCreate() {
