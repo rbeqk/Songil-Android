@@ -333,6 +333,7 @@
     <string name="comment_remove_user">(삭제)</string>
     <string name="do_modfiy">수정하기</string>
     <string name="do_remove">삭제하기</string>
+    <string name="reported_comment">블라인드 처리된 코멘트입니다.</string>
 
     <!-- story 상세 페이지 관련 -->
     <string name="story_title">%s님의 스토리</string>

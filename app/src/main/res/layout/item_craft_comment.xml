@@ -8,96 +8,126 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline_start"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintGuide_begin="16dp"
-            android:orientation="vertical"/>
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline_end"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintGuide_end="16dp"
-            android:orientation="vertical"/>
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_nickname"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="@id/guideline_start"
-            android:layout_marginTop="4dp"
-            tools:text="자몽"/>
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="@id/tv_nickname"
-            app:layout_constraintBottom_toBottomOf="@id/tv_nickname"
-            app:layout_constraintEnd_toEndOf="@id/guideline_end"
-            android:textSize="12sp"
-            android:fontFamily="@font/spoqahansansneo_light"
-            tools:text="2021.04.23"/>
-
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/vp2_photo"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_reported"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintStart_toStartOf="@id/guideline_start"
-            app:layout_constraintEnd_toEndOf="@id/guideline_end"
-            app:layout_constraintTop_toBottomOf="@id/tv_nickname"
-            android:layout_marginTop="16dp"
-            android:orientation="horizontal"
-            android:overScrollMode="never"
-            app:layout_constraintDimensionRatio="1:1"/>
+            app:layout_constraintTop_toTopOf="@id/layout_comment_content"
+            app:layout_constraintStart_toStartOf="@id/layout_comment_content"
+            app:layout_constraintBottom_toBottomOf="@id/layout_comment_content"
+            app:layout_constraintEnd_toEndOf="@id/layout_comment_content"
+            android:visibility="invisible"
+            android:layout_gravity="center">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_page"
-            android:layout_width="wrap_content"
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@string/reported_comment"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_comment_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@id/vp2_photo"
-            app:layout_constraintEnd_toEndOf="@id/vp2_photo"
-            android:layout_margin="12dp"
-            android:padding="8dp"
-            android:background="#cc171717"
-            android:textColor="@color/songil_1"
-            android:textSize="12sp"
-            tools:text="1/2"/>
+            app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_review"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/vp2_photo"
-            app:layout_constraintStart_toStartOf="@id/guideline_start"
-            app:layout_constraintEnd_toEndOf="@id/guideline_end"
-            android:layout_marginTop="12dp"
-            android:fontFamily="@font/spoqahansansneo_light"
-            tools:text="과실이 가슴이 무한한 아니한 얼마나 군영과 듣는다. 방황하였으며, 얼음과 이 전인 우리 오직 얼마나 우는 피다. 그들은 밝은 우리 노년에게서 구하지 것이다."
-            android:lineSpacingExtra="4sp"/>
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintGuide_begin="16dp"
+                android:orientation="vertical"/>
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_report"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/tv_review"
-            app:layout_constraintEnd_toEndOf="@id/guideline_end"
-            android:layout_marginTop="12dp"
-            android:fontFamily="@font/spoqahansansneo_light"
-            android:textSize="12sp"
-            android:text="@string/report_with_underline"/>
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintGuide_end="16dp"
+                android:orientation="vertical"/>
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:background="@color/g_2"
-            app:layout_constraintStart_toStartOf="@id/guideline_start"
-            app:layout_constraintEnd_toEndOf="@id/guideline_end"
-            app:layout_constraintTop_toBottomOf="@id/tv_report"
-            android:layout_marginTop="24dp"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_nickname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="@id/guideline_start"
+                android:layout_marginTop="4dp"
+                tools:text="자몽"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/tv_nickname"
+                app:layout_constraintBottom_toBottomOf="@id/tv_nickname"
+                app:layout_constraintEnd_toEndOf="@id/guideline_end"
+                android:textSize="12sp"
+                android:fontFamily="@font/spoqahansansneo_light"
+                tools:text="2021.04.23"/>
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/vp2_photo"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintStart_toStartOf="@id/guideline_start"
+                app:layout_constraintEnd_toEndOf="@id/guideline_end"
+                app:layout_constraintTop_toBottomOf="@id/tv_nickname"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal"
+                android:overScrollMode="never"
+                app:layout_constraintDimensionRatio="1:1"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_page"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@id/vp2_photo"
+                app:layout_constraintEnd_toEndOf="@id/vp2_photo"
+                android:layout_margin="12dp"
+                android:padding="8dp"
+                android:background="#cc171717"
+                android:textColor="@color/songil_1"
+                android:textSize="12sp"
+                tools:text="1/2"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_review"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/vp2_photo"
+                app:layout_constraintStart_toStartOf="@id/guideline_start"
+                app:layout_constraintEnd_toEndOf="@id/guideline_end"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/spoqahansansneo_light"
+                tools:text="과실이 가슴이 무한한 아니한 얼마나 군영과 듣는다. 방황하였으며, 얼음과 이 전인 우리 오직 얼마나 우는 피다. 그들은 밝은 우리 노년에게서 구하지 것이다."
+                android:lineSpacingExtra="4sp"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_report"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/tv_review"
+                app:layout_constraintEnd_toEndOf="@id/guideline_end"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/spoqahansansneo_light"
+                android:textSize="12sp"
+                android:text="@string/report_with_underline"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="@color/g_2"
+                app:layout_constraintStart_toStartOf="@id/guideline_start"
+                app:layout_constraintEnd_toEndOf="@id/guideline_end"
+                app:layout_constraintTop_toBottomOf="@id/tv_report"
+                android:layout_marginTop="24dp"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

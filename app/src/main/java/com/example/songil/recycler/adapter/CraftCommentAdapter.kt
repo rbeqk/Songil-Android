@@ -28,6 +28,8 @@ class CraftCommentAdapter(private val context : Context, inputCommentData : Arra
         val photoCount = binding.tvPage
         val review = binding.tvReview
         val reportBtn = binding.tvReport
+        val contentLayout = binding.layoutCommentContent
+        val reportedLayout = binding.layoutReported
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -57,6 +59,13 @@ class CraftCommentAdapter(private val context : Context, inputCommentData : Arra
         }
         holder.reportBtn.setOnClickListener {
             (holder.itemView.context as CraftActivity).startActivityHorizontal(Intent(context, ReportActivity::class.java))
+        }
+        if (commentData[position].isReported == "Y"){
+            holder.contentLayout.visibility = View.INVISIBLE
+            holder.reportedLayout.visibility = View.VISIBLE
+        } else {
+            holder.contentLayout.visibility = View.VISIBLE
+            holder.reportedLayout.visibility = View.INVISIBLE
         }
     }
 
