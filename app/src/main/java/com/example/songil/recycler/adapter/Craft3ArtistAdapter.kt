@@ -6,6 +6,7 @@ import androidx.core.content.ContextCompat
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.songil.R
 import com.example.songil.data.Ask
 import com.example.songil.databinding.ItemCraft3ArtistBinding
@@ -38,7 +39,7 @@ class Craft3ArtistAdapter(private val onclick : (Int) -> Unit) : PagingDataAdapt
             holder.name.text = data.name
             holder.artistName.text = data.nickname
             holder.date.text = data.createdAt
-            //Glide.with(holder.itemView.context).load(data.imageUrl).fallback(R.drawable.ic_with_full_gray_32).into(holder.image)
+            Glide.with(holder.itemView.context).load(data.mainImageUrl).into(holder.image)
             if (data.status == 1){
                 holder.writeBtn.isClickable = true
                 holder.writeBtn.text = holder.itemView.context.getString(R.string.do_answer)
