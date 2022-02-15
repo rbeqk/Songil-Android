@@ -165,7 +165,9 @@
     <string name="form_craft_nickname">%s / %s</string>
     <string name="do_answer">답변하기</string>
     <string name="complete_answer">답변완료</string>
+    <string name="answer_content">답변 내용</string>
     <string name="hint_answer">답변 내용을 작성해주세요.</string>
+    <string name="fail_to_send_answer">답변을 등록하는데 실패했습니다. 잠시 후에 다시 시도해주세요.</string>
 
     <!-- bottom navigation 관련 -->
     <string name="home_eng">HOME</string>

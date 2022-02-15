@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.songil.R
 import com.example.songil.config.BaseActivity
 import com.example.songil.config.BaseViewModel
+import com.example.songil.config.GlobalApplication
 import com.example.songil.databinding.SimpleBaseActivityBinding
 import com.example.songil.page_artistmanage.subpage_answer.ArtistManageAnswerActivity
 import com.example.songil.popup_warning.SocketTimeoutDialog
@@ -93,9 +94,12 @@ class ArtistManageAskListActivity : BaseActivity<SimpleBaseActivityBinding>(R.la
         exitHorizontal
     }
 
-    private fun enterWritePage(position : Int){
+    private fun enterWritePage(position : Int, askIdx : Int, status : Int){
         selectPosition = position
-        getWriteResult.launch(Intent(this, ArtistManageAnswerActivity::class.java))
+        val intent = Intent(this, ArtistManageAnswerActivity::class.java)
+        intent.putExtra(GlobalApplication.TARGET_IDX, askIdx)
+        intent.putExtra("ANSWER", status)
+        getWriteResult.launch(intent)
         overridePendingTransition(R.anim.from_right, R.anim.to_left)
     }
 }

@@ -30,12 +30,10 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/btn_back"
-                        android:layout_width="22dp"
-                        android:layout_height="22dp"
+                        style="@style/toolbarButton"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        android:layout_marginStart="16dp"
                         android:src="@drawable/ic_back_22"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -96,7 +94,7 @@
                     app:layout_constraintTop_toBottomOf="@id/tv_craft_nickname"
                     app:layout_constraintStart_toStartOf="@id/guide_start"
                     app:layout_constraintEnd_toEndOf="@id/guide_end"
-                    android:text="@={viewModel.inquiryContent}"
+                    android:text="@{viewModel.inquiryContent.askContent}"
                     android:background="@drawable/shape_edittext_1"
                     android:minLines="5"
                     android:enabled="false"

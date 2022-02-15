@@ -11,7 +11,7 @@ import com.example.songil.R
 import com.example.songil.data.Ask
 import com.example.songil.databinding.ItemCraft3ArtistBinding
 
-class Craft3ArtistAdapter(private val onclick : (Int) -> Unit) : PagingDataAdapter<Ask, Craft3ArtistAdapter.Craft3ArtistViewHolder>(diffCallback){
+class Craft3ArtistAdapter(private val onclick : (Int, Int, Int) -> Unit) : PagingDataAdapter<Ask, Craft3ArtistAdapter.Craft3ArtistViewHolder>(diffCallback){
 
     companion object {
         private val diffCallback = object : DiffUtil.ItemCallback<Ask>() {
@@ -41,16 +41,14 @@ class Craft3ArtistAdapter(private val onclick : (Int) -> Unit) : PagingDataAdapt
             holder.date.text = data.createdAt
             Glide.with(holder.itemView.context).load(data.mainImageUrl).into(holder.image)
             if (data.status == 1){
-                holder.writeBtn.isClickable = true
                 holder.writeBtn.text = holder.itemView.context.getString(R.string.do_answer)
                 holder.writeBtn.setBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.songil_2))
-                holder.writeBtn.setOnClickListener {
-                    onclick(position)
-                }
             } else {
                 holder.writeBtn.text = holder.itemView.context.getString(R.string.complete_answer)
-                holder.writeBtn.isClickable = false
                 holder.writeBtn.setBackgroundColor(ContextCompat.getColor(holder.itemView.context, R.color.g_3))
+            }
+            holder.writeBtn.setOnClickListener {
+                onclick(position, data.askIdx, data.status)
             }
         }
     }
