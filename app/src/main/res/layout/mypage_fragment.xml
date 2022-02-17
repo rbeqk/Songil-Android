@@ -144,28 +144,37 @@
                     android:layout_marginTop="20dp"
                     android:background="@color/g_1">
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_point"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/btn_point"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        android:layout_marginStart="20dp"
-                        android:text="@string/point"
-                        android:fontFamily="@font/spoqahansansneo_regular"/>
+                        app:layout_constraintEnd_toStartOf="@id/vertical_point_benefit">
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_point_value"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:layout_constraintStart_toEndOf="@id/tv_point"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        android:layout_marginStart="8dp"
-                        android:fontFamily="@font/spoqahansansneo_bold"
-                        priceValue="@{viewModel.userInfo.point}"
-                        tools:text="1350"/>
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_point"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            android:layout_marginStart="20dp"
+                            android:text="@string/point"
+                            android:fontFamily="@font/spoqahansansneo_regular"/>
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_point_value"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintStart_toEndOf="@id/tv_point"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:layout_marginStart="8dp"
+                            android:fontFamily="@font/spoqahansansneo_bold"
+                            priceValue="@{viewModel.userInfo.point}"
+                            tools:text="1350"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                     <View
                         android:id="@+id/vertical_point_benefit"

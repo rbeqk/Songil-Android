@@ -9,6 +9,7 @@ import com.example.songil.R
 import com.example.songil.config.BaseFragment
 import com.example.songil.config.GlobalApplication
 import com.example.songil.config.MyPageActivityType
+import com.example.songil.data.SongilUserInfo
 import com.example.songil.databinding.MypageFragmentBinding
 import com.example.songil.page_main.MainActivity
 import com.example.songil.page_mybenefit.MybenefitActivity
@@ -16,6 +17,7 @@ import com.example.songil.page_mycomment.MycommentActivity
 import com.example.songil.page_myfavorite_article.MyFavoriteArticleActivity
 import com.example.songil.page_myfavorite_craft.MyFavoriteCraftActivity
 import com.example.songil.page_mypage_about_post.MyPagePostActivity
+import com.example.songil.page_mypage_ask_history.MyPageAskActivity
 import com.example.songil.page_needlogin.NeedLoginActivity
 import com.example.songil.page_orderstatus.OrderstatusActivity
 import com.example.songil.page_setting.SettingActivity
@@ -29,22 +31,31 @@ class MypageFragment : BaseFragment<MypageFragmentBinding>(MypageFragmentBinding
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this)[MypageViewModel::class.java]
-        binding.viewModel = viewModel
+
         binding.lifecycleOwner = this
+        binding.viewModel = viewModel
 
         setObserver()
         setButton()
+
+        viewModel.tryGetMyInfo()
     }
 
     private fun setObserver(){
-        val loginChangeObserver = Observer<Boolean>{ liveData ->
-            if (liveData){
-                binding.tvNickname.text = "Need API"
+        val loginChangeObserver = Observer<Boolean>{ isLogin ->
+            binding.btnShoppingCart.applyChange()
+            if (isLogin){
+                viewModel.tryGetMyInfo()
             } else {
-                binding.tvNickname.text = "로그인해 주세요"
+                viewModel.clearUserInfo(getString(R.string.user_name_need_login))
             }
         }
         viewModel.isLogin.observe(viewLifecycleOwner, loginChangeObserver)
+
+        val userInfoObserver = Observer<SongilUserInfo>{ _ ->
+            binding.invalidateAll()
+        }
+        viewModel.userInfo.observe(viewLifecycleOwner, userInfoObserver)
     }
 
     override fun onResume() {
@@ -80,7 +91,9 @@ class MypageFragment : BaseFragment<MypageFragmentBinding>(MypageFragmentBinding
         }
 
         binding.btnBenefit.setOnClickListener {
-            (activity as MainActivity).startActivityHorizontal(Intent(activity as MainActivity, MybenefitActivity::class.java))
+            if (GlobalApplication.checkIsLogin()) {
+                (activity as MainActivity).startActivityHorizontal(Intent(activity as MainActivity, MybenefitActivity::class.java))
+            }
         }
 
         binding.tvbtnLogout.setOnClickListener {
@@ -89,15 +102,27 @@ class MypageFragment : BaseFragment<MypageFragmentBinding>(MypageFragmentBinding
         }
 
         binding.btnFavoriteProduct.setOnClickListener {
-            (activity as MainActivity).startActivityHorizontal(Intent(activity as MainActivity, MyFavoriteCraftActivity::class.java))
+            if (GlobalApplication.checkIsLogin()) {
+                (activity as MainActivity).startActivityHorizontal(Intent(activity as MainActivity, MyFavoriteCraftActivity::class.java))
+            }
         }
 
         binding.btnOrderStatus.setOnClickListener {
-            (activity as MainActivity).startActivityHorizontal(Intent(activity as MainActivity, OrderstatusActivity::class.java))
+            if (GlobalApplication.checkIsLogin()) {
+                (activity as MainActivity).startActivityHorizontal(Intent(activity as MainActivity, OrderstatusActivity::class.java))
+            }
         }
 
         binding.btnMyComment.setOnClickListener {
-            (activity as MainActivity).startActivityHorizontal(Intent(activity as MainActivity, MycommentActivity::class.java))
+            if (GlobalApplication.checkIsLogin()) {
+                (activity as MainActivity).startActivityHorizontal(Intent(activity as MainActivity, MycommentActivity::class.java))
+            }
+        }
+
+        binding.btnOneByOneAsk.setOnClickListener {
+            if (GlobalApplication.checkIsLogin()){
+                (activity as MainActivity).startActivityHorizontal(Intent(activity as MainActivity, MyPageAskActivity::class.java))
+            }
         }
 
         binding.btnSetting.setOnClickListener {

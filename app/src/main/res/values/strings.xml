@@ -165,6 +165,7 @@
     <string name="form_craft_nickname">%s / %s</string>
     <string name="do_answer">답변하기</string>
     <string name="complete_answer">답변완료</string>
+    <string name="wait_answer">답변대기중</string>
     <string name="answer_content">답변 내용</string>
     <string name="hint_answer">답변 내용을 작성해주세요.</string>
     <string name="fail_to_send_answer">답변을 등록하는데 실패했습니다. 잠시 후에 다시 시도해주세요.</string>
@@ -182,6 +183,7 @@
     <string name="form_artist">%s 작가</string>
     
     <!-- my page 관련 -->
+    <string name="user_name_need_login">로그인이 필요합니다.</string>
     <string name="my_page_eng">MY PAGE</string>
     <string name="form_level">Lv. %d</string>
     <string name="favorite_product">찜한 상품</string>
