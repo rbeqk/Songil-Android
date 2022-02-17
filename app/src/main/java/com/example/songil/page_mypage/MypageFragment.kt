@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.example.songil.R
 import com.example.songil.config.BaseFragment
 import com.example.songil.config.GlobalApplication
@@ -18,6 +19,7 @@ import com.example.songil.page_myfavorite_article.MyFavoriteArticleActivity
 import com.example.songil.page_myfavorite_craft.MyFavoriteCraftActivity
 import com.example.songil.page_mypage_about_post.MyPagePostActivity
 import com.example.songil.page_mypage_ask_history.MyPageAskActivity
+import com.example.songil.page_mypage_modify_profile.ModifyProfileActivity
 import com.example.songil.page_needlogin.NeedLoginActivity
 import com.example.songil.page_orderstatus.OrderstatusActivity
 import com.example.songil.page_setting.SettingActivity
@@ -52,8 +54,10 @@ class MypageFragment : BaseFragment<MypageFragmentBinding>(MypageFragmentBinding
         }
         viewModel.isLogin.observe(viewLifecycleOwner, loginChangeObserver)
 
-        val userInfoObserver = Observer<SongilUserInfo>{ _ ->
+        val userInfoObserver = Observer<SongilUserInfo>{ liveData ->
             binding.invalidateAll()
+            if (liveData.userProfile != null)
+                Glide.with(this).load(liveData.userProfile).into(binding.ivProfile)
         }
         viewModel.userInfo.observe(viewLifecycleOwner, userInfoObserver)
     }
@@ -137,6 +141,13 @@ class MypageFragment : BaseFragment<MypageFragmentBinding>(MypageFragmentBinding
 
         binding.tvbtnLikeArticle.setOnClickListener {
             (activity as MainActivity).startActivityHorizontal(Intent(activity as MainActivity, MyFavoriteArticleActivity::class.java))
+        }
+
+        binding.tvbtnSetProfile.setOnClickListener {
+            val intent = Intent(activity as MainActivity, ModifyProfileActivity::class.java)
+            intent.putExtra("userNickname", viewModel.userInfo.value!!.userName)
+            intent.putExtra("imageUrl", viewModel.userInfo.value!!.userProfile)
+            (activity as MainActivity).startActivityHorizontal(intent)
         }
     }
 

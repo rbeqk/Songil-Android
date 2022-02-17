@@ -64,6 +64,7 @@
         <activity android:name=".page_myfavorite_article.MyFavoriteArticleActivity"/>
         <activity android:name=".page_mypage_about_post.MyPagePostActivity"/>
         <activity android:name=".page_mypage_ask_history.MyPageAskActivity"/>
+        <activity android:name=".page_mypage_modify_profile.ModifyProfileActivity" android:windowSoftInputMode="adjustResize"/>
     </application>
 
 </manifest>
