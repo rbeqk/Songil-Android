@@ -17,7 +17,7 @@ interface AbtestRetrofitInterface {
     @POST("with/ab-test/{abTestIdx}/comments")
     suspend fun postAbtestChat(@Path("abTestIdx") abTestIdx : Int, @Body params : RequestWriteComment) : Response<BaseResponse>
 
-    @DELETE("with/ab-test/ocomments/{commentIdx}")
+    @DELETE("with/ab-test/comments/{commentIdx}") // change ocomment to comment
     suspend fun deleteAbtestChat(@Path("commentIdx") commentIdx : Int) : Response<BaseResponse>
 
     @DELETE("with/ab-test/{abTestIdx}")
