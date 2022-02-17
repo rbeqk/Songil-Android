@@ -1,68 +1,61 @@
 package com.example.songil.page_basket
 
-import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.example.songil.page_basket.models.BasketItem
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import androidx.lifecycle.viewModelScope
+import com.example.songil.config.BaseViewModel
+import com.example.songil.page_basket.models.AmountAndPosition
+import com.example.songil.page_basket.models.CartItem
 import kotlinx.coroutines.launch
 
-class BasketViewModel : ViewModel() {
+class BasketViewModel : BaseViewModel() {
     private val repository = BasketRepository()
-    val itemList = ArrayList<BasketItem>()
-    var paymentBtnActivate = MutableLiveData<Boolean>(false)
+    val itemList = ArrayList<CartItem>()
+    var paymentBtnActivate = MutableLiveData(true)
     var itemResultCode = MutableLiveData<Int>()
     var checkAll = MutableLiveData<Boolean>(false)
 
-    var changeItemResult = MutableLiveData<Int>()
-    var removeItemResult = MutableLiveData<Int>()
+    private val _removeItemResult = MutableLiveData<Int>()
+    val removeItemResult : LiveData<Int> get() = _removeItemResult
 
-    /*fun tempFunction(){
-        itemList.add(BasketItem(1, 1, "테스트상품1", "작가1", 1, 35000, "https://kougeihin.jp/wp/wp-content/uploads/craft0629.jpg"))
-        itemList.add(BasketItem(1, 1, "테스트상품2", "작가1", 2, 30000, "https://kougeihin.jp/wp/wp-content/uploads/craft0629.jpg"))
-        itemList.add(BasketItem(1, 1, "테스트상품3", "작가2", 1, 28000, "https://kougeihin.jp/wp/wp-content/uploads/craft0629.jpg"))
-        itemList.add(BasketItem(1, 1, "테스트상품4", "작가1", 1, 34000, "https://kougeihin.jp/wp/wp-content/uploads/craft0629.jpg"))
-        itemList.add(BasketItem(1, 1, "테스트상품5", "작가3", 3, 40000, "https://kougeihin.jp/wp/wp-content/uploads/craft0629.jpg"))
-        itemResultCode.value = 1000
-    }*/
+    private val _amountChangeResult = MutableLiveData<AmountAndPosition>()
+    val amountChangeResult : LiveData<AmountAndPosition> get() = _amountChangeResult
 
-    fun tryGetCart(){
-        CoroutineScope(Dispatchers.IO).launch {
-            repository.getCartItems().let { response ->
-                if (response.isSuccessful){
-                    if (response.body()!!.code == 1000){
-                        itemList.addAll(response.body()!!.result)
-                    }
-                    itemResultCode.postValue(response.body()!!.code)
-                }
+    private val _cartItemCnt = MutableLiveData<Int>()
+    val cartItemCnt : LiveData<Int> get() = _cartItemCnt
+
+    fun tryGetCartItem(){
+        viewModelScope.launch(exceptionHandler) {
+            val result = repository.getCartItem()
+            if (result.body()?.code == 200){
+                itemList.clear()
+                itemList.addAll(result.body()!!.result)
+                _cartItemCnt.postValue(result.body()!!.result.size)
+                checkAll.postValue(true)
+            }
+            itemResultCode.postValue(result.body()?.code ?: -1)
+        }
+    }
+
+    private fun tryChangeItemCount(position : Int, amountChange : Int){
+        viewModelScope.launch(exceptionHandler) {
+            val result = repository.changeItemAmount(itemList[position].craftIdx, amountChange)
+            if (result.body()?.code == 200){
+                itemList[position].amount = result.body()!!.result.amount
+                _amountChangeResult.postValue(AmountAndPosition(result.body()!!.result.amount, position))
             }
         }
     }
 
-    fun tryChangeItemCount(position : Int){
-        CoroutineScope(Dispatchers.IO).launch {
-            repository.changeItemCount(itemList[position].cartIdx, itemList[position].amount).let { response ->
-                if (response.isSuccessful){
-                    Log.d("change item", response.body()!!.message!! + "${itemList[position]}")
-                    changeItemResult.postValue(response.body()!!.code)
-                }
+    private fun tryDeleteItem(position : Int) {
+        viewModelScope.launch(exceptionHandler) {
+            val craftIdx = itemList[position].craftIdx
+            val result = repository.deleteItem(craftIdx)
+            if (result.body()?.code == 200){
+                itemList.removeAt(position)
+                _cartItemCnt.postValue(itemList.size)
             }
-        }
-    }
-
-    fun tryDeleteItem(position : Int) {
-        val temp = itemList[position].cartIdx
-        CoroutineScope(Dispatchers.IO).launch {
-            repository.deleteItem(itemList[position].cartIdx).let { response ->
-                if (response.isSuccessful){
-                    Log.d("deleteItem", response.body()!!.message!! + "${temp}")
-                    if (response.body()!!.isSuccess){
-                        itemList.removeAt(position)
-                    }
-                    removeItemResult.postValue(response.body()!!.code)
-                }
-            }
+            _removeItemResult.postValue(result.body()?.code ?: -1)
         }
     }
 
@@ -71,7 +64,7 @@ class BasketViewModel : ViewModel() {
     fun getTotalPrice() : Int {
         var total = 0
         for (item in itemList){
-            if (item.checked)
+            if (item.checked != false)
                 total += (item.price * item.amount)
         }
         return total
@@ -81,16 +74,16 @@ class BasketViewModel : ViewModel() {
     fun getCheckCount() : Int {
         var total = 0
         for (item in itemList){
-            if (item.checked) total += 1
+            if (item.checked != false) total += 1
         }
         return total
     }
 
     // check all item is checked (apply isChecked in cbAll)
-    fun checkAllCbSelected() : Boolean {
+    private fun checkAllCbSelected() : Boolean {
         var flag = true
         for (item in itemList){
-            if (!item.checked){
+            if (item.checked == false){
                 flag = false
                 break
             }
@@ -108,17 +101,17 @@ class BasketViewModel : ViewModel() {
 
     // change item's checked
     fun toggleCheckButton(position : Int){
-        itemList[position].checked = !itemList[position].checked
+        if (itemList[position].checked == null) itemList[position].checked = true
+        itemList[position].checked = !itemList[position].checked!!
         checkAll.value = checkAllCbSelected()
     }
 
     fun changeItemAmount(position : Int, isPlus : Boolean){
         if (isPlus && itemList[position].amount < 9){
-            itemList[position].amount += 1
+            tryChangeItemCount(position, 1)
         } else if (!isPlus && itemList[position].amount > 1){
-            itemList[position].amount -= 1
+            tryChangeItemCount(position, -1)
         }
-        tryChangeItemCount(position)
     }
 
     fun removeItem(position: Int){

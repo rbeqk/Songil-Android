@@ -64,6 +64,7 @@
     <string name="form_number_bracket">(%d)</string>
 
     <!-- 장바구니 관련 -->
+    <string name="empty_shopping_basket">아직 장바구니에 담은 상품이 없어요.</string>
     <string name="shopping_basket">장바구니</string>
     <string name="select_all">전체 선택</string>
     <string name="select_all_with_count">전체 선택 (%d/%d)</string>

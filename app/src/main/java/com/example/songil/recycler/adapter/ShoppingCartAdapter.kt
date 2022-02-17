@@ -8,15 +8,15 @@ import com.bumptech.glide.Glide
 import com.example.songil.R
 import com.example.songil.databinding.ItemShoppingcartBinding
 import com.example.songil.page_basket.BasketViewModel
-import com.example.songil.page_basket.models.BasketItem
+import com.example.songil.page_basket.models.CartItem
 
 class ShoppingCartAdapter(private val context : Context, private val viewModel : BasketViewModel) : RecyclerView.Adapter<ShoppingCartAdapter.ViewHolder>() {
 
-    private var dataList = ArrayList<BasketItem>()
+    private var dataList = ArrayList<CartItem>()
     private val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
     private lateinit var binding : ItemShoppingcartBinding
 
-    class ViewHolder(binding : ItemShoppingcartBinding) : RecyclerView.ViewHolder(binding.root){
+    inner class ViewHolder(binding : ItemShoppingcartBinding) : RecyclerView.ViewHolder(binding.root){
         val image = binding.ivPhoto
         val craftName = binding.tvCraft
         val craftCount = binding.tvCount
@@ -34,9 +34,9 @@ class ShoppingCartAdapter(private val context : Context, private val viewModel :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        Glide.with(context).load(dataList[position].thumbNailImg).into(holder.image)
+        Glide.with(context).load(dataList[position].mainImageUrl).into(holder.image)
         holder.craftCount.text = dataList[position].amount.toString()
-        holder.craftName.text = dataList[position].productName
+        holder.craftName.text = dataList[position].name
         holder.artistName.text = dataList[position].artistName
         holder.checkBox.setOnClickListener{
             viewModel.toggleCheckButton(position)
@@ -51,13 +51,18 @@ class ShoppingCartAdapter(private val context : Context, private val viewModel :
             viewModel.removeItem(position)
             notifyDataSetChanged()
         }
-        holder.checkBox.isChecked = dataList[position].checked
+        if (dataList[position].checked == null) {
+            dataList[position].checked = true
+            holder.checkBox.isChecked = true
+        } else {
+            holder.checkBox.isChecked = dataList[position].checked!!
+        }
         holder.price.text = context.getString(R.string.form_price_won, dataList[position].price)
     }
 
     override fun getItemCount(): Int = dataList.size
 
-    fun applyData(newData : ArrayList<BasketItem>){
+    fun applyData(newData : ArrayList<CartItem>){
         dataList = newData
         notifyDataSetChanged()
     }

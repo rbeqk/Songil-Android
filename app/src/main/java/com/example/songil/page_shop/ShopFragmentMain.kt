@@ -37,6 +37,7 @@ class ShopFragmentMain : BaseFragment<ShopFragmentMainBinding>(ShopFragmentMainB
     RvCategoryView<Int>, RvClickView {
 
     private lateinit var viewModel : ShopMainViewModel
+    private var isFirst = true
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -48,7 +49,15 @@ class ShopFragmentMain : BaseFragment<ShopFragmentMainBinding>(ShopFragmentMainB
         setObserver()
 
         viewModel.tryGetShopMain()
-        //viewModel.loadData()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (!isFirst){
+            binding.btnShoppingbasket.applyChange()
+        } else {
+            isFirst = false
+        }
     }
 
     override fun categoryClick(data: Int) {

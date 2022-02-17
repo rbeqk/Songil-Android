@@ -2,6 +2,7 @@ package com.example.songil.page_basket
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -9,10 +10,10 @@ import androidx.recyclerview.widget.SimpleItemAnimator
 import com.example.songil.R
 import com.example.songil.config.BaseActivity
 import com.example.songil.databinding.ShoppingbasketActivityBinding
+import com.example.songil.page_basket.models.AmountAndPosition
 import com.example.songil.recycler.adapter.ShoppingCartAdapter
-import com.example.songil.recycler.rv_interface.RvTriggerView
 
-class BasketActivity : BaseActivity<ShoppingbasketActivityBinding>(R.layout.shoppingbasket_activity), RvTriggerView {
+class BasketActivity : BaseActivity<ShoppingbasketActivityBinding>(R.layout.shoppingbasket_activity) {
     private lateinit var viewModel : BasketViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,40 +27,56 @@ class BasketActivity : BaseActivity<ShoppingbasketActivityBinding>(R.layout.shop
         setObserver()
         setBtn()
 
-        viewModel.tryGetCart()
+        viewModel.tryGetCartItem()
     }
 
     private fun setObserver(){
-        val resultCodeObserver = Observer<Int>{ liveData ->
-            if (liveData == 1000){
+        // when receive cart item list, change view (cart item placed in VM)
+        val resultCartItemObserver = Observer<Int>{ liveData ->
+            if (liveData == 200){
                 (binding.rvShoppingContent.adapter as ShoppingCartAdapter).applyData(viewModel.itemList)
-                binding.btnPayment.text = getString(R.string.form_price_won, viewModel.getTotalPrice())
-                //viewModel.checkAll.value = viewModel.checkAllCbSelected()
+                binding.btnPayment.text = getString(R.string.form_payment, viewModel.getTotalPrice())
                 binding.tvSelectAll.text = getString(R.string.select_all_with_count, viewModel.getCheckCount(), viewModel.itemList.size)
             }
         }
-        viewModel.itemResultCode.observe(this, resultCodeObserver)
+        viewModel.itemResultCode.observe(this, resultCartItemObserver)
 
-        val resultChangeObserver = Observer<Int> { liveData ->
-            if (liveData == 1000){
-                (binding.rvShoppingContent.adapter as ShoppingCartAdapter).changeData()
-                changeActivityViews()
-            }
-        }
-        viewModel.changeItemResult.observe(this, resultChangeObserver)
-
+        // when remove cart item, receive result and if result is successful, change view
         val resultRemoveObserver = Observer<Int> { liveData ->
-            if (liveData == 1000){
+            if (liveData == 200){
                 (binding.rvShoppingContent.adapter as ShoppingCartAdapter).changeData()
                 changeActivityViews()
             }
         }
         viewModel.removeItemResult.observe(this, resultRemoveObserver)
 
+        // when toggle top checkbox (can toggle all item)
         val checkAllObserver = Observer<Boolean>{
             changeActivityViews()
         }
         viewModel.checkAll.observe(this, checkAllObserver)
+
+        // when call cart item amount change api, receive result and apply to view
+        val amountChangeObserver = Observer<AmountAndPosition> { liveData ->
+            (binding.rvShoppingContent.adapter as ShoppingCartAdapter).notifyItemChanged(liveData.position)
+            changeActivityViews()
+        }
+        viewModel.amountChangeResult.observe(this, amountChangeObserver)
+
+        // when cart item cnt is 0, show empty message view
+        // otherwise, hide empty message view
+        val cartItemCntObserver = Observer<Int> { cnt ->
+            when (cnt){
+                0 -> {
+                    binding.viewEmpty.root.visibility = View.VISIBLE
+                    binding.viewEmpty.tvNoProductYet.text = getString(R.string.empty_shopping_basket)
+                }
+                else -> {
+                    binding.viewEmpty.root.visibility = View.GONE
+                }
+            }
+        }
+        viewModel.cartItemCnt.observe(this, cartItemCntObserver)
     }
 
     private fun setRecyclerView(){
@@ -72,43 +89,25 @@ class BasketActivity : BaseActivity<ShoppingbasketActivityBinding>(R.layout.shop
     }
     
     private fun setBtn(){
-        binding.cbSelectAll.setOnClickListener { // 전체 선택 버튼 클릭 이벤트 
+        binding.cbSelectAll.setOnClickListener { // when click top checkbox
             viewModel.changeCbAll() 
-            (binding.rvShoppingContent.adapter as ShoppingCartAdapter).changeData()    // adapter 에 데이터 변화 전달
+            (binding.rvShoppingContent.adapter as ShoppingCartAdapter).changeData()    // send signal to adapter (data select stat is changed)
             changeActivityViews()
         }
         binding.btnPayment.setOnClickListener {
             Log.d("test", "payment ${viewModel.itemList}")
         }
         binding.btnBack.setOnClickListener {
-            onBackPressed()
+            finish()
         }
     }
 
+    // when change data in viewModel, change view to apply VM's data
     private fun changeActivityViews(){
-        binding.btnPayment.text = getString(R.string.form_price_won, viewModel.getTotalPrice())
+        binding.btnPayment.text = getString(R.string.form_payment, viewModel.getTotalPrice())
         viewModel.paymentBtnActivate.value = (viewModel.getTotalPrice() != 0)
         binding.tvSelectAll.text = getString(R.string.select_all_with_count, viewModel.getCheckCount(), viewModel.itemList.size)
     }
-
-    // call in adapter
-    override fun notifyDataChange(type : Int, position : Int?) {
-        when (type){
-            0 -> { // check 만 변경, 서버 호출 불필요
-                viewModel.checkAll.value = viewModel.checkAllCbSelected()
-            }
-            1 -> { // 개수 조정
-                viewModel.tryChangeItemCount(position!!)
-            }
-            else -> {   // 삭제
-                viewModel.tryDeleteItem(position!!)
-            }
-        }
-        changeActivityViews()
-    }
-
-    // Activity 의 notifyDataChange -> Adapter 에서 Activity 로 데이터 변화 알림
-    // Adapter 의 changeData -> Activity 에서 Adapter 로 데이터 변화 알림
 
     override fun finish() {
         super.finish()

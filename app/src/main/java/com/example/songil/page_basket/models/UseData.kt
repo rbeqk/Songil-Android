@@ -1,3 +1,8 @@
 package com.example.songil.page_basket.models
 
-data class BasketItem(val cartIdx : Int, val productIdx : Int, val productName : String, val artistName : String, var amount : Int, val price : Int, val thumbNailImg : String, var checked: Boolean = true)
+data class CartItem(val craftIdx : Int, val mainImageUrl : String, val name : String, val artistIdx : Int, val artistName : String, val price : Int, var amount : Int, var checked : Boolean ?= null)
+
+data class Amount(val amount : Int)
+
+// after amount change api called, used in Adapter to notifyItemChange(position)
+data class AmountAndPosition(val amount : Int, val position : Int)

@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.animation.TranslateAnimation
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
@@ -52,6 +51,11 @@ class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity
         }
     }
 
+    override fun onRestart() {
+        super.onRestart()
+        binding.btnShoppingbasket.applyChange()
+    }
+
     private fun setObserver(){
         val resultCodeObserver = Observer<Int>{ liveData ->
             when (liveData) {
@@ -60,7 +64,7 @@ class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity
                     addFragments()
                 }
                 else -> {
-                    Toast.makeText(this, viewModel.message, Toast.LENGTH_SHORT).show()
+                    showSimpleToastMessage(viewModel.message)
                 }
             }
         }
@@ -91,8 +95,9 @@ class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity
         viewModel.itemCount.observe(this, productCountObserver)
 
         val addToCartObserver = Observer<Int>{ liveData ->
-            if (liveData == 1000){
+            if (liveData == 200){
                 clearBottomButtonState()
+                binding.btnShoppingbasket.applyChange()
             }
         }
         viewModel.addCartResult.observe(this, addToCartObserver)

@@ -59,6 +59,11 @@ class ShopActivityCategory : BaseActivity<ShopActivityCategoryBinding>(R.layout.
         viewModel.tryGetStartIdx()
     }
 
+    override fun onRestart() {
+        super.onRestart()
+        binding.btnShoppingbasket.applyChange()
+    }
+
     // call when select category in category recyclerview
     override fun categoryClick(data: Int) {
         viewModel.setCategory(data)

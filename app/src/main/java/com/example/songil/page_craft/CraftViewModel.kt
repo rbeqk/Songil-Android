@@ -69,11 +69,8 @@ class CraftViewModel : BaseViewModel() {
 
     fun tryAddToCart(){
         viewModelScope.launch(exceptionHandler) {
-            repository.addToCart(craftIdx, itemCount.value!!).let { response ->
-                if (response.isSuccessful){
-                    addCartResult.postValue(response.body()!!.code)
-                }
-            }
+            val result = repository.addToCart(craftIdx, itemCount.value!!)
+            addCartResult.postValue(result.body()?.code ?: -1)
         }
     }
 
