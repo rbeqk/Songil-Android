@@ -58,6 +58,8 @@ class MypageFragment : BaseFragment<MypageFragmentBinding>(MypageFragmentBinding
             binding.invalidateAll()
             if (liveData.userProfile != null)
                 Glide.with(this).load(liveData.userProfile).into(binding.ivProfile)
+            else
+                binding.ivProfile.setImageResource(0)
         }
         viewModel.userInfo.observe(viewLifecycleOwner, userInfoObserver)
     }

@@ -1,6 +1,5 @@
 package com.example.songil.custom_view.shopping_cart_button
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.util.AttributeSet
@@ -10,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewTreeLifecycleOwner
 import androidx.lifecycle.ViewTreeViewModelStoreOwner
+import com.example.songil.config.BaseActivity
 import com.example.songil.config.GlobalApplication
 import com.example.songil.databinding.ViewShoppingCartButtonBinding
 import com.example.songil.page_basket.BasketActivity
@@ -21,7 +21,7 @@ class ShoppingCartButton(context: Context, attrs : AttributeSet) : ConstraintLay
     init {
         binding.tvShoppingCartCount.text = GlobalApplication.globalSharedPreferences.getInt("count", 0).toString()
         binding.root.setOnClickListener {
-            context.startActivity(Intent((context as Activity), BasketActivity::class.java))
+            (context as BaseActivity<*>).startActivityHorizontal(Intent(context, BasketActivity::class.java))
         }
     }
 
