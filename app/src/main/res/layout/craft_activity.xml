@@ -40,7 +40,7 @@
                         android:tint="@color/songil_2"
                         android:src="@drawable/ic_back_22"/>
 
-                    <com.example.songil.custom_view.ShoppingCartButton
+                    <com.example.songil.custom_view.shopping_cart_button.ShoppingCartButton
                         android:id="@+id/btn_shoppingbasket"
                         android:layout_width="28dp"
                         android:layout_height="28dp"

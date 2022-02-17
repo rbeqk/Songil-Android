@@ -12,6 +12,7 @@ import androidx.databinding.InverseBindingListener
 import com.example.songil.R
 import com.example.songil.page_needlogin.NeedLoginActivity
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import java.text.DecimalFormat
 
 object BindingAdapter {
     @JvmStatic
@@ -51,5 +52,17 @@ object BindingAdapter {
             view.setTextColor(view.context.getColor(R.color.songil_2))
             view.isClickable = true
         }
+    }
+
+    @JvmStatic
+    @BindingAdapter("priceValue")
+    fun setPriceIntText(view : TextView, price : Int){
+        view.text = DecimalFormat("#,###").format(price)
+    }
+
+    @JvmStatic
+    @BindingAdapter("simpleInterValue")
+    fun setSimpleIntText(view : TextView, integer : Int) {
+        view.text = integer.toString()
     }
 }
