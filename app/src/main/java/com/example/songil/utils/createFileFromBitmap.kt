@@ -10,7 +10,7 @@ import java.util.*
 fun createFileFromBitmap(bitmap: Bitmap, context: Context, position : Int) : File {
     val file = File(context.filesDir, makeUploadFileName(position))
     val fileOutputStream = FileOutputStream(file)
-    bitmap.compress(Bitmap.CompressFormat.PNG, 100, fileOutputStream)
+    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream)
     fileOutputStream.close()
     return file
 }
