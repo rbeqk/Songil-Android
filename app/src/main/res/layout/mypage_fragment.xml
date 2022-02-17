@@ -50,7 +50,8 @@
                         android:src="@drawable/ic_setting_22"/>
 
 
-                    <com.example.songil.custom_view.ShoppingCartButton
+                    <com.example.songil.custom_view.shopping_cart_button.ShoppingCartButton
+                        android:id="@+id/btn_shopping_cart"
                         android:layout_width="28dp"
                         android:layout_height="28dp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -115,6 +116,7 @@
                     android:layout_marginStart="16dp"
                     android:textSize="16sp"
                     android:fontFamily="@font/spoqahansansneo_bold"
+                    android:text="@{viewModel.userInfo.userName}"
                     tools:text="야작중인고양이"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -127,6 +129,7 @@
                     android:layout_width="48dp"
                     android:layout_height="26dp"
                     android:gravity="center"
+                    android:visibility="invisible"
                     android:fontFamily="@font/montserrat_extrabold"
                     android:textSize="12sp"
                     tools:text="Lv.5"/>
@@ -161,6 +164,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         android:layout_marginStart="8dp"
                         android:fontFamily="@font/spoqahansansneo_bold"
+                        priceValue="@{viewModel.userInfo.point}"
                         tools:text="1350"/>
 
                     <View
@@ -194,6 +198,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="4dp"
                             android:fontFamily="@font/spoqahansansneo_bold"
+                            simpleInterValue="@{viewModel.userInfo.benefitCnt}"
                             tools:text="3"/>
 
                     </LinearLayout>
@@ -216,6 +221,7 @@
                         android:layout_height="wrap_content"
                         android:textSize="18sp"
                         tools:text="1"
+                        simpleInterValue="@{viewModel.userInfo.likedCraftCnt}"
                         android:fontFamily="@font/montserrat_bold"/>
 
                     <TextView
@@ -244,6 +250,7 @@
                         android:layout_height="wrap_content"
                         android:textSize="18sp"
                         tools:text="1"
+                        simpleInterValue="@{viewModel.userInfo.orderCnt}"
                         android:fontFamily="@font/montserrat_bold"/>
 
                     <TextView
@@ -272,6 +279,7 @@
                         android:layout_height="wrap_content"
                         android:textSize="18sp"
                         tools:text="1"
+                        simpleInterValue="@{viewModel.userInfo.commentCnt}"
                         android:fontFamily="@font/montserrat_bold"/>
 
                     <TextView
@@ -300,6 +308,7 @@
                         android:layout_height="wrap_content"
                         android:textSize="18sp"
                         tools:text="1"
+                        simpleInterValue="@{viewModel.userInfo.askCnt}"
                         android:fontFamily="@font/montserrat_bold"/>
 
                     <TextView
