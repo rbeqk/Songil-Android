@@ -155,8 +155,9 @@ class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity
         }
 
         binding.btnBuyNow.setOnClickListener {
-            Log.d("btnBuyNow", "click")
-            startActivityHorizontal(Intent(this, OrderActivity::class.java))
+            val intent = Intent(this, OrderActivity::class.java)
+            intent.putExtra("ORDER_CRAFTS", arrayListOf(viewModel.getOrderCraftForm()))
+            startActivityHorizontal(intent)
         }
 
         binding.btnAddToCart.setOnClickListener {

@@ -29,10 +29,10 @@ class Craft4Adapter : RecyclerView.Adapter<Craft4Adapter.Craft4ViewHolder>(){
     }
 
     override fun onBindViewHolder(holder: Craft4ViewHolder, position: Int) {
-        Glide.with(holder.itemView.context).load(craft4Data[position].imageUrl).into(holder.image)
+        Glide.with(holder.itemView.context).load(craft4Data[position].mainImageUrl).into(holder.image)
         holder.craftName.text = craft4Data[position].name
-        holder.artistName.text = craft4Data[position].artist
-        holder.count.text = holder.itemView.context.getString(R.string.form_single_count, craft4Data[position].count)
+        holder.artistName.text = craft4Data[position].artistName
+        holder.count.text = holder.itemView.context.getString(R.string.form_single_count, craft4Data[position].amount)
         holder.price.text = holder.itemView.context.getString(R.string.form_price_won, craft4Data[position].price)
         if (position == itemCount - 1){
             holder.line.visibility = View.INVISIBLE

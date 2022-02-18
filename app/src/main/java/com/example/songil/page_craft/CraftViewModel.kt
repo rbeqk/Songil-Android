@@ -3,6 +3,7 @@ package com.example.songil.page_craft
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.songil.config.BaseViewModel
+import com.example.songil.data.CraftAndAmount
 import com.example.songil.data.CraftDetailInfo
 import com.example.songil.data.LikeData
 import kotlinx.coroutines.launch
@@ -77,6 +78,10 @@ class CraftViewModel : BaseViewModel() {
 
     fun setCraftIdx(idx : Int){
         craftIdx = idx
+    }
+
+    fun getOrderCraftForm() : CraftAndAmount {
+        return CraftAndAmount(craftIdx, itemCount.value!!)
     }
 
     fun setBtnActivate(idx : Int){

@@ -1,41 +1,67 @@
 package com.example.songil.page_order
 
+import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.songil.config.BaseViewModel
 import com.example.songil.data.Craft4
-import com.example.songil.data.OrderForm
+import com.example.songil.data.CraftAndAmount
+import com.example.songil.page_order.models.OrderRecipientData
+import com.example.songil.page_order.models.PriceData
+import com.example.songil.page_order.models.ShippingInfo
+import kotlinx.coroutines.launch
 
-class OrderViewModel : ViewModel() {
-    var orderFormResult = MutableLiveData<Int>()
+class OrderViewModel : BaseViewModel() {
+
+    private val repository = OrderRepository()
+
     var craftList = ArrayList<Craft4>()
-    var recipient = ""
-    var phoneNumber = ""
-    var zipCode = ""
-    var address = ""
-    var detailAddress = ""
-    var memo = ""
-    var point = "0"
-    var havePoint = 0
-    var coupon = "없음"
-    var couponIdx = -1
-    var shippingFee = 0
-    var totalPrice = 0
 
-    fun tryGetOrderForm(){
-        val orderForm = OrderForm(arrayListOf(Craft4(1, "https://cdn.class101.net/images/07064f5a-c599-4c8b-b77a-a2c0857849ef/original", "상품", "손길", 30000, 1)))
-        recipient = orderForm.recipient
-        zipCode = orderForm.zipCode
-        address = orderForm.address
-        detailAddress = orderForm.detailAddress
-        craftList = orderForm.craft
-        havePoint = orderForm.havePoint
-        orderFormResult.value = 200
+    private val _getOrderInfoResult = MutableLiveData<Int>()
+    val getOrderInfoResult : LiveData<Int> get() = _getOrderInfoResult
+
+    private val _getExtraFeeResult = MutableLiveData<Int>()
+    val getExtraFeeResult : LiveData<Int> get() = _getExtraFeeResult
+
+    var btnActivate = MutableLiveData(false)
+    var orderIdx = 0
+
+    val priceData = PriceData()
+    val shippingInfo = ShippingInfo()
+
+    // 주문서 정보 수신
+    fun tryGetOrderForm(crafts : ArrayList<CraftAndAmount>){
+        viewModelScope.launch(exceptionHandler) {
+            val result = repository.getOrderData(crafts)
+            if (result.body()?.code == 200){
+                val data = result.body()!!.result
+                craftList.clear()
+                craftList.addAll(data.craft)
+                priceData.havePoint = data.point
+                priceData.shippingFee = data.totalBasicShippingFee
+                priceData.craftTotalPrice = data.totalCraftPrice
+                orderIdx = data.orderIdx
+            }
+            _getOrderInfoResult.value = (result.body()?.code ?: -1)
+        }
     }
 
-    private fun getTotalPrice(){
-        for (craft in craftList){
-            totalPrice += craft.price
+    // 우편 번호로 산간 지역 확인
+    fun tryCheckExtraFee() {
+        viewModelScope.launch(exceptionHandler) {
+            val result = repository.postExtraFee(orderIdx, shippingInfo.zipCode)
+            if (result.body()?.code == 200){
+                priceData.extraShippingFee = result.body()!!.result.totalExtraShippingFee
+            }
+            _getExtraFeeResult.postValue(result.body()?.code ?: -1)
         }
-        totalPrice += shippingFee
+    }
+
+
+    // 결제 버튼의 활성화 여부 설정
+    fun checkBtnActivate(){
+        btnActivate.value = (shippingInfo.recipient != "" && shippingInfo.phone != "" && shippingInfo.zipCode != "" &&
+                shippingInfo.address != "" && shippingInfo.detailAddress != "")
     }
 }

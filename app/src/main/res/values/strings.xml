@@ -69,6 +69,7 @@
     <string name="select_all">전체 선택</string>
     <string name="select_all_with_count">전체 선택 (%d/%d)</string>
     <string name="form_payment">%d원 결제하기</string>
+    <string name="form_payment_string">%s원 결제하기</string>
     <string name="word_minus">\u2212</string>
     <string name="word_plus">\u002b</string>
 
@@ -111,9 +112,12 @@
     <string name="final_payment_amount">최종 결제금액</string>
     <string name="craft_payment_amount">상품 금액</string>
     <string name="shipping_fee">배송비</string>
+    <string name="extra_shipping_fee">산간지역 배송비</string>
     <string name="point_discount">포인트 할인</string>
     <string name="coupon_discount">쿠폰 할인</string>
     <string name="sum">합계</string>
+    <string name="form_price_won_kr_string">%s원</string>
+    <string name="form_have_point">보유 포인트 %s</string>
 
     <!-- 정렬 bottom sheet 관련 -->
     <string name="sort_popular">인기순</string>

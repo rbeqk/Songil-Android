@@ -1,5 +1,6 @@
 package com.example.songil.page_basket
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -11,6 +12,7 @@ import com.example.songil.R
 import com.example.songil.config.BaseActivity
 import com.example.songil.databinding.ShoppingbasketActivityBinding
 import com.example.songil.page_basket.models.AmountAndPosition
+import com.example.songil.page_order.OrderActivity
 import com.example.songil.recycler.adapter.ShoppingCartAdapter
 
 class BasketActivity : BaseActivity<ShoppingbasketActivityBinding>(R.layout.shoppingbasket_activity) {
@@ -95,7 +97,9 @@ class BasketActivity : BaseActivity<ShoppingbasketActivityBinding>(R.layout.shop
             changeActivityViews()
         }
         binding.btnPayment.setOnClickListener {
-            Log.d("test", "payment ${viewModel.itemList}")
+            val intent = Intent(this, OrderActivity::class.java)
+            intent.putExtra("ORDER_CRAFTS", viewModel.getOrderCraftForm())
+            startActivityHorizontal(intent)
         }
         binding.btnBack.setOnClickListener {
             finish()

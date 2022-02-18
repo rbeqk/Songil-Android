@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.songil.config.BaseViewModel
+import com.example.songil.data.CraftAndAmount
 import com.example.songil.page_basket.models.AmountAndPosition
 import com.example.songil.page_basket.models.CartItem
 import kotlinx.coroutines.launch
@@ -112,6 +113,14 @@ class BasketViewModel : BaseViewModel() {
         } else if (!isPlus && itemList[position].amount > 1){
             tryChangeItemCount(position, -1)
         }
+    }
+
+    fun getOrderCraftForm() : ArrayList<CraftAndAmount> {
+        val temp = ArrayList<CraftAndAmount>()
+        for (item in itemList){
+            temp.add(CraftAndAmount(item.craftIdx, item.amount))
+        }
+        return temp
     }
 
     fun removeItem(position: Int){
