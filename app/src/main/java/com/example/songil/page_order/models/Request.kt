@@ -5,3 +5,5 @@ import com.example.songil.data.CraftAndAmount
 data class RequestBodyGetOrder(val crafts : ArrayList<CraftAndAmount>)
 
 data class RequestBodyPostExtraFee(val zipcode : String)
+
+data class RequestBodyPostBenefit(val benefitIdx : Int?)

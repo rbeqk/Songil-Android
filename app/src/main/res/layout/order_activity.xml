@@ -371,6 +371,7 @@
                         app:layout_constraintStart_toStartOf="@id/guideline_edittext_start_benefit"
                         app:layout_constraintEnd_toStartOf="@id/btn_check_coupon"
                         android:layout_marginEnd="6dp"
+                        android:enabled="false"
                         style="@style/EditTextStyle"
                         tools:text="test"
                         />

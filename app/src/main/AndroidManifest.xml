@@ -65,6 +65,7 @@
         <activity android:name=".page_mypage_about_post.MyPagePostActivity"/>
         <activity android:name=".page_mypage_ask_history.MyPageAskActivity"/>
         <activity android:name=".page_mypage_modify_profile.ModifyProfileActivity" android:windowSoftInputMode="adjustResize"/>
+        <activity android:name=".page_order.subpage_benefit.ApplyBenefitActivity"/>
     </application>
 
 </manifest>

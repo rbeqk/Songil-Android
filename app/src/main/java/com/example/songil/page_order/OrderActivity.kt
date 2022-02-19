@@ -15,6 +15,7 @@ import com.example.songil.config.BaseActivity
 import com.example.songil.config.GlobalApplication
 import com.example.songil.data.CraftAndAmount
 import com.example.songil.databinding.OrderActivityBinding
+import com.example.songil.page_order.subpage_benefit.ApplyBenefitActivity
 import com.example.songil.recycler.adapter.Craft4Adapter
 import com.example.songil.utils.changeToPriceForm
 import com.example.songil.utils.changeToPriceFormKr
@@ -32,11 +33,18 @@ class OrderActivity : BaseActivity<OrderActivityBinding>(R.layout.order_activity
 
     private val orderViewModel : OrderViewModel by lazy { ViewModelProvider(this)[OrderViewModel::class.java] }
     private var fixEditTextByUser = false
+    private val benefitActivityRegister = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
+        if (result.resultCode == RESULT_OK){
+            val intentData = result.data?.getIntExtra("BENEFIT_IDX", -1)
+            val benefitIdx = if (intentData == -1) null else intentData
+            orderViewModel.tryApplyBenefit(benefitIdx)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        @SuppressWarnings("unchecked")
+        @Suppress("UNCHECKED_CAST")
         val orderCrafts = intent.getSerializableExtra("ORDER_CRAFTS") as ArrayList<CraftAndAmount>
 
         binding.viewModel = orderViewModel
@@ -79,6 +87,13 @@ class OrderActivity : BaseActivity<OrderActivityBinding>(R.layout.order_activity
 
         binding.btnPayment.setOnClickListener {
             goBootPayRequest()
+        }
+
+        binding.btnCheckCoupon.setOnClickListener {
+            val intent = Intent(this, ApplyBenefitActivity::class.java)
+            intent.putExtra("ORDER_IDX", orderViewModel.orderIdx)
+            benefitActivityRegister.launch(intent)
+            overridePendingTransition(R.anim.from_right, R.anim.to_left)
         }
     }
 
@@ -150,6 +165,15 @@ class OrderActivity : BaseActivity<OrderActivityBinding>(R.layout.order_activity
             }
         }
         orderViewModel.getExtraFeeResult.observe(this, getExtraFeeResult)
+
+        val applyBenefitObserver = Observer<Int> { resultCode ->
+            when (resultCode){
+                200 -> {
+                    applyPriceChange()
+                }
+            }
+        }
+        orderViewModel.applyBenefitResult.observe(this, applyBenefitObserver)
     }
 
     private fun applyPriceChange(){
@@ -158,6 +182,7 @@ class OrderActivity : BaseActivity<OrderActivityBinding>(R.layout.order_activity
         binding.tvShippingFeeValue.text = changeToPriceFormKr(orderViewModel.priceData.shippingFee, isMinus = false)
         binding.tvPointDiscountValue.text = changeToPriceFormKr(orderViewModel.priceData.usePoint, isMinus = true)
         binding.tvCouponDiscountValue.text = changeToPriceFormKr(orderViewModel.priceData.couponDiscount, isMinus = true)
+        binding.etCoupon.setText(orderViewModel.priceData.couponName ?: getString(R.string.none))
         if (orderViewModel.priceData.extraShippingFee != 0) {
             binding.tvExtraShippingFee.visibility = View.VISIBLE
             binding.tvExtraShippingFeeValue.visibility = View.VISIBLE

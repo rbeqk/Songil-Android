@@ -118,6 +118,7 @@
     <string name="sum">합계</string>
     <string name="form_price_won_kr_string">%s원</string>
     <string name="form_have_point">보유 포인트 %s</string>
+    <string name="none">없음</string>
 
     <!-- 정렬 bottom sheet 관련 -->
     <string name="sort_popular">인기순</string>

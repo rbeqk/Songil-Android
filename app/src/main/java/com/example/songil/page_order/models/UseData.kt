@@ -6,10 +6,12 @@ data class GetOrderInfoResponseBody(val orderIdx : Int, val craft : ArrayList<Cr
 
 data class PostExtraFeeResponseBody(val totalExtraShippingFee : Int, val finalPrice : Int)
 
+data class PostBenefitResponseBody(val benefitIdx : Int?, val title : String?, val benefitDiscount : Int, val finalPrice : Int)
+
 data class OrderRecipientData(var recipient : String = "", var phone : String = "", var address : String = "",
                               var detailAddress : String = "", var memo : String = "", var pointDiscount : Int = 0)
 
-class PriceData(var craftTotalPrice : Int = 0, var couponName : String = "", var couponDiscount : Int = 0, var shippingFee : Int = 0, var extraShippingFee : Int = 0,
+class PriceData(var craftTotalPrice : Int = 0, var couponName : String? = null, var couponDiscount : Int = 0, var shippingFee : Int = 0, var extraShippingFee : Int = 0,
                 var usePoint : Int = 0, var havePoint : Int = 0) {
 
     fun applyUserPoint(inputPoint : Int) {

@@ -1,9 +1,6 @@
 package com.example.songil.page_order
 
-import com.example.songil.page_order.models.RequestBodyGetOrder
-import com.example.songil.page_order.models.RequestBodyPostExtraFee
-import com.example.songil.page_order.models.ResponseGetOrder
-import com.example.songil.page_order.models.ResponsePostExtraFee
+import com.example.songil.page_order.models.*
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
@@ -15,4 +12,7 @@ interface OrderRetrofitInterface {
 
     @POST("orders/{orderIdx}/extra-fee")
     suspend fun postOrderExtraFee(@Path("orderIdx") orderIdx : Int, @Body params : RequestBodyPostExtraFee) : Response<ResponsePostExtraFee>
+
+    @POST("orders/{orderIdx}/benefits")
+    suspend fun postBenefit(@Path("orderIdx") orderIdx :Int, @Body params : RequestBodyPostBenefit) : Response<ResponsePostBenefit>
 }

@@ -1,13 +1,11 @@
 package com.example.songil.page_order
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.songil.config.BaseViewModel
 import com.example.songil.data.Craft4
 import com.example.songil.data.CraftAndAmount
-import com.example.songil.page_order.models.OrderRecipientData
 import com.example.songil.page_order.models.PriceData
 import com.example.songil.page_order.models.ShippingInfo
 import kotlinx.coroutines.launch
@@ -23,6 +21,9 @@ class OrderViewModel : BaseViewModel() {
 
     private val _getExtraFeeResult = MutableLiveData<Int>()
     val getExtraFeeResult : LiveData<Int> get() = _getExtraFeeResult
+
+    private val _applyBenefitResult = MutableLiveData<Int>()
+    val applyBenefitResult : LiveData<Int> get() = _applyBenefitResult
 
     var btnActivate = MutableLiveData(false)
     var orderIdx = 0
@@ -55,6 +56,18 @@ class OrderViewModel : BaseViewModel() {
                 priceData.extraShippingFee = result.body()!!.result.totalExtraShippingFee
             }
             _getExtraFeeResult.postValue(result.body()?.code ?: -1)
+        }
+    }
+
+    // 베네핏 (쿠폰) 적용
+    fun tryApplyBenefit(benefitIdx : Int?){
+        viewModelScope.launch(exceptionHandler) {
+            val result = repository.postBenefit(orderIdx, benefitIdx)
+            if (result.body()?.code == 200){
+                priceData.couponDiscount = result.body()!!.result.benefitDiscount
+                priceData.couponName = result.body()!!.result.title
+            }
+            _applyBenefitResult.postValue(result.body()?.code ?: -1)
         }
     }
 

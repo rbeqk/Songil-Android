@@ -2,10 +2,7 @@ package com.example.songil.page_order
 
 import com.example.songil.config.GlobalApplication
 import com.example.songil.data.CraftAndAmount
-import com.example.songil.page_order.models.RequestBodyGetOrder
-import com.example.songil.page_order.models.RequestBodyPostExtraFee
-import com.example.songil.page_order.models.ResponseGetOrder
-import com.example.songil.page_order.models.ResponsePostExtraFee
+import com.example.songil.page_order.models.*
 import retrofit2.Response
 
 class OrderRepository {
@@ -19,6 +16,12 @@ class OrderRepository {
 
     suspend fun postExtraFee(orderIdx : Int, zipcode : String) : Response<ResponsePostExtraFee> {
         val result = retrofit.postOrderExtraFee(orderIdx, RequestBodyPostExtraFee(zipcode))
+        if (result.isSuccessful) return result
+        else throw UnknownError()
+    }
+
+    suspend fun postBenefit(orderIdx : Int, benefitIdx : Int?) : Response<ResponsePostBenefit>{
+        val result = retrofit.postBenefit(orderIdx = orderIdx, params = RequestBodyPostBenefit(benefitIdx))
         if (result.isSuccessful) return result
         else throw UnknownError()
     }
