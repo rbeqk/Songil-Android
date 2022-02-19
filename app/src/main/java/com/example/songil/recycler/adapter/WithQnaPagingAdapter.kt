@@ -1,20 +1,17 @@
 package com.example.songil.recycler.adapter
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.songil.R
-import com.example.songil.config.BaseActivity
-import com.example.songil.config.GlobalApplication
 import com.example.songil.data.WithQna
 import com.example.songil.databinding.ItemPostBinding
-import com.example.songil.page_qna.QnaActivity
-import com.example.songil.page_story.StoryActivity
+import com.example.songil.recycler.adapter_interface.SingleUpdateAdapterInterface
+import com.example.songil.recycler.rv_interface.RvSingleUpdateView
 
-class WithQnaPagingAdapter(private val postType : Int = 0) : PagingDataAdapter<WithQna, WithQnaPagingAdapter.WithQnaViewHolder>(diffCallback){
+class WithQnaPagingAdapter : PagingDataAdapter<WithQna, WithQnaPagingAdapter.WithQnaViewHolder>(diffCallback), SingleUpdateAdapterInterface{
 
     companion object{
         val diffCallback = object : DiffUtil.ItemCallback<WithQna>(){
@@ -41,16 +38,7 @@ class WithQnaPagingAdapter(private val postType : Int = 0) : PagingDataAdapter<W
             else holder.isLike.setImageResource(R.drawable.ic_heart_line_16)
             holder.content.text = qnaItem.content
             holder.root.setOnClickListener {
-                if (postType == 0 ){
-                    val intent = Intent(holder.itemView.context, QnaActivity::class.java)
-                    intent.putExtra(GlobalApplication.QNA_IDX,qnaItem.qnaIdx)
-                    (holder.itemView.context as BaseActivity<*>).startActivityHorizontal(intent)
-                }
-                else {
-                    val intent = Intent(holder.itemView.context, StoryActivity::class.java)
-                    intent.putExtra(GlobalApplication.STORY_IDX,1)
-                    (holder.itemView.context as BaseActivity<*>).startActivityHorizontal(intent)
-                }
+                singleUpdateView?.targetItemClick(position, qnaItem.qnaIdx)
             }
         }
     }
@@ -70,6 +58,22 @@ class WithQnaPagingAdapter(private val postType : Int = 0) : PagingDataAdapter<W
         val date = binding.tvDate
         val isLike = binding.ivFavorite
         val root = binding.root
+    }
+
+    override var singleUpdateView: RvSingleUpdateView? = null
+
+    override fun applySingleItemChange(position: Int, target: Any?) {
+        if (target is WithQna){
+            val item = getItem(position) as WithQna
+            item.userProfile = target.userProfile
+            item.userName = target.userName
+            item.title = target.title
+            item.content = target.content
+            item.totalLikeCnt = target.totalLikeCnt
+            item.totalCommentCnt = target.totalCommentCnt
+            item.isLike = target.isLike
+            notifyItemChanged(position)
+        }
     }
 
 }

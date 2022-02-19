@@ -1,6 +1,5 @@
 package com.example.songil.recycler.adapter
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,14 +10,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.songil.R
-import com.example.songil.config.BaseActivity
-import com.example.songil.config.GlobalApplication
 import com.example.songil.data.ABTest
 import com.example.songil.databinding.ItemAbtestBinding
-import com.example.songil.page_abtest.AbtestActivity
+import com.example.songil.recycler.adapter_interface.SingleUpdateAdapterInterface
 import com.example.songil.recycler.rv_interface.RvAbTestView
+import com.example.songil.recycler.rv_interface.RvSingleUpdateView
 
-class WithABTestPagingAdapter(private val view : RvAbTestView) : PagingDataAdapter<ABTest, WithABTestPagingAdapter.ABTestViewHolder>(diffCallback){
+class WithABTestPagingAdapter(private val view : RvAbTestView) : PagingDataAdapter<ABTest, WithABTestPagingAdapter.ABTestViewHolder>(diffCallback), SingleUpdateAdapterInterface {
 
     companion object {
         val diffCallback = object : DiffUtil.ItemCallback<ABTest>(){
@@ -65,9 +63,7 @@ class WithABTestPagingAdapter(private val view : RvAbTestView) : PagingDataAdapt
             Glide.with(holder.itemView.context).load(abTest.imageA).into(holder.photoA)
             Glide.with(holder.itemView.context).load(abTest.imageB).into(holder.photoB)
             holder.root.setOnClickListener {
-                val intent = Intent(holder.itemView.context, AbtestActivity::class.java)
-                intent.putExtra(GlobalApplication.ABTEST_IDX, abTest.abTestIdx)
-                (holder.itemView.context as BaseActivity<*>).startActivityHorizontal(intent)
+                singleUpdateView?.targetItemClick(position, abTest.abTestIdx)
             }
             holder.photoA.setOnClickListener {
                 if (select == null) {
@@ -98,7 +94,7 @@ class WithABTestPagingAdapter(private val view : RvAbTestView) : PagingDataAdapt
             when {
                 (abTest.isFinished == "Y") -> { // 투표 종료 기간이 지난 경우
                     applyVoteState(holder, isFinish = true, isVoted = false)
-                    applyVote(holder, abTest.finalInfo!!.vote, abTest.finalInfo.percent, abTest.finalInfo.totalVoteCnt)
+                    applyVote(holder, abTest.finalInfo!!.vote, abTest.finalInfo!!.percent, abTest.finalInfo!!.totalVoteCnt)
                 }
                 (select == null) -> { // 투표 가능한 기간 내 투표를 안한 경우
                     holder.layoutA.visibility = View.GONE
@@ -110,7 +106,7 @@ class WithABTestPagingAdapter(private val view : RvAbTestView) : PagingDataAdapt
                 }
                 else -> { // 투표 가능한 기간 내 투표를 완료한 경우
                     applyVoteState(holder, isFinish = false, isVoted = true)
-                    applyVote(holder, abTest.voteInfo.vote, abTest.voteInfo.percent, abTest.voteInfo.totalVoteCnt)
+                    applyVote(holder, abTest.voteInfo!!.vote, abTest.voteInfo!!.percent, abTest.voteInfo!!.totalVoteCnt)
                     holder.voteBtn.setOnClickListener {
                         view.cancelVote(abTest.abTestIdx)
                     }
@@ -187,4 +183,22 @@ class WithABTestPagingAdapter(private val view : RvAbTestView) : PagingDataAdapt
             }
         }
     }
+
+    override var singleUpdateView: RvSingleUpdateView? = null
+
+    override fun applySingleItemChange(position: Int, target: Any?) {
+        if (target is ABTest){
+            val item = getItem(position) as ABTest
+            item.artistImageUrl = target.artistImageUrl
+            item.artistName = target.artistName
+            item.content = target.content
+            item.totalCommentCnt = target.totalCommentCnt
+            item.isFinished = target.isFinished
+            item.voteInfo = target.voteInfo
+            item.finalInfo = target.finalInfo
+            notifyItemChanged(position)
+        }
+    }
+
+
 }

@@ -2,9 +2,9 @@ package com.example.songil.page_abtest
 
 import com.example.songil.config.BaseResponse
 import com.example.songil.config.GlobalApplication
-import com.example.songil.data.ABTest
 import com.example.songil.data.Chat
 import com.example.songil.page_abtest.model.RequestWriteComment
+import com.example.songil.page_abtest.model.ResponseAbtest
 import com.example.songil.repository.PostRepository
 import retrofit2.HttpException
 import retrofit2.Response
@@ -21,10 +21,10 @@ class AbtestRepository : PostRepository() {
         throw(HttpException(response))
     }
 
-    suspend fun getAbtest(abtestIdx : Int) : ABTest{
+    suspend fun getAbtest(abtestIdx : Int) : Response<ResponseAbtest>{
         val response = retrofitInterface.getAbtest(abtestIdx)
-        if (response.isSuccessful && response.body()?.code == 200){
-            return response.body()!!.result
+        if (response.isSuccessful){
+            return response
         }
         throw(HttpException(response))
     }

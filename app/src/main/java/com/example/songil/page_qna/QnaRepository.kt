@@ -3,8 +3,8 @@ package com.example.songil.page_qna
 import com.example.songil.config.BaseResponse
 import com.example.songil.config.GlobalApplication
 import com.example.songil.data.Chat
-import com.example.songil.data.WithQna
 import com.example.songil.page_qna.models.RequestWriteComment
+import com.example.songil.page_qna.models.ResponseQna
 import com.example.songil.page_qna.models.ResponseQnaLike
 import com.example.songil.repository.PostRepository
 import retrofit2.Response
@@ -24,15 +24,13 @@ class QnaRepository : PostRepository() {
         return arrayListOf()
     }
 
-    suspend fun getQna(qnaIdx : Int) : WithQna? {
+    suspend fun getQna(qnaIdx : Int) : Response<ResponseQna> {
         retrofitInterface.getQna(qnaIdx).let { response ->
             if (response.isSuccessful){
-                if (response.body()?.code == 200){
-                    return response.body()!!.result
-                }
+                return response
             }
         }
-        return null
+        throw UnknownError()
     }
 
     suspend fun writeChat(postIdx : Int, parentIdx : Int?, comment : String) : Int{

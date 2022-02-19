@@ -18,7 +18,7 @@ class QnaViewModel : BaseViewModel() {
     var loadQna = MutableLiveData<Int>()
     private var qna : WithQna = WithQna(0, 0, null, "",
             "", "", "", "N", 0, "N", 0)
-    private val getQna get() = qna
+    val getQna get() = qna
 
     var replyPointIdx : Int? = null
 
@@ -32,15 +32,13 @@ class QnaViewModel : BaseViewModel() {
     }.flow.map { it.insertHeaderItem(item = getQna) }
 
 
-    fun getQna() {
+    fun tryGetQna() {
         viewModelScope.launch(exceptionHandler) {
             val qnaResult = repository.getQna(qnaIdx)
-            if (qnaResult != null){
-                qna = qnaResult
-                loadQna.postValue(200)
-            } else {
-                loadQna.postValue(-1)
+            if (qnaResult.body()?.code == 200){
+                qna = qnaResult.body()!!.result
             }
+            loadQna.postValue(qnaResult.body()?.code ?: -1)
         }
     }
 
@@ -49,7 +47,7 @@ class QnaViewModel : BaseViewModel() {
             if (comment != ""){
                 commentResult.postValue(repository.writeChat(qnaIdx, replyPointIdx, comment))
             }
-            getQna()
+            tryGetQna()
         }
     }
 

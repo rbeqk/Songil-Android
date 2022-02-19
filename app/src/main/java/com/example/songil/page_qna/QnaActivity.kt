@@ -22,6 +22,7 @@ import com.example.songil.popup_more.MoreBottomSheet
 import com.example.songil.popup_more.popup_interface.PopupMoreView
 import com.example.songil.popup_remove.RemoveDialog
 import com.example.songil.popup_remove.popup_interface.PopupRemoveView
+import com.example.songil.popup_warning.WarningDialog
 import com.example.songil.recycler.adapter.PostAndChatAdapter
 import com.example.songil.recycler.rv_interface.RvPostAndChatView
 import com.example.songil.utils.softKeyboardCallback.KeyboardVisibilityUtils
@@ -33,6 +34,7 @@ class QnaActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity), R
     private val viewModel : QnaViewModel by lazy { ViewModelProvider(this)[QnaViewModel::class.java] }
     private lateinit var keyboardVisibilityUtils : KeyboardVisibilityUtils
     private lateinit var writeResult : ActivityResultLauncher<Intent>
+    private var itemIsExists = true // 현재 조회중인 아이템이 존재하는지 여부
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +52,7 @@ class QnaActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity), R
 
         writeResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
             if (result.resultCode == RESULT_OK){
-                viewModel.getQna()
+                viewModel.tryGetQna()
             }
         }
 
@@ -68,7 +70,7 @@ class QnaActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity), R
             binding.etComment.hint = ""
         })
 
-        viewModel.getQna()
+        viewModel.tryGetQna()
     }
 
     override fun onDestroy() {
@@ -86,6 +88,13 @@ class QnaActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity), R
             when (liveData){
                 200 -> {
                     (binding.rvComment.adapter as PostAndChatAdapter).refresh()
+                }
+                2312 -> {
+                    val dialog = WarningDialog("삭제된 QnA입니다.", "이전 페이지로 이동되며\n바로 새로고침됩니다."){
+                        itemIsExists = false
+                        finish()
+                    }
+                    dialog.show(supportFragmentManager, dialog.tag)
                 }
             }
             binding.btnRegister.isClickable = true
@@ -137,7 +146,8 @@ class QnaActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity), R
 
     private fun setButton(){
         binding.btnBack.setOnClickListener {
-            onBackPressed()
+            itemIsExists = true
+            finish()
         }
 
         binding.btnRegister.setOnClickListener {
@@ -160,6 +170,14 @@ class QnaActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity), R
     }
 
     override fun finish() {
+        if (itemIsExists){
+            val intent = Intent(this, BaseActivity::class.java)
+            intent.putExtra("QNA", viewModel.getQna)
+            setResult(RESULT_OK, intent)
+        } else {
+            val intent = Intent(this, BaseActivity::class.java)
+            setResult(RESULT_OK, intent)
+        }
         super.finish()
         exitHorizontal
     }

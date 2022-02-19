@@ -35,8 +35,10 @@ class AbtestViewModel : BaseViewModel() {
     fun tryGetAbtest(){
         viewModelScope.launch(exceptionHandler) {
             val abtestResult = abtestRepository.getAbtest(abtestIdx)
-            abTest = abtestResult
-            loadAbtest.postValue(200)
+            if (abtestResult.body()?.code == 200){
+                abTest = abtestResult.body()!!.result
+            }
+            loadAbtest.postValue(abtestResult.body()?.code ?: -1)
         }
     }
 

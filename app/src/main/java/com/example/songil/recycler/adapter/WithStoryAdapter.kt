@@ -1,6 +1,5 @@
 package com.example.songil.recycler.adapter
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
@@ -8,13 +7,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.songil.R
-import com.example.songil.config.BaseActivity
-import com.example.songil.config.GlobalApplication
 import com.example.songil.data.FrontStory
 import com.example.songil.databinding.ItemStoryBinding
-import com.example.songil.page_story.StoryActivity
+import com.example.songil.recycler.adapter_interface.SingleUpdateAdapterInterface
+import com.example.songil.recycler.rv_interface.RvSingleUpdateView
 
-class WithStoryAdapter(diffCallback : DiffUtil.ItemCallback<FrontStory>) : PagingDataAdapter<FrontStory, WithStoryAdapter.FrontStoryViewHolder>(diffCallback) {
+class WithStoryAdapter(diffCallback : DiffUtil.ItemCallback<FrontStory>) : PagingDataAdapter<FrontStory, WithStoryAdapter.FrontStoryViewHolder>(diffCallback),
+    SingleUpdateAdapterInterface {
 
     override fun onBindViewHolder(holder: FrontStoryViewHolder, position: Int) {
         val storyItem = getItem(position)
@@ -26,9 +25,7 @@ class WithStoryAdapter(diffCallback : DiffUtil.ItemCallback<FrontStory>) : Pagin
             holder.title.text = storyItem.title
             holder.userName.text = storyItem.userName
             holder.root.setOnClickListener {
-                val intent = Intent(holder.itemView.context, StoryActivity::class.java)
-                intent.putExtra(GlobalApplication.STORY_IDX, storyItem.storyIdx)
-                (holder.itemView.context as BaseActivity<*>).startActivityHorizontal(intent)
+                singleUpdateView?.targetItemClick(position, storyItem.storyIdx)
             }
         }
     }
@@ -46,5 +43,19 @@ class WithStoryAdapter(diffCallback : DiffUtil.ItemCallback<FrontStory>) : Pagin
         val root = binding.root
         val title = binding.tvStoryTitle
         val userName = binding.tvUserName
+    }
+
+    override var singleUpdateView: RvSingleUpdateView? = null
+
+    override fun applySingleItemChange(position: Int, target: Any?) {
+        if (target is FrontStory){
+            val item = getItem(position) as FrontStory
+            item.mainImageUrl = target.mainImageUrl
+            item.isLike = target.isLike
+            item.totalLikeCnt = target.totalLikeCnt
+            item.title = target.title
+            item.userName = target.userName
+            notifyItemChanged(position)
+        }
     }
 }

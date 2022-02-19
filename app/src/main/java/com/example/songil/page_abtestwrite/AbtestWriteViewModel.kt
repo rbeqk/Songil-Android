@@ -38,18 +38,20 @@ class AbtestWriteViewModel : BaseViewModel() {
     fun tryGetAbtest() {
         viewModelScope.launch (exceptionHandler){
             val result = abtestRepository.getAbtest(abtestIdx)
-            val date = result.deadline.split(".")
-            if (date.size == 3){
-                year = date[0]
-                month = date[1]
-                day = date[2]
+            if (result.body()?.code == 200){
+                val abtest = result.body()!!.result
+                val date = abtest.deadline.split(".")
+                if (date.size == 3){
+                    year = date[0]
+                    month = date[1]
+                    day = date[2]
+                }
+                abtestContent = abtest.content
+                imageUriList.clear()
+                imageUriList.add(abtest.imageA)
+                imageUriList.add(abtest.imageB)
             }
-            abtestContent = result.content
-            imageUriList.clear()
-            imageUriList.add(result.imageA)
-            imageUriList.add(result.imageB)
-            resultLoad.postValue(200)
-
+            resultLoad.postValue(result.body()?.code ?: -1)
         }
     }
 

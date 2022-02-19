@@ -16,6 +16,7 @@ class WithStoryRepository {
                     return response.body()!!.result.story
                 }
             }
+            throw UnknownError()
         }
         return arrayListOf()
     }

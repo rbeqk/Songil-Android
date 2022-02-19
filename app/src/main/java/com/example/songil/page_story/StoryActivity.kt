@@ -23,6 +23,7 @@ import com.example.songil.popup_more.MoreBottomSheet
 import com.example.songil.popup_more.popup_interface.PopupMoreView
 import com.example.songil.popup_remove.RemoveDialog
 import com.example.songil.popup_remove.popup_interface.PopupRemoveView
+import com.example.songil.popup_warning.WarningDialog
 import com.example.songil.viewPager2.adapter.Vp2ImageAdapter
 import com.google.android.material.chip.Chip
 
@@ -30,6 +31,7 @@ class StoryActivity : BaseActivity<StoryActivityBinding>(R.layout.story_activity
 
     private val viewModel : StoryViewModel by lazy { ViewModelProvider(this)[StoryViewModel::class.java] }
     private lateinit var writeResult : ActivityResultLauncher<Intent>
+    private var itemIsExists = true // 현재 조회중인 아이템이 존재하는지 여부
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +56,13 @@ class StoryActivity : BaseActivity<StoryActivityBinding>(R.layout.story_activity
                 200 -> {
                     applyView()
                 }
+                2311 -> {
+                    val dialog = WarningDialog("삭제된 스토리입니다.", "이전 페이지로 이동되며\n바로 새로고침됩니다."){
+                        itemIsExists = false
+                        finish()
+                    }
+                    dialog.show(supportFragmentManager, dialog.tag)
+                }
             }
         }
         viewModel.storyDetailResult.observe(this, getStoryObserver)
@@ -76,7 +85,8 @@ class StoryActivity : BaseActivity<StoryActivityBinding>(R.layout.story_activity
 
     private fun setButton(){
         binding.btnBack.setOnClickListener {
-            onBackPressed()
+            itemIsExists = true
+            finish()
         }
 
         binding.btnComment.setOnClickListener {
@@ -149,6 +159,14 @@ class StoryActivity : BaseActivity<StoryActivityBinding>(R.layout.story_activity
     }
 
     override fun finish() {
+        if (itemIsExists){
+            val intent = Intent(this, BaseActivity::class.java)
+            intent.putExtra("STORY", viewModel.getFrontStory())
+            setResult(RESULT_OK, intent)
+        } else {
+            val intent = Intent(this, BaseActivity::class.java)
+            setResult(RESULT_OK, intent)
+        }
         super.finish()
         exitHorizontal
     }

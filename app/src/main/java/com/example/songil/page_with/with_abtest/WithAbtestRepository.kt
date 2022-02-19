@@ -8,10 +8,11 @@ class WithAbtestRepository {
 
     suspend fun getAbTest(pageIdx : Int, sort : String) : ArrayList<ABTest>{
         val result = retrofitInterface.getAbTest("ab-test", page = pageIdx, sort = sort)
-        if (result.isSuccessful){
-            if (result.body()?.code == 200) return result.body()!!.result
+        if (result.isSuccessful && result.body()?.code == 200){
+            return result.body()!!.result
+        } else {
+            throw UnknownError()
         }
-        return arrayListOf()
     }
 
     suspend fun getAbTestPageCnt() : Int {

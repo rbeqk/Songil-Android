@@ -183,7 +183,7 @@ class PostAndChatAdapter(private val view : RvPostAndChatView) : PagingDataAdapt
                     when {
                         (item.isFinished == "Y") -> { // 투표 종료 기간이 지난 경우
                             applyVoteState(holder, true)
-                            applyVote(holder, item.finalInfo!!.vote, item.finalInfo.percent, item.finalInfo.totalVoteCnt)
+                            applyVote(holder, item.finalInfo!!.vote, item.finalInfo!!.percent, item.finalInfo!!.totalVoteCnt)
                         }
                         (item.voteInfo == null) -> { // 투표 가능한 기간 내 투표를 안한 경우
                             holder.layoutA.visibility = View.GONE
@@ -195,7 +195,7 @@ class PostAndChatAdapter(private val view : RvPostAndChatView) : PagingDataAdapt
                         }
                         else -> { // 투표 가능한 기간 내 투표를 완료한 경우
                             applyVoteState(holder, isFinish = false, isVoted = true)
-                            applyVote(holder, item.voteInfo.vote, item.voteInfo.percent, item.voteInfo.totalVoteCnt)
+                            applyVote(holder, item.voteInfo!!.vote, item.voteInfo!!.percent, item.voteInfo!!.totalVoteCnt)
                             holder.voteBtn.setOnClickListener {
                                  view.cancelVote(item.abTestIdx)
                             }

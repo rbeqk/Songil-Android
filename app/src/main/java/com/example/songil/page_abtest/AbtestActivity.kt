@@ -21,6 +21,7 @@ import com.example.songil.popup_more.MoreBottomSheet
 import com.example.songil.popup_more.popup_interface.PopupMoreView
 import com.example.songil.popup_remove.RemoveDialog
 import com.example.songil.popup_remove.popup_interface.PopupRemoveView
+import com.example.songil.popup_warning.WarningDialog
 import com.example.songil.recycler.adapter.PostAndChatAdapter
 import com.example.songil.recycler.rv_interface.RvPostAndChatView
 import com.example.songil.utils.softKeyboardCallback.KeyboardVisibilityUtils
@@ -33,6 +34,7 @@ class AbtestActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity)
     private val viewModel : AbtestViewModel by lazy { ViewModelProvider(this)[AbtestViewModel::class.java] }
     private lateinit var keyboardVisibilityUtils : KeyboardVisibilityUtils
     private lateinit var writeResult : ActivityResultLauncher<Intent>
+    private var itemIsExists = true // 현재 조회중인 아이템이 존재하는지 여부
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,7 +86,8 @@ class AbtestActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity)
 
     private fun setButton(){
         binding.btnBack.setOnClickListener {
-            onBackPressed()
+            itemIsExists = true
+            finish()
         }
 
         binding.btnRegister.setOnClickListener {
@@ -104,6 +107,13 @@ class AbtestActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity)
                 200 -> {
                     binding.tvTitle.text = getString(R.string.AB_TEST_title, viewModel.getAbtest.artistName)
                     (binding.rvComment.adapter as PostAndChatAdapter).refresh()
+                }
+                2313 -> {
+                    val dialog = WarningDialog("삭제된 ABTEST입니다.", "이전 페이지로 이동되며\n바로 새로고침됩니다."){
+                        itemIsExists = false
+                        finish()
+                    }
+                    dialog.show(supportFragmentManager, dialog.tag)
                 }
             }
             binding.btnRegister.isClickable = true
@@ -152,6 +162,14 @@ class AbtestActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity)
     }
 
     override fun finish() {
+        if (itemIsExists){
+            val intent = Intent(this, BaseActivity::class.java)
+            intent.putExtra("ABTEST", viewModel.getAbtest)
+            setResult(RESULT_OK, intent)
+        } else {
+            val intent = Intent(this, BaseActivity::class.java)
+            setResult(RESULT_OK, intent)
+        }
         super.finish()
         exitHorizontal
     }

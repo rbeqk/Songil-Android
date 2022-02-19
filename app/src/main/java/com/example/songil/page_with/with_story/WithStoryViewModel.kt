@@ -20,9 +20,14 @@ class WithStoryViewModel : BaseViewModel() {
 
     var isRefresh = false
 
+    var pointer : WithStoryPagingSource ?= null
+    private fun getWithStoryPagingSource() : WithStoryPagingSource {
+        return WithStoryPagingSource(repository, startIdxInt, ::isRefresh, sortString).also { pointer = it }
+    }
+
     var flow = Pager(PagingConfig(10)){
-        WithStoryPagingSource(repository, startIdxInt, ::isRefresh, sortString)
-    }.flow
+        getWithStoryPagingSource()
+    }.flow.cachedIn(viewModelScope)
 
     fun tryGetStartIdx(){
         viewModelScope.launch(exceptionHandler) {

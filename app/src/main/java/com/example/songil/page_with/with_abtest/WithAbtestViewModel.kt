@@ -24,8 +24,13 @@ class WithAbtestViewModel : BaseViewModel() {
 
     var isRefresh = false
 
+    var pointer : WithAbtestPagingSource ?= null
+    private fun getWithAbtestPagingSource() : WithAbtestPagingSource {
+        return WithAbtestPagingSource(abTestRepository, startIdxInt, ::isRefresh, sortString).also { pointer = it }
+    }
+
     var flow = Pager(PagingConfig(pageSize = 5)){
-        WithAbtestPagingSource(abTestRepository, startIdxInt, ::isRefresh, sortString)
+        getWithAbtestPagingSource()
     }.flow
 
     fun tryGetPageCnt(){

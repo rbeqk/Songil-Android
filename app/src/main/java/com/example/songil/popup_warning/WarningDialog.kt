@@ -12,7 +12,7 @@ import android.view.Window
 import androidx.fragment.app.DialogFragment
 import com.example.songil.databinding.PopupWarningBinding
 
-class WarningDialog : DialogFragment() {
+class WarningDialog(private val message : String, private val subMessage : String, private val onClick : () -> Unit) : DialogFragment() {
     private var _binding : PopupWarningBinding ?= null
     private val binding get() = _binding!!
 
@@ -23,6 +23,9 @@ class WarningDialog : DialogFragment() {
         dialog?.window?.requestFeature(Window.FEATURE_NO_TITLE)
         dialog?.setCanceledOnTouchOutside(false)
 
+        binding.tvMessage.text = subMessage
+        binding.tvWarning.text = message
+
         return binding.root
     }
 
@@ -31,6 +34,7 @@ class WarningDialog : DialogFragment() {
 
         binding.btnClose.setOnClickListener {
             dismiss()
+            onClick()
         }
     }
 

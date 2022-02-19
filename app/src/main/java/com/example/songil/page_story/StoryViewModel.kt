@@ -3,6 +3,7 @@ package com.example.songil.page_story
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.songil.config.BaseViewModel
+import com.example.songil.data.FrontStory
 import com.example.songil.data.WithStory
 import kotlinx.coroutines.launch
 
@@ -14,6 +15,18 @@ class StoryViewModel : BaseViewModel() {
     var storyDetailResult = MutableLiveData<Int>()
     var likeResult = MutableLiveData<Boolean>()
     var removeResult = MutableLiveData<Boolean>()
+
+    fun getFrontStory() : FrontStory {
+        return FrontStory(
+            mainImageUrl = storyDetail.imageUrl[0],
+            isLike = storyDetail.isLike,
+            totalLikeCnt = storyDetail.totalLikeCnt,
+            title = storyDetail.title,
+            userName = storyDetail.userName,
+            userIdx = storyDetail.userIdx,
+            storyIdx = storyDetail.storyIdx
+        )
+    }
 
     fun tryGetStoryDetail(){
         viewModelScope.launch(exceptionHandler) {
