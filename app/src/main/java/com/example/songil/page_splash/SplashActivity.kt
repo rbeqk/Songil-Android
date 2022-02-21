@@ -52,8 +52,7 @@ class SplashActivity : BaseActivity<SplashActivityBinding>(R.layout.splash_activ
         val autoLoginObserver = Observer<Int> { liveData ->
             when (liveData){
                 200 -> { // 로그인 성공
-                    startActivity(Intent(this, MainActivity::class.java))
-                    finish()
+                    viewModel.tryGetUserType()
                 }
                 3000 -> { // jwt 토큰 검증 기간 만료
                     showSimpleToastMessage("로그인 이후 30일이 경과되어\n자동 로그아웃 되었습니다.")
@@ -67,6 +66,12 @@ class SplashActivity : BaseActivity<SplashActivityBinding>(R.layout.splash_activ
             }
         }
         viewModel.autoLoginResultCode.observe(this, autoLoginObserver)
+
+        val userTypeObserver = Observer<Int>{ _ ->
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+        }
+        viewModel.userTypeResultCode.observe(this, userTypeObserver)
 
         val errorObserver = Observer<BaseViewModel.FetchState>{ _ ->
             val socketTimeoutDialog = SocketTimeoutDialog()

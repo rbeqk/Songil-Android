@@ -14,6 +14,7 @@ class GlobalApplication : Application() {
     companion object {
         const val API_URL = "https://dev.songil.shop/"
         const val X_ACCESS_TOKEN = "x-access-token"
+        const val IS_ARTIST = "is_artist"
         const val USER_IDX = "user-idx"
         const val CRAFT_IDX = "craft-idx"
         const val ABTEST_IDX = "abtest-idx"
