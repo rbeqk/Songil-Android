@@ -38,24 +38,13 @@ class WithFragment : BaseFragment<WithFragmentMainBinding>(WithFragmentMainBindi
     private lateinit var currentFragment : WithSubFragmentInterface
     private lateinit var writeResult : ActivityResultLauncher<Intent>
 
-    private var isFirst = true
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         writeResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
             if (result.resultCode == Activity.RESULT_OK){
-                /* do something after post uploaded */
+                currentFragment.reload()
             }
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        if (isFirst){
-            isFirst = false
-        } else {
-            currentFragment.reload()
         }
     }
 
@@ -74,6 +63,11 @@ class WithFragment : BaseFragment<WithFragmentMainBinding>(WithFragmentMainBindi
         childFragmentManager.beginTransaction().add(binding.layoutFragment.id, abtestFragment).hide(abtestFragment).add(binding.layoutFragment.id, qnaFragment).hide(qnaFragment).commit()
         childFragmentManager.beginTransaction().add(binding.layoutFragment.id, storyFragment).commit()
         currentFragment = storyFragment
+        if (GlobalApplication.checkIsLogin()) {
+            binding.btnWrite.visibility = View.VISIBLE
+        } else {
+            binding.btnWrite.visibility = View.GONE
+        }
     }
 
     private fun setButton(){
@@ -153,6 +147,11 @@ class WithFragment : BaseFragment<WithFragmentMainBinding>(WithFragmentMainBindi
                     binding.lineSelectAbTest.visibility = View.INVISIBLE
                     storyFragment.onShow()
                     childFragmentManager.beginTransaction().show(storyFragment).commit()
+                    if (GlobalApplication.checkIsLogin()) {
+                        binding.btnWrite.visibility = View.VISIBLE
+                    } else {
+                        binding.btnWrite.visibility = View.GONE
+                    }
                     currentFragment = storyFragment
                 }
             }
@@ -165,6 +164,11 @@ class WithFragment : BaseFragment<WithFragmentMainBinding>(WithFragmentMainBindi
                     binding.lineSelectAbTest.visibility = View.INVISIBLE
                     qnaFragment.onShow()
                     childFragmentManager.beginTransaction().show(qnaFragment).commit()
+                    if (GlobalApplication.checkIsLogin()) {
+                        binding.btnWrite.visibility = View.VISIBLE
+                    } else {
+                        binding.btnWrite.visibility = View.GONE
+                    }
                     currentFragment = qnaFragment
                 }
             }
@@ -177,6 +181,11 @@ class WithFragment : BaseFragment<WithFragmentMainBinding>(WithFragmentMainBindi
                     binding.lineSelectAbTest.visibility = View.VISIBLE
                     abtestFragment.onShow()
                     childFragmentManager.beginTransaction().show(abtestFragment).commit()
+                    if (GlobalApplication.checkIsArtist()) {
+                        binding.btnWrite.visibility = View.VISIBLE
+                    } else {
+                        binding.btnWrite.visibility = View.GONE
+                    }
                     currentFragment = abtestFragment
                 }
             }

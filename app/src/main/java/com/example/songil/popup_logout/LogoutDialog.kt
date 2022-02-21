@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import androidx.fragment.app.DialogFragment
+import com.example.songil.config.GlobalApplication
 import com.example.songil.databinding.PopupYesOrNoBinding
 import com.example.songil.popup_logout.popup_interface.PopupLogoutView
 
@@ -40,6 +41,10 @@ class LogoutDialog(private val logoutView : PopupLogoutView) : DialogFragment() 
         }
 
         binding.btnYes.setOnClickListener {
+            val edit = GlobalApplication.globalSharedPreferences.edit()
+            edit.remove(GlobalApplication.X_ACCESS_TOKEN)
+            edit.remove(GlobalApplication.IS_ARTIST)
+            edit.apply()
             logoutView.logout()
             dismiss()
         }

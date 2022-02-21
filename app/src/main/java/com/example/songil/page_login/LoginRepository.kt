@@ -2,6 +2,7 @@ package com.example.songil.page_login
 
 import com.example.songil.config.GlobalApplication
 import com.example.songil.page_login.models.LoginInfo
+import com.example.songil.page_login.models.ResponseGetUserTypeBody
 import com.example.songil.page_login.models.ResponseLogin
 import retrofit2.Response
 
@@ -12,5 +13,13 @@ class LoginRepository {
         val result = loginRetrofitInterface.postLogin(loginInfo)
         if (result.isSuccessful) return result
         else throw UnknownError()
+    }
+
+    suspend fun getUserType() : ResponseGetUserTypeBody {
+        val result = loginRetrofitInterface.getUserType()
+        if (result.isSuccessful){
+            return result.body()!!
+        }
+        throw UnknownError()
     }
 }

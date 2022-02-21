@@ -39,7 +39,7 @@ class SplashViewModel : BaseViewModel() {
             val result = repository.getUserType()
             if (result.code == 200){
                 val edit = GlobalApplication.globalSharedPreferences.edit()
-                edit.putBoolean(GlobalApplication.IS_ARTIST, result.type == 2).apply()
+                edit.putBoolean(GlobalApplication.IS_ARTIST, result.result.type == 2).apply()
             } else {
                 val edit = GlobalApplication.globalSharedPreferences.edit()
                 edit.putBoolean(GlobalApplication.IS_ARTIST, false).apply()

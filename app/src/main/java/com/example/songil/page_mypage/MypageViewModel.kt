@@ -26,8 +26,6 @@ class MypageViewModel : BaseViewModel(){
     }
 
     fun tryLogout(){
-        val edit = GlobalApplication.globalSharedPreferences.edit()
-        edit.remove(GlobalApplication.X_ACCESS_TOKEN).apply()
         isLogin.value = false
     }
 

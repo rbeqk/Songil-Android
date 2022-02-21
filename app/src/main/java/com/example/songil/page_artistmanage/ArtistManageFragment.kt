@@ -48,8 +48,6 @@ class ArtistManageFragment : BaseFragment<ArtistFragmentManageBinding>(ArtistFra
     }
 
     override fun logout() {
-        val edit = GlobalApplication.globalSharedPreferences.edit()
-        edit.remove(GlobalApplication.X_ACCESS_TOKEN).apply()
         (activity as MainActivity).toggleMyPage(false)
     }
 }

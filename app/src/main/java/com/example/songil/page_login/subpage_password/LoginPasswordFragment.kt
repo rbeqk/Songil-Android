@@ -48,8 +48,9 @@ class LoginPasswordFragment(private val loginInfo : LoginInfo) : BaseFragment<Lo
         val loginResultObserver = Observer<Int>{ liveData ->
             viewModel.changeBtnState()
             when (liveData){
-                200 -> {
-                    (activity as LoginActivity).changeFragment(LoginProcess.COMPLETE)
+                200 ->{
+                    viewModel.tryGetUserType()
+                    //(activity as LoginActivity).changeFragment(LoginProcess.COMPLETE)
                 }
                 else -> {
                     binding.tvDescription.text = getString(R.string.cannot_find_user_login)
@@ -57,6 +58,11 @@ class LoginPasswordFragment(private val loginInfo : LoginInfo) : BaseFragment<Lo
             }
         }
         viewModel.loginResult.observe(viewLifecycleOwner, loginResultObserver)
+
+        val getUserTypeObserver =Observer<Int> { _ ->
+            (activity as LoginActivity).changeFragment(LoginProcess.COMPLETE)
+        }
+        viewModel.userTypeResultCode.observe(viewLifecycleOwner, getUserTypeObserver)
     }
 
     private fun setButton(){
