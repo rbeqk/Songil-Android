@@ -14,9 +14,13 @@ class SplashViewModel : BaseViewModel() {
          viewModelScope.launch(exceptionHandler) {
             repository.getAutoLogin().let { response ->
                 if (response.isSuccessful){
-                    if (response.body()!!.code != 200){
+                    if (response.body()?.code != 200){
                         val edit = GlobalApplication.globalSharedPreferences.edit()
                         edit.remove(GlobalApplication.X_ACCESS_TOKEN).apply()
+                    } else {
+                        val newJwt = response.body()!!.result.jwt
+                        val edit = GlobalApplication.globalSharedPreferences.edit()
+                        edit.putString(GlobalApplication.X_ACCESS_TOKEN, newJwt).apply()
                     }
                     autoLoginResultCode.postValue(response.body()!!.code)
                 } else {

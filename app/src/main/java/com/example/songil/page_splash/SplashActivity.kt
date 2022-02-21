@@ -51,13 +51,16 @@ class SplashActivity : BaseActivity<SplashActivityBinding>(R.layout.splash_activ
     private fun setObserver(){
         val autoLoginObserver = Observer<Int> { liveData ->
             when (liveData){
-                200 ->{
+                200 -> { // 로그인 성공
                     startActivity(Intent(this, MainActivity::class.java))
                     finish()
                 }
-                else ->{
-                    // 다시 시도 여부를 묻는 dialog 가 필요할 듯
-                    // ????
+                3000 -> { // jwt 토큰 검증 기간 만료
+                    showSimpleToastMessage("로그인 이후 30일이 경과되어\n자동 로그아웃 되었습니다.")
+                    startActivity(Intent(this, MainActivity::class.java))
+                    finish()
+                }
+                else ->{ // 비 회원
                     startActivity(Intent(this, MainActivity::class.java))
                     finish()
                 }
