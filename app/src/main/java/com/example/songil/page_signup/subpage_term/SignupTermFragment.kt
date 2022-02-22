@@ -1,15 +1,26 @@
 package com.example.songil.page_signup.subpage_term
 
+import android.graphics.pdf.PdfRenderer
 import android.os.Bundle
+import android.os.ParcelFileDescriptor
 import android.view.View
+import android.view.animation.AlphaAnimation
+import android.view.animation.TranslateAnimation
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.songil.R
 import com.example.songil.config.BaseFragment
 import com.example.songil.config.SignUpProcess
 import com.example.songil.databinding.SignupFragmentTermBinding
 import com.example.songil.page_signup.SignupActivity
 import com.example.songil.page_signup.models.SignUpInfo
-import com.example.songil.popup_term.TermBottomSheet
+import com.example.songil.recycler.adapter.PdfTermAdapter
+import com.example.songil.utils.copyInputStreamToFile
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.io.File
 
 class SignupTermFragment(private val signUpInfo: SignUpInfo) : BaseFragment<SignupFragmentTermBinding>(SignupFragmentTermBinding::bind, R.layout.signup_fragment_term) {
 
@@ -21,24 +32,57 @@ class SignupTermFragment(private val signUpInfo: SignUpInfo) : BaseFragment<Sign
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
+        setRecyclerView()
         setButton()
+    }
+
+    private fun setRecyclerView(){
+        binding.rvTerm.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        binding.rvTerm.adapter = PdfTermAdapter(null, getWindowSize()[0])
     }
 
     private fun setButton(){
         binding.tvTermsRequiredUsage.setOnClickListener {
-            val inputStream = resources.assets.open("terms_usage.txt")
-            val size = inputStream.available()
-            val buf = ByteArray(size)
-            inputStream.read(buf)
-            callTermDialog(String(buf))
+
+            showTermLayout()
+            lifecycleScope.launch(Dispatchers.Default) {
+                val result = kotlin.runCatching {
+                    val inputStream = resources.assets.open("songil_terms_of_use.pdf")
+                    val file = File.createTempFile(inputStream.hashCode().toString(), ".pdf")
+                    copyInputStreamToFile(inputStream, file)
+
+                    val input = ParcelFileDescriptor.open(file, ParcelFileDescriptor.MODE_READ_ONLY)
+                    val renderer = PdfRenderer(input)
+                    withContext(Dispatchers.Main){
+                        (binding.rvTerm.adapter as PdfTermAdapter).changeRenderer(renderer)
+                    }
+                    file.delete()
+                }
+                /*if (result.isFailure){
+                    //에러처리 어떻게
+                }*/
+            }
         }
 
         binding.tvTermsRequiredPrivacyPolicy.setOnClickListener {
-            val inputStream = resources.assets.open("terms_privacy_policy.txt")
-            val size = inputStream.available()
-            val buf = ByteArray(size)
-            inputStream.read(buf)
-            callTermDialog(String(buf))
+            showTermLayout()
+            lifecycleScope.launch(Dispatchers.Default) {
+                val result = kotlin.runCatching {
+                    val inputStream = resources.assets.open("songil_privacy_policy.pdf")
+                    val file = File.createTempFile(inputStream.hashCode().toString(), ".pdf")
+                    copyInputStreamToFile(inputStream, file)
+
+                    val input = ParcelFileDescriptor.open(file, ParcelFileDescriptor.MODE_READ_ONLY)
+                    val renderer = PdfRenderer(input)
+                    withContext(Dispatchers.Main){
+                        (binding.rvTerm.adapter as PdfTermAdapter).changeRenderer(renderer)
+                    }
+                    file.delete()
+                }
+                /*if (result.isFailure){
+                    //에러처리 어떻게
+                }*/
+            }
         }
 
         binding.btnNext.setOnClickListener {
@@ -49,10 +93,42 @@ class SignupTermFragment(private val signUpInfo: SignUpInfo) : BaseFragment<Sign
         binding.btnCancel.setOnClickListener {
             (activity as SignupActivity).changeFragment(SignUpProcess.CANCEL)
         }
+
+        binding.btnConfirmation.setOnClickListener {
+            hideTermLayout()
+        }
+
+        binding.backgroundTerm.setOnClickListener {
+            hideTermLayout()
+        }
     }
 
-    private fun callTermDialog(terms : String){
-        val dialogFragment = TermBottomSheet(terms)
-        dialogFragment.show(childFragmentManager, dialogFragment.tag)
+    private fun showTermLayout() {
+        val backgroundAnim = AlphaAnimation(0f, 1f)
+        backgroundAnim.duration = 350
+        backgroundAnim.fillAfter = true
+        val anim = TranslateAnimation(0f, 0f, binding.layoutTerm.height.toFloat(), 0f)
+        anim.duration = 350
+        anim.fillAfter = true
+
+        binding.backgroundTerm.animation = backgroundAnim
+        binding.backgroundTerm.visibility = View.VISIBLE
+        binding.layoutTerm.animation = anim
+        binding.layoutTerm.visibility = View.VISIBLE
+    }
+
+    private fun hideTermLayout(){
+        val backgroundAnim = AlphaAnimation(1f, 0f)
+        backgroundAnim.duration = 350
+        backgroundAnim.fillAfter = false
+        val anim = TranslateAnimation(0f, 0f, 0f, binding.layoutTerm.height.toFloat())
+        anim.duration = 350
+        anim.fillAfter = false
+
+        binding.backgroundTerm.animation = backgroundAnim
+        binding.backgroundTerm.visibility = View.INVISIBLE
+        binding.layoutTerm.animation = anim
+        binding.layoutTerm.visibility = View.INVISIBLE
+        (binding.rvTerm).scrollToPosition(0)
     }
 }
