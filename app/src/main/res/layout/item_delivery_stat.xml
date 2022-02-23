@@ -49,7 +49,7 @@
                 android:maxLines="3"
                 android:textSize="12sp"
                 android:fontFamily="@font/spoqahansansneo_light"
-                android:text="@{data.currentPosition}"
+                android:text="@{data.where}"
                 tools:text="남서울 터미널 직영 HUB"
                 android:layout_weight="1"/>
 
@@ -60,7 +60,7 @@
                 android:maxLines="3"
                 android:textSize="12sp"
                 android:fontFamily="@font/spoqahansansneo_light"
-                android:text="@{data.deliveryStatus}"
+                android:text="@{data.kind}"
                 tools:text="인수자 등록"
                 android:layout_weight="1"/>
 
