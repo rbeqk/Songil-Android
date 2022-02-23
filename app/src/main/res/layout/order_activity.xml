@@ -158,6 +158,8 @@
                     app:layout_constraintEnd_toEndOf="@id/guideline_end"
                     app:layout_constraintTop_toBottomOf="@id/et_recipient"
                     android:layout_marginTop="8dp"
+                    android:inputType="phone"
+                    android:maxLength="13"
                     android:text="@={viewModel.shippingInfo.phone}"
                     style="@style/EditTextStyle"
                     tools:text="01077488084"

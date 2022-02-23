@@ -26,6 +26,7 @@
             android:layout_height="wrap_content"/>
 
         <View
+            android:id="@+id/line_separator"
             android:layout_width="match_parent"
             android:layout_height="8dp"
             android:background="@color/g_1"

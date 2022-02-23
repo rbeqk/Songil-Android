@@ -10,7 +10,8 @@
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/songil_1">
+            android:background="@color/songil_1"
+            app:elevation="0dp">
 
             <com.google.android.material.appbar.MaterialToolbar
                 android:layout_width="match_parent"
@@ -32,23 +33,11 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/btn_back"
-                        android:layout_width="22dp"
-                        android:layout_height="22dp"
+                        style="@style/toolbarButton"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="@id/navigation_bar"
                         app:layout_constraintBottom_toBottomOf="@id/navigation_bar"
-                        android:layout_marginStart="16dp"
                         android:src="@drawable/ic_back_22"/>
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/btn_home"
-                        android:layout_width="22dp"
-                        android:layout_height="22dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@id/navigation_bar"
-                        app:layout_constraintBottom_toBottomOf="@id/navigation_bar"
-                        android:layout_marginEnd="16dp"
-                        android:src="@drawable/ic_home_22"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </com.google.android.material.appbar.MaterialToolbar>
@@ -192,7 +181,7 @@
                     android:textSize="14sp"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/et_shipping_memo"
+                    android:id="@+id/tv_shipping_memo"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toStartOf="@id/guideline_edittext_start"
@@ -208,7 +197,7 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toTopOf="@id/et_shipping_memo"
+                    app:layout_constraintTop_toTopOf="@id/tv_shipping_memo"
                     app:layout_constraintStart_toStartOf="@id/guideline_start"
                     android:text="@string/shipping_memo"
                     android:textSize="14sp"/>
@@ -217,7 +206,7 @@
                     android:id="@+id/space_shopping_address_information"
                     android:layout_width="match_parent"
                     android:layout_height="8dp"
-                    app:layout_constraintTop_toBottomOf="@id/et_shipping_memo"
+                    app:layout_constraintTop_toBottomOf="@id/tv_shipping_memo"
                     android:layout_marginTop="28dp"
                     android:background="@color/g_1"/>
 
@@ -270,10 +259,32 @@
                     android:text="@string/shipping_fee"/>
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_point_discount_value"
+                    android:id="@+id/tv_extra_shipping_fee_value"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     app:layout_constraintTop_toBottomOf="@id/tv_shipping_fee_value"
+                    app:layout_constraintEnd_toEndOf="@id/guideline_end"
+                    android:fontFamily="@font/spoqahansansneo_light"
+                    android:textSize="14sp"
+                    tools:text="-3,000원"
+                    android:visibility="gone"
+                    android:layout_marginTop="24dp"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_extra_shipping_fee"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="@id/tv_extra_shipping_fee_value"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_extra_shipping_fee_value"
+                    app:layout_constraintStart_toStartOf="@id/guideline_start"
+                    android:visibility="gone"
+                    android:text="@string/extra_shipping_fee"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_point_discount_value"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/tv_extra_shipping_fee"
                     app:layout_constraintEnd_toEndOf="@id/guideline_end"
                     android:fontFamily="@font/spoqahansansneo_light"
                     android:textSize="14sp"

@@ -58,6 +58,7 @@
     <string name="article_eng">ARTICLE</string>
     <string name="review_eng">REVIEW</string>
     <string name="form_price_won">%d won</string>
+    <string name="form_price_won_string">%s won</string>
     <string name="new_eng">NEW</string>
     <string name="soldout_eng">SOLD OUT</string>
     <string name="form_search_result">총 %d개 검색 결과</string>
@@ -232,9 +233,15 @@
     <string name="cancel_order">주문취소</string>
     <string name="go_write_comment">코멘트 작성하러 가기</string>
     <string name="complete_write_comment">코멘트 작성 완료</string>
+    <string name="preparing_for_delivery">배송준비중</string>
     <string name="in_transit">배송중</string>
-    <string name="cancelled_complete">취소완료</string>
     <string name="delivered">배송완료</string>
+    <string name="request_cancel">취소요청</string>
+    <string name="cancel_request_denied">취소거부</string>
+    <string name="cancelled_complete">취소완료</string>
+    <string name="request_return">반품요청</string>
+    <string name="return_request_denied">반품거부</string>
+    <string name="return_complete">반품완료</string>
     <string name="check_consumer_information">주문자 정보확인</string>
     <string name="input_shipping_information">발송정보 입력</string>
 
