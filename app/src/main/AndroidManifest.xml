@@ -35,7 +35,7 @@
         <activity android:name=".page_mybenefit.MybenefitActivity"/>
         <activity android:name=".page_myfavorite_craft.MyFavoriteCraftActivity"/>
         <activity android:name=".page_order.OrderActivity"/>
-        <activity android:name=".page_orderstatus.OrderstatusActivity"/>
+        <activity android:name=".page_orderstatus.OrderStatusActivity"/>
         <activity android:name=".page_mycomment.MycommentActivity"/>
         <activity android:name=".page_setting.SettingActivity"/>
         <activity android:name=".page_search.SearchActivity"/>
@@ -66,6 +66,7 @@
         <activity android:name=".page_mypage_ask_history.MyPageAskActivity"/>
         <activity android:name=".page_mypage_modify_profile.ModifyProfileActivity" android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".page_order.subpage_benefit.ApplyBenefitActivity"/>
+        <activity android:name=".page_payinfo.PayInfoActivity"/>
     </application>
 
 </manifest>

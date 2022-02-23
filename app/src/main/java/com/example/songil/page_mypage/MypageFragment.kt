@@ -21,7 +21,7 @@ import com.example.songil.page_mypage_about_post.MyPagePostActivity
 import com.example.songil.page_mypage_ask_history.MyPageAskActivity
 import com.example.songil.page_mypage_modify_profile.ModifyProfileActivity
 import com.example.songil.page_needlogin.NeedLoginActivity
-import com.example.songil.page_orderstatus.OrderstatusActivity
+import com.example.songil.page_orderstatus.OrderStatusActivity
 import com.example.songil.page_setting.SettingActivity
 import com.example.songil.popup_logout.LogoutDialog
 import com.example.songil.popup_logout.popup_interface.PopupLogoutView
@@ -115,7 +115,7 @@ class MypageFragment : BaseFragment<MypageFragmentBinding>(MypageFragmentBinding
 
         binding.btnOrderStatus.setOnClickListener {
             if (GlobalApplication.checkIsLogin()) {
-                (activity as MainActivity).startActivityHorizontal(Intent(activity as MainActivity, OrderstatusActivity::class.java))
+                (activity as MainActivity).startActivityHorizontal(Intent(activity as MainActivity, OrderStatusActivity::class.java))
             }
         }
 

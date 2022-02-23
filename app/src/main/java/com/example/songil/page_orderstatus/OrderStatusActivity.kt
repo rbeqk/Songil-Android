@@ -1,46 +1,53 @@
 package com.example.songil.page_orderstatus
 
 import android.os.Bundle
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.songil.R
 import com.example.songil.config.BaseActivity
-import com.example.songil.data.Orders
 import com.example.songil.databinding.SimpleBaseActivityBinding
-import com.example.songil.recycler.adapter.OrdersAdapter
+import com.example.songil.recycler.adapter.OrdersPagingAdapter
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
-class OrderstatusActivity : BaseActivity<SimpleBaseActivityBinding>(R.layout.simple_base_activity) {
+class OrderStatusActivity : BaseActivity<SimpleBaseActivityBinding>(R.layout.simple_base_activity) {
 
-    private lateinit var viewModel : OrderstatusViewModel
+    private val viewModel : OrderStatusViewModel by lazy { ViewModelProvider(this)[OrderStatusViewModel::class.java] }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding.tvTitle.text = getString(R.string.order_status)
 
-        viewModel = ViewModelProvider(this)[OrderstatusViewModel::class.java]
         setRecyclerView()
         setObserver()
         setButton()
-        viewModel.getData()
+
+        lifecycleScope.launch {
+            viewModel.flow.collectLatest { pagingData ->
+                (binding.rvContent.adapter as OrdersPagingAdapter).submitData(pagingData)
+            }
+        }
+
+        binding.layoutRefresh.setOnRefreshListener {
+            (binding.rvContent.adapter as OrdersPagingAdapter).refresh()
+            binding.layoutRefresh.isRefreshing = false
+        }
     }
 
     private fun setRecyclerView(){
         binding.rvContent.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        binding.rvContent.adapter = OrdersAdapter(this)
+        binding.rvContent.adapter = OrdersPagingAdapter(this)
     }
 
     private fun setObserver(){
-        val orderStatusObserver = Observer<ArrayList<Orders>>{ liveData ->
-            (binding.rvContent.adapter as OrdersAdapter).applyData(liveData)
-        }
-        viewModel.ordersData.observe(this, orderStatusObserver)
+
     }
 
     private fun setButton(){
         binding.btnBack.setOnClickListener {
-            onBackPressed()
+            finish()
         }
     }
 
