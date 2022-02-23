@@ -230,6 +230,7 @@
     <!-- 주문현황 관련 -->
     <string name="payment_information">결제정보</string>
     <string name="delivery_status">배송현황</string>
+    <string name="delivery_information">배송정보</string>
     <string name="cancel_order">주문취소</string>
     <string name="go_write_comment">코멘트 작성하러 가기</string>
     <string name="complete_write_comment">코멘트 작성 완료</string>
@@ -377,6 +378,8 @@
     <!-- 배송현황 관련 -->
     <string name="time">시간</string>
     <string name="current_position">현재 위치</string>
+    <string name="current_delivery_status">배송상태</string>
+    <string name="copy_underline"><u>복사</u></string>
 
     <!-- date picker 관련 -->
     <string name="cancel">취소</string>
