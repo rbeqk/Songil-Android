@@ -3,6 +3,9 @@ plugins {
     id 'kotlin-android'
 }
 
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
 apply plugin: 'kotlin-kapt'
 
 android {
@@ -17,6 +20,8 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "BOOTPAY_KEY", properties["BOOTPAY_KEY"]
     }
 
     buildTypes {
@@ -58,5 +63,5 @@ dependencies {
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 
     implementation "androidx.paging:paging-runtime-ktx:3.0.1"
-    implementation 'com.github.bootpay:client_android_java:3.3.91'
+    implementation 'com.github.bootpay:client_android_java:3.5.0'
 }

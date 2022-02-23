@@ -7,6 +7,7 @@ import com.example.songil.config.BaseViewModel
 import com.example.songil.data.Craft4
 import com.example.songil.data.CraftAndAmount
 import com.example.songil.page_order.models.PriceData
+import com.example.songil.page_order.models.RequestBodyPostEtcInfo
 import com.example.songil.page_order.models.ShippingInfo
 import kotlinx.coroutines.launch
 
@@ -24,6 +25,12 @@ class OrderViewModel : BaseViewModel() {
 
     private val _applyBenefitResult = MutableLiveData<Int>()
     val applyBenefitResult : LiveData<Int> get() = _applyBenefitResult
+
+    private val _postOrderInfoResult = MutableLiveData<Int>()
+    val postOrderInfoResult : LiveData<Int> get() = _postOrderInfoResult
+
+    private val _postOrderVerificationResult = MutableLiveData<Int>()
+    val postOrderVerificationResult : LiveData<Int> get() = _postOrderVerificationResult
 
     var btnActivate = MutableLiveData(false)
     var orderIdx = 0
@@ -71,10 +78,35 @@ class OrderViewModel : BaseViewModel() {
         }
     }
 
+    // 결제 직전
+    fun trySendOrderInfo(){
+        viewModelScope.launch(exceptionHandler) {
+            val tempBody = RequestBodyPostEtcInfo(shippingInfo.recipient, shippingInfo.phone, shippingInfo.address, shippingInfo.detailAddress, shippingInfo.memo, priceData.usePoint)
+            val result = repository.postEtcInfo(orderIdx, tempBody)
+            _postOrderInfoResult.postValue(result.body()?.code ?: -1)
+        }
+    }
+
+    // 결제 검증 api
+    fun tryPostOrderVerification(receiptIdx : String){
+        viewModelScope.launch(exceptionHandler) {
+            val result = repository.postOrderVerification(orderIdx, receiptIdx)
+            _postOrderVerificationResult.postValue(result.code)
+        }
+    }
 
     // 결제 버튼의 활성화 여부 설정
     fun checkBtnActivate(){
         btnActivate.value = (shippingInfo.recipient != "" && shippingInfo.phone != "" && shippingInfo.zipCode != "" &&
                 shippingInfo.address != "" && shippingInfo.detailAddress != "")
+    }
+
+    fun getOrderName() : String {
+        return if (craftList.size == 1){
+            craftList[0].name
+        }
+        else {
+            "${craftList[0].name}외 ${craftList.size - 1}개"
+        }
     }
 }

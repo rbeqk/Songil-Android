@@ -1,5 +1,6 @@
 package com.example.songil.page_order
 
+import com.example.songil.config.BaseResponse
 import com.example.songil.config.GlobalApplication
 import com.example.songil.data.CraftAndAmount
 import com.example.songil.page_order.models.*
@@ -23,6 +24,18 @@ class OrderRepository {
     suspend fun postBenefit(orderIdx : Int, benefitIdx : Int?) : Response<ResponsePostBenefit>{
         val result = retrofit.postBenefit(orderIdx = orderIdx, params = RequestBodyPostBenefit(benefitIdx))
         if (result.isSuccessful) return result
+        else throw UnknownError()
+    }
+
+    suspend fun postEtcInfo(orderIdx : Int, params : RequestBodyPostEtcInfo) : Response<ResponsePostEtcInfo>{
+        val result = retrofit.postOrderEtcInfo(orderIdx, params)
+        if (result.isSuccessful) return result
+        else throw UnknownError()
+    }
+
+    suspend fun postOrderVerification(orderIdx : Int, receiptId : String) : BaseResponse {
+        val result = retrofit.postOrderVerification(orderIdx, RequestBodyPostOrderVerification(receiptId = receiptId))
+        if (result.isSuccessful) return result.body()!!
         else throw UnknownError()
     }
 }

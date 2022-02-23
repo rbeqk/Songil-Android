@@ -2,6 +2,7 @@ package com.example.songil.page_order
 
 import android.content.Intent
 import android.os.Bundle
+import android.telephony.PhoneNumberFormattingTextWatcher
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -10,12 +11,14 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.songil.BuildConfig
 import com.example.songil.R
 import com.example.songil.config.BaseActivity
 import com.example.songil.config.GlobalApplication
 import com.example.songil.data.CraftAndAmount
 import com.example.songil.databinding.OrderActivityBinding
 import com.example.songil.page_order.subpage_benefit.ApplyBenefitActivity
+import com.example.songil.page_ordercomplete.OrdercompleteActivity
 import com.example.songil.recycler.adapter.Craft4Adapter
 import com.example.songil.utils.changeToPriceForm
 import com.example.songil.utils.changeToPriceFormKr
@@ -27,6 +30,7 @@ import kr.co.bootpay.enums.PG
 import kr.co.bootpay.enums.UX
 import kr.co.bootpay.model.BootExtra
 import kr.co.bootpay.model.BootUser
+import org.json.JSONObject
 
 // 여기 부트페이 테스트 api key 있다. commit 금지
 class OrderActivity : BaseActivity<OrderActivityBinding>(R.layout.order_activity){
@@ -55,7 +59,7 @@ class OrderActivity : BaseActivity<OrderActivityBinding>(R.layout.order_activity
             binding.spaceCoupon.visibility = View.GONE
         }
 
-        BootpayAnalytics.init(this, "_")
+        BootpayAnalytics.init(this, BuildConfig.BOOTPAY_KEY)
 
         setRecyclerView()
         setObserver()
@@ -86,7 +90,8 @@ class OrderActivity : BaseActivity<OrderActivityBinding>(R.layout.order_activity
         }
 
         binding.btnPayment.setOnClickListener {
-            goBootPayRequest()
+            orderViewModel.trySendOrderInfo()
+            //goBootPayRequest()
         }
 
         binding.btnCheckCoupon.setOnClickListener {
@@ -135,8 +140,15 @@ class OrderActivity : BaseActivity<OrderActivityBinding>(R.layout.order_activity
             }
         }
 
+        val phoneTextWatcher = object : PhoneNumberFormattingTextWatcher(){
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                super.onTextChanged(s, start, before, count)
+                orderViewModel.checkBtnActivate()
+            }
+        }
+
         binding.etAddress.addTextChangedListener(checkTextWatcher)
-        binding.etPhoneNumber.addTextChangedListener(checkTextWatcher)
+        binding.etPhoneNumber.addTextChangedListener(phoneTextWatcher)
         binding.etRecipient.addTextChangedListener(checkTextWatcher)
         binding.etDetailAddress.addTextChangedListener(checkTextWatcher)
         binding.etZipCode.addTextChangedListener(checkTextWatcher)
@@ -174,6 +186,37 @@ class OrderActivity : BaseActivity<OrderActivityBinding>(R.layout.order_activity
             }
         }
         orderViewModel.applyBenefitResult.observe(this, applyBenefitObserver)
+
+        // 12.5 api 결과
+        val postOrderEtcInfoObserver = Observer<Int> { resultCode ->
+            when (resultCode){
+                200 -> {
+                    goBootPayRequest()
+                }
+            }
+        }
+        orderViewModel.postOrderInfoResult.observe(this, postOrderEtcInfoObserver)
+
+        val orderVerificationObserver = Observer<Int> { resultCode ->
+            when(resultCode){
+                200 -> {
+                    startActivityHorizontal(Intent(this, OrdercompleteActivity::class.java))
+                }
+                2328 -> { // 존재하지 않는 receiptId
+                    showSimpleToastMessage("삭제된 주문 정보입니다")
+                }
+                3000 -> { // jwt 토큰 기한 만료
+                    showSimpleToastMessage("자동로그인 혹은 로그인을 수행한 이후 30일이 경과되어 로그아웃되었습니다.")
+                }
+                3500 -> { // 위조된 요청
+                    showSimpleToastMessage("!!위조된 요청입니다!!")
+                }
+                else -> {
+
+                }
+            }
+        }
+        orderViewModel.postOrderVerificationResult.observe(this, orderVerificationObserver)
     }
 
     private fun applyPriceChange(){
@@ -195,26 +238,41 @@ class OrderActivity : BaseActivity<OrderActivityBinding>(R.layout.order_activity
     }
 
     private fun goBootPayRequest() {
-        val bootUser = BootUser().setPhone("010-7748-8084")
+        val bootUser = BootUser().setPhone(orderViewModel.shippingInfo.phone)
         val bootExtra = BootExtra().setQuotas(intArrayOf(0, 2, 3))
-        Bootpay.init(this).setApplicationId("_").setContext(this)
-            .setBootUser(bootUser).setBootExtra(bootExtra).setUX(UX.PG_DIALOG).setPG(PG.KCP).setMethod(Method.CARD)
-            .setName("테스트 상품명").setOrderId("1234").setPrice(1000).onDone { message ->
-                Log.d("done", message)
+        Bootpay.init(this).setApplicationId(BuildConfig.BOOTPAY_KEY).setContext(this)
+            .setBootUser(bootUser).setBootExtra(bootExtra).setUX(UX.PG_DIALOG).setPG(PG.NICEPAY).setMethod(Method.CARD)
+            .setName(orderViewModel.getOrderName()).setOrderId(orderViewModel.orderIdx.toString()).setPrice(orderViewModel.priceData.calTotalPrice())
+            .onDone { data ->
+                Log.d("tesintg", parseReceiptId(data))
+                orderViewModel.tryPostOrderVerification(parseReceiptId(data))
+            }.onConfirm { message ->
+                //showSimpleToastMessage(message)
+                Log.d("onConfirm", message)
+                Bootpay.confirm(message)
             }
             .onReady { message ->
-                Log.d("ready", message)
+                // 가상계좌로 결제 시, 가상계좌 발급이 완료되면 호출
+                //showSimpleToastMessage(message)
+                Log.d("onReady", message)
             }
-            .onCancel { message ->
-                Log.d("cancel", message)
+            .onCancel { message -> // 결제 진행 중 사용자가 결제를 취소한 경우
+                //showSimpleToastMessage(message)
+                Log.d("onCancel", message)
             }
-            .onError{ message ->
-                Log.d("error", message)
+            .onError{ message -> // 결제 진행 중 오류 발생시 호출 (활성화 하지 않은 pg, 한도초과, 카드 정지 등)
+                //showSimpleToastMessage(message)
+                Log.d("onError", message)
             }
             .onClose { _ ->
                 Log.d("close", "close")
             }
             .request()
+    }
+
+    private fun parseReceiptId(bootPayString : String) : String {
+        val jsonObject = JSONObject(bootPayString)
+        return jsonObject.getString("receipt_id")
     }
 
     override fun finish() {

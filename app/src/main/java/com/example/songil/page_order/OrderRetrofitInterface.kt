@@ -1,5 +1,6 @@
 package com.example.songil.page_order
 
+import com.example.songil.config.BaseResponse
 import com.example.songil.page_order.models.*
 import retrofit2.Response
 import retrofit2.http.Body
@@ -15,4 +16,10 @@ interface OrderRetrofitInterface {
 
     @POST("orders/{orderIdx}/benefits")
     suspend fun postBenefit(@Path("orderIdx") orderIdx :Int, @Body params : RequestBodyPostBenefit) : Response<ResponsePostBenefit>
+
+    @POST("orders/{orderIdx}/etc-info")
+    suspend fun postOrderEtcInfo(@Path("orderIdx") orderIdx :Int, @Body params : RequestBodyPostEtcInfo) : Response<ResponsePostEtcInfo>
+
+    @POST("orders/{orderIdx}")
+    suspend fun postOrderVerification(@Path("orderIdx") orderIdx : Int, @Body params : RequestBodyPostOrderVerification) : Response<BaseResponse>
 }

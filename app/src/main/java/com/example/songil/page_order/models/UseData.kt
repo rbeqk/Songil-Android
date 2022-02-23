@@ -8,8 +8,7 @@ data class PostExtraFeeResponseBody(val totalExtraShippingFee : Int, val finalPr
 
 data class PostBenefitResponseBody(val benefitIdx : Int?, val title : String?, val benefitDiscount : Int, val finalPrice : Int)
 
-data class OrderRecipientData(var recipient : String = "", var phone : String = "", var address : String = "",
-                              var detailAddress : String = "", var memo : String = "", var pointDiscount : Int = 0)
+data class PostEtcInfoResponseBody(val finalPrice: Int)
 
 class PriceData(var craftTotalPrice : Int = 0, var couponName : String? = null, var couponDiscount : Int = 0, var shippingFee : Int = 0, var extraShippingFee : Int = 0,
                 var usePoint : Int = 0, var havePoint : Int = 0) {
