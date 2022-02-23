@@ -9,17 +9,22 @@ import com.example.songil.R
 import com.example.songil.config.BaseActivity
 import com.example.songil.config.BaseViewModel
 import com.example.songil.config.GlobalApplication
+import com.example.songil.config.InquiryTarget
 import com.example.songil.databinding.InquiryActivityBinding
 import com.example.songil.popup_inquiry.InquiryDialog
 
 class InquiryActivity : BaseActivity<InquiryActivityBinding>(R.layout.inquiry_activity) {
-    private val viewModel : InquiryViewModel by lazy { ViewModelProvider(this, InquiryViewModel.InquiryViewModelFactory(craftIdx))[InquiryViewModel::class.java] }
+    private lateinit var viewModel : InquiryViewModel
     private var craftIdx = 0
+    private lateinit var targetType : InquiryTarget
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        craftIdx = intent.getIntExtra(GlobalApplication.CRAFT_IDX, 0)
+        craftIdx = intent.getIntExtra(GlobalApplication.TARGET_IDX, 0)
+        targetType = intent.getSerializableExtra(GlobalApplication.TARGET_IDX_TYPE) as InquiryTarget
+
+        viewModel = ViewModelProvider(this, InquiryViewModel.InquiryViewModelFactory(craftIdx, targetType))[InquiryViewModel::class.java]
 
         binding.viewModel = viewModel
         binding.lifecycleOwner = this

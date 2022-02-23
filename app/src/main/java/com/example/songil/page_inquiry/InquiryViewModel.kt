@@ -2,9 +2,10 @@ package com.example.songil.page_inquiry
 
 import androidx.lifecycle.*
 import com.example.songil.config.BaseViewModel
+import com.example.songil.config.InquiryTarget
 import kotlinx.coroutines.launch
 
-class InquiryViewModel(private val craftIdx : Int) : BaseViewModel() {
+class InquiryViewModel(private val targetIdx : Int, private val targetType : InquiryTarget) : BaseViewModel() {
     private val repository = InquiryRepository()
 
     var reviewContent = ""
@@ -14,10 +15,10 @@ class InquiryViewModel(private val craftIdx : Int) : BaseViewModel() {
     private val _inquiryResult = MutableLiveData<Boolean>()
     val inquiryResult : LiveData<Boolean> get() = _inquiryResult
 
-    class InquiryViewModelFactory(private val craftIdx : Int) : ViewModelProvider.Factory {
+    class InquiryViewModelFactory(private val targetIdx : Int, private val targetType : InquiryTarget) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             @Suppress("UNCHECKED_CAST")
-            return InquiryViewModel(craftIdx = craftIdx) as T
+            return InquiryViewModel(targetIdx = targetIdx, targetType = targetType) as T
         }
     }
 
@@ -31,8 +32,16 @@ class InquiryViewModel(private val craftIdx : Int) : BaseViewModel() {
 
     fun trySendInquiry(){
         viewModelScope.launch(exceptionHandler) {
-            val result = repository.sendInquiry(craftIdx = craftIdx, content = reviewContent)
-            _inquiryResult.postValue(result.body()?.code == 200)
+            when (targetType){
+                InquiryTarget.CRAFT -> {
+                    val result = repository.sendCraftInquiry(craftIdx = targetIdx, content = reviewContent)
+                    _inquiryResult.postValue(result.body()?.code == 200)
+                }
+                InquiryTarget.ORDER -> {
+                    val result = repository.sendOrderInquiry(orderDetailIdx = targetIdx, content = reviewContent)
+                    _inquiryResult.postValue(result.body()?.code == 200)
+                }
+            }
         }
     }
 

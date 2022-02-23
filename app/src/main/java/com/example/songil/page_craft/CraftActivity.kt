@@ -14,6 +14,7 @@ import com.bumptech.glide.Glide
 import com.example.songil.R
 import com.example.songil.config.BaseActivity
 import com.example.songil.config.GlobalApplication
+import com.example.songil.config.InquiryTarget
 import com.example.songil.data.LikeData
 import com.example.songil.databinding.CraftActivityBinding
 import com.example.songil.page_craft.subpage_comment.CraftFragmentComment
@@ -167,7 +168,8 @@ class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity
         binding.layoutContract.setOnClickListener {
             if (GlobalApplication.checkIsLogin()) {
                 val intent = Intent(this, InquiryActivity::class.java)
-                intent.putExtra(GlobalApplication.CRAFT_IDX, viewModel.productDetailInfo.craftIdx)
+                intent.putExtra(GlobalApplication.TARGET_IDX, viewModel.productDetailInfo.craftIdx)
+                intent.putExtra(GlobalApplication.TARGET_IDX_TYPE, InquiryTarget.CRAFT)
                 startActivityHorizontal(intent)
             } else {
                 callNeedLoginDialog()

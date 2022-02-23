@@ -15,7 +15,6 @@ class GlobalApplication : Application() {
         const val API_URL = "https://dev.songil.shop/"
         const val X_ACCESS_TOKEN = "x-access-token"
         const val IS_ARTIST = "is_artist"
-        const val USER_IDX = "user-idx"
         const val CRAFT_IDX = "craft-idx"
         const val ABTEST_IDX = "abtest-idx"
         const val STORY_IDX = "story-idx"
@@ -24,6 +23,7 @@ class GlobalApplication : Application() {
         const val IS_FIRST_EXEC = "first_exec"
         const val REPORT_TARGET = "report_target"
         const val TARGET_IDX = "target-idx"
+        const val TARGET_IDX_TYPE = "target-idx-type"
         const val WRITE_TYPE = "write-type"
         lateinit var sRetrofit: Retrofit
         lateinit var globalSharedPreferences: SharedPreferences
@@ -38,6 +38,8 @@ class GlobalApplication : Application() {
             Category(8,"전체보기", R.drawable.ic_heart_line_28),
         )
         val sort = mapOf("price" to "낮은 가격순", "popular" to "인기순", "new" to "최신순", "comment" to "리뷰 많은 순")
+        val courierMap = mapOf("01" to "우체국택배", "04" to "CJ대한통운", "05" to "한진택배", "06" to "로젠택배", "08" to "롯데택배", "11" to "일양로지스", "20" to "한덱스",
+                "22" to "대신택배", "23" to "경동택배", "24" to "GS Postbox 택배", "32" to "합동택배")
 
         fun checkIsLogin() : Boolean {
             return globalSharedPreferences.contains(X_ACCESS_TOKEN)

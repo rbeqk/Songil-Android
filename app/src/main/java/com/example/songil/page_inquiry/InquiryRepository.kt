@@ -8,8 +8,14 @@ import retrofit2.Response
 class InquiryRepository {
     private val retrofit = GlobalApplication.sRetrofit.create(InquiryRetrofitInterface::class.java)
 
-    suspend fun sendInquiry(craftIdx : Int, content : String) : Response<ResponsePostInquiry> {
-        val result = retrofit.postInquiry(craftIdx = craftIdx, params = RequestBodyPostInquiry(content))
+    suspend fun sendCraftInquiry(craftIdx : Int, content : String) : Response<ResponsePostInquiry> {
+        val result = retrofit.postCraftInquiry(craftIdx = craftIdx, params = RequestBodyPostInquiry(content))
+        if (result.isSuccessful) return result
+        else throw UnknownError()
+    }
+
+    suspend fun sendOrderInquiry(orderDetailIdx : Int, content : String) : Response<ResponsePostInquiry> {
+        val result = retrofit.postOrderInquiry(orderDetailIdx = orderDetailIdx, params = RequestBodyPostInquiry(content))
         if (result.isSuccessful) return result
         else throw UnknownError()
     }

@@ -19,3 +19,7 @@ enum class LoginProcess {
 enum class MyPageActivityType {
     FAVORITE_POST, COMMENT_POST, MY_POST
 }
+
+enum class InquiryTarget {
+    CRAFT, ORDER
+}

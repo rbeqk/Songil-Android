@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.songil.R
 import com.example.songil.config.BaseActivity
+import com.example.songil.config.GlobalApplication
+import com.example.songil.config.InquiryTarget
 import com.example.songil.databinding.ItemOrderStatusBinding
 import com.example.songil.page_cancel.CancelActivity
 import com.example.songil.page_delivery.DeliveryActivity
@@ -56,11 +58,16 @@ class OrderStatusAdapter(private val context : Context, private val dataList : A
         }
         holder.btnDeliveryStatus.setOnClickListener {
             //Log.d("order", "배송 정보 to ${dataList[position].orderStatus}")
-            (context as BaseActivity<*>).startActivityHorizontal(Intent(context, DeliveryActivity::class.java))
+            val intent = Intent(context, DeliveryActivity::class.java)
+            intent.putExtra("ORDER_DETAIL_IDX", dataList[position].orderDetailIdx)
+            (context as BaseActivity<*>).startActivityHorizontal(intent)
         }
         holder.btnInquiry.setOnClickListener {
             //Log.d("order", "문의 작성 to ${dataList[position].productIdx}")
-            context.startActivity(Intent(context as Activity, InquiryActivity::class.java))
+            val intent = Intent(context as Activity, InquiryActivity::class.java)
+            intent.putExtra(GlobalApplication.TARGET_IDX, dataList[position].orderDetailIdx)
+            intent.putExtra(GlobalApplication.TARGET_IDX_TYPE, InquiryTarget.ORDER)
+            context.startActivity(intent)
         }
         holder.btnOrderCancel.setOnClickListener {
             //Log.d("order", "주문 취소 to ${dataList[position].orderIdx}")

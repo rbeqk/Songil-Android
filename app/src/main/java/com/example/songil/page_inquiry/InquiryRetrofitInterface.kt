@@ -9,5 +9,8 @@ import retrofit2.http.Path
 
 interface InquiryRetrofitInterface {
     @POST("shop/crafts/{craftIdx}/ask")
-    suspend fun postInquiry(@Path("craftIdx") craftIdx : Int, @Body params : RequestBodyPostInquiry) : Response<ResponsePostInquiry>
+    suspend fun postCraftInquiry(@Path("craftIdx") craftIdx : Int, @Body params : RequestBodyPostInquiry) : Response<ResponsePostInquiry>
+
+    @POST("my-page/orders/{orderDetailIdx}/ask")
+    suspend fun postOrderInquiry(@Path("orderDetailIdx") orderDetailIdx : Int, @Body params : RequestBodyPostInquiry) : Response<ResponsePostInquiry>
 }
