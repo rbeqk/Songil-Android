@@ -25,6 +25,7 @@ import com.example.songil.page_orderstatus.OrderStatusActivity
 import com.example.songil.page_setting.SettingActivity
 import com.example.songil.popup_logout.LogoutDialog
 import com.example.songil.popup_logout.popup_interface.PopupLogoutView
+import com.example.songil.popup_warning.WarningDialog
 
 class MypageFragment : BaseFragment<MypageFragmentBinding>(MypageFragmentBinding::bind, R.layout.mypage_fragment), PopupLogoutView{
 
@@ -136,9 +137,12 @@ class MypageFragment : BaseFragment<MypageFragmentBinding>(MypageFragmentBinding
         }
 
         binding.tvbtnChangeToArtistPage.setOnClickListener {
-            /*val dialogFragment = WarningDialog()
-            dialogFragment.show(childFragmentManager, dialogFragment.tag)*/
-            (activity as MainActivity).toggleMyPage(true)
+            if (GlobalApplication.checkIsArtist()){
+                (activity as MainActivity).toggleMyPage(true)
+            } else {
+                val dialogFragment = WarningDialog(getString(R.string.warning_title_artist_page), getString(R.string.warning_message_artist_page)){}
+                dialogFragment.show(childFragmentManager, dialogFragment.tag)
+            }
         }
 
         binding.tvbtnLikeArticle.setOnClickListener {
