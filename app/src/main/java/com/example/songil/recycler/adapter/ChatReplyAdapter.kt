@@ -7,9 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.songil.R
 import com.example.songil.data.ChatReply
 import com.example.songil.databinding.ItemPostCommentReplyBinding
+import com.example.songil.recycler.rv_interface.RvPostAndChatView
 import com.example.songil.recycler.viewholder.PostCommentReplyViewHolder
 
-class ChatReplyAdapter(private val replyData : ArrayList<ChatReply>) : RecyclerView.Adapter<PostCommentReplyViewHolder>(){
+class ChatReplyAdapter(private val replyData : ArrayList<ChatReply>, private val view : RvPostAndChatView) : RecyclerView.Adapter<PostCommentReplyViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostCommentReplyViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemPostCommentReplyBinding.inflate(inflater, parent, false)
@@ -23,7 +24,11 @@ class ChatReplyAdapter(private val replyData : ArrayList<ChatReply>) : RecyclerV
         holder.isWriter.visibility = if (replyData[position].isWriter == "Y") View.VISIBLE else View.INVISIBLE
         holder.reportOrRemoveBtn.text = if (replyData[position].isUserComment == "Y") holder.itemView.context.getString(R.string.remove_with_underline) else holder.itemView.context.getString(R.string.report_with_underline)
         holder.reportOrRemoveBtn.setOnClickListener {
-
+            if (replyData[position].isUserComment == "Y"){
+                view.removeChat(replyData[position].commentIdx)
+            } else {
+                view.reportChat(replyData[position].commentIdx)
+            }
         }
     }
 
