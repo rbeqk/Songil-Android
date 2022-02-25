@@ -67,11 +67,13 @@ class OrderStatusAdapter(private val context : Context, private val dataList : A
             val intent = Intent(context as Activity, InquiryActivity::class.java)
             intent.putExtra(GlobalApplication.TARGET_IDX, dataList[position].orderDetailIdx)
             intent.putExtra(GlobalApplication.TARGET_IDX_TYPE, InquiryTarget.ORDER)
-            context.startActivity(intent)
+            (context as BaseActivity<*>).startActivityHorizontal(intent)
         }
         holder.btnOrderCancel.setOnClickListener {
             //Log.d("order", "주문 취소 to ${dataList[position].orderIdx}")
-            context.startActivity(Intent(context as Activity, CancelActivity::class.java))
+            val intent = Intent(context as Activity, CancelActivity::class.java)
+            intent.putExtra("ORDER_DETAIL_IDX", dataList[position].orderDetailIdx)
+            (context as BaseActivity<*>).startActivityHorizontal(intent)
         }
         holder.btnPaymentInfo.setOnClickListener {
             val intent = Intent(context as BaseActivity<*>, PayInfoActivity::class.java)
