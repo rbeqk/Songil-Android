@@ -4,7 +4,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
-import androidx.paging.cachedIn
 import com.example.songil.config.BaseViewModel
 import com.example.songil.page_with.with_story.paging.WithStoryPagingSource
 import kotlinx.coroutines.launch
@@ -27,7 +26,7 @@ class WithStoryViewModel : BaseViewModel() {
 
     var flow = Pager(PagingConfig(10)){
         getWithStoryPagingSource()
-    }.flow.cachedIn(viewModelScope)
+    }.flow
 
     fun tryGetStartIdx(){
         viewModelScope.launch(exceptionHandler) {

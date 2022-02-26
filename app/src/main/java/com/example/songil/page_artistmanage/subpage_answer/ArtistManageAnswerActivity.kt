@@ -33,6 +33,7 @@ class ArtistManageAnswerActivity : BaseActivity<InquiryActivityAnswerBinding>(R.
         if (status == 2){
             binding.etAnswer.isEnabled = false
             binding.tvAnswer.text = getString(R.string.answer_content)
+            binding.tvTitle.text = getString(R.string.answer_content)
         }
 
         setEditText()
