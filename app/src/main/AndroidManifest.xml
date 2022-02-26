@@ -67,6 +67,7 @@
         <activity android:name=".page_mypage_modify_profile.ModifyProfileActivity" android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".page_order.subpage_benefit.ApplyBenefitActivity"/>
         <activity android:name=".page_payinfo.PayInfoActivity"/>
+        <activity android:name=".page_artistmanage.subpage_cancel_request.ArtistManageCancelRequestActivity"/>
     </application>
 
 </manifest>

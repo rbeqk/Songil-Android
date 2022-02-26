@@ -1,4 +1,4 @@
-package com.example.songil.page_artistmanage.subpage_orderstat
+package com.example.songil.page_artistmanage.subpage_cancel_request
 
 import android.os.Bundle
 import android.view.View
@@ -9,29 +9,36 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.songil.R
 import com.example.songil.config.BaseActivity
 import com.example.songil.databinding.SimpleBaseActivityBinding
-import com.example.songil.recycler.adapter.OrdersArtistPagingAdapter
+import com.example.songil.recycler.adapter.CancelRequestListPagingAdapter
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class ArtistManageOrderStatActivity : BaseActivity<SimpleBaseActivityBinding>(R.layout.simple_base_activity){
-    private val viewModel : ArtistManageOrderStatViewModel by lazy { ViewModelProvider(this)[ArtistManageOrderStatViewModel::class.java] }
-    private var pagingjob : Job?= null
+class ArtistManageCancelRequestActivity : BaseActivity<SimpleBaseActivityBinding>(R.layout.simple_base_activity) {
+
+    private val viewModel : ArtistManageCancelRequestViewModel by lazy { ViewModelProvider(this)[ArtistManageCancelRequestViewModel::class.java] }
+    private var pagingJob : Job ?= null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        setRecyclerView()
         setButton()
         setObserver()
-        setRecyclerView()
+
+        viewModel.tryGetPageCnt()
+
         binding.layoutRefresh.setOnRefreshListener {
             viewModel.tryGetPageCnt()
         }
 
-        binding.tvTitle.text = getString(R.string.order_status)
-        binding.viewEmpty.tvEmptyTarget.text = getString(R.string.empty_artist_order_status)
+        binding.tvTitle.text = getString(R.string.cancel_return_request_list)
+        binding.viewEmpty.tvEmptyTarget.text = getString(R.string.empty_cancel_request)
+    }
 
-        viewModel.tryGetPageCnt()
+    private fun setRecyclerView(){
+        binding.rvContent.layoutManager = LinearLayoutManager(parent, LinearLayoutManager.VERTICAL, false)
+        binding.rvContent.adapter = CancelRequestListPagingAdapter()
     }
 
     private fun setButton(){
@@ -40,19 +47,15 @@ class ArtistManageOrderStatActivity : BaseActivity<SimpleBaseActivityBinding>(R.
         }
     }
 
-    private fun setRecyclerView(){
-        binding.rvContent.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        binding.rvContent.adapter = OrdersArtistPagingAdapter()
-    }
-
     private fun setObserver(){
-        val pageCntObserver = Observer<Int> { resultCode ->
+        val pageCntObserver = Observer<Int>{ resultCode ->
             binding.layoutRefresh.isRefreshing = false
             when (resultCode){
                 200 -> {
                     if (viewModel.startPage == 0){
                         binding.viewEmpty.root.visibility = View.VISIBLE
-                    } else {
+                    }
+                    else {
                         binding.viewEmpty.root.visibility = View.GONE
                         restartJob()
                     }
@@ -63,10 +66,10 @@ class ArtistManageOrderStatActivity : BaseActivity<SimpleBaseActivityBinding>(R.
     }
 
     private fun restartJob(){
-        pagingjob?.cancel()
-        pagingjob = lifecycleScope.launch {
+        pagingJob?.cancel()
+        pagingJob = lifecycleScope.launch {
             viewModel.flow.collectLatest { pagingData ->
-                (binding.rvContent.adapter as OrdersArtistPagingAdapter).submitData(pagingData)
+                (binding.rvContent.adapter as CancelRequestListPagingAdapter).submitData(pagingData)
             }
         }
     }

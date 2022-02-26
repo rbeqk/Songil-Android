@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp">
+        android:paddingHorizontal="16dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="0dp">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guide_start_25"
@@ -20,10 +21,10 @@
             android:id="@+id/iv_craft"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/guide_start_25"/>
+            app:layout_constraintEnd_toEndOf="@id/guide_start_25"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintDimensionRatio="1:1"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_craft_name"
@@ -32,22 +33,22 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="@id/guide_start_25"
             app:layout_constraintEnd_toStartOf="@id/tv_order_status"
-            android:layout_marginEnd="14dp"
-            android:layout_marginStart="14dp"
             android:textSize="12sp"
             android:maxLines="1"
             android:ellipsize="end"
             android:fontFamily="@font/spoqahansansneo_regular"
-            tools:text="작품명 외1"/>
+            tools:text="상품명1"
+            android:layout_marginStart="14dp"
+            android:layout_marginEnd="14dp"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_order_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             android:textSize="12sp"
-            tools:text="발송중"/>
+            tools:text="반품신청"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_consumer"
@@ -63,35 +64,72 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/btn_check_consumer"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@id/tv_consumer"
+            android:paddingVertical="12dp"
+            android:paddingHorizontal="16dp"
             app:layout_constraintStart_toStartOf="@id/tv_craft_name"
-            app:layout_constraintEnd_toStartOf="@id/btn_shipping_information"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/iv_craft"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="6dp"
             android:textSize="12sp"
             android:gravity="center"
             android:text="@string/check_consumer_information"
             android:background="@drawable/custom_order_status_button"
+            android:textColor="@drawable/custom_order_status_button_text"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_reason"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/iv_craft"
+            android:layout_marginTop="12dp"
+            android:textSize="12sp"
+            android:fontFamily="@font/spoqahansansneo_regular"
+            android:textColor="@color/g_4"
+            android:lineSpacingExtra="4dp"
+            tools:text="취소사유 : 동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세 무궁화 삼천리 화려강산 대한사람 대한으로 길이 보전하세"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/btn_ok"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tv_reason"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btn_denial"
+            android:paddingVertical="12dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="2dp"
+            android:textSize="12sp"
+            android:gravity="center"
+            android:text="@string/to_approve"
+            android:background="@drawable/custom_order_status_button"
             android:textColor="@drawable/custom_order_status_button_text" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/btn_shipping_information"
+            android:id="@+id/btn_denial"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintTop_toTopOf="@id/btn_check_consumer"
-            app:layout_constraintBottom_toBottomOf="@id/btn_check_consumer"
-            app:layout_constraintStart_toEndOf="@id/btn_check_consumer"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tv_reason"
+            app:layout_constraintStart_toEndOf="@id/btn_ok"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginStart="6dp"
+            android:paddingVertical="12dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginStart="2dp"
             android:gravity="center"
             android:textSize="12sp"
-            android:text="@string/input_shipping_information"
+            android:text="@string/reject_approve"
             android:background="@drawable/custom_order_status_button"
             android:textColor="@drawable/custom_order_status_button_text"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <View
+            android:id="@+id/line_separator"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/g_2"
+            app:layout_constraintTop_toBottomOf="@id/btn_denial"
+            android:layout_marginTop="20dp"/>
 
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
