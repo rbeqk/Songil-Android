@@ -1,15 +1,12 @@
 package com.example.songil.recycler.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.songil.databinding.ItemSearchRecentsearchBinding
-import com.example.songil.recycler.rv_interface.RvTriggerView
 
-class RecentSearchAdapter(context : Context, private val triggerView: RvTriggerView) : RecyclerView.Adapter<RecentSearchAdapter.ViewHolder>() {
+class RecentSearchAdapter(private val search : (String) -> Unit, private val delete : (String) -> Unit) : RecyclerView.Adapter<RecentSearchAdapter.ViewHolder>() {
 
-    private val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
     private lateinit var binding : ItemSearchRecentsearchBinding
     private var dataList = ArrayList<String>()
 
@@ -19,6 +16,7 @@ class RecentSearchAdapter(context : Context, private val triggerView: RvTriggerV
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val inflater = LayoutInflater.from(parent.context)
         binding = ItemSearchRecentsearchBinding.inflate(inflater, parent, false)
         return ViewHolder(binding)
     }
@@ -26,10 +24,10 @@ class RecentSearchAdapter(context : Context, private val triggerView: RvTriggerV
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.word.text = dataList[position]
         holder.removeBtn.setOnClickListener {
-            triggerView.notifyDataChange(0, position)
+            delete(dataList[position])
         }
         holder.word.setOnClickListener {
-            triggerView.notifyDataChange(1, position)
+            search(dataList[position])
         }
     }
 

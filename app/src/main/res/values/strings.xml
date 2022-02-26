@@ -63,6 +63,7 @@
     <string name="soldout_eng">SOLD OUT</string>
     <string name="form_search_result">총 %d개 검색 결과</string>
     <string name="form_number_bracket">(%d)</string>
+    <string name="empty_recently_keywords">최근 검색 내역이 없습니다.</string>
 
     <!-- 장바구니 관련 -->
     <string name="empty_shopping_basket">아직 장바구니에 담은 상품이 없어요.</string>
@@ -260,7 +261,7 @@
     <string name="will_reorder">재주문 예정</string>
     <string name="do_cancel_order">주문 취소하기</string>
     <string name="cancel_complete">취소 완료</string>
-    <string name="cancel_message">주문이 취소처리 되었습니다.\n결제수단으로 환불예정입니다.</string>
+    <string name="cancel_message">주문취소 요청이 완료 되었습니다.\n작가님에게 취소 요청이 전달됩니다</string>
 
     <!-- 설정 페이지 관련 -->
     <string name="notice">공지사항</string>
