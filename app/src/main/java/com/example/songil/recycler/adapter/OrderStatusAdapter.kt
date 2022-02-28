@@ -18,6 +18,7 @@ import com.example.songil.page_delivery.DeliveryActivity
 import com.example.songil.page_inquiry.InquiryActivity
 import com.example.songil.page_orderstatus.models.OrderStatusItemInfo
 import com.example.songil.page_payinfo.PayInfoActivity
+import com.example.songil.page_return.ReturnActivity
 import com.example.songil.utils.changeToPriceForm
 
 class OrderStatusAdapter(private val context : Context, private val dataList : ArrayList<OrderStatusItemInfo>) : RecyclerView.Adapter<OrderStatusAdapter.ViewHolder>() {
@@ -55,9 +56,9 @@ class OrderStatusAdapter(private val context : Context, private val dataList : A
         holder.orderStatus.text = context.getString(orderStatusString[dataList[position].status]!!)
         holder.orderStatus.setTextColor(ContextCompat.getColor(holder.itemView.context, orderStatusColor[dataList[position].status] ?: R.color.songil_2))
         holder.price.text = context.getString(R.string.form_price_won_string, changeToPriceForm(dataList[position].price))
-        // set buttons
-        holder.btnComment.setOnClickListener {
 
+        holder.btnComment.setOnClickListener {
+            // 여기
         }
         holder.btnDeliveryStatus.setOnClickListener {
             //Log.d("order", "배송 정보 to ${dataList[position].orderStatus}")
@@ -72,12 +73,7 @@ class OrderStatusAdapter(private val context : Context, private val dataList : A
             intent.putExtra(GlobalApplication.TARGET_IDX_TYPE, InquiryTarget.ORDER)
             (context as BaseActivity<*>).startActivityHorizontal(intent)
         }
-        holder.btnOrderCancel.setOnClickListener {
-            //Log.d("order", "주문 취소 to ${dataList[position].orderIdx}")
-            val intent = Intent(context as Activity, CancelActivity::class.java)
-            intent.putExtra("ORDER_DETAIL_IDX", dataList[position].orderDetailIdx)
-            (context as BaseActivity<*>).startActivityHorizontal(intent)
-        }
+
         holder.btnPaymentInfo.setOnClickListener {
             val intent = Intent(context as BaseActivity<*>, PayInfoActivity::class.java)
             intent.putExtra("ORDER_DETAIL_IDX", dataList[position].orderDetailIdx)
@@ -86,16 +82,26 @@ class OrderStatusAdapter(private val context : Context, private val dataList : A
         holder.amount.text = context.getString(R.string.form_single_count, dataList[position].amount)
         holder.btnComment.text = context.getString(R.string.go_write_comment)
         Glide.with(context).load(dataList[position].mainImageUrl).into(holder.image)
-        // canReqCancel 이 null 이 아닌 경우는 아직 주문이 취소 가능한 경우
-        // canReqCancel 이 null 인 경우는 canReqReturn 이 null 이 아니며, 이는 반품이 가능한 경우
         holder.btnComment.isEnabled = (dataList[position].canWriteComment == "Y")
-        if (dataList[position].canReqCancel != null){
+        // status 가 1, 2, 4, 5 (순서대로 배송준비중, 배송중, 취소요청, 취소완료)인 경우에는 취소 버튼
+        // 아닌 경우에는 반품 버튼
+        if (dataList[position].status == 1 || dataList[position].status == 2 || dataList[position].status == 4 || dataList[position].status == 5){
             holder.btnOrderCancel.text = context.getString(R.string.request_cancel)
             holder.btnOrderCancel.isEnabled = (dataList[position].canReqCancel == "Y")
+            holder.btnOrderCancel.setOnClickListener {
+                val intent = Intent(context as Activity, CancelActivity::class.java)
+                intent.putExtra("ORDER_DETAIL_IDX", dataList[position].orderDetailIdx)
+                (context as BaseActivity<*>).startActivityHorizontal(intent)
+            }
         }
-        else if (dataList[position].canReqReturn != null) {
+        else {
             holder.btnOrderCancel.text = context.getString(R.string.request_return)
             holder.btnOrderCancel.isEnabled = (dataList[position].canReqReturn == "Y")
+            /*holder.btnOrderCancel.setOnClickListener {
+                val intent = Intent(context as Activity, ReturnActivity::class.java)
+                intent.putExtra("ORDER_DETAIL_IDX", dataList[position].orderDetailIdx)
+                (context as BaseActivity<*>).startActivityHorizontal(intent)
+            }*/
         }
 
     }
