@@ -68,6 +68,7 @@
         <activity android:name=".page_order.subpage_benefit.ApplyBenefitActivity"/>
         <activity android:name=".page_payinfo.PayInfoActivity"/>
         <activity android:name=".page_artistmanage.subpage_cancel_request.ArtistManageCancelRequestActivity"/>
+        <activity android:name=".page_customer_center.CustomerCenterActivity"/>
     </application>
 
 </manifest>

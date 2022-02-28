@@ -6,8 +6,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
-
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -25,12 +23,10 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/btn_back"
-                        android:layout_width="22dp"
-                        android:layout_height="22dp"
+                        style="@style/toolbarButton"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        android:layout_marginStart="16dp"
                         android:src="@drawable/ic_back_22"/>
 
                     <androidx.appcompat.widget.AppCompatTextView

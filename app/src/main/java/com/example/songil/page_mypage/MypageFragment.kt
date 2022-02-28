@@ -12,6 +12,7 @@ import com.example.songil.config.GlobalApplication
 import com.example.songil.config.MyPageActivityType
 import com.example.songil.data.SongilUserInfo
 import com.example.songil.databinding.MypageFragmentBinding
+import com.example.songil.page_customer_center.CustomerCenterActivity
 import com.example.songil.page_main.MainActivity
 import com.example.songil.page_mybenefit.MybenefitActivity
 import com.example.songil.page_mycomment.MycommentActivity
@@ -154,6 +155,10 @@ class MypageFragment : BaseFragment<MypageFragmentBinding>(MypageFragmentBinding
             intent.putExtra("userNickname", viewModel.userInfo.value!!.userName)
             intent.putExtra("imageUrl", viewModel.userInfo.value!!.userProfile)
             (activity as MainActivity).startActivityHorizontal(intent)
+        }
+
+        binding.tvbtnCustomerCenter.setOnClickListener {
+            (activity as MainActivity).startActivityHorizontal(Intent(activity as MainActivity, CustomerCenterActivity::class.java))
         }
     }
 
