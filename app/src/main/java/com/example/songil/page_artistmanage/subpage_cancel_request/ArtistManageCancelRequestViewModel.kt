@@ -6,6 +6,8 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import com.example.songil.config.BaseViewModel
+import com.example.songil.config.CancelOrReturn
+import com.example.songil.data.ChangedItemFromAPI
 import com.example.songil.recycler.pagingSource.OrdersCancelRequestPagingSource
 import kotlinx.coroutines.launch
 
@@ -15,7 +17,11 @@ class ArtistManageCancelRequestViewModel : BaseViewModel() {
     private val _pageCntResult = MutableLiveData<Int>()
     val pageCntResult : LiveData<Int> get() = _pageCntResult
 
+    private val _requestAnswerResult = MutableLiveData<ChangedItemFromAPI<Int>>()
+    val requestAnswerResult : LiveData<ChangedItemFromAPI<Int>> get() = _requestAnswerResult
+
     var startPage = 0
+    var errorMsg = ""
 
     lateinit var pagingSourcePointer : OrdersCancelRequestPagingSource
 
@@ -26,6 +32,31 @@ class ArtistManageCancelRequestViewModel : BaseViewModel() {
                 startPage = result.result.totalPages
             }
             _pageCntResult.postValue(result.code)
+        }
+    }
+
+    fun trySendRequestAnswer(cancelOrReturn: CancelOrReturn, isApprove : Boolean, orderDetailIdx : Int, positionInAdapter : Int){
+        viewModelScope.launch(exceptionHandler) {
+            val result = when(cancelOrReturn){
+                CancelOrReturn.CANCEL -> {
+                    if (isApprove)  {
+                        repository.postCancelRequestAnswer(orderDetailIdx = orderDetailIdx, "approval")
+                    } else {
+                        repository.postCancelRequestAnswer(orderDetailIdx = orderDetailIdx, "rejection")
+                    }
+                }
+                CancelOrReturn.RETURN -> {
+                    if (isApprove)  {
+                        // 반품으로 변경 필요
+                        repository.postCancelRequestAnswer(orderDetailIdx = orderDetailIdx, "approval")
+                    } else {
+                        // 반품으로 변경 필요
+                        repository.postCancelRequestAnswer(orderDetailIdx = orderDetailIdx, "rejection")
+                    }
+                }
+            }
+            errorMsg = result.message ?: ""
+            _requestAnswerResult.postValue(ChangedItemFromAPI(position = positionInAdapter, ApiResultCode = result.code, newData = orderDetailIdx))
         }
     }
 

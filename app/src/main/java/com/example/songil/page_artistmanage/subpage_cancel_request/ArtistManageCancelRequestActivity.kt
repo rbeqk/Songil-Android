@@ -8,7 +8,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.songil.R
 import com.example.songil.config.BaseActivity
+import com.example.songil.config.CancelOrReturn
+import com.example.songil.data.ChangedItemFromAPI
 import com.example.songil.databinding.SimpleBaseActivityBinding
+import com.example.songil.popup_Yes_Or_No.CancelOrReturnDialog
 import com.example.songil.recycler.adapter.CancelRequestListPagingAdapter
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
@@ -38,7 +41,26 @@ class ArtistManageCancelRequestActivity : BaseActivity<SimpleBaseActivityBinding
 
     private fun setRecyclerView(){
         binding.rvContent.layoutManager = LinearLayoutManager(parent, LinearLayoutManager.VERTICAL, false)
-        binding.rvContent.adapter = CancelRequestListPagingAdapter()
+        binding.rvContent.adapter = CancelRequestListPagingAdapter(::callDialog)
+    }
+
+    private fun callDialog(cancelOrReturn: CancelOrReturn, isApprove : Boolean, orderDetailIdx : Int, positionInAdapter : Int){
+        val title = when(cancelOrReturn){
+            CancelOrReturn.CANCEL -> {
+                if (isApprove) { "주문 취소 요청을 승인하시겠습니까?" }
+                else {"주문 취소 요청을 거절하시겠습니까?"}
+            }
+            CancelOrReturn.RETURN -> {
+                if (isApprove) { "반품 요청을 승인하시겠습니까?" }
+                else {"반품 요청을 거절하시겠습니까?"}
+            }
+        }
+        val dialog = CancelOrReturnDialog(title = title, cancelOrReturn = cancelOrReturn, isApprove = isApprove, orderDetailIdx = orderDetailIdx, position = positionInAdapter, ::callAnswerRequestApi)
+        dialog.show(supportFragmentManager, dialog.tag)
+    }
+
+    private fun callAnswerRequestApi(cancelOrReturn: CancelOrReturn, isApprove : Boolean, orderDetailIdx : Int, positionInAdapter : Int){
+        viewModel.trySendRequestAnswer(cancelOrReturn, isApprove, orderDetailIdx, positionInAdapter)
     }
 
     private fun setButton(){
@@ -63,6 +85,19 @@ class ArtistManageCancelRequestActivity : BaseActivity<SimpleBaseActivityBinding
             }
         }
         viewModel.pageCntResult.observe(this, pageCntObserver)
+
+        val changeItemObserver = Observer<ChangedItemFromAPI<Int>> { liveData ->
+            when (liveData.ApiResultCode){
+                200 -> {
+                    (binding.rvContent.adapter as CancelRequestListPagingAdapter).applyChange(liveData.newData?: 0, liveData.position)
+                }
+                4001 -> { // 부트페이 api 에서 취소 불가가 발생한 경우 (취소 불가, 해당거래 취소 실패 등)
+                    (binding.rvContent.adapter as CancelRequestListPagingAdapter).applyChange(liveData.newData?: 0, liveData.position)
+                    showSimpleToastMessage(viewModel.errorMsg)
+                }
+            }
+        }
+        viewModel.requestAnswerResult.observe(this, changeItemObserver)
     }
 
     private fun restartJob(){

@@ -7,10 +7,11 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.songil.config.CancelOrReturn
 import com.example.songil.databinding.ItemOrdersBinding
 import com.example.songil.page_artistmanage.subpage_cancel_request.models.GetCancelRequestItemResponseBody
 
-class CancelRequestListPagingAdapter : PagingDataAdapter<GetCancelRequestItemResponseBody, CancelRequestListPagingAdapter.OrderStatusViewHolder>(diffCallback) {
+class CancelRequestListPagingAdapter(private val answerApi : (CancelOrReturn, Boolean, Int, Int) -> Unit) : PagingDataAdapter<GetCancelRequestItemResponseBody, CancelRequestListPagingAdapter.OrderStatusViewHolder>(diffCallback) {
     companion object {
         val diffCallback = object : DiffUtil.ItemCallback<GetCancelRequestItemResponseBody>() {
             override fun areItemsTheSame(oldItem: GetCancelRequestItemResponseBody, newItem: GetCancelRequestItemResponseBody): Boolean {
@@ -34,7 +35,7 @@ class CancelRequestListPagingAdapter : PagingDataAdapter<GetCancelRequestItemRes
         if (item != null){
             holder.date.text = item.createdAt
             holder.orders.layoutManager = LinearLayoutManager(holder.itemView.context, LinearLayoutManager.VERTICAL, false)
-            holder.orders.adapter = CancelRequestItemAdapter(item.order)
+            holder.orders.adapter = CancelRequestItemAdapter(item.order, answerApi, position)
             if (position == itemCount - 1){ holder.separator.visibility = View.INVISIBLE }
             else { holder.separator.visibility = View.VISIBLE }
         }
@@ -44,5 +45,20 @@ class CancelRequestListPagingAdapter : PagingDataAdapter<GetCancelRequestItemRes
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemOrdersBinding.inflate(inflater, parent, false)
         return OrderStatusViewHolder(binding)
+    }
+
+
+    fun applyChange(orderDetailIdx : Int, position: Int) {
+        val requestList = getItem(position)?.order
+        if (requestList != null){
+            for (childPosition in 0 until requestList.size) {
+                if (requestList[childPosition].orderDetailIdx == orderDetailIdx) {
+                    requestList[childPosition].status = 3
+                    requestList[childPosition].canChangeStatus = "N"
+                    notifyItemChanged(position)
+                    break
+                }
+            }
+        }
     }
 }

@@ -9,11 +9,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.songil.R
 import com.example.songil.config.BaseActivity
+import com.example.songil.config.CancelOrReturn
 import com.example.songil.databinding.ItemCancelRequestBinding
 import com.example.songil.page_artistmanage.subpage_cancel_request.models.CancelRequest
 import com.example.songil.page_payinfo.PayInfoActivity
 
-class CancelRequestItemAdapter(private val dataList : ArrayList<CancelRequest>) : RecyclerView.Adapter<CancelRequestItemAdapter.CancelRequestViewHolder>() {
+class CancelRequestItemAdapter(private val dataList : ArrayList<CancelRequest>, private val answerApi : (CancelOrReturn, Boolean, Int, Int) -> Unit, private val parentPosition : Int) : RecyclerView.Adapter<CancelRequestItemAdapter.CancelRequestViewHolder>() {
     inner class CancelRequestViewHolder(binding : ItemCancelRequestBinding) : RecyclerView.ViewHolder(binding.root){
         val separator = binding.lineSeparator
         val image = binding.ivCraft
@@ -60,10 +61,27 @@ class CancelRequestItemAdapter(private val dataList : ArrayList<CancelRequest>) 
         holder.btnApprove.isEnabled = (dataList[position].canChangeStatus == "Y")
         holder.btnDenial.isEnabled = (dataList[position].canChangeStatus == "Y")
         holder.btnApprove.setOnClickListener {
-            // 여기
+            when (dataList[position].status) {
+                1 -> { // 취소 신청
+                    answerApi(CancelOrReturn.CANCEL, true, dataList[position].orderDetailIdx, parentPosition)
+                }
+                2 -> { // 반품 신청
+                    answerApi(CancelOrReturn.RETURN, true, dataList[position].orderDetailIdx, parentPosition)
+                }
+                3 -> { /* 처리 완료, 호출 안되는 부분 */ }
+            }
+
         }
         holder.btnDenial.setOnClickListener {
-            // 여기
+            when (dataList[position].status) {
+                1 -> { // 취소 신청
+                    answerApi(CancelOrReturn.CANCEL, false, dataList[position].orderDetailIdx, parentPosition)
+                }
+                2 -> { // 반품 신청
+                    answerApi(CancelOrReturn.RETURN, false, dataList[position].orderDetailIdx, parentPosition)
+                }
+                3 -> { /* 처리 완료, 호출 안되는 부분 */ }
+            }
         }
         if (position == itemCount - 1){
             holder.separator.visibility = View.INVISIBLE

@@ -23,3 +23,7 @@ enum class MyPageActivityType {
 enum class InquiryTarget {
     CRAFT, ORDER
 }
+
+enum class CancelOrReturn {
+    CANCEL, RETURN
+}
