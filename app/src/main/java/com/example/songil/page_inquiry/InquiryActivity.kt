@@ -79,4 +79,9 @@ class InquiryActivity : BaseActivity<InquiryActivityBinding>(R.layout.inquiry_ac
             viewModel.trySendInquiry()
         }
     }
+
+    override fun finish() {
+        super.finish()
+        exitHorizontal
+    }
 }
