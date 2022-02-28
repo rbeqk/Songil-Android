@@ -1,5 +1,6 @@
 package com.example.songil.recycler.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -12,6 +13,8 @@ class DeliveryAdapter(private val dataList : ArrayList<DeliveryStatus> = arrayLi
             binding.data = item
             binding.executePendingBindings()
         }
+
+        val tvDate = binding.tvDate
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DeliveryViewHolder {
@@ -20,7 +23,9 @@ class DeliveryAdapter(private val dataList : ArrayList<DeliveryStatus> = arrayLi
         return DeliveryViewHolder(binding)
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: DeliveryViewHolder, position: Int) {
+        holder.tvDate.text = dataList[position].time[0] + "\n" + dataList[position].time[1]
         holder.bind(dataList[position])
     }
 

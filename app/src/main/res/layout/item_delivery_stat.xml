@@ -32,6 +32,7 @@
             android:paddingBottom="14dp">
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_date"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -39,7 +40,6 @@
                 android:textSize="12sp"
                 android:fontFamily="@font/spoqahansansneo_light"
                 tools:text="2020-12-01\n11:11:11"
-                android:text="@{data.time}"
                 android:layout_weight="1"/>
 
             <androidx.appcompat.widget.AppCompatTextView
