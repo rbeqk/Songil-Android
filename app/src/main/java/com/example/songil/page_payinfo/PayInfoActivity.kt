@@ -7,13 +7,16 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.songil.R
 import com.example.songil.config.BaseActivity
+import com.example.songil.config.BaseViewModel
 import com.example.songil.databinding.PayinfoActivityBinding
+import com.example.songil.popup_warning.SocketTimeoutDialog
 import com.example.songil.recycler.adapter.Craft4Adapter
 import com.example.songil.utils.changeToPriceFormKr
 
 class PayInfoActivity : BaseActivity<PayinfoActivityBinding>(R.layout.payinfo_activity) {
 
-    private val viewModel : PayInfoViewModel by lazy { ViewModelProvider(this, PayInfoViewModel.PayInfoViewModelFactory(intent.getIntExtra("ORDER_DETAIL_IDX", -1)))[PayInfoViewModel::class.java] }
+    private val viewModel : PayInfoViewModel by lazy {
+        ViewModelProvider(this, PayInfoViewModel.PayInfoViewModelFactory(intent.getIntExtra("ORDER_DETAIL_IDX", -1), intent.getBooleanExtra("IS_ARTIST", false)))[PayInfoViewModel::class.java] }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,6 +60,23 @@ class PayInfoActivity : BaseActivity<PayinfoActivityBinding>(R.layout.payinfo_ac
             }
         }
         viewModel.getOrderDetailResult.observe(this, getOrderDetailInfoObserver)
+
+        val errorObserver = Observer<BaseViewModel.FetchState>{ liveData ->
+            when(liveData){
+                BaseViewModel.FetchState.PARSE_ERROR -> {}
+                BaseViewModel.FetchState.WRONG_CONNECTION -> {}
+                BaseViewModel.FetchState.FAIL -> {
+                    val dialog = SocketTimeoutDialog()
+                    dialog.show(supportFragmentManager, dialog.tag)
+                }
+                BaseViewModel.FetchState.BAD_INTERNET -> {
+                    val dialog = SocketTimeoutDialog()
+                    dialog.show(supportFragmentManager, dialog.tag)
+                }
+                null -> {}
+            }
+        }
+        viewModel.fetchState.observe(this, errorObserver)
     }
 
     private fun applyDataToView(){

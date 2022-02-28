@@ -1,13 +1,16 @@
 package com.example.songil.recycler.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.songil.R
+import com.example.songil.config.BaseActivity
 import com.example.songil.databinding.ItemOrderStatusArtistBinding
 import com.example.songil.page_artistmanage.subpage_orderstat.models.OrderStatusArtistItemInfo
+import com.example.songil.page_payinfo.PayInfoActivity
 
 class OrderStatusArtistAdapter(private val dataList : ArrayList<OrderStatusArtistItemInfo>) : RecyclerView.Adapter<OrderStatusArtistAdapter.OrderStatusArtistViewHolder>() {
     class OrderStatusArtistViewHolder(binding : ItemOrderStatusArtistBinding) : RecyclerView.ViewHolder(binding.root){
@@ -30,10 +33,13 @@ class OrderStatusArtistAdapter(private val dataList : ArrayList<OrderStatusArtis
         holder.craftName.text = dataList[position].name
         holder.userName.text = dataList[position].userName
         holder.btnCheckUser.setOnClickListener {
-
+            val intent = Intent(holder.itemView.context, PayInfoActivity::class.java)
+            intent.putExtra("IS_ARTIST", true)
+            intent.putExtra("ORDER_DETAIL_IDX", dataList[position].orderDetailIdx)
+            (holder.itemView.context as BaseActivity<*>).startActivityHorizontal(intent)
         }
         holder.btnInputShippingInfo.setOnClickListener {
-
+            // 여기
         }
         when (dataList[position].status){
             1 -> {

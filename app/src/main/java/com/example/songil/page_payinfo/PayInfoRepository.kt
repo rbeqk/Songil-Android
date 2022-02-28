@@ -11,4 +11,10 @@ class PayInfoRepository {
         if (result.isSuccessful) return result.body()!!
         else throw UnknownError()
     }
+
+    suspend fun getOrderDetailInfoArtist(orderDetailIdx : Int) : ResponseGetOrderDetailInfo {
+        val result = retrofit.getOrderDetailInfoArtist(orderDetailIdx)
+        if (result.isSuccessful) return result.body()!!
+        else throw UnknownError()
+    }
 }

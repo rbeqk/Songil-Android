@@ -8,4 +8,7 @@ import retrofit2.http.Path
 interface PayInfoRetrofitInterface {
     @GET("my-page/orders/{orderDetailIdx}")
     suspend fun getOrderDetailInfo(@Path("orderDetailIdx") orderDetailIdx : Int) : Response<ResponseGetOrderDetailInfo>
+
+    @GET("artist-page/orders/{orderDetailIdx}")
+    suspend fun getOrderDetailInfoArtist(@Path("orderDetailIdx") orderDetailIdx : Int) : Response<ResponseGetOrderDetailInfo>
 }

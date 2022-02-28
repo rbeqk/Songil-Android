@@ -6,7 +6,7 @@ import com.example.songil.data.Craft4
 import com.example.songil.page_payinfo.models.OrderDetailInfo
 import kotlinx.coroutines.launch
 
-class PayInfoViewModel(private val orderDetailIdx : Int) : BaseViewModel() {
+class PayInfoViewModel(private val orderDetailIdx : Int, private val isArtist : Boolean = false) : BaseViewModel() {
     private val repository = PayInfoRepository()
 
     val craftList = arrayListOf<Craft4>()
@@ -17,16 +17,20 @@ class PayInfoViewModel(private val orderDetailIdx : Int) : BaseViewModel() {
 
     lateinit var orderDetailInfo : OrderDetailInfo
 
-    class PayInfoViewModelFactory(private val orderDetailIdx: Int) : ViewModelProvider.Factory {
+    class PayInfoViewModelFactory(private val orderDetailIdx: Int, private val isArtist : Boolean) : ViewModelProvider.Factory {
         override fun <T : ViewModel?> create(modelClass: Class<T>): T {
             @Suppress("UNCHECKED_CAST")
-            return PayInfoViewModel(orderDetailIdx) as T
+            return PayInfoViewModel(orderDetailIdx, isArtist) as T
         }
     }
 
     fun tryGetOrderDetailInfo(){
         viewModelScope.launch(exceptionHandler) {
-            val result = repository.getOrderDetailInfo(orderDetailIdx)
+            val result = if (isArtist) {
+                repository.getOrderDetailInfoArtist(orderDetailIdx)
+            } else {
+                repository.getOrderDetailInfo(orderDetailIdx)
+            }
             if (result.code == 200){
                 orderDetailInfo = result.result
                 craftList.add(Craft4(craftIdx = orderDetailInfo.craftIdx, mainImageUrl = orderDetailInfo.mainImageUrl, artistName = orderDetailInfo.artistName,
