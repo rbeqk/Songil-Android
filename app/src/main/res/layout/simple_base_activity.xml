@@ -74,7 +74,8 @@
 
             <include
                 android:id="@+id/view_empty"
-                layout="@layout/view_notify_content_empty"/>
+                layout="@layout/view_notify_content_empty"
+                android:visibility="gone"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

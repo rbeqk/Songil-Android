@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.songil.R
@@ -25,8 +26,9 @@ class OrderStatusAdapter(private val context : Context, private val dataList : A
     private val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
     private val orderStatusString = mapOf(1 to R.string.preparing_for_delivery, 2 to R.string.in_transit, 3 to R.string.delivered,
-            4 to R.string.request_cancel, 5 to R.string.cancel_request_denied, 6 to R.string.cancelled_complete, 7 to R.string.request_return,
-            8 to R.string.return_request_denied, 9 to R.string.return_complete)
+            4 to R.string.request_cancel, 5 to R.string.cancelled_complete, 6 to R.string.request_return, 7 to R.string.return_complete)
+    private val orderStatusColor = mapOf(1 to R.color.green, 2 to R.color.green, 3 to R.color.azul,
+            4 to R.color.tomato, 5 to R.color.tomato, 6 to R.color.tomato, 7 to R.color.tomato)
 
     class ViewHolder(binding : ItemOrderStatusBinding) : RecyclerView.ViewHolder(binding.root){
         val btnPaymentInfo = binding.btnPaymentInformation
@@ -51,6 +53,7 @@ class OrderStatusAdapter(private val context : Context, private val dataList : A
         holder.productName.text = dataList[position].name
         holder.artistName.text = dataList[position].artistName
         holder.orderStatus.text = context.getString(orderStatusString[dataList[position].status]!!)
+        holder.orderStatus.setTextColor(ContextCompat.getColor(holder.itemView.context, orderStatusColor[dataList[position].status] ?: R.color.songil_2))
         holder.price.text = context.getString(R.string.form_price_won_string, changeToPriceForm(dataList[position].price))
         // set buttons
         holder.btnComment.setOnClickListener {
