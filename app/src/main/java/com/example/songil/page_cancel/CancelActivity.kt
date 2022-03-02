@@ -48,6 +48,8 @@ class CancelActivity : BaseActivity<CancelActivityBinding>(R.layout.cancel_activ
             viewModel.checkBtnActivate()
             when (resultCode){
                 200 -> {
+                    val intent = Intent(this, BaseActivity::class.java)
+                    setResult(RESULT_OK, intent)
                     val dialogFragment = CancelDialog()
                     dialogFragment.show(supportFragmentManager, dialogFragment.tag)
                 }

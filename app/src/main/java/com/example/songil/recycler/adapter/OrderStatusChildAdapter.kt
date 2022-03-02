@@ -13,15 +13,14 @@ import com.example.songil.config.BaseActivity
 import com.example.songil.config.GlobalApplication
 import com.example.songil.config.InquiryTarget
 import com.example.songil.databinding.ItemOrderStatusBinding
-import com.example.songil.page_cancel.CancelActivity
 import com.example.songil.page_delivery.DeliveryActivity
 import com.example.songil.page_inquiry.InquiryActivity
 import com.example.songil.page_orderstatus.models.OrderStatusItemInfo
 import com.example.songil.page_payinfo.PayInfoActivity
-import com.example.songil.page_return.ReturnActivity
+import com.example.songil.recycler.rv_interface.RvUserOrderStatusView
 import com.example.songil.utils.changeToPriceForm
 
-class OrderStatusAdapter(private val context : Context, private val dataList : ArrayList<OrderStatusItemInfo>) : RecyclerView.Adapter<OrderStatusAdapter.ViewHolder>() {
+class OrderStatusChildAdapter(private val context : Context, private val dataList : ArrayList<OrderStatusItemInfo>, private val rvView : RvUserOrderStatusView, private val parentPosition : Int) : RecyclerView.Adapter<OrderStatusChildAdapter.ViewHolder>() {
 
     private lateinit var binding : ItemOrderStatusBinding
     private val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -58,7 +57,7 @@ class OrderStatusAdapter(private val context : Context, private val dataList : A
         holder.price.text = context.getString(R.string.form_price_won_string, changeToPriceForm(dataList[position].price))
 
         holder.btnComment.setOnClickListener {
-            // 여기
+            rvView.goToCommentWrite(parentPosition = parentPosition, childPosition = position, orderDetailIdx = dataList[position].orderDetailIdx)
         }
         holder.btnDeliveryStatus.setOnClickListener {
             //Log.d("order", "배송 정보 to ${dataList[position].orderStatus}")
@@ -80,28 +79,36 @@ class OrderStatusAdapter(private val context : Context, private val dataList : A
             context.startActivityHorizontal(intent)
         }
         holder.amount.text = context.getString(R.string.form_single_count, dataList[position].amount)
-        holder.btnComment.text = context.getString(R.string.go_write_comment)
         Glide.with(context).load(dataList[position].mainImageUrl).into(holder.image)
-        holder.btnComment.isEnabled = (dataList[position].canWriteComment == "Y")
+        when (dataList[position].commentBtnStatus){
+            1 -> {
+                holder.btnComment.isEnabled = false
+                holder.btnComment.text = context.getString(R.string.go_write_comment)
+            }
+            2 -> {
+                holder.btnComment.isEnabled = true
+                holder.btnComment.text = context.getString(R.string.go_write_comment)
+            }
+            3 -> {
+                holder.btnComment.isEnabled = false
+                holder.btnComment.text = context.getString(R.string.complete_write_comment)
+            }
+        }
         // status 가 1, 2, 4, 5 (순서대로 배송준비중, 배송중, 취소요청, 취소완료)인 경우에는 취소 버튼
         // 아닌 경우에는 반품 버튼
         if (dataList[position].status == 1 || dataList[position].status == 2 || dataList[position].status == 4 || dataList[position].status == 5){
             holder.btnOrderCancel.text = context.getString(R.string.request_cancel)
             holder.btnOrderCancel.isEnabled = (dataList[position].canReqCancel == "Y")
             holder.btnOrderCancel.setOnClickListener {
-                val intent = Intent(context as Activity, CancelActivity::class.java)
-                intent.putExtra("ORDER_DETAIL_IDX", dataList[position].orderDetailIdx)
-                (context as BaseActivity<*>).startActivityHorizontal(intent)
+                rvView.requestCancel(parentPosition = parentPosition, childPosition = position, orderDetailIdx = dataList[position].orderDetailIdx)
             }
         }
         else {
             holder.btnOrderCancel.text = context.getString(R.string.request_return)
             holder.btnOrderCancel.isEnabled = (dataList[position].canReqReturn == "Y")
-            /*holder.btnOrderCancel.setOnClickListener {
-                val intent = Intent(context as Activity, ReturnActivity::class.java)
-                intent.putExtra("ORDER_DETAIL_IDX", dataList[position].orderDetailIdx)
-                (context as BaseActivity<*>).startActivityHorizontal(intent)
-            }*/
+            holder.btnOrderCancel.setOnClickListener {
+                rvView.requestReturn(parentPosition = parentPosition, childPosition = position, orderDetailIdx = dataList[position].orderDetailIdx)
+            }
         }
 
     }
