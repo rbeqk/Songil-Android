@@ -43,7 +43,7 @@
         <activity android:name=".page_articlecontent.ArticleContentActivity"/>
         <activity android:name=".page_ordercomplete.OrdercompleteActivity" android:noHistory="true"/>
         <activity android:name=".page_withdrawal.WithdrawalActivity"/>
-        <activity android:name=".page_shippinginfo.ShippinginfoActivity" android:windowSoftInputMode="adjustResize"/>
+        <activity android:name=".page_shippinginfo.ShippingInfoActivity" android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".page_commentwrite.CommentWriteActivity"/>
         <activity android:name=".page_story.StoryActivity"/>
         <activity android:name=".page_storywrite.StoryWriteActivity"/>
@@ -69,6 +69,7 @@
         <activity android:name=".page_payinfo.PayInfoActivity"/>
         <activity android:name=".page_artistmanage.subpage_cancel_request.ArtistManageCancelRequestActivity"/>
         <activity android:name=".page_customer_center.CustomerCenterActivity"/>
+        <activity android:name=".page_return.ReturnActivity"/>
     </application>
 
 </manifest>

@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.songil.page_return.ReturnViewModel" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/songil_1"
+            app:elevation="0dp">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:contentInsetStart="0dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/btn_back"
+                        style="@style/toolbarButton"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:src="@drawable/ic_back_22"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:text="@string/request_return"
+                        android:textSize="16sp"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.appbar.MaterialToolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintGuide_begin="24dp"
+                android:orientation="vertical"/>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintGuide_end="24dp"
+                android:orientation="vertical"/>
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline_text_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintGuide_begin="56dp"
+                android:orientation="vertical"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_cancel_reason"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@id/guideline_start"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="24dp"
+                android:text="@string/reason_of_cancel"
+                android:textSize="16sp"/>
+
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/cb_simple_remorse"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@drawable/custom_checkbox_circle_20"
+                android:button="@android:color/transparent"
+                app:layout_constraintStart_toStartOf="@id/guideline_start"
+                app:layout_constraintTop_toBottomOf="@id/tv_cancel_reason"
+                android:layout_marginTop="22dp"
+                android:clickable="false"
+                android:onClick="@{() -> viewModel.changeIdx(0)}"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/cb_simple_remorse"
+                app:layout_constraintBottom_toBottomOf="@id/cb_simple_remorse"
+                app:layout_constraintStart_toStartOf="@id/guideline_text_start"
+                android:textSize="14sp"
+                android:fontFamily="@font/spoqahansansneo_light"
+                android:text="@string/simple_remorse"
+                android:onClick="@{() -> viewModel.changeIdx(0)}"/>
+
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/cb_damage_during_delivery"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                app:layout_constraintTop_toBottomOf="@id/cb_simple_remorse"
+                app:layout_constraintStart_toStartOf="@id/guideline_start"
+                android:layout_marginTop="18dp"
+                android:background="@drawable/custom_checkbox_circle_20"
+                android:button="@android:color/transparent"
+                android:clickable="false"
+                android:onClick="@{() -> viewModel.changeIdx(1)}"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/cb_damage_during_delivery"
+                app:layout_constraintBottom_toBottomOf="@id/cb_damage_during_delivery"
+                app:layout_constraintStart_toStartOf="@id/guideline_text_start"
+                android:fontFamily="@font/spoqahansansneo_light"
+                android:textSize="14sp"
+                android:text="@string/damaged_during_delivery"
+                android:onClick="@{() -> viewModel.changeIdx(1)}"/>
+
+
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/cb_consult_artist"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                app:layout_constraintStart_toStartOf="@id/guideline_start"
+                app:layout_constraintTop_toBottomOf="@id/cb_damage_during_delivery"
+                android:layout_marginTop="18dp"
+                android:background="@drawable/custom_checkbox_circle_20"
+                android:button="@android:color/transparent"
+                android:clickable="false"
+                android:onClick="@{() -> viewModel.changeIdx(2)}"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/cb_consult_artist"
+                app:layout_constraintBottom_toBottomOf="@id/cb_consult_artist"
+                app:layout_constraintStart_toStartOf="@id/guideline_text_start"
+                android:fontFamily="@font/spoqahansansneo_light"
+                android:textSize="14sp"
+                android:text="@string/consult_with_artist"
+                android:onClick="@{() -> viewModel.changeIdx(2)}"/>
+
+            <androidx.appcompat.widget.AppCompatCheckBox
+                android:id="@+id/cb_self_write"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                app:layout_constraintStart_toStartOf="@id/guideline_start"
+                app:layout_constraintTop_toBottomOf="@id/cb_consult_artist"
+                android:layout_marginTop="18dp"
+                android:background="@drawable/custom_checkbox_circle_20"
+                android:button="@android:color/transparent"
+                android:clickable="false"
+                android:onClick="@{() -> viewModel.changeIdx(3)}"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/cb_self_write"
+                app:layout_constraintBottom_toBottomOf="@id/cb_self_write"
+                app:layout_constraintStart_toStartOf="@id/guideline_text_start"
+                android:fontFamily="@font/spoqahansansneo_light"
+                android:textSize="14sp"
+                android:text="@string/self_write"
+                android:onClick="@{() -> viewModel.changeIdx(3)}"/>
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/et_reason"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:gravity="top"
+                app:layout_constraintStart_toStartOf="@id/guideline_start"
+                app:layout_constraintEnd_toEndOf="@id/guideline_end"
+                app:layout_constraintTop_toBottomOf="@id/cb_self_write"
+                android:layout_marginTop="18dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:background="@drawable/shape_edittext_1"
+                android:lines="10"
+                android:textSize="14sp"
+                android:fontFamily="@font/spoqahansansneo_regular"
+                android:text="@={viewModel.reasonContent}"
+                android:textColor="@color/g_4"
+                android:hint="@string/write_report_reason"/>
+
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/btn_request_return"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:fontFamily="@font/spoqahansansneo_bold"
+                textBtnActivate="@{viewModel.returnButtonActivate}"
+                android:text="@string/do_cancel_order"
+                android:textSize="16sp"
+                android:gravity="center"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

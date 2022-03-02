@@ -26,12 +26,10 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/btn_Back"
-                        android:layout_width="22dp"
-                        android:layout_height="22dp"
+                        style="@style/toolbarButton"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        android:layout_marginStart="16dp"
                         android:src="@drawable/ic_back_22"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -72,7 +70,7 @@
                 android:layout_marginTop="36dp"
                 android:text="@string/shipping_date"/>
 
-            <androidx.appcompat.widget.AppCompatEditText
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/et_year"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -81,6 +79,7 @@
                 app:layout_constraintBottom_toBottomOf="@id/tv_shipping_date"
                 app:layout_constraintStart_toStartOf="@id/guide_start_33"
                 app:layout_constraintEnd_toStartOf="@id/tv_year"
+                android:textSize="16sp"
                 android:gravity="center"
                 android:background="@drawable/shape_edittext_1"
                 android:fontFamily="@font/spoqahansansneo_light"
@@ -102,7 +101,7 @@
                 android:text="@string/year"
                 />
 
-            <androidx.appcompat.widget.AppCompatEditText
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/et_month"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -111,6 +110,7 @@
                 app:layout_constraintBottom_toBottomOf="@id/tv_shipping_date"
                 app:layout_constraintStart_toEndOf="@id/tv_year"
                 app:layout_constraintEnd_toStartOf="@id/tv_month"
+                android:textSize="16sp"
                 android:gravity="center"
                 android:fontFamily="@font/spoqahansansneo_light"
                 android:background="@drawable/shape_edittext_1"
@@ -132,7 +132,7 @@
                 android:text="@string/month"
                 />
 
-            <androidx.appcompat.widget.AppCompatEditText
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/et_day"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -141,6 +141,7 @@
                 app:layout_constraintBottom_toBottomOf="@id/tv_shipping_date"
                 app:layout_constraintStart_toEndOf="@id/tv_month"
                 app:layout_constraintEnd_toStartOf="@id/tv_day"
+                android:textSize="16sp"
                 android:gravity="center"
                 android:maxLines="1"
                 android:fontFamily="@font/spoqahansansneo_light"
@@ -172,6 +173,7 @@
                 android:text="@string/courier_company"/>
 
             <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/tvbtn_courier_company"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
@@ -222,7 +224,56 @@
                 android:gravity="center"
                 android:textSize="16sp"
                 android:fontFamily="@font/spoqahansansneo_bold"
-                android:text="@string/do_answer"/>
+                android:text="@string/input_shipping_information"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <View
+            android:id="@+id/background_filter"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="invisible"
+            android:background="@color/black80"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_date_picker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:visibility="invisible"
+            android:background="@drawable/shape_bottom_sheet">
+
+            <DatePicker
+                android:id="@+id/date_picker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toTopOf="@id/tvbtn_date_yes"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:datePickerMode="spinner"
+                android:calendarViewShown="false"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvbtn_date_no"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                app:layout_constraintEnd_toStartOf="@id/tvbtn_date_yes"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:gravity="center"
+                android:text="@string/cancel"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvbtn_date_yes"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                app:layout_constraintStart_toEndOf="@id/tvbtn_date_no"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:gravity="center"
+                android:text="@string/decision"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
