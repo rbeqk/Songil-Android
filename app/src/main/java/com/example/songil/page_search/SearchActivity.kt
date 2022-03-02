@@ -18,6 +18,7 @@ import com.example.songil.config.GlobalApplication
 import com.example.songil.data.SearchItemCountList
 import com.example.songil.databinding.SearchActivityBinding
 import com.example.songil.page_search.models.SearchCategory
+import com.example.songil.popup_sort.SortBottomSheet
 import com.example.songil.popup_sort.SortBottomSheetSimple
 import com.example.songil.popup_sort.popup_interface.PopupSortView
 import com.example.songil.recycler.adapter.ArticlePagingAdapter
@@ -115,9 +116,16 @@ class SearchActivity : BaseActivity<SearchActivityBinding>(R.layout.search_activ
             viewModel.tryGetSearchPageCnt()
         }
 
+        // 현재 선택된 카테고리가 SHOP 인 경우에는 정렬 기준이 4개
+        // WITH, ARTICLE 은 정렬 기준이 2개
         binding.btnSort.setOnClickListener {
-            val dialog = SortBottomSheetSimple(this, viewModel.sort)
-            dialog.show(supportFragmentManager, dialog.tag)
+            if (viewModel.searchCategory == SearchCategory.SHOP){
+                val dialog = SortBottomSheet(this, viewModel.sort)
+                dialog.show(supportFragmentManager, dialog.tag)
+            } else {
+                val dialog = SortBottomSheetSimple(this, viewModel.sort)
+                dialog.show(supportFragmentManager, dialog.tag)
+            }
         }
 
         binding.btnRemoveEdittext.setOnClickListener {
@@ -179,6 +187,7 @@ class SearchActivity : BaseActivity<SearchActivityBinding>(R.layout.search_activ
         }
         viewModel.startIdx.observe(this, startIdxObserver)
 
+        // 각 카테고리의 개수 (SHOP, WITH, ARTICLE) 의 개수 갱신
         val cntListObserver = Observer<SearchItemCountList> { liveData ->
             binding.tvShopCount.text = liveData.shopCnt.toString()
             binding.tvArticleCount.text = liveData.articleCnt.toString()
@@ -198,6 +207,9 @@ class SearchActivity : BaseActivity<SearchActivityBinding>(R.layout.search_activ
         viewModel.cntList.observe(this, cntListObserver)
     }
 
+    // 처음 화면 (아무것도 검색하지 않은 상태) 에서는 뒤로가기 누르면 바로 이전 화면으로 이동
+    // 만약 검색어를 입력하는 VIEW 가 표시된다면(=binding.layoutSearchSearching 이 VISIBLE 이면 검색어를 입력하는 화면) 검색어를 입력하는 VIEW 를 INVISIBLE 로 변환
+    // 검색 결과가 보일 때 뒤로가기 누르면 이전 화면으로 이동
     override fun onBackPressed() {
         when {
             isFirst -> {
@@ -212,12 +224,17 @@ class SearchActivity : BaseActivity<SearchActivityBinding>(R.layout.search_activ
         }
     }
 
+    // 검색 결과가 없음을 나타내는 VIEW 를 show
     private fun showEmptyView(){
         binding.viewEmpty.root.visibility = View.VISIBLE
     }
 
+    // 카테고리 변경 (SHOP, WITH, ARTICLE)
+    // 카테고리 변경시 초기 정렬 기준은 popular 로 설정!
     private fun changeCategory(searchCategory : SearchCategory){
         viewModel.changeCategory(searchCategory)
+        viewModel.sort = "popular"
+        binding.tvSort.text = GlobalApplication.sort[viewModel.sort] ?: "인기순"
         binding.viewEmpty.root.visibility = View.GONE
         when (searchCategory){
             SearchCategory.SHOP -> {
@@ -238,6 +255,8 @@ class SearchActivity : BaseActivity<SearchActivityBinding>(R.layout.search_activ
         }
     }
 
+    // 검색 결과 데이터를 불러오는 부분으로
+    // 기존의 데이터를 지우고 (PagingData.empty() 호출) 새로운 데이터 flow 를 수신
     private fun restartPagingJob(){
         val searchCategory = viewModel.searchCategory
         shopPaging?.cancel()
@@ -271,11 +290,13 @@ class SearchActivity : BaseActivity<SearchActivityBinding>(R.layout.search_activ
         }
     }
 
+    // 검색어를 입력하는 View 표시
     private fun showSearchLayout(){
         viewModel.tryGetSearchKeywords()
         binding.layoutSearchSearching.visibility = View.VISIBLE
     }
 
+    // 검색어를 입력하는 View 숨김 (검색 결과 화면이 보이게 된다.)
     private fun hideSearchLayout(){
         isFirst = false
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
@@ -283,6 +304,7 @@ class SearchActivity : BaseActivity<SearchActivityBinding>(R.layout.search_activ
         binding.layoutSearchSearching.visibility = View.GONE
     }
 
+    // 사용자 최근 검색어, 인기 검색어 api 호출 결과로 UI 갱신
     private fun applyKeywords(){
         if (viewModel.recentlyKeywords.size == 0){
             binding.rvRecentSearch.visibility = View.GONE
@@ -314,10 +336,12 @@ class SearchActivity : BaseActivity<SearchActivityBinding>(R.layout.search_activ
         }
     }
 
+    // 최근 검색어 삭제
     private fun deleteWord(targetWord : String){
         viewModel.tryRemoveWord(targetWord)
     }
 
+    // 최근 검색어 클릭시 발생하는 검색 기능
     private fun searchByWord(targetWord : String){
         binding.etSearchBar.setText(targetWord)
         hideSearchLayout()
@@ -326,6 +350,7 @@ class SearchActivity : BaseActivity<SearchActivityBinding>(R.layout.search_activ
         viewModel.tryGetSearchPageCnt()
     }
 
+    // 정렬 bottom dialog 에서 정렬 기준 선택했을 시 호출되는 함수
     override fun sort(sort: String) {
         viewModel.sort = sort
         binding.tvSort.text = GlobalApplication.sort[sort] ?: "인기순"
