@@ -64,6 +64,7 @@
     <string name="form_search_result">총 %d개 검색 결과</string>
     <string name="form_number_bracket">(%d)</string>
     <string name="empty_recently_keywords">최근 검색 내역이 없습니다.</string>
+    <string name="empty_input_text">검색어를 입력해주세요.</string>
 
     <!-- 장바구니 관련 -->
     <string name="empty_shopping_basket">아직 장바구니에 담은 상품이 없어요.</string>
@@ -266,6 +267,11 @@
     <string name="cancel_complete">취소 완료</string>
     <string name="cancel_message">주문취소 요청이 완료 되었습니다.\n작가님에게 취소 요청이 전달됩니다</string>
 
+    <!-- 반품 요청 페이지 관련 -->
+    <string name="damaged_during_delivery">배송 중 파손</string>
+    <string name="do_request_return">반품 요청하기</string>
+    <string name="return_message">반품 요청이 완료되었습니다.\n작가님에게 반품 요청이 전달됩니다</string>
+    
     <!-- 설정 페이지 관련 -->
     <string name="notice">공지사항</string>
     <string name="setting_app_push_alarm">앱 푸시 알림 설정</string>
@@ -404,5 +410,6 @@
     <string name="empty_artist_order_status">아직 들어온 주문이 없어요.</string>
     <string name="empty_cancel_request">아직 반품/취소요청이 없어요.</string>
     <string name="empty_notice">아직 공지사항이 없어요.</string>
+    <string name="empty_search">검색된 내용이 없어요.</string>
 
 </resources>

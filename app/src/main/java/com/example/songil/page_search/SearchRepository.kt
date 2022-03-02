@@ -2,7 +2,7 @@ package com.example.songil.page_search
 
 import com.example.songil.config.BaseResponse
 import com.example.songil.config.GlobalApplication
-import com.example.songil.page_search.models.ResponseGetSearchKeywords
+import com.example.songil.page_search.models.*
 
 class SearchRepository {
     private val retrofit = GlobalApplication.sRetrofit.create(SearchRetrofitInterface::class.java)
@@ -21,6 +21,30 @@ class SearchRepository {
 
     suspend fun deleteKeyword(keyword : String) : BaseResponse {
         val result = retrofit.deleteKeywords(word = keyword)
+        if (result.isSuccessful) return result.body()!!
+        else throw UnknownError()
+    }
+
+    suspend fun getSearchResultPage(keyword : String, category : String) : ResponseGetSearchResultPage {
+        val result = retrofit.getSearchResultPage(keyword = keyword, category = category)
+        if (result.isSuccessful) return result.body()!!
+        else throw UnknownError()
+    }
+
+    suspend fun getSearchShopResult(keyword : String, sort : String, pageIdx : Int) : ResponseGetSearchShopList {
+        val result = retrofit.getSearchShopList(keyword = keyword, sort = sort, page = pageIdx)
+        if (result.isSuccessful) return result.body()!!
+        else throw UnknownError()
+    }
+
+    suspend fun getSearchWithResult(keyword : String, sort : String, pageIdx : Int) : ResponseGetSearchWithList {
+        val result = retrofit.getSearchWithList(keyword = keyword, sort = sort, page = pageIdx)
+        if (result.isSuccessful) return result.body()!!
+        else throw UnknownError()
+    }
+
+    suspend fun getSearchArticleResult(keyword : String, sort : String, pageIdx : Int) : ResponseGetSearchArticleList {
+        val result = retrofit.getSearchArticleList(keyword = keyword, sort = sort, page = pageIdx)
         if (result.isSuccessful) return result.body()!!
         else throw UnknownError()
     }
