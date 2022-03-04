@@ -30,12 +30,12 @@
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/btn_back"
-                        android:layout_width="22dp"
-                        android:layout_height="22dp"
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:scaleType="center"
                         app:layout_constraintTop_toTopOf="@id/tv_title"
                         app:layout_constraintBottom_toBottomOf="@id/tv_title"
                         app:layout_constraintStart_toStartOf="parent"
-                        android:layout_marginStart="16dp"
                         android:src="@drawable/ic_back_22"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -63,7 +63,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/btn_written"
                         detailActivate="@{viewModel.btnWriteable}"
-                        android:onClick="@{() -> viewModel.changeFragment(0)}">
+                        android:onClick="@{() -> viewModel.changeCategory(0)}">
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:layout_width="match_parent"
@@ -82,7 +82,7 @@
                         app:layout_constraintStart_toEndOf="@id/btn_writeable"
                         app:layout_constraintTop_toTopOf="@id/btn_writeable"
                         detailActivate="@{viewModel.btnWritten}"
-                        android:onClick="@{() -> viewModel.changeFragment(1)}">
+                        android:onClick="@{() -> viewModel.changeCategory(1)}">
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:layout_width="match_parent"
@@ -105,12 +105,44 @@
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
             android:background="@color/songil_1">
 
-            <FrameLayout
-                android:id="@+id/layout_fragment"
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/layout_refresh_writable_comment"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:visibility="visible">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_content_writable_comment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/layout_refresh_written_comment"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:visibility="gone">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_content_written_comment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+            <include
+                android:id="@+id/view_empty"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:visibility="gone"
+                layout="@layout/view_notify_content_empty"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
