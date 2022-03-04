@@ -8,7 +8,9 @@ import android.text.TextWatcher
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.songil.R
 import com.example.songil.config.BaseActivity
@@ -17,11 +19,16 @@ import com.example.songil.page_imagepicker.ImagePickerActivity
 import com.example.songil.recycler.adapter.AddPhotoPickerAdapter
 import com.example.songil.recycler.decoration.AddPhotoDecoration
 import com.example.songil.recycler.rv_interface.RvPhotoView
+import com.example.songil.utils.createFileFromBitmap
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class CommentWriteActivity : BaseActivity<CommentActivityWriteBinding>(R.layout.comment_activity_write), RvPhotoView {
 
-    private val viewModel : CommentWriteViewModel by lazy { ViewModelProvider(this)[CommentWriteViewModel::class.java] }
+    private val viewModel : CommentWriteViewModel by lazy {
+        ViewModelProvider(this, CommentWriteViewModel.CommentWriteViewModelFactory(intent.getIntExtra("ORDER_DETAIL_IDX", -1)))[CommentWriteViewModel::class.java] }
     lateinit var imagePickerResult : ActivityResultLauncher<Intent>
+    private val activity = this
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,11 +46,12 @@ class CommentWriteActivity : BaseActivity<CommentActivityWriteBinding>(R.layout.
         setEditText()
         setRecyclerView()
         setButton()
+        setObserver()
     }
 
     private fun setRecyclerView(){
         binding.rvPhoto.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        binding.rvPhoto.adapter = AddPhotoPickerAdapter(this, 3)
+        binding.rvPhoto.adapter = AddPhotoPickerAdapter(this, 3, viewModel.getImageUriList())
         binding.rvPhoto.addItemDecoration(AddPhotoDecoration(this))
     }
 
@@ -54,16 +62,48 @@ class CommentWriteActivity : BaseActivity<CommentActivityWriteBinding>(R.layout.
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
             override fun afterTextChanged(s: Editable?) {
-                binding.tvWordCount.text = getString(R.string.form_count, s.toString().length, 300)
+                binding.tvWordCount.text = getString(R.string.form_count, s.toString().length, 500)
                 viewModel.checkCommentLength()
             }
-
         })
+    }
+
+    private fun setObserver(){
+        val uploadResultObserver = Observer<Int> { resultCode ->
+            dismissLoadingDialog()
+            viewModel.checkCommentLength()
+            viewModel.clearFiles()
+            if (resultCode == 200){
+                val intent = Intent(this, BaseActivity::class.java)
+                setResult(RESULT_OK, intent)
+                finish()
+            }
+        }
+        viewModel.uploadCommentResult.observe(this, uploadResultObserver)
     }
 
     private fun setButton(){
         binding.btnBack.setOnClickListener {
             onBackPressed()
+        }
+
+        binding.btnRegister.setOnClickListener {
+            viewModel.commentBtnActivate.value = false
+            showLoadingDialog()
+            lifecycleScope.launch(Dispatchers.Default) {
+                try {
+                    val bitmapList = (binding.rvPhoto.adapter as AddPhotoPickerAdapter).getBitmapList()
+                    viewModel.imageFileList.clear()
+                    for (i in 0 until  bitmapList.size) {
+                        val file = createFileFromBitmap(bitmapList[i], activity, i)
+                        viewModel.imageFileList.add(file)
+                    }
+                    viewModel.tryUploadComment()
+                } catch (e : OutOfMemoryError) {
+                    viewModel.clearFiles()
+                    dismissLoadingDialog()
+                }
+            }
         }
     }
 
