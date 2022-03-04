@@ -99,5 +99,6 @@ class StoryWriteViewModel : BaseViewModel() {
                 file.delete()
             }
         }
+        imageFileList.clear()
     }
 }

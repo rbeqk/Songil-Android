@@ -70,10 +70,10 @@ class StoryWriteActivity : BaseActivity<StoryActivityWriteBinding>(R.layout.stor
 
     private fun setObserver(){
         val uploadResultObserver = Observer<Int>{ liveData ->
-            viewModel.checkAvailable()
             dismissLoadingDialog()
+            viewModel.checkAvailable()
+            viewModel.clearFiles()
             if (liveData == 200){
-                viewModel.clearFiles()
                 val intent = Intent(this, BaseActivity::class.java)
                 setResult(RESULT_OK, intent)
                 finish()
