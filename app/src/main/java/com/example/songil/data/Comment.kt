@@ -12,7 +12,7 @@ class Comment(val commentIdx : Int, val craftIdx : Int, val craftName : String, 
             }
 
             override fun areContentsTheSame(oldItem: Comment, newItem: Comment): Boolean {
-                return (oldItem.content == newItem.content && newItem.commentImageList == oldItem.commentImageList)
+                return (oldItem.content == newItem.content && newItem.commentImageList == oldItem.commentImageList && newItem.isRemoved == oldItem.isRemoved && newItem.isReported == oldItem.isReported)
             }
         }
     }

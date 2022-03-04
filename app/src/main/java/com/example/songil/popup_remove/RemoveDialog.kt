@@ -14,7 +14,7 @@ import com.example.songil.R
 import com.example.songil.databinding.PopupYesOrNoBinding
 import com.example.songil.popup_remove.popup_interface.PopupRemoveView
 
-class RemoveDialog(private val viewImpl : PopupRemoveView) : DialogFragment() {
+class RemoveDialog(private val viewImpl : PopupRemoveView, private val specificText : String ?= null) : DialogFragment() {
     private var _binding : PopupYesOrNoBinding ?= null
     private val binding get() = _binding!!
 
@@ -23,7 +23,7 @@ class RemoveDialog(private val viewImpl : PopupRemoveView) : DialogFragment() {
         setSize()
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = PopupYesOrNoBinding.inflate(inflater)
 
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
@@ -36,7 +36,11 @@ class RemoveDialog(private val viewImpl : PopupRemoveView) : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.tvConfirm.text = getString(R.string.confirm_remove_post)
+        if (specificText == null) {
+            binding.tvConfirm.text = getString(R.string.confirm_remove_post)
+        } else {
+            binding.tvConfirm.text = specificText
+        }
         binding.icWarning.visibility = View.VISIBLE
 
         binding.btnYes.setOnClickListener {

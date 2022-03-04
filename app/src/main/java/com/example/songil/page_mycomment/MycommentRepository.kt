@@ -43,4 +43,10 @@ class MycommentRepository {
         }
         else throw UnknownError()
     }
+
+    suspend fun deleteComment(commentIdx : Int) : Int {
+        val result = retrofit.deleteComment(commentIdx)
+        if (result.isSuccessful) return result.body()!!.code
+        else throw UnknownError()
+    }
 }

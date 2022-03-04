@@ -12,7 +12,7 @@ import com.example.songil.data.Comment
 import com.example.songil.databinding.ItemCraftCommentBinding
 import com.example.songil.viewPager2.adapter.Vp2ImageAdapter
 
-class CraftCommentPagingAdapter : PagingDataAdapter<Comment, CraftCommentPagingAdapter.ViewHolder>(Comment.commentDiffCallback) {
+class CraftCommentPagingAdapter(private val removeComment : (Int, Int) -> Unit) : PagingDataAdapter<Comment, CraftCommentPagingAdapter.ViewHolder>(Comment.commentDiffCallback) {
     class ViewHolder(binding : ItemCraftCommentBinding) : RecyclerView.ViewHolder(binding.root){
         val craftAndArtistName = binding.tvNickname
         val date = binding.tvDate
@@ -20,6 +20,7 @@ class CraftCommentPagingAdapter : PagingDataAdapter<Comment, CraftCommentPagingA
         val photoCount = binding.tvPage
         val review = binding.tvReview
         val removeBtn = binding.tvReport
+        val line = binding.lineBottom
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -33,6 +34,12 @@ class CraftCommentPagingAdapter : PagingDataAdapter<Comment, CraftCommentPagingA
         val context = holder.itemView.context
         val comment = getItem(position)
         if (comment != null){
+            if (position == itemCount - 1){
+                holder.line.visibility = View.GONE
+            } else {
+                holder.line.visibility = View.VISIBLE
+            }
+
             if (comment.isRemoved){
                 holder.date.text = ""
                 holder.craftAndArtistName.text = comment.artist.userName + "/" + comment.craftName
@@ -40,7 +47,7 @@ class CraftCommentPagingAdapter : PagingDataAdapter<Comment, CraftCommentPagingA
                 holder.photoCount.visibility = View.GONE
                 holder.removeBtn.visibility = View.INVISIBLE
                 holder.review.text = "삭제된 코멘트입니다."
-                holder.date.text = "----.--.--"
+                holder.date.text = ""
             } else {
                 holder.date.text = comment.createdAt
                 holder.review.text = comment.content
@@ -64,10 +71,18 @@ class CraftCommentPagingAdapter : PagingDataAdapter<Comment, CraftCommentPagingA
                     holder.photoCount.visibility = View.GONE
                 }
                 holder.removeBtn.setOnClickListener {
-
+                    removeComment(position, comment.commentIdx)
                 }
             }
         }
+    }
 
+    // 해당 position 의 isRemoved 를 true 로 변경하여 view 를 일시적으로 가림
+    fun applyRemoveResult(position : Int){
+        val comment = getItem(position)
+        if (comment != null){
+            comment.isRemoved = true
+            notifyItemChanged(position)
+        }
     }
 }

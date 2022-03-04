@@ -258,6 +258,7 @@
     <string name="do_write">작성하기</string>
     <string name="empty_writable_comment">작성 가능한 코멘트가 없습니다.</string>
     <string name="empty_written_comment">작성한 코멘트가 없습니다.</string>
+    <string name="confirmation_remove_comment">코멘트를\n삭제하시겠습니까?</string>
 
     <!-- 주문 취소 페이지 관련 -->
     <string name="reason_of_cancel">취소 사유</string>

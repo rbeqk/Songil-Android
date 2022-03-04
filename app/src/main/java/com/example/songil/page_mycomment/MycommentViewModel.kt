@@ -33,6 +33,14 @@ class MycommentViewModel : BaseViewModel() {
     private val _writtenCommentIsEmpty = MutableLiveData<Boolean>()
     val writtenCommentIsEmpty : LiveData<Boolean> get() = _writtenCommentIsEmpty
 
+    // 코멘트 제거 api 호출 결과 code 값
+    private val _deleteCommentResult = MutableLiveData<Int>()
+    val deleteCommentResult : LiveData<Int> get() = _deleteCommentResult
+
+    // 임시적으로 저장하게 되는 삭제 대상 commentIdx 와 해당 comment 의 recyclerView position
+    var removeTargetCommentIdx = 0
+    var removeTargetCommentPosition = 0
+
     private suspend fun getWritablePagingData(pageIdx : Int) = repository.getMyWritableComment(pageIdx)
     private suspend fun getWrittenPagingData(pageIdx : Int) = repository.getMyWrittenComment(pageIdx)
 
@@ -66,6 +74,13 @@ class MycommentViewModel : BaseViewModel() {
                 btnWriteable.value = false
                 btnWritten.value = true
             }
+        }
+    }
+
+    // 댓글 삭제 api
+    fun tryDeleteComment(){
+        viewModelScope.launch(exceptionHandler) {
+            _deleteCommentResult.postValue(repository.deleteComment(removeTargetCommentIdx))
         }
     }
 }

@@ -13,6 +13,8 @@ import com.example.songil.R
 import com.example.songil.config.BaseActivity
 import com.example.songil.databinding.MycommentActivityBinding
 import com.example.songil.page_commentwrite.CommentWriteActivity
+import com.example.songil.popup_remove.RemoveDialog
+import com.example.songil.popup_remove.popup_interface.PopupRemoveView
 import com.example.songil.recycler.adapter.CraftCommentPagingAdapter
 import com.example.songil.recycler.adapter.MyWritableCommentPagingAdapter
 import com.example.songil.recycler.decoration.Top16Decoration
@@ -20,7 +22,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class MycommentActivity : BaseActivity<MycommentActivityBinding>(R.layout.mycomment_activity) {
+class MycommentActivity : BaseActivity<MycommentActivityBinding>(R.layout.mycomment_activity), PopupRemoveView {
 
     private lateinit var viewModel : MycommentViewModel
     private val writeCommentActivityResult : ActivityResultLauncher<Intent> = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
@@ -97,6 +99,14 @@ class MycommentActivity : BaseActivity<MycommentActivityBinding>(R.layout.mycomm
             }
         }
         viewModel.writtenCommentIsEmpty.observe(this, writtenCommentIsEmptyObserver)
+
+        // 코멘트 삭제 api 호출 결과 observer
+        val removeCommentResult = Observer<Int> { resultCode ->
+            if (resultCode == 200) {
+                (binding.rvContentWrittenComment.adapter as CraftCommentPagingAdapter).applyRemoveResult(viewModel.removeTargetCommentPosition)
+            }
+        }
+        viewModel.deleteCommentResult.observe(this, removeCommentResult)
     }
 
     private fun setRecyclerView(){
@@ -104,7 +114,7 @@ class MycommentActivity : BaseActivity<MycommentActivityBinding>(R.layout.mycomm
         binding.rvContentWritableComment.adapter = MyWritableCommentPagingAdapter(::goToWritePage)
 
         binding.rvContentWrittenComment.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        binding.rvContentWrittenComment.adapter = CraftCommentPagingAdapter()
+        binding.rvContentWrittenComment.adapter = CraftCommentPagingAdapter(::removeComment)
         binding.rvContentWrittenComment.addItemDecoration(Top16Decoration(this))
     }
 
@@ -117,6 +127,15 @@ class MycommentActivity : BaseActivity<MycommentActivityBinding>(R.layout.mycomm
     override fun finish() {
         super.finish()
         exitHorizontal
+    }
+
+    // 작성한 코멘트 삭제버튼 클릭시 코멘트 삭제를 묻는 dialog 호출
+    private fun removeComment(position : Int, commentIdx : Int){
+        viewModel.removeTargetCommentIdx = commentIdx
+        viewModel.removeTargetCommentPosition = position
+
+        val dialog = RemoveDialog(this, specificText = getString(R.string.confirmation_remove_comment))
+        dialog.show(supportFragmentManager, dialog.tag)
     }
 
     // MyWritableCommentPagingAdapter 에서 코멘트 작성 버튼 클릭시 호출
@@ -148,5 +167,10 @@ class MycommentActivity : BaseActivity<MycommentActivityBinding>(R.layout.mycomm
                 (binding.rvContentWrittenComment.adapter as CraftCommentPagingAdapter).submitData(pagingData)
             }
         }
+    }
+
+    // 코멘트 삭제 확인 dialog 에서 yes 를 누른 경우 호출되는 코멘트 삭제 부분
+    override fun popupRemoveClick() {
+        viewModel.tryDeleteComment()
     }
 }
