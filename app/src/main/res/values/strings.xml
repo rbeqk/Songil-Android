@@ -319,7 +319,7 @@
     <!-- 작가 관리 페이지 관련 -->
     <string name="artist_page_eng">ARTIST PAGE</string>
     <string name="total_revenue">누적 판매액</string>
-    <string name="month_revenue">1달 판매액</string>
+    <string name="day_revenue">1일 판매액</string>
     <string name="change_to_mypage">마이페이지로 전환</string>
     <string name="one_by_one_ask_list">1:1 문의 목록</string>
     <string name="cancel_return_request_list">반품/취소 요청 현황</string>
