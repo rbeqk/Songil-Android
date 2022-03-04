@@ -290,7 +290,8 @@
     <string name="write_comment">코멘트 작성</string>
     <string name="comment">코멘트</string>
     <string name="photo">사진</string>
-    <string name="photo_maximum_message">최소 1장, 최대 3장 업로드 가능</string>
+    <string name="photo_available_size_range">최소 1장, 최대 3장 업로드 가능</string>
+    <string name="photo_available_max_size">최대 3장 업로드 가능</string>
     <string name="complete_write">작성 완료</string>
     <string name="write_comment_hint">코멘트를 작성해주세요.</string>
 
