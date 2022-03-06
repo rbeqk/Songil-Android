@@ -26,4 +26,10 @@ class ArtistManageCancelRequestRepository {
         if (result.isSuccessful) return result.body()!!
         else throw UnknownError()
     }
+
+    suspend fun postReturnRequestAnswer(orderDetailIdx: Int, type : String) : BaseResponse {
+        val result = retrofit.postReturnOrder(orderDetailIdx, RequestBodyPostCancelOrReturn(type))
+        if (result.isSuccessful) return result.body()!!
+        else throw UnknownError()
+    }
 }

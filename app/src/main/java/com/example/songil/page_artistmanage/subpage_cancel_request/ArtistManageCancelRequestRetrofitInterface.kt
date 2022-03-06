@@ -16,4 +16,7 @@ interface ArtistManageCancelRequestRetrofitInterface {
 
     @POST("artist-page/orders/{orderDetailIdx}/cancel")
     suspend fun postCancelOrder(@Path("orderDetailIdx") orderDetailIdx : Int, @Body params : RequestBodyPostCancelOrReturn) : Response<BaseResponse>
+
+    @POST("artist-page/orders/{orderDetailIdx}/return")
+    suspend fun postReturnOrder(@Path("orderDetailIdx") orderDetailIdx : Int, @Body params : RequestBodyPostCancelOrReturn) : Response<BaseResponse>
 }

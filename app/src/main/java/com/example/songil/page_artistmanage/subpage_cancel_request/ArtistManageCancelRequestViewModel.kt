@@ -47,11 +47,9 @@ class ArtistManageCancelRequestViewModel : BaseViewModel() {
                 }
                 CancelOrReturn.RETURN -> {
                     if (isApprove)  {
-                        // 반품으로 변경 필요
-                        repository.postCancelRequestAnswer(orderDetailIdx = orderDetailIdx, "approval")
+                        repository.postReturnRequestAnswer(orderDetailIdx = orderDetailIdx, "approval")
                     } else {
-                        // 반품으로 변경 필요
-                        repository.postCancelRequestAnswer(orderDetailIdx = orderDetailIdx, "rejection")
+                        repository.postReturnRequestAnswer(orderDetailIdx = orderDetailIdx, "rejection")
                     }
                 }
             }
