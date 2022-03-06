@@ -22,14 +22,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="56dp">
 
+                    <View
+                        android:id="@+id/background_toolbar"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/black80"
+                        android:visibility="invisible"/>
+
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/btn_back"
-                        android:layout_width="22dp"
-                        android:layout_height="22dp"
+                        style="@style/toolbarButton"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        android:layout_marginStart="16dp"
                         android:src="@drawable/ic_back_22" />
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -86,32 +91,11 @@
                 app:layout_constraintTop_toBottomOf="@id/tvbtn_notice"
                 android:background="@color/g_2"/>
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvbtn_app_push"
-                android:layout_width="0dp"
-                android:layout_height="56dp"
-                app:layout_constraintTop_toBottomOf="@id/line_notice"
-                app:layout_constraintStart_toStartOf="@id/guideline_start"
-                app:layout_constraintEnd_toEndOf="@id/guideline_end"
-                android:gravity="center_vertical"
-                android:text="@string/setting_app_push_alarm"/>
-
-            <androidx.appcompat.widget.SwitchCompat
-                android:layout_width="wrap_content"
-                android:layout_height="20dp"
-                app:layout_constraintTop_toTopOf="@id/tvbtn_app_push"
-                app:layout_constraintBottom_toBottomOf="@id/tvbtn_app_push"
-                app:layout_constraintEnd_toEndOf="@id/guideline_end"
-                android:checked="true"
-                app:track="@drawable/custom_switch"
-                android:thumb="@drawable/shape_switch_thumb"
-                android:background="@null"/>
-
             <View
                 android:id="@+id/space_app_push"
                 android:layout_width="match_parent"
                 android:layout_height="8dp"
-                app:layout_constraintTop_toBottomOf="@id/tvbtn_app_push"
+                app:layout_constraintTop_toBottomOf="@id/line_notice"
                 android:background="@color/g_1"/>
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -152,21 +136,11 @@
                 app:layout_constraintTop_toBottomOf="@id/tvbtn_privacy_policy"
                 android:background="@color/g_2"/>
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvbtn_terms_ad"
-                android:layout_width="0dp"
-                android:layout_height="56dp"
-                app:layout_constraintTop_toBottomOf="@id/line_privacy_policy"
-                app:layout_constraintStart_toStartOf="@id/guideline_start"
-                app:layout_constraintEnd_toEndOf="@id/guideline_end"
-                android:gravity="center_vertical"
-                android:text="@string/terms_ad"/>
-
             <View
                 android:id="@+id/space_terms_ad"
                 android:layout_width="match_parent"
                 android:layout_height="8dp"
-                app:layout_constraintTop_toBottomOf="@id/tvbtn_terms_ad"
+                app:layout_constraintTop_toBottomOf="@id/line_privacy_policy"
                 android:background="@color/g_1"/>
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -178,6 +152,77 @@
                 app:layout_constraintTop_toBottomOf="@id/space_terms_ad"
                 android:gravity="center_vertical"
                 android:text="@string/withdrawal"/>
+
+
+            <View
+                android:id="@+id/background_term"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/layout_term"
+                android:layout_marginBottom="-16dp"
+                android:background="@color/black80"
+                android:visibility="invisible"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_term"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHeight_percent="0.95"
+                android:visibility="invisible"
+                android:background="@drawable/shape_bottom_sheet">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:id="@+id/layout_term_navigation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <View
+                        android:layout_width="56dp"
+                        android:layout_height="4dp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginTop="12dp"
+                        android:background="@drawable/shape_rectangle_g3_radius_2"/>
+
+                    <TextView
+                        android:id="@+id/tv_terms"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginTop="42dp"
+                        android:textSize="16sp"
+                        android:text="@string/use_term"/>
+
+                    <TextView
+                        android:id="@+id/btn_confirmation"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingVertical="16dp"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="0dp"
+                        android:textSize="13sp"
+                        app:layout_constraintTop_toTopOf="@id/tv_terms"
+                        app:layout_constraintBottom_toBottomOf="@id/tv_terms"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:layout_marginEnd="24dp"
+                        android:text="@string/confirmation"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_term"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@id/layout_term_navigation"
+                    android:layout_marginTop="16dp"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
