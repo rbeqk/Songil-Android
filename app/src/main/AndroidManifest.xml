@@ -70,6 +70,7 @@
         <activity android:name=".page_artistmanage.subpage_cancel_request.ArtistManageCancelRequestActivity"/>
         <activity android:name=".page_customer_center.CustomerCenterActivity"/>
         <activity android:name=".page_return.ReturnActivity"/>
+        <activity android:name=".page_shippinginfo_confirmation.ShippingInfoConfirmationActivity"/>
     </application>
 
 </manifest>

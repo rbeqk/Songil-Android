@@ -9,8 +9,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.songil.databinding.ItemOrdersBinding
 import com.example.songil.page_artistmanage.subpage_orderstat.models.GetArtistOrderStatusResponseBody
+import com.example.songil.recycler.rv_interface.RvArtistOrderStatusView
 
-class OrdersArtistPagingAdapter : PagingDataAdapter<GetArtistOrderStatusResponseBody, OrdersArtistPagingAdapter.OrderStatusViewHolder>(diffCallback) {
+class OrdersArtistPagingAdapter(private val view : RvArtistOrderStatusView) : PagingDataAdapter<GetArtistOrderStatusResponseBody, OrdersArtistPagingAdapter.OrderStatusViewHolder>(diffCallback) {
     companion object {
         val diffCallback = object : DiffUtil.ItemCallback<GetArtistOrderStatusResponseBody>() {
             override fun areItemsTheSame(oldItem: GetArtistOrderStatusResponseBody, newItem: GetArtistOrderStatusResponseBody): Boolean {
@@ -41,12 +42,20 @@ class OrdersArtistPagingAdapter : PagingDataAdapter<GetArtistOrderStatusResponse
         if (item != null) {
             holder.date.text = item.createdAt
             holder.orders.layoutManager = LinearLayoutManager(holder.itemView.context, LinearLayoutManager.VERTICAL, false)
-            holder.orders.adapter = OrderStatusArtistAdapter(item.order)
+            holder.orders.adapter = OrderStatusArtistChildAdapter(item.order, view, position)
             if (position == itemCount - 1){
                 holder.separator.visibility = View.INVISIBLE
             } else {
                 holder.separator.visibility = View.VISIBLE
             }
+        }
+    }
+
+    fun applyInputShippingInfo(parentPosition : Int, childPosition : Int){
+        val item = getItem(parentPosition)
+        if (item != null){
+            item.order[childPosition].status = 2
+            notifyItemChanged(parentPosition)
         }
     }
 }

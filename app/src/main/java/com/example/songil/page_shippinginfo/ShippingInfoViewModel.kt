@@ -1,8 +1,8 @@
 package com.example.songil.page_shippinginfo
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.*
 import com.example.songil.config.BaseViewModel
+import kotlinx.coroutines.launch
 
 class ShippingInfoViewModel(private val orderDetailIdx : Int) : BaseViewModel() {
 
@@ -13,9 +13,18 @@ class ShippingInfoViewModel(private val orderDetailIdx : Int) : BaseViewModel() 
         }
     }
 
+    private val repository = ShippingInfoRepository()
+
+    private val _sendingInfoResult = MutableLiveData<Int>()
+    val sendingInfoResult : LiveData<Int> get() = _sendingInfoResult
+
+    var btnActivate = MutableLiveData(false)
+
     private var year : Int = 0
     private var month : Int = 0
     private var day : Int = 0
+    var tCode = ""
+    var waybillNumber : String = ""
 
     fun setDate(inputYear : Int, inputMonth : Int, inputDay : Int) {
         year = inputYear
@@ -23,8 +32,18 @@ class ShippingInfoViewModel(private val orderDetailIdx : Int) : BaseViewModel() 
         day = inputDay
     }
 
-    fun tempGetStatusString() : String {
-        return "${year}.${month}.${day} : orderDetailIdx $orderDetailIdx"
+    fun checkBtnActivate(){
+        btnActivate.value = (year != 0 && month != 0 && day != 0 && tCode != "" && waybillNumber != "")
+    }
+
+    fun deactivateBtn(){
+        btnActivate.value = false
+    }
+
+    fun tryUploadSendingInfo(){
+        viewModelScope.launch(exceptionHandler) {
+            _sendingInfoResult.postValue(repository.postSendingInfo(orderDetailIdx, year, month, day, tCode, tInvoice = waybillNumber))
+        }
     }
 
 }

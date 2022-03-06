@@ -9,3 +9,5 @@ data class DeliveryStatus(val time : ArrayList<String>, val where : String, val 
 data class UserType(val type : Int)
 
 data class ChangedItemFromAPI<T : Any>(val position : Int, val ApiResultCode : Int, var newData : T ?= null)
+
+data class WaybillInfo(val year : Int, val month : Int, val day : Int, val tCode : String, val tInvoice : String)

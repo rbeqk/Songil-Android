@@ -338,7 +338,9 @@
     <string name="month">월</string>
     <string name="day">일</string>
     <string name="courier_company">택배사</string>
+    <string name="select_courier_company">택배사 선택</string>
     <string name="waybill_number">운송장번호</string>
+    <string name="confirmation_shipping_info">발송정보 확인</string>
 
     <!-- WITH 페이지 관련 -->
     <string name="story_eng">STORY</string>

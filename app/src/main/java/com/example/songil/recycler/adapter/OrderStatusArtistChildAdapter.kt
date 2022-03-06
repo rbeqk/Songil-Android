@@ -11,8 +11,10 @@ import com.example.songil.config.BaseActivity
 import com.example.songil.databinding.ItemOrderStatusArtistBinding
 import com.example.songil.page_artistmanage.subpage_orderstat.models.OrderStatusArtistItemInfo
 import com.example.songil.page_payinfo.PayInfoActivity
+import com.example.songil.page_shippinginfo_confirmation.ShippingInfoConfirmationActivity
+import com.example.songil.recycler.rv_interface.RvArtistOrderStatusView
 
-class OrderStatusArtistAdapter(private val dataList : ArrayList<OrderStatusArtistItemInfo>) : RecyclerView.Adapter<OrderStatusArtistAdapter.OrderStatusArtistViewHolder>() {
+class OrderStatusArtistChildAdapter(private val dataList : ArrayList<OrderStatusArtistItemInfo>, private val view : RvArtistOrderStatusView, private val parentPosition : Int = 0) : RecyclerView.Adapter<OrderStatusArtistChildAdapter.OrderStatusArtistViewHolder>() {
     class OrderStatusArtistViewHolder(binding : ItemOrderStatusArtistBinding) : RecyclerView.ViewHolder(binding.root){
         val image = binding.ivCraft
         val craftName = binding.tvCraftName
@@ -38,21 +40,34 @@ class OrderStatusArtistAdapter(private val dataList : ArrayList<OrderStatusArtis
             intent.putExtra("ORDER_DETAIL_IDX", dataList[position].orderDetailIdx)
             (holder.itemView.context as BaseActivity<*>).startActivityHorizontal(intent)
         }
-        holder.btnInputShippingInfo.setOnClickListener {
-            // 여기
-        }
         when (dataList[position].status){
             1 -> {
                 holder.orderStatus.text = holder.itemView.context.getString(R.string.before_shipment)
                 holder.orderStatus.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.tomato))
+                holder.btnInputShippingInfo.text = holder.itemView.context.getString(R.string.input_shipping_information)
+                holder.btnInputShippingInfo.setOnClickListener {
+                    view.goToInputShippingInfo(parentPosition, position, dataList[position].orderDetailIdx)
+                }
             }
             2 -> {
                 holder.orderStatus.text = holder.itemView.context.getString(R.string.sending_out)
                 holder.orderStatus.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.green))
+                holder.btnInputShippingInfo.text = holder.itemView.context.getString(R.string.confirmation_shipping_info)
+                holder.btnInputShippingInfo.setOnClickListener {
+                    val intent = Intent(holder.itemView.context, ShippingInfoConfirmationActivity::class.java)
+                    intent.putExtra("ORDER_DETAIL_IDX", dataList[position].orderDetailIdx)
+                    (holder.itemView.context as BaseActivity<*>).startActivityHorizontal(intent)
+                }
             }
             3 -> {
                 holder.orderStatus.text = holder.itemView.context.getString(R.string.complete_shipment)
                 holder.orderStatus.setTextColor(ContextCompat.getColor(holder.itemView.context, R.color.azul))
+                holder.btnInputShippingInfo.text = holder.itemView.context.getString(R.string.confirmation_shipping_info)
+                holder.btnInputShippingInfo.setOnClickListener {
+                    val intent = Intent(holder.itemView.context, ShippingInfoConfirmationActivity::class.java)
+                    intent.putExtra("ORDER_DETAIL_IDX", dataList[position].orderDetailIdx)
+                    (holder.itemView.context as BaseActivity<*>).startActivityHorizontal(intent)
+                }
             }
         }
     }
