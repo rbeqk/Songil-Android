@@ -6,6 +6,6 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface ShippingInfoConfirmationRetrofitInterface {
-    @GET("/artist-page/ordrers/{orderDetailIdx}/sending")
+    @GET("/artist-page/orders/{orderDetailIdx}/sending")
     suspend fun getSendingInfo(@Path("orderDetailIdx") orderDetailIdx : Int) : Response<ResponseGetShippingInfo>
 }
