@@ -52,7 +52,6 @@ class SearchActivity : BaseActivity<SearchActivityBinding>(R.layout.search_activ
         binding.viewEmpty.tvEmptyTarget.text = getString(R.string.empty_search)
 
         showSearchLayout()
-        binding.etSearchBar.requestFocus()
         setEditTextView()
         setButton()
         setRecyclerView()
@@ -67,8 +66,11 @@ class SearchActivity : BaseActivity<SearchActivityBinding>(R.layout.search_activ
     }
 
     private fun setEditTextView(){
-        binding.etSearchBar.setOnClickListener {
-            showSearchLayout()
+        // 검색어 입력하는 editText 의 focus 유무에 따라 검색어입력/검색결과 화면 전환
+        binding.etSearchBar.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
+            if (hasFocus){
+                showSearchLayout()
+            }
         }
 
         binding.etSearchBar.setOnEditorActionListener { v, actionId, _ ->
@@ -81,6 +83,7 @@ class SearchActivity : BaseActivity<SearchActivityBinding>(R.layout.search_activ
                     showSimpleToastMessage(getString(R.string.empty_input_text))
                 } else {
                     hideSearchLayout()
+                    binding.etSearchBar.clearFocus()
                     changeCategory(SearchCategory.SHOP)
                     viewModel.tryGetSearchPageCnt()
                 }
@@ -130,6 +133,7 @@ class SearchActivity : BaseActivity<SearchActivityBinding>(R.layout.search_activ
 
         binding.btnRemoveEdittext.setOnClickListener {
             binding.etSearchBar.setText("")
+            binding.etSearchBar.requestFocus()
         }
     }
 
@@ -217,6 +221,7 @@ class SearchActivity : BaseActivity<SearchActivityBinding>(R.layout.search_activ
             }
             binding.layoutSearchSearching.visibility == View.VISIBLE -> {
                 hideSearchLayout()
+                binding.etSearchBar.clearFocus()
             }
             else -> {
                 super.onBackPressed()
@@ -290,18 +295,20 @@ class SearchActivity : BaseActivity<SearchActivityBinding>(R.layout.search_activ
         }
     }
 
-    // 검색어를 입력하는 View 표시
+    // 검색어를 입력하는 View 표시 + 검색 결과를 표시하는 view 숨김
     private fun showSearchLayout(){
         viewModel.tryGetSearchKeywords()
         binding.layoutSearchSearching.visibility = View.VISIBLE
+        binding.layoutSearchResult.visibility = View.GONE
     }
 
-    // 검색어를 입력하는 View 숨김 (검색 결과 화면이 보이게 된다.)
+    // 검색어를 입력하는 View 숨김 + 검색 결과 화면을 표시
     private fun hideSearchLayout(){
         isFirst = false
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
         imm?.hideSoftInputFromWindow(binding.etSearchBar.windowToken, 0)
         binding.layoutSearchSearching.visibility = View.GONE
+        binding.layoutSearchResult.visibility = View.VISIBLE
     }
 
     // 사용자 최근 검색어, 인기 검색어 api 호출 결과로 UI 갱신
@@ -331,6 +338,8 @@ class SearchActivity : BaseActivity<SearchActivityBinding>(R.layout.search_activ
                 binding.etSearchBar.setText(data)
                 hideSearchLayout()
                 binding.etSearchBar.clearFocus()
+                changeCategory(SearchCategory.SHOP)
+                viewModel.tryGetSearchPageCnt()
             }
             binding.cgPopularSearch.addView(chip)
         }
