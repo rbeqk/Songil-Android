@@ -1,14 +1,15 @@
 package com.example.songil.page_abtestwrite
 
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.view.animation.AlphaAnimation
 import android.view.animation.TranslateAnimation
+import android.view.inputmethod.InputMethodManager
 import android.widget.DatePicker
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -120,7 +121,6 @@ class AbtestWriteActivity : BaseActivity<AbtestActivityWriteBinding>(R.layout.ab
         viewModel.resultModify.observe(this, modifyObserver)
 
         val errorObserver = Observer<BaseViewModel.FetchState>{ liveData ->
-            Log.d("errorHandling", "$liveData")
             viewModel.checkAvailable()
             dismissLoadingDialog()
         }
@@ -214,6 +214,9 @@ class AbtestWriteActivity : BaseActivity<AbtestActivityWriteBinding>(R.layout.ab
     }
 
     private fun showDatePicker(){
+        val imm: InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(binding.etContent.windowToken, 0)
+
         datePickerIsShow = true
 
         val backgroundAnim = AlphaAnimation(0f, 1f)

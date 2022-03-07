@@ -151,7 +151,7 @@ class PostAndChatAdapter(private val view : RvPostAndChatView) : PagingDataAdapt
                     var choice = item.voteInfo?.vote
                     holder.artistName.text = item.artistName
                     holder.content.text = item.content
-                    holder.date.text = item.deadline
+                    holder.date.text = holder.itemView.context.getString(R.string.form_until_string, item.deadline)
                     holder.commentCount.text = item.totalCommentCnt.toString()
                     if (item.artistImageUrl != null) Glide.with(holder.itemView.context).load(item.artistImageUrl).into(holder.artistImage)
                     Glide.with(holder.itemView.context).load(item.imageA).into(holder.photoA)

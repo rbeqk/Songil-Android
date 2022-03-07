@@ -1,5 +1,7 @@
 package com.example.songil.page_customer_center
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -63,7 +65,8 @@ class CustomerCenterActivity : BaseActivity<CustomercenterActivityBinding>(R.lay
         }
 
         binding.btnKakao.setOnClickListener {
-
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://pf.kakao.com/_QAUBs"))
+            startActivity(intent)
         }
     }
 

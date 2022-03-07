@@ -57,7 +57,7 @@ class WithABTestPagingAdapter(private val view : RvAbTestView) : PagingDataAdapt
 
             holder.artistName.text = abTest.artistName
             holder.content.text = abTest.content
-            holder.date.text = abTest.deadline
+            holder.date.text = holder.itemView.context.getString(R.string.form_until_string, abTest.deadline)
             holder.commentCount.text = abTest.totalCommentCnt.toString()
             if (abTest.artistImageUrl != null) Glide.with(holder.itemView.context).load(abTest.artistImageUrl).into(holder.artistImage)
             Glide.with(holder.itemView.context).load(abTest.imageA).into(holder.photoA)

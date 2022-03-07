@@ -40,13 +40,13 @@ class SignupAuthcodeFragment(private val signUpInfo: SignUpInfo) : BaseFragment<
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
-            override fun afterTextChanged(s: Editable?) { viewModel.checkAuthCodeForm() }
+            override fun afterTextChanged(s: Editable?) { viewModel.checkAuthButtonStatus() }
         })
     }
 
     private fun setObserver(){
         val checkAuthCodeObserver = Observer<Int>{ liveData ->
-            viewModel.checkAuthCodeForm()
+            viewModel.checkAuthButtonStatus()
             when (liveData) {
                 200 -> { // 성공
                     moveToNext()
@@ -63,6 +63,8 @@ class SignupAuthcodeFragment(private val signUpInfo: SignUpInfo) : BaseFragment<
 
         val issueAuthCodeObserver = Observer<Int>{ liveData ->
             binding.btnReceiveAgain.setBackgroundResource(R.drawable.shape_text_button_black)
+            binding.btnReceiveAgain.isClickable = true
+            viewModel.checkAuthButtonStatus()
             when (liveData){
                 200 -> {
                     initTimer()
@@ -76,6 +78,7 @@ class SignupAuthcodeFragment(private val signUpInfo: SignUpInfo) : BaseFragment<
         viewModel.issueAuthCodeResult.observe(viewLifecycleOwner, issueAuthCodeObserver)
 
         val timerCountObserver = Observer<Int>{ liveData ->
+            viewModel.checkAuthButtonStatus()
             binding.tvRemainTime.text = getString(R.string.remain_time_with_time, liveData / 60, liveData % 60)
         }
         viewModel.timerCount.observe(viewLifecycleOwner, timerCountObserver)

@@ -27,8 +27,8 @@ class SignupAuthcodeViewModel(private val signUpInfo: SignUpInfo) : BaseViewMode
 
     var timerCount = MutableLiveData<Int>()
 
-    fun checkAuthCodeForm(){
-        btnActivate.value = inputAuthcode.matches(Regex("[0-9]{6}\$"))
+    fun checkAuthButtonStatus(){
+        btnActivate.value = inputAuthcode.matches(Regex("[0-9]{6}\$")) && timerCount.value != null && timerCount.value!! > 0
     }
 
     fun setConfirmEmail(){

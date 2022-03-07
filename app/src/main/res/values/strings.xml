@@ -365,6 +365,7 @@
     <string name="response_date">응답기간</string>
     <string name="until_receive_survey">까지 설문받기</string>
     <string name="until">까지</string>
+    <string name="form_until_string">~%s 까지</string>
     <string name="write_post">게시글 작성하기</string>
     <string name="photo_count_ab_test">2장인 경우에만 업로드 가능</string>
     <string name="write_story">스토리 작성</string>
