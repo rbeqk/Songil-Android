@@ -25,6 +25,7 @@ class GlobalApplication : Application() {
         const val TARGET_IDX = "target-idx"
         const val TARGET_IDX_TYPE = "target-idx-type"
         const val WRITE_TYPE = "write-type"
+        const val SEARCH_CATEGORY = "search-category"
         lateinit var sRetrofit: Retrofit
         lateinit var globalSharedPreferences: SharedPreferences
         val categoryList = arrayListOf(

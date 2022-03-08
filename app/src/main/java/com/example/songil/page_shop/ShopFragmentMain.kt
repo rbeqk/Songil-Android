@@ -19,6 +19,8 @@ import com.example.songil.databinding.ShopFragmentMainBinding
 import com.example.songil.page_artist.ArtistActivity
 import com.example.songil.page_craft.CraftActivity
 import com.example.songil.page_main.MainActivity
+import com.example.songil.page_search.SearchActivity
+import com.example.songil.page_search.models.SearchCategory
 import com.example.songil.page_shop.models.ShopMainBanner
 import com.example.songil.page_shop.models.TodayArtistsResult
 import com.example.songil.page_shop.shop_category.ShopActivityCategory
@@ -74,6 +76,12 @@ class ShopFragmentMain : BaseFragment<ShopFragmentMainBinding>(ShopFragmentMainB
                 intent.putExtra("artistIdx", artistIdx)
                 (activity as MainActivity).startActivityHorizontal(intent)
             }
+        }
+
+        binding.btnSearch.setOnClickListener {
+            val intent = Intent(activity as MainActivity, SearchActivity::class.java)
+            intent.putExtra(GlobalApplication.SEARCH_CATEGORY, SearchCategory.SHOP)
+            (activity as MainActivity).startActivityHorizontal(intent)
         }
     }
 

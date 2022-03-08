@@ -41,6 +41,8 @@ class SearchActivity : BaseActivity<SearchActivityBinding>(R.layout.search_activ
     private var withPaging : Job ?= null
     private var articlePaging : Job ?= null
 
+    // 검색할 때 가장 먼저 보여질 category 설정 (SHOP, WITH, ARTICLE 중 하나), null 인 경우 SearchCategory.SHOP 을 사용
+    private val startCategory : SearchCategory? by lazy { intent.getSerializableExtra(GlobalApplication.SEARCH_CATEGORY)?.let { it as SearchCategory } }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,7 +86,7 @@ class SearchActivity : BaseActivity<SearchActivityBinding>(R.layout.search_activ
                 } else {
                     hideSearchLayout()
                     binding.etSearchBar.clearFocus()
-                    changeCategory(SearchCategory.SHOP)
+                    changeCategory(startCategory ?: SearchCategory.SHOP)
                     viewModel.tryGetSearchPageCnt()
                 }
 
@@ -338,7 +340,7 @@ class SearchActivity : BaseActivity<SearchActivityBinding>(R.layout.search_activ
                 binding.etSearchBar.setText(data)
                 hideSearchLayout()
                 binding.etSearchBar.clearFocus()
-                changeCategory(SearchCategory.SHOP)
+                changeCategory(startCategory ?: SearchCategory.SHOP)
                 viewModel.tryGetSearchPageCnt()
             }
             binding.cgPopularSearch.addView(chip)
@@ -355,7 +357,7 @@ class SearchActivity : BaseActivity<SearchActivityBinding>(R.layout.search_activ
         binding.etSearchBar.setText(targetWord)
         hideSearchLayout()
         binding.etSearchBar.clearFocus()
-        changeCategory(SearchCategory.SHOP)
+        changeCategory(startCategory ?: SearchCategory.SHOP)
         viewModel.tryGetSearchPageCnt()
     }
 
@@ -364,5 +366,10 @@ class SearchActivity : BaseActivity<SearchActivityBinding>(R.layout.search_activ
         viewModel.sort = sort
         binding.tvSort.text = GlobalApplication.sort[sort] ?: "인기순"
         viewModel.tryGetSearchPageCnt()
+    }
+
+    override fun finish() {
+        super.finish()
+        exitHorizontal
     }
 }

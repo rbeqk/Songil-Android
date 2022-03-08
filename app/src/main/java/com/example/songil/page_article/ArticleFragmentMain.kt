@@ -1,5 +1,6 @@
 package com.example.songil.page_article
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ShapeDrawable
 import android.graphics.drawable.shapes.RoundRectShape
@@ -14,9 +15,12 @@ import com.example.songil.R
 import com.example.songil.viewPager2.adapter.Vp2ArticleTitleAdapter
 import com.example.songil.viewPager2.decoration.Vp2ArticleDecoration
 import com.example.songil.config.BaseFragment
+import com.example.songil.config.GlobalApplication
 import com.example.songil.data.SimpleArticle
 import com.example.songil.databinding.ArticleFragmentMainBinding
 import com.example.songil.page_main.MainActivity
+import com.example.songil.page_search.SearchActivity
+import com.example.songil.page_search.models.SearchCategory
 import com.example.songil.popup_warning.SocketTimeoutDialog
 import com.example.songil.utils.dpToPx
 import kotlin.math.abs
@@ -36,10 +40,18 @@ class ArticleFragmentMain : BaseFragment<ArticleFragmentMainBinding>(ArticleFrag
 
         setViewPager()
         setSeekBar()
-
+        setButton()
         setObserver()
 
         viewModel.tryGetArticleData()
+    }
+
+    private fun setButton(){
+        binding.btnSearch.setOnClickListener {
+            val intent = Intent(activity as MainActivity, SearchActivity::class.java)
+            intent.putExtra(GlobalApplication.SEARCH_CATEGORY, SearchCategory.ARTICLE)
+            (activity as MainActivity).startActivityHorizontal(intent)
+        }
     }
 
     private fun setObserver(){

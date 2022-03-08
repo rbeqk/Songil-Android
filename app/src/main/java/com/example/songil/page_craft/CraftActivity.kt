@@ -21,6 +21,8 @@ import com.example.songil.page_craft.subpage_ask.CraftFragmentAsk
 import com.example.songil.page_craft.subpage_detail.CraftFragmentDetail
 import com.example.songil.page_inquiry.InquiryActivity
 import com.example.songil.page_order.OrderActivity
+import com.example.songil.page_search.SearchActivity
+import com.example.songil.page_search.models.SearchCategory
 
 class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity) {
 
@@ -188,6 +190,12 @@ class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity
 
         binding.btnBack.setOnClickListener {
             onBackPressed()
+        }
+
+        binding.btnSearch.setOnClickListener {
+            val intent = Intent(this, SearchActivity::class.java)
+            intent.putExtra(GlobalApplication.SEARCH_CATEGORY, SearchCategory.SHOP)
+            startActivityHorizontal(intent)
         }
     }
 

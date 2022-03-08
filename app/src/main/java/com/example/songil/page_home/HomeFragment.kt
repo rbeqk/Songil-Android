@@ -172,7 +172,7 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::bind
 
     private fun setButton(){
         binding.btnSearch.setOnClickListener {
-            startActivity(Intent(requireContext(), SearchActivity::class.java))
+            (activity as MainActivity).startActivityHorizontal(Intent(requireContext(), SearchActivity::class.java))
         }
     }
 }

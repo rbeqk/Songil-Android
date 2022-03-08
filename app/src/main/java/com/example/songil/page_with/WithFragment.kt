@@ -20,6 +20,8 @@ import com.example.songil.page_abtestwrite.AbtestWriteActivity
 import com.example.songil.page_main.MainActivity
 import com.example.songil.page_alarm.AlarmActivity
 import com.example.songil.page_qnawrite.QnaWriteActivity
+import com.example.songil.page_search.SearchActivity
+import com.example.songil.page_search.models.SearchCategory
 import com.example.songil.page_storywrite.StoryWriteActivity
 import com.example.songil.page_with.with_abtest.WithFragmentAbtest
 import com.example.songil.page_with.with_qna.WithFragmentQna
@@ -111,6 +113,12 @@ class WithFragment : BaseFragment<WithFragmentMainBinding>(WithFragmentMainBindi
                     }
                 }
             }
+        }
+
+        binding.btnSearch.setOnClickListener {
+            val intent = Intent(activity as MainActivity, SearchActivity::class.java)
+            intent.putExtra(GlobalApplication.SEARCH_CATEGORY, SearchCategory.WITH)
+            (activity as MainActivity).startActivityHorizontal(intent)
         }
     }
 
