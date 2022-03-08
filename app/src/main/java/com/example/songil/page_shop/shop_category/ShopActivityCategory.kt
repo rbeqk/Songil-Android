@@ -56,6 +56,10 @@ class ShopActivityCategory : BaseActivity<ShopActivityCategoryBinding>(R.layout.
 
         viewModel.setInit()
         viewModel.tryGetStartIdx()
+
+        binding.layoutRefresh.setOnRefreshListener {
+            viewModel.tryGetStartIdx()
+        }
     }
 
     override fun onRestart() {
@@ -115,6 +119,7 @@ class ShopActivityCategory : BaseActivity<ShopActivityCategoryBinding>(R.layout.
 
         val startIdxObserver = Observer<Int>{ liveData ->
             lifecycleScope.launch { (binding.rvCraft.adapter as Craft1PagingAdapter).submitData( PagingData.empty()) }
+            binding.layoutRefresh.isRefreshing = false
             if (liveData == 0){
                 clearJob()
             } else {
