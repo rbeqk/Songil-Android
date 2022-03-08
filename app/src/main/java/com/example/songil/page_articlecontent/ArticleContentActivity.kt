@@ -51,9 +51,6 @@ class ArticleContentActivity : BaseActivity<ArticleActivityContentBinding>(R.lay
                     (binding.rvContent.adapter as ArticleContentAdapter).applyData(viewModel.articleData.content)
                     setArticleInfo()
                 }
-                else -> {
-
-                }
             }
         }
         viewModel.getArticleResult.observe(this, articleObserver)
@@ -62,9 +59,6 @@ class ArticleContentActivity : BaseActivity<ArticleActivityContentBinding>(R.lay
             when (liveData){
                 200 -> {
                     setLikeInfo()
-                }
-                else -> {
-
                 }
             }
         }
@@ -113,12 +107,19 @@ class ArticleContentActivity : BaseActivity<ArticleActivityContentBinding>(R.lay
         binding.btnHome.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
-            //onBackPressed()
             startActivity(intent)
         }
 
         binding.btnFavorite.setOnClickListener {
             viewModel.tryChangeLikeData()
+        }
+
+        binding.btnShare.setOnClickListener {
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.type = "text/plain"
+            intent.putExtra(Intent.EXTRA_TEXT, viewModel.shareMessage())
+            val shareIntent = Intent.createChooser(intent, "share")
+            startActivity(shareIntent)
         }
     }
 

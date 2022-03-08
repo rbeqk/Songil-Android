@@ -49,4 +49,8 @@ class ArticleContentViewModel : ViewModel() {
             }
         }
     }
+
+    fun shareMessage() : String {
+        return "[songil]\n${articleData.editorName}의 ${articleData.title}\nsongile앱에서 \"${articleData.editorName}\" 또는 \"${articleData.title}\"로 검색시 찾으실 수 있습니다"
+    }
 }

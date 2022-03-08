@@ -148,7 +148,11 @@ class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity
         }
 
         binding.btnShare.setOnClickListener {
-            Log.d("btnShare", "click")
+            val intent = Intent(Intent.ACTION_SEND)
+            intent.type = "text/plain"
+            intent.putExtra(Intent.EXTRA_TEXT, viewModel.shareMessage())
+            val shareIntent = Intent.createChooser(intent, "share")
+            startActivity(shareIntent)
         }
 
         binding.ivArrowDown.setOnClickListener {

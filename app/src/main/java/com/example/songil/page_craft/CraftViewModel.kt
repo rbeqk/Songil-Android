@@ -15,7 +15,7 @@ class CraftViewModel : BaseViewModel() {
     var message = ""
     private var craftIdx = 0
 
-    // 수정 후 api 에서 사용하는 데이터
+    // 상품 정보
     lateinit var productDetailInfo : CraftDetailInfo
 
     // 구매 버튼 활성화 여부
@@ -109,6 +109,10 @@ class CraftViewModel : BaseViewModel() {
         val tempCount = itemCount.value!!.plus(number)
         if (tempCount in 1..10)
             itemCount.value = tempCount
+    }
+
+    fun shareMessage() : String {
+        return "[songil]\n${productDetailInfo.artistName}님의 ${productDetailInfo.name}\n가격 : ${productDetailInfo.price}\n용도 : ${productDetailInfo.usage.joinToString(",")}"
     }
 
 }
