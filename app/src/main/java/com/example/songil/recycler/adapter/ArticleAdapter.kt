@@ -1,13 +1,17 @@
 package com.example.songil.recycler.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.songil.R
+import com.example.songil.config.BaseActivity
+import com.example.songil.config.GlobalApplication
 import com.example.songil.data.ItemArticle
 import com.example.songil.databinding.ItemArticleBinding
+import com.example.songil.page_articlecontent.ArticleContentActivity
 
 class ArticleAdapter(baseData : ArrayList<ItemArticle> ?= null) : RecyclerView.Adapter<ArticleAdapter.ArticleViewHolder>() {
 
@@ -32,7 +36,9 @@ class ArticleAdapter(baseData : ArrayList<ItemArticle> ?= null) : RecyclerView.A
 
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
         holder.root.setOnClickListener {
-
+            val intent = Intent(holder.itemView.context, ArticleContentActivity::class.java)
+            intent.putExtra(GlobalApplication.ARTICLE_IDX, dataList[position].articleIdx)
+            (holder.itemView.context as BaseActivity<*>).startActivityHorizontal(intent)
         }
         Glide.with(holder.itemView.context).load(dataList[position].mainImageUrl).into(holder.thumbnail)
         if (dataList[position].isLike == "Y") { holder.likeImage.setImageResource(R.drawable.ic_heart_base_16) }
