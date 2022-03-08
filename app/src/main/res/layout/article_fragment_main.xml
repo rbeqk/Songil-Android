@@ -5,7 +5,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:clipChildren="false">
 
         <View
             android:id="@+id/background_top"
@@ -63,8 +64,8 @@
             android:id="@+id/seek_article"
             app:layout_constraintTop_toBottomOf="@id/vp2_article"
             android:layout_marginTop="48dp"
-            android:paddingStart="60dp"
-            android:paddingEnd="60dp"
+            android:paddingStart="30dp"
+            android:paddingEnd="30dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:progress="0"

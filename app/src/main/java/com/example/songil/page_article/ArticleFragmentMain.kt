@@ -1,8 +1,12 @@
 package com.example.songil.page_article
 
+import android.graphics.Color
+import android.graphics.drawable.ShapeDrawable
+import android.graphics.drawable.shapes.RoundRectShape
 import android.os.Bundle
 import android.view.View
 import android.widget.SeekBar
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
@@ -42,6 +46,7 @@ class ArticleFragmentMain : BaseFragment<ArticleFragmentMainBinding>(ArticleFrag
         val articleObserver = Observer<ArrayList<SimpleArticle>>{ LiveData ->
             (binding.vp2Article.adapter as Vp2ArticleTitleAdapter).applyData(LiveData)
             pageRangeSize = (progressMax / (LiveData.size - 1))
+            changeThumbSize(LiveData.size)
         }
         viewModel.articleData.observe(viewLifecycleOwner, articleObserver)
 
@@ -69,7 +74,7 @@ class ArticleFragmentMain : BaseFragment<ArticleFragmentMainBinding>(ArticleFrag
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 if (!isUser){
-                    binding.seekArticle.setProgress(position * pageRangeSize, true)
+                    binding.seekArticle.setProgress(position * pageRangeSize, false)
                 }
             }
         })
@@ -88,11 +93,24 @@ class ArticleFragmentMain : BaseFragment<ArticleFragmentMainBinding>(ArticleFrag
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
-/*                val threshold = (seekBar!!.progress / pageRangeSize) * pageRangeSize
-                binding.seekArticle.setProgress(threshold, true)*/
                 isUser = false
             }
-
         })
+    }
+
+    private fun changeThumbSize(itemCount : Int){
+        if (itemCount != 0) {
+            val thumbWidth = (getWindowSize()[0] - dpToPx(requireContext(), 60)) / itemCount
+
+            val thumb = ShapeDrawable(RoundRectShape(listOf(2f, 2f, 2f, 2f, 2f, 2f, 2f, 2f).toFloatArray(), null, null))
+            thumb.intrinsicHeight = dpToPx(requireContext(), 4)
+            thumb.intrinsicWidth = thumbWidth
+            thumb.paint.color = Color.BLACK
+            binding.seekArticle.thumb = thumb
+
+            val seekBarParams = binding.seekArticle.layoutParams as ConstraintLayout.LayoutParams
+            seekBarParams.setMargins(thumbWidth / 2, dpToPx(requireContext(), 48),  thumbWidth / 2 , 0)
+            binding.seekArticle.layoutParams = seekBarParams
+        }
     }
 }
