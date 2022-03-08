@@ -31,8 +31,7 @@ class MybenefitActivity : BaseActivity<MydetailActivityBinding>(R.layout.mydetai
             viewModel.tryGetMyBenefit()
         }
 
-        //viewModel.tryGetMyBenefit()
-        viewModel.tempGetBenefitData()
+        viewModel.tryGetMyBenefit()
     }
 
     private fun setRecyclerView(){

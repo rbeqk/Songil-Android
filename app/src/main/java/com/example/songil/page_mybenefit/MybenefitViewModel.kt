@@ -19,14 +19,4 @@ class MybenefitViewModel : BaseViewModel() {
             }
         }
     }
-
-    fun tempGetBenefitData(){
-        val temp = ArrayList<Benefit>()
-        temp.add(Benefit(1, "10% 할인", "손길 오픈 기념 단독 베네핏", "12.12", "https://pds.joins.com/news/component/joongang_sunday/2010/09/19004519.jpg", ""))
-        temp.add(Benefit(1, "15% 할인", "손길 오픈 기념 단독 베네핏", "12.12", "https://pds.joins.com/news/component/joongang_sunday/2010/09/19004519.jpg", ""))
-        temp.add(Benefit(1, "10% 할인", "손길 오픈 기념 단독 베네핏", "12.12", "https://pds.joins.com/news/component/joongang_sunday/2010/09/19004519.jpg", ""))
-        temp.add(Benefit(1, "20% 할인", "신규회원 전용 베네핏", "01.24", "https://pds.joins.com/news/component/joongang_sunday/2010/09/19004519.jpg", ""))
-        temp.add(Benefit(1, "10% 할인", "신규회원 전용 베네핏", "01.24", "https://pds.joins.com/news/component/joongang_sunday/2010/09/19004519.jpg", ""))
-        benefitDatas.value = temp
-    }
 }
