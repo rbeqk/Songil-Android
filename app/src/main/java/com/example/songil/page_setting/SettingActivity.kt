@@ -13,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.songil.R
 import com.example.songil.config.BaseActivity
+import com.example.songil.config.GlobalApplication
 import com.example.songil.databinding.SettingActivityBinding
 import com.example.songil.page_notice.NoticeActivity
 import com.example.songil.page_withdrawal.WithdrawalActivity
@@ -97,9 +98,15 @@ class SettingActivity : BaseActivity<SettingActivityBinding>(R.layout.setting_ac
             hideTermLayout()
         }
 
-        binding.tvWithdrawal.setOnClickListener {
-            startActivityHorizontal(Intent(this, WithdrawalActivity::class.java))
+        if (!GlobalApplication.checkIsLogin()){
+            binding.tvWithdrawal.setTextColor(getColor(R.color.g_3))
+            binding.tvWithdrawal.isClickable = false
+        } else {
+            binding.tvWithdrawal.setOnClickListener {
+                startActivityHorizontal(Intent(this, WithdrawalActivity::class.java))
+            }
         }
+
     }
 
     override fun finish() {

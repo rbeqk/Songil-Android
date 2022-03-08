@@ -96,8 +96,12 @@ class StoryActivity : BaseActivity<StoryActivityBinding>(R.layout.story_activity
         }
 
         binding.btnFavorite.setOnClickListener {
-            viewModel.tryToggleLike()
-            binding.btnFavorite.isClickable = false
+            if (GlobalApplication.checkIsLogin()){
+                viewModel.tryToggleLike()
+                binding.btnFavorite.isClickable = false
+            } else {
+                callNeedLoginDialog()
+            }
         }
 
         binding.btnMore.setOnClickListener {

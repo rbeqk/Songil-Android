@@ -87,15 +87,23 @@ class WithFragmentAbtest : BaseFragment<SimpleRecyclerviewFragmentSwipeBinding>(
     override fun getSort(): String = viewModel.sort
 
     override fun reload() {
-        //viewModel.pointer?.invalidate()  //(binding.rvContent.adapter as WithABTestPagingAdapter).refresh()
+        viewModel.pointer?.invalidate()  //(binding.rvContent.adapter as WithABTestPagingAdapter).refresh()
     }
 
     override fun vote(abTestIdx: Int, vote: String) {
-        viewModel.tryVote(abTestIdx, vote)
+        if (GlobalApplication.checkIsLogin()){
+            viewModel.tryVote(abTestIdx, vote)
+        } else {
+            (activity as BaseActivity<*>).callNeedLoginDialog()
+        }
     }
 
     override fun cancelVote(abTestIdx: Int) {
-        viewModel.tryCancelVote(abTestIdx)
+        if (GlobalApplication.checkIsLogin()){
+            viewModel.tryCancelVote(abTestIdx)
+        } else {
+            (activity as BaseActivity<*>).callNeedLoginDialog()
+        }
     }
 
     override var recentTargetPosition: Int = 0

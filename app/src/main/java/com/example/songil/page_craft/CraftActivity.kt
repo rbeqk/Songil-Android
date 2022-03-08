@@ -2,7 +2,6 @@ package com.example.songil.page_craft
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.animation.TranslateAnimation
 import androidx.core.content.ContextCompat
@@ -117,7 +116,6 @@ class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity
         viewModel.inStock.observe(this, inStockObserver)
 
         val likeObserver = Observer<LikeData>{liveData ->
-            Log.d("call", "$liveData")
             binding.btnFavorite.setBackgroundResource(if (liveData.isLike == "Y") R.drawable.ic_heart_base_28 else R.drawable.ic_heart_line_28)
         }
         viewModel.likeData.observe(this, likeObserver)
@@ -134,17 +132,25 @@ class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity
 
     private fun setButton(){
         binding.btnBuy.setOnClickListener {
-            binding.btnFavorite.visibility = View.INVISIBLE
-            binding.btnShare.visibility = View.INVISIBLE
-            binding.btnBuy.visibility = View.INVISIBLE
-            binding.btnAddToCart.visibility = View.VISIBLE
-            binding.btnBuyNow.visibility = View.VISIBLE
-            binding.btnAddToCart.visibility = View.VISIBLE
-            showAddView()
+            if (GlobalApplication.checkIsLogin()){
+                binding.btnFavorite.visibility = View.INVISIBLE
+                binding.btnShare.visibility = View.INVISIBLE
+                binding.btnBuy.visibility = View.INVISIBLE
+                binding.btnAddToCart.visibility = View.VISIBLE
+                binding.btnBuyNow.visibility = View.VISIBLE
+                binding.btnAddToCart.visibility = View.VISIBLE
+                showAddView()
+            } else {
+                callNeedLoginDialog()
+            }
         }
 
         binding.btnFavorite.setOnClickListener {
-            viewModel.tryToggleLike()
+            if (GlobalApplication.checkIsLogin()){
+                viewModel.tryToggleLike()
+            } else {
+                callNeedLoginDialog()
+            }
         }
 
         binding.btnShare.setOnClickListener {

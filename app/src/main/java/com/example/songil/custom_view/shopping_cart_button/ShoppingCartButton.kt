@@ -13,6 +13,9 @@ import com.example.songil.config.BaseActivity
 import com.example.songil.config.GlobalApplication
 import com.example.songil.databinding.ViewShoppingCartButtonBinding
 import com.example.songil.page_basket.BasketActivity
+import com.example.songil.popup_warning.NeedLoginDialog
+import java.lang.Exception
+
 
 class ShoppingCartButton(context: Context, attrs : AttributeSet) : ConstraintLayout(context, attrs) {
     private val binding = ViewShoppingCartButtonBinding.inflate(LayoutInflater.from(context), this, true)
@@ -21,7 +24,16 @@ class ShoppingCartButton(context: Context, attrs : AttributeSet) : ConstraintLay
     init {
         binding.tvShoppingCartCount.text = GlobalApplication.globalSharedPreferences.getInt("count", 0).toString()
         binding.root.setOnClickListener {
-            (context as BaseActivity<*>).startActivityHorizontal(Intent(context, BasketActivity::class.java))
+            if (GlobalApplication.checkIsLogin()){
+                (context as BaseActivity<*>).startActivityHorizontal(Intent(context, BasketActivity::class.java))
+            } else {
+                try {
+                    val dialog = NeedLoginDialog()
+                    dialog.show((context as BaseActivity<*>).supportFragmentManager, dialog.tag)
+                } catch (e : Exception) {
+                    // context 가 BaseActivity 로 casting 이 안될 때
+                }
+            }
         }
     }
 

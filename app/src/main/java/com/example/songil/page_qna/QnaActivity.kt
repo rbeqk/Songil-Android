@@ -2,7 +2,6 @@ package com.example.songil.page_qna
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -84,6 +83,7 @@ class QnaActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity), R
     }
 
     private fun setObserver(){
+        // get QnA 결과 observer
         val qnaResult = Observer<Int>{ liveData ->
             when (liveData){
                 200 -> {
@@ -101,6 +101,7 @@ class QnaActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity), R
         }
         viewModel.loadQna.observe(this, qnaResult)
 
+        // 댓글 등록 observer
         val commentRegisterResult = Observer<Int>{ liveData ->
             when (liveData){
                 200 -> {
@@ -116,6 +117,7 @@ class QnaActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity), R
         }
         viewModel.commentResult.observe(this, commentRegisterResult)
 
+        // 댓글 삭제 observer
         val removeCommentResult = Observer<Int>{ liveData ->
             when (liveData){
                 200 -> {
@@ -125,6 +127,7 @@ class QnaActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity), R
         }
         viewModel.deleteCommentResult.observe(this, removeCommentResult)
 
+        // 좋아요 변경 결과 observer
         val changeLikeObserver = Observer<Boolean>{ liveData ->
             if (liveData){
                 if ((binding.rvComment.adapter as PostAndChatAdapter).itemCount > 0) {
@@ -134,11 +137,12 @@ class QnaActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity), R
         }
         viewModel.changeLikeResult.observe(this, changeLikeObserver)
 
+        // QnA 삭제 observer
         val removeQnaResult = Observer<Boolean> { liveData ->
             if (liveData){
                 finish()
             } else {
-                Log.d("QnaActivity", "remove qna on failure")
+                showSimpleToastMessage("QnA 삭제에 실패했습니다. 잠시 후에 다시 시도해주세요.")
             }
         }
         viewModel.deleteQnaResult.observe(this, removeQnaResult)
@@ -151,8 +155,12 @@ class QnaActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity), R
         }
 
         binding.btnRegister.setOnClickListener {
-            viewModel.tryWriteComment(binding.etComment.text.toString())
-            binding.btnRegister.isClickable = false
+            if (GlobalApplication.checkIsLogin()){
+                viewModel.tryWriteComment(binding.etComment.text.toString())
+                binding.btnRegister.isClickable = false
+            } else {
+                callNeedLoginDialog()
+            }
         }
 
         binding.btnMore.setOnClickListener {
@@ -210,7 +218,11 @@ class QnaActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity), R
     }
 
     override fun clickLikeBtn() {
-        viewModel.tryToggleLike()
+        if (GlobalApplication.checkIsLogin()){
+            viewModel.tryToggleLike()
+        } else {
+            callNeedLoginDialog()
+        }
     }
 
     override fun vote(abTestIdx: Int, vote: String) { /* empty function, only ab-test activity use this function */ }

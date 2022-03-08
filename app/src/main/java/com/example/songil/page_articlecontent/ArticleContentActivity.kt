@@ -111,7 +111,11 @@ class ArticleContentActivity : BaseActivity<ArticleActivityContentBinding>(R.lay
         }
 
         binding.btnFavorite.setOnClickListener {
-            viewModel.tryChangeLikeData()
+            if (GlobalApplication.checkIsLogin()){
+                viewModel.tryChangeLikeData()
+            } else {
+                callNeedLoginDialog()
+            }
         }
 
         binding.btnShare.setOnClickListener {

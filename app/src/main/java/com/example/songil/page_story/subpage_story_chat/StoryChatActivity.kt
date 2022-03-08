@@ -2,6 +2,7 @@ package com.example.songil.page_story.subpage_story_chat
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -98,9 +99,16 @@ class StoryChatActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activi
         }
 
         binding.btnRegister.setOnClickListener {
-            viewModel.tryWriteComment(binding.etComment.text.toString())
-            binding.btnRegister.isClickable = false
+            if (GlobalApplication.checkIsLogin()){
+                viewModel.tryWriteComment(binding.etComment.text.toString())
+                binding.btnRegister.isClickable = false
+            } else {
+                callNeedLoginDialog()
+            }
         }
+
+        // 스토리의 채팅 부분에서는 더보기 버튼이 필요 없다.
+        binding.btnMore.visibility = View.GONE
     }
 
     override fun finish() {

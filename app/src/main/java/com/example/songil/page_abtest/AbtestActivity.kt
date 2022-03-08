@@ -91,8 +91,12 @@ class AbtestActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity)
         }
 
         binding.btnRegister.setOnClickListener {
-            viewModel.tryWriteComment(binding.etComment.text.toString())
-            binding.btnRegister.isClickable = false
+            if (GlobalApplication.checkIsLogin()){
+                viewModel.tryWriteComment(binding.etComment.text.toString())
+                binding.btnRegister.isClickable = false
+            } else {
+                callNeedLoginDialog()
+            }
         }
 
         binding.btnMore.setOnClickListener {
@@ -205,11 +209,19 @@ class AbtestActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity)
     override fun clickLikeBtn() { /* empty function, only qna activity use this function */ }
 
     override fun vote(abTestIdx: Int, vote: String) {
-        viewModel.tryVote(abTestIdx, vote)
+        if (GlobalApplication.checkIsLogin()){
+            viewModel.tryVote(abTestIdx, vote)
+        } else {
+            callNeedLoginDialog()
+        }
     }
 
     override fun cancelVote(abTestIdx: Int) {
-        viewModel.tryCancelVote(abTestIdx)
+        if (GlobalApplication.checkIsLogin()){
+            viewModel.tryCancelVote(abTestIdx)
+        } else {
+            callNeedLoginDialog()
+        }
     }
 
     override fun bottomSheetModifyClick() {

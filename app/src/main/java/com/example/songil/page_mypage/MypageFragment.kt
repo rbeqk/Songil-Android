@@ -101,6 +101,8 @@ class MypageFragment : BaseFragment<MypageFragmentBinding>(MypageFragmentBinding
         binding.btnBenefit.setOnClickListener {
             if (GlobalApplication.checkIsLogin()) {
                 (activity as MainActivity).startActivityHorizontal(Intent(activity as MainActivity, MybenefitActivity::class.java))
+            } else {
+                (activity as MainActivity).callNeedLoginDialog()
             }
         }
 
@@ -112,24 +114,32 @@ class MypageFragment : BaseFragment<MypageFragmentBinding>(MypageFragmentBinding
         binding.btnFavoriteProduct.setOnClickListener {
             if (GlobalApplication.checkIsLogin()) {
                 (activity as MainActivity).startActivityHorizontal(Intent(activity as MainActivity, MyFavoriteCraftActivity::class.java))
+            } else {
+                (activity as MainActivity).callNeedLoginDialog()
             }
         }
 
         binding.btnOrderStatus.setOnClickListener {
             if (GlobalApplication.checkIsLogin()) {
                 (activity as MainActivity).startActivityHorizontal(Intent(activity as MainActivity, OrderStatusActivity::class.java))
+            } else {
+                (activity as MainActivity).callNeedLoginDialog()
             }
         }
 
         binding.btnMyComment.setOnClickListener {
             if (GlobalApplication.checkIsLogin()) {
                 (activity as MainActivity).startActivityHorizontal(Intent(activity as MainActivity, MycommentActivity::class.java))
+            } else {
+                (activity as MainActivity).callNeedLoginDialog()
             }
         }
 
         binding.btnOneByOneAsk.setOnClickListener {
             if (GlobalApplication.checkIsLogin()){
                 (activity as MainActivity).startActivityHorizontal(Intent(activity as MainActivity, MyPageAskActivity::class.java))
+            } else {
+                (activity as MainActivity).callNeedLoginDialog()
             }
         }
 
