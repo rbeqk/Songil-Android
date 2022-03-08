@@ -1,3 +1,5 @@
 package com.example.songil.page_mypage_ask_history.models
 
-data class ResponseGetMyPageAskList(val result : ArrayList<MyPageAskTotalData>)
+import com.example.songil.config.BaseResponse
+
+data class ResponseGetMyPageAskList(val result : ArrayList<MyPageAskTotalData>) : BaseResponse()

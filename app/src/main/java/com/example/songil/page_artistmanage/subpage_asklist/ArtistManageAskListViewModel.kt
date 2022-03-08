@@ -19,7 +19,7 @@ class ArtistManageAskListViewModel : BaseViewModel() {
     var isRefresh = false
 
     var flow = Pager(PagingConfig(pageSize = 5)){
-        Craft3ArtistPagingSource(repository, ::startIdx, ::isRefresh)
+        Craft3ArtistPagingSource(repository, startIdx)
     }.flow
 
     fun tryGetPageCnt(){

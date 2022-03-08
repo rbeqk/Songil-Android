@@ -2,6 +2,7 @@ package com.example.songil.page_artistmanage.subpage_asklist
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -33,6 +34,7 @@ class ArtistManageAskListActivity : BaseActivity<SimpleBaseActivityBinding>(R.la
         super.onCreate(savedInstanceState)
 
         binding.tvTitle.text = getString(R.string.one_by_one_ask_list)
+        binding.viewEmpty.tvEmptyTarget.text = getString(R.string.empty_inquiry_list_artist)
 
         setRecyclerView()
         setObserver()
@@ -52,9 +54,14 @@ class ArtistManageAskListActivity : BaseActivity<SimpleBaseActivityBinding>(R.la
     }
 
     private fun setObserver() {
-        val startCntObserver = Observer<Int>{ _ ->
+        val startCntObserver = Observer<Int>{ totalPage ->
             binding.layoutRefresh.isRefreshing = false
-            restartJob()
+            if (totalPage > 0){
+                binding.viewEmpty.root.visibility = View.GONE
+                restartJob()
+            } else {
+                binding.viewEmpty.root.visibility = View.VISIBLE
+            }
         }
         viewModel.pageCntResult.observe(this, startCntObserver)
 

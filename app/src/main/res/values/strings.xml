@@ -420,5 +420,7 @@
     <string name="empty_search">검색된 내용이 없어요.</string>
     <string name="empty_registered_craft">아직 작가님이 등록된 상품이 없어요.</string>
     <string name="empty_registered_article">아직 작가님이 등록한 아티클이 없어요</string>
+    <string name="empty_inquiry_list">보낸 문의사항이 없어요.</string>
+    <string name="empty_inquiry_list_artist">받은 문의사항이 없어요.</string>
 
 </resources>

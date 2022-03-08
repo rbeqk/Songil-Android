@@ -16,7 +16,7 @@ class MyAskPagingSource(private val repository : MyPageAskRepository) : PagingSo
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, MyPageAskTotalData> {
         return try {
             val pageIdx = params.key ?: 1
-            val response = repository.getMyAskList(pageIdx).body()!!.result
+            val response = repository.getMyAskList(pageIdx).result
             val prevKey = if (pageIdx == 1) null else pageIdx - 1
             val nextKey = if (response.size == 0) null else pageIdx + 1
             LoadResult.Page(
