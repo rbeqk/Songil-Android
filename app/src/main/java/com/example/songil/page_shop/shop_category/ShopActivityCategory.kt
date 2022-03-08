@@ -25,7 +25,6 @@ import com.example.songil.recycler.decoration.Craft1Decoration
 import com.example.songil.recycler.decoration.ShopCategoryTextDecoration
 import com.example.songil.recycler.decoration.Craft2Decoration
 import com.example.songil.recycler.rv_interface.RvCategoryView
-import com.example.songil.recycler.rv_interface.RvCraftLikeView
 import com.example.songil.recycler.rv_interface.RvClickView
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
@@ -36,7 +35,7 @@ import kotlinx.coroutines.launch
 // RvCraftView -> 이번주 인기 공예 recyclerView 에서 아이템 클릭시 호출할 함수 정의
 // RvCraftLikeView -> 전체 상품을 표시하는 recyclerView 에서 아이템 클릭시, 그리고 좋아요 클릭시 호출할 함수 정의
 class ShopActivityCategory : BaseActivity<ShopActivityCategoryBinding>(R.layout.shop_activity_category),
-    RvCategoryView<Int>, PopupSortView, RvClickView, RvCraftLikeView<Int> {
+    RvCategoryView<Int>, PopupSortView, RvClickView {
 
     private var pagingJob : Job ?= null
     private lateinit var viewModel : ShopCategoryViewModel
@@ -195,17 +194,6 @@ class ShopActivityCategory : BaseActivity<ShopActivityCategoryBinding>(R.layout.
                 (binding.rvCraft.adapter as Craft1PagingAdapter).submitData(pagingData)
             }
         }
-    }
-
-    // 이걸로 바꿀예정
-    override fun clickData(dataKey: Int) {
-        val intent = Intent(this, CraftActivity::class.java)
-        intent.putExtra(GlobalApplication.CRAFT_IDX, dataKey)
-        startActivityHorizontal(intent)
-    }
-
-    override fun clickLike(dataKey: Int, position: Int) {
-        // data 의 like 버튼을 클릭했을 때, like api 호출
     }
 
     override fun finish() {

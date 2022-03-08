@@ -1,20 +1,24 @@
 package com.example.songil.page_artist.subpage_craft
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.songil.R
+import com.example.songil.config.BaseActivity
 import com.example.songil.config.BaseFragment
+import com.example.songil.config.GlobalApplication
 import com.example.songil.databinding.SimpleRecyclerviewFragmentBinding
 import com.example.songil.page_artist.ArtistActivity
 import com.example.songil.page_artist.ArtistSubpageFragment
+import com.example.songil.page_craft.CraftActivity
 import com.example.songil.recycler.adapter.Craft1Adapter
 import com.example.songil.recycler.decoration.Craft1Decoration
-import com.example.songil.recycler.rv_interface.RvCraftLikeView
+import com.example.songil.recycler.rv_interface.RvClickView
 
-class ArtistCraftFragment : BaseFragment<SimpleRecyclerviewFragmentBinding>(SimpleRecyclerviewFragmentBinding::bind, R.layout.simple_recyclerview_fragment), RvCraftLikeView<Int>, ArtistSubpageFragment{
+class ArtistCraftFragment : BaseFragment<SimpleRecyclerviewFragmentBinding>(SimpleRecyclerviewFragmentBinding::bind, R.layout.simple_recyclerview_fragment), RvClickView, ArtistSubpageFragment{
 
     private val viewModel : ArtistCraftViewModel by lazy { ViewModelProvider(this)[ArtistCraftViewModel::class.java] }
 
@@ -23,6 +27,8 @@ class ArtistCraftFragment : BaseFragment<SimpleRecyclerviewFragmentBinding>(Simp
 
         setRecyclerView()
         setObserver()
+
+        binding.viewEmpty.tvEmptyTarget.text = getString(R.string.empty_registered_craft)
 
         viewModel.setArtistIdx((activity as ArtistActivity).intent.getIntExtra("artistIdx", 1))
         viewModel.tryGetCraftPageCnt()
@@ -37,11 +43,13 @@ class ArtistCraftFragment : BaseFragment<SimpleRecyclerviewFragmentBinding>(Simp
     private fun setObserver(){
         val pageResult = Observer<Int>{ liveData ->
             if (liveData > 0){
+                binding.viewEmpty.root.visibility = View.GONE
                 viewModel.tryGetCraftList()
                 if (liveData < 2){ // 페이지 수가 적어 표시되는 아이템이 화면크기보다 작을 경우, 레이아웃의 minHeight 조정
                     binding.layoutMain.minHeight = getWindowSize()[1] - (activity as ArtistActivity).getToolbarHeight() - getStatusBarHeight()
                 }
             } else {
+                binding.viewEmpty.root.visibility = View.VISIBLE
                 binding.layoutMain.minHeight = getWindowSize()[1] - (activity as ArtistActivity).getToolbarHeight() - getStatusBarHeight()
             }
         }
@@ -52,20 +60,9 @@ class ArtistCraftFragment : BaseFragment<SimpleRecyclerviewFragmentBinding>(Simp
                 200 -> {
                     (binding.rvContent.adapter as Craft1Adapter).updateListRef(viewModel.newSize)
                 }
-                else -> {
-
-                }
             }
         }
         viewModel.craftListResult.observe(viewLifecycleOwner, craftResult)
-    }
-
-    override fun clickData(dataKey: Int) {
-
-    }
-
-    override fun clickLike(dataKey: Int, position: Int) {
-
     }
 
     override fun changeSort(sort: String) {
@@ -77,5 +74,11 @@ class ArtistCraftFragment : BaseFragment<SimpleRecyclerviewFragmentBinding>(Simp
 
     override fun updateList() {
         viewModel.tryGetCraftList()
+    }
+
+    override fun itemClick(idx: Int) {
+        val intent = Intent(activity as BaseActivity<*>, CraftActivity::class.java)
+        intent.putExtra(GlobalApplication.CRAFT_IDX, idx)
+        (activity as BaseActivity<*>).startActivityHorizontal(intent)
     }
 }

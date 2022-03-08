@@ -6,17 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.songil.R
 import com.example.songil.data.Craft1
 import com.example.songil.databinding.ItemCraft1Binding
-import com.example.songil.recycler.rv_interface.RvCraftLikeView
+import com.example.songil.recycler.rv_interface.RvClickView
 
-class Craft1Adapter(private val context: Context, private val view : RvCraftLikeView<Int>, baseData : ArrayList<Craft1> ?= null) : RecyclerView.Adapter<Craft1Adapter.ViewHolder>() {
+class Craft1Adapter(private val context: Context, private val view : RvClickView, baseData : ArrayList<Craft1> ?= null) : RecyclerView.Adapter<Craft1Adapter.ViewHolder>() {
 
     private lateinit var binding : ItemCraft1Binding
     private val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
     private val dataList = baseData ?: ArrayList<Craft1>()
-    private val useReference = (baseData != null) // pass by reference 로 전달받은 경우 true
 
 
     class ViewHolder(binding : ItemCraft1Binding) : RecyclerView.ViewHolder(binding.root){
@@ -26,7 +26,6 @@ class Craft1Adapter(private val context: Context, private val view : RvCraftLike
         val craftName = binding.tvName
         val artistName = binding.tvMaker
         val price = binding.tvPrice
-        val btnFav = binding.btnFavorite
         val favCount = binding.tvFavoriteCount
         val ivFav = binding.ivFavorite
         val review = binding.tvReviewCount
@@ -39,9 +38,9 @@ class Craft1Adapter(private val context: Context, private val view : RvCraftLike
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.layoutMain.setOnClickListener {
-            view.clickData(dataList[position].craftIdx)
+            view.itemClick(dataList[position].craftIdx)
         }
-        //Glide.with(context).load(dataList[position].thumbnailImg).into(holder.image)
+        Glide.with(context).load(dataList[position].mainImageUrl).into(holder.image)
         holder.craftName.text = dataList[position].name
         holder.artistName.text = dataList[position].artistName
         holder.price.text = context.getString(R.string.form_price_won, dataList[position].price)
@@ -65,9 +64,6 @@ class Craft1Adapter(private val context: Context, private val view : RvCraftLike
         } else {
             holder.ivFav.setImageResource(R.drawable.ic_heart_base_16)
         }
-        holder.btnFav.setOnClickListener {
-            view.clickLike(dataList[position].craftIdx, position)
-        }
     }
 
     override fun getItemCount(): Int = dataList.size
@@ -76,33 +72,6 @@ class Craft1Adapter(private val context: Context, private val view : RvCraftLike
         dataList.clear()
         dataList.addAll(newData)
         notifyDataSetChanged()
-    }
-
-    fun clearData(){
-        val prevSize = dataList.size
-        dataList.clear()
-        notifyItemRangeRemoved(0, prevSize)
-    }
-
-    fun applyLike(position : Int, isLike : String, likeCount : Int){
-        if (useReference){
-            notifyItemChanged(position)
-        } else {
-            dataList[position].isLike = isLike
-            dataList[position].totalLikeCnt = likeCount
-            notifyItemChanged(position)
-        }
-    }
-
-    fun updateList(item : ArrayList<Craft1>?){
-        if (item != null) {
-            val prevSize = dataList.size
-            val newSize = item.size
-            val addCount = newSize - prevSize
-            dataList.clear()
-            dataList.addAll(item)
-            notifyItemRangeInserted(prevSize, addCount)
-        }
     }
 
     // pass by reference 의 경우, viewModel 상에서 데이터를 수정하면 여기에도 반영되므로 notifyItemRangeInserted 만 호출

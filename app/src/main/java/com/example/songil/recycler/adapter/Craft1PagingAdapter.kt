@@ -41,7 +41,6 @@ class Craft1PagingAdapter() : PagingDataAdapter<Craft1, Craft1PagingAdapter.Craf
         val craftName = binding.tvName
         val artistName = binding.tvMaker
         val price = binding.tvPrice
-        val btnFav = binding.btnFavorite
         val favCount = binding.tvFavoriteCount
         val ivFav = binding.ivFavorite
         val review = binding.tvReviewCount
@@ -78,9 +77,6 @@ class Craft1PagingAdapter() : PagingDataAdapter<Craft1, Craft1PagingAdapter.Craf
                 holder.ivFav.setImageResource(R.drawable.ic_heart_line_16)
             } else {
                 holder.ivFav.setImageResource(R.drawable.ic_heart_base_16)
-            }
-            holder.btnFav.setOnClickListener {
-                //view.clickLike(craft.craftIdx, position)
             }
         }
     }

@@ -1,7 +1,6 @@
 package com.example.songil.page_artist.subpage_article
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -24,6 +23,8 @@ class ArtistArticleFragment : BaseFragment<SimpleRecyclerviewFragmentBinding>(Si
         setRecyclerView()
         setObserver()
 
+        binding.viewEmpty.tvEmptyTarget.text = getString(R.string.empty_registered_article)
+
         viewModel.setArtistIdx((activity as ArtistActivity).intent.getIntExtra("artistIdx", 1))
         viewModel.tryGetArticlePageCnt()
     }
@@ -31,11 +32,13 @@ class ArtistArticleFragment : BaseFragment<SimpleRecyclerviewFragmentBinding>(Si
     private fun setObserver(){
         val pageResult = Observer<Int>{liveData ->
             if (liveData > 0){
+                binding.viewEmpty.root.visibility = View.GONE
                 viewModel.tryGetArticleList()
                 if (liveData < 2){
                     binding.layoutMain.minHeight = getWindowSize()[1] - (activity as ArtistActivity).getToolbarHeight() - getStatusBarHeight()
                 }
             } else {
+                binding.viewEmpty.root.visibility = View.VISIBLE
                 binding.layoutMain.minHeight = getWindowSize()[1] - (activity as ArtistActivity).getToolbarHeight() - getStatusBarHeight()
             }
         }
@@ -45,9 +48,6 @@ class ArtistArticleFragment : BaseFragment<SimpleRecyclerviewFragmentBinding>(Si
             when (liveData){
                 200 -> {
                     (binding.rvContent.adapter as ArticleAdapter).updateData(viewModel.newSize)
-                }
-                else -> {
-
                 }
             }
         }
