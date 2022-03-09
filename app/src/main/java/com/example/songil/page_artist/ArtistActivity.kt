@@ -1,7 +1,7 @@
 package com.example.songil.page_artist
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -13,6 +13,8 @@ import com.example.songil.config.GlobalApplication
 import com.example.songil.databinding.ArtistActivityBinding
 import com.example.songil.page_artist.subpage_article.ArtistArticleFragment
 import com.example.songil.page_artist.subpage_craft.ArtistCraftFragment
+import com.example.songil.page_search.SearchActivity
+import com.example.songil.page_search.models.SearchCategory
 import com.example.songil.popup_sort.SortBottomSheet
 import com.example.songil.popup_sort.SortBottomSheetSimple
 import com.example.songil.popup_sort.popup_interface.PopupSortView
@@ -20,7 +22,6 @@ import com.example.songil.popup_sort.popup_interface.PopupSortView
 class ArtistActivity : BaseActivity<ArtistActivityBinding>(R.layout.artist_activity), PopupSortView {
 
     private val artistViewModel : ArtistViewModel by lazy { ViewModelProvider(this)[ArtistViewModel::class.java] }
-
     private val craftFragment : ArtistCraftFragment by lazy { ArtistCraftFragment() }
     private val articleFragment : ArtistArticleFragment by lazy { ArtistArticleFragment() }
     private lateinit var currentFragment : Fragment
@@ -72,6 +73,12 @@ class ArtistActivity : BaseActivity<ArtistActivityBinding>(R.layout.artist_activ
         binding.btnBack.setOnClickListener {
             onBackPressed()
         }
+
+        binding.btnSearch.setOnClickListener {
+            val intent = Intent(this, SearchActivity::class.java)
+            intent.putExtra(GlobalApplication.SEARCH_CATEGORY, SearchCategory.SHOP)
+            startActivityHorizontal(intent)
+        }
     }
 
     private fun setObserver(){
@@ -103,6 +110,7 @@ class ArtistActivity : BaseActivity<ArtistActivityBinding>(R.layout.artist_activ
     }
 
     private fun applyDataToView(){
+        binding.tvTitle.text = artistViewModel.artistInfo.name
         binding.tvArtistName.text = artistViewModel.artistInfo.name
         binding.tvStudio.text = artistViewModel.artistInfo.company
         binding.tvArtistComment.text = artistViewModel.artistInfo.introduction

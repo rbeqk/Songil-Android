@@ -58,4 +58,6 @@ class ArtistArticleViewModel : ViewModel() {
             }
         }
     }
+
+    fun getCurrentPage() = requestPage
 }

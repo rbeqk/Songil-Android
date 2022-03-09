@@ -39,6 +39,7 @@ class ArtistArticleFragment : BaseFragment<SimpleRecyclerviewFragmentBinding>(Si
                 }
             } else {
                 binding.viewEmpty.root.visibility = View.VISIBLE
+                binding.progressBar.visibility = View.GONE
                 binding.layoutMain.minHeight = getWindowSize()[1] - (activity as ArtistActivity).getToolbarHeight() - getStatusBarHeight()
             }
         }
@@ -47,6 +48,9 @@ class ArtistArticleFragment : BaseFragment<SimpleRecyclerviewFragmentBinding>(Si
         val articleResult = Observer<Int>{ liveData ->
             when (liveData){
                 200 -> {
+                    if (viewModel.getCurrentPage() == 0){
+                        binding.progressBar.visibility = View.GONE
+                    }
                     (binding.rvContent.adapter as ArticleAdapter).updateData(viewModel.newSize)
                 }
             }
