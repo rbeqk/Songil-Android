@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit
 
 class GlobalApplication : Application() {
     companion object {
-        const val API_URL = "https://dev.songil.shop/"
+        const val API_URL = "https://prod.songilcraft.shop/"
         const val X_ACCESS_TOKEN = "x-access-token"
         const val IS_ARTIST = "is_artist"
         const val CRAFT_IDX = "craft-idx"
@@ -36,7 +36,7 @@ class GlobalApplication : Application() {
             Category(5,"섬유공예", R.drawable.image_textile_craft),
             Category(6,"가죽공예", R.drawable.image_leather_craft),
             Category(7,"기타공예", R.drawable.image_etc_craft),
-            Category(8,"전체보기", R.drawable.ic_heart_line_28),
+            Category(8,"전체보기", R.drawable.ic_baseline_add_24),
         )
         val sort = mapOf("price" to "낮은 가격순", "popular" to "인기순", "new" to "최신순", "comment" to "리뷰 많은 순")
         val courierMap = mapOf("01" to "우체국택배", "04" to "CJ대한통운", "05" to "한진택배", "06" to "로젠택배", "08" to "롯데택배", "11" to "일양로지스",

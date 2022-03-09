@@ -51,7 +51,7 @@ class MypageFragment : BaseFragment<MypageFragmentBinding>(MypageFragmentBinding
             if (isLogin){
                 viewModel.tryGetMyInfo()
             } else {
-                viewModel.clearUserInfo(getString(R.string.user_name_need_login))
+                viewModel.clearUserInfo(getString(R.string.login_slash_signup))
             }
         }
         viewModel.isLogin.observe(viewLifecycleOwner, loginChangeObserver)

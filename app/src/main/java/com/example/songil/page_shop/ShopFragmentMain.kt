@@ -87,7 +87,7 @@ class ShopFragmentMain : BaseFragment<ShopFragmentMainBinding>(ShopFragmentMainB
 
     private fun setObserver(){
         val todayArtistObserver = Observer<TodayArtistsResult>{ liveData ->
-            binding.tvTodayArtisanName.text = getString(R.string.form_artist, liveData.artistName)
+            binding.tvTodayArtisanName.text = liveData.artistName //getString(R.string.form_artist, liveData.artistName)
             Glide.with(activity as MainActivity).load(liveData.imageUrl).into(binding.ivProfile)
             binding.tvTodayArtisanMajor.text = liveData.major
         }
