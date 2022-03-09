@@ -1,6 +1,5 @@
 package com.example.songil.popup_warning
 
-import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
@@ -12,9 +11,7 @@ import android.view.ViewGroup
 import android.view.Window
 import androidx.fragment.app.DialogFragment
 import com.example.songil.R
-import com.example.songil.config.BaseActivity
 import com.example.songil.databinding.PopupWarningBinding
-import com.example.songil.page_needlogin.NeedLoginActivity
 
 class NeedLoginDialog : DialogFragment() {
     private var _binding : PopupWarningBinding ?= null
@@ -39,11 +36,11 @@ class NeedLoginDialog : DialogFragment() {
         }
 
         binding.btnClose.setOnClickListener {
-            (activity as BaseActivity<*>).startActivityVertical(Intent(activity, NeedLoginActivity::class.java))
+            //(activity as BaseActivity<*>).startActivityVertical(Intent(activity, NeedLoginActivity::class.java))
             dismiss()
         }
 
-        binding.btnClose.text = getString(R.string.login_slash_signup)
+        binding.btnClose.text = getString(R.string.close_with_underline)
         binding.tvWarning.text = getString(R.string.service_need_login)
         binding.tvMessage.text = getString(R.string.service_need_login_messsage)
     }

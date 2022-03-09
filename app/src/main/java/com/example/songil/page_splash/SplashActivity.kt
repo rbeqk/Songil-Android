@@ -15,7 +15,6 @@ import com.example.songil.databinding.SplashActivityBinding
 import com.example.songil.page_main.MainActivity
 import com.example.songil.popup_warning.SocketTimeoutDialog
 import com.example.songil.utils.setStatusBarBlack
-//import com.example.songil.page_needlogin.NeedLoginActivity
 
 class SplashActivity : BaseActivity<SplashActivityBinding>(R.layout.splash_activity){
 
@@ -37,9 +36,6 @@ class SplashActivity : BaseActivity<SplashActivityBinding>(R.layout.splash_activ
                 val edit = GlobalApplication.globalSharedPreferences.edit()
                 edit.putBoolean(GlobalApplication.IS_FIRST_EXEC, false).apply()
 
-                /*val intent = Intent(this, NeedLoginActivity::class.java)
-                intent.putExtra("isFirst", true)
-                startActivity(intent)*/
                 startActivity(Intent(this, MainActivity::class.java))
                 finish()
             } else {
@@ -74,7 +70,7 @@ class SplashActivity : BaseActivity<SplashActivityBinding>(R.layout.splash_activ
         viewModel.userTypeResultCode.observe(this, userTypeObserver)
 
         val errorObserver = Observer<BaseViewModel.FetchState>{ _ ->
-            val socketTimeoutDialog = SocketTimeoutDialog()
+            val socketTimeoutDialog = SocketTimeoutDialog(true)
             socketTimeoutDialog.show(supportFragmentManager, socketTimeoutDialog.tag)
         }
         viewModel.fetchState.observe(this, errorObserver)

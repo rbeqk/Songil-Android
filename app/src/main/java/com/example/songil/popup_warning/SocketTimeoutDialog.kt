@@ -13,7 +13,7 @@ import androidx.fragment.app.DialogFragment
 import com.example.songil.R
 import com.example.songil.databinding.PopupWarningBinding
 
-class SocketTimeoutDialog() : DialogFragment() {
+class SocketTimeoutDialog(private val afterClose : Boolean = false) : DialogFragment() {
     private var _binding : PopupWarningBinding ?= null
     private val binding get() = _binding!!
 
@@ -36,6 +36,7 @@ class SocketTimeoutDialog() : DialogFragment() {
 
         binding.btnClose.setOnClickListener {
             dismiss()
+            if (afterClose) activity?.finish()
         }
     }
 

@@ -396,7 +396,7 @@
     <!-- 로그인 필요 dialog 관련 -->
     <string name="login_slash_signup"><u>로그인/회원가입</u></string>
     <string name="service_need_login">로그인이 필요한\n서비스입니다.</string>
-    <string name="service_need_login_messsage">로그인 또는 회원가입 후\n전체 서비스를 이용해보세요!</string>
+    <string name="service_need_login_messsage">마이페이지에서 로그인/회원가입 후\n전체 서비스를 이용해보세요</string>
 
     <!-- 배송현황 관련 -->
     <string name="time">시간</string>
