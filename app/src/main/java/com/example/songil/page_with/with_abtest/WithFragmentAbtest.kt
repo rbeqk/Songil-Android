@@ -29,6 +29,7 @@ class WithFragmentAbtest : BaseFragment<SimpleRecyclerviewFragmentSwipeBinding>(
 
     private val viewModel : WithAbtestViewModel by lazy { ViewModelProvider(this)[WithAbtestViewModel::class.java] }
     private var pagingJob : Job? = null
+    private var isFirst = true
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -39,7 +40,6 @@ class WithFragmentAbtest : BaseFragment<SimpleRecyclerviewFragmentSwipeBinding>(
             viewModel.tryGetPageCnt()
         }
 
-        viewModel.tryGetPageCnt()
     }
 
     private fun setObserver(){
@@ -76,7 +76,12 @@ class WithFragmentAbtest : BaseFragment<SimpleRecyclerviewFragmentSwipeBinding>(
     }
 
     override fun onShow() {
-        binding.rvContent.scrollToPosition(0)
+        if (!isFirst){
+            binding.rvContent.scrollToPosition(0)
+        } else {
+            viewModel.tryGetPageCnt()
+            isFirst = false
+        }
     }
 
     override fun sort(sort: String) {

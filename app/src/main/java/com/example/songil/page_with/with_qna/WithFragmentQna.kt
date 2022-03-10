@@ -29,6 +29,7 @@ class WithFragmentQna : BaseFragment<SimpleRecyclerviewFragmentSwipeBinding>(Sim
 
     private val viewModel: WithQnaViewModel by lazy { ViewModelProvider(this)[WithQnaViewModel::class.java] }
     private var pagingJob : Job ?= null
+    private var isFirst = true
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -40,7 +41,6 @@ class WithFragmentQna : BaseFragment<SimpleRecyclerviewFragmentSwipeBinding>(Sim
             viewModel.tryGetPageCnt()
         }
 
-        viewModel.tryGetPageCnt()
     }
 
     private fun setObserver(){
@@ -70,7 +70,12 @@ class WithFragmentQna : BaseFragment<SimpleRecyclerviewFragmentSwipeBinding>(Sim
     }
 
     override fun onShow() {
-        binding.rvContent.scrollToPosition(0)
+        if (!isFirst){
+            binding.rvContent.scrollToPosition(0)
+        } else {
+            viewModel.tryGetPageCnt()
+            isFirst = false
+        }
     }
 
     override fun sort(sort: String) {
