@@ -17,6 +17,7 @@ import com.example.songil.config.GlobalApplication
 import com.example.songil.config.InquiryTarget
 import com.example.songil.data.LikeData
 import com.example.songil.databinding.CraftActivityBinding
+import com.example.songil.page_artist.ArtistActivity
 import com.example.songil.page_craft.subpage_comment.CraftFragmentComment
 import com.example.songil.page_craft.subpage_ask.CraftFragmentAsk
 import com.example.songil.page_craft.subpage_detail.CraftFragmentDetail
@@ -46,6 +47,7 @@ class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity
         setObserver()
         setButton()
         setNestedScrollView()
+        addFragments()
 
         viewModel.setCraftIdx(idx)
         viewModel.tryGetCraftInfo()
@@ -57,6 +59,7 @@ class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity
 
     override fun onRestart() {
         super.onRestart()
+        viewModel.tryGetLike()
         binding.btnShoppingbasket.applyChange()
     }
 
@@ -64,8 +67,9 @@ class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity
         val resultCodeObserver = Observer<Int>{ liveData ->
             when (liveData) {
                 200 -> {
+                    detailFragment.applyData(viewModel.productDetailInfo)
+                    askFragment.applyData(viewModel.productDetailInfo.artistImageUrl, viewModel.productDetailInfo.artistName)
                     applyToView()
-                    addFragments()
                 }
                 else -> {
                     showSimpleToastMessage(viewModel.message)
@@ -205,6 +209,12 @@ class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity
             intent.putExtra(GlobalApplication.SEARCH_CATEGORY, SearchCategory.SHOP)
             startActivityHorizontal(intent)
         }
+
+        binding.tvMaker.setOnClickListener {
+            val intent = Intent(this, ArtistActivity::class.java)
+            intent.putExtra("artistIdx", viewModel.productDetailInfo.artistIdx)
+            startActivityHorizontal(intent)
+        }
     }
 
     private fun setNestedScrollView(){
@@ -231,13 +241,13 @@ class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity
     }
 
     private fun addFragments(){
-        askFragment = CraftFragmentAsk(viewModel.productDetailInfo.artistImageUrl, viewModel.productDetailInfo.artistName)
+        askFragment = CraftFragmentAsk()
         supportFragmentManager.beginTransaction().add(binding.layoutFragment.id, askFragment).commit()
         supportFragmentManager.beginTransaction().hide(askFragment).commit()
         reviewFragment = CraftFragmentComment()
         supportFragmentManager.beginTransaction().add(binding.layoutFragment.id, reviewFragment).commit()
         supportFragmentManager.beginTransaction().hide(reviewFragment).commit()
-        detailFragment = CraftFragmentDetail(viewModel.productDetailInfo)
+        detailFragment = CraftFragmentDetail()
         supportFragmentManager.beginTransaction().add(binding.layoutFragment.id, detailFragment).commit()
         currentFragment = detailFragment
         showBuyBtn()

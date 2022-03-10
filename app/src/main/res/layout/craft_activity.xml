@@ -401,6 +401,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
+                    android:scaleType="center"
                     android:layout_marginTop="8dp"
                     android:src="@drawable/ic_icon_down_19"/>
 

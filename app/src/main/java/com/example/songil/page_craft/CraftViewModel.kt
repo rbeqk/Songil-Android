@@ -44,17 +44,24 @@ class CraftViewModel : BaseViewModel() {
 
     fun tryGetCraftInfo(){
         viewModelScope.launch(exceptionHandler) {
-            repository.getDetailCraftInfo(craftIdx).let { response ->
-                if (response.isSuccessful){
-                    if (response.body()!!.code == 200){
-                        itemCount.postValue(1)
-                        inStock.postValue(response.body()?.result?.isSoldOut == "N")
-                        productDetailInfo = response.body()!!.result
-                        likeData.postValue(LikeData(response.body()?.result?.isLike ?: "N", 0))
-                    }
-                    message = response.body()!!.message!!
-                    resultCode.postValue(response.body()?.code ?: -1)
-                }
+            val result =  repository.getDetailCraftInfo(craftIdx)
+            if (result.code == 200){
+                itemCount.postValue(1)
+                inStock.postValue(result.result.isSoldOut == "N")
+                productDetailInfo = result.result
+                likeData.postValue(LikeData(result.result.isLike, 0))
+            }
+            message = result.message ?: ""
+            resultCode.postValue(result.code)
+        }
+    }
+
+    // 좋아요만 요청하는 함수 (실제로는 craft 전체 데이터를 요청하고, 그 중 좋아요만 반영)
+    fun tryGetLike(){
+        viewModelScope.launch(exceptionHandler) {
+            val result =  repository.getDetailCraftInfo(craftIdx)
+            if (result.code == 200){
+                likeData.postValue(LikeData(result.result.isLike, 0))
             }
         }
     }
