@@ -26,4 +26,10 @@ class SimpleImageAdapter(private val context : Context, private val dataList : A
     }
 
     override fun getItemCount(): Int = dataList.size
+
+    fun applyData(newData : ArrayList<String>){
+        dataList.clear()
+        dataList.addAll(newData)
+        notifyDataSetChanged()
+    }
 }
