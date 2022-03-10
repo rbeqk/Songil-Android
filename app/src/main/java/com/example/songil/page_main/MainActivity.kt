@@ -1,5 +1,6 @@
 package com.example.songil.page_main
 
+import android.content.Intent
 import android.os.Bundle
 import com.example.songil.R
 import com.example.songil.config.BaseActivity
@@ -8,6 +9,7 @@ import com.example.songil.page_article.ArticleFragmentMain
 import com.example.songil.page_artistmanage.ArtistManageFragment
 import com.example.songil.page_home.HomeFragment
 import com.example.songil.page_mypage.MypageFragment
+import com.example.songil.page_orderstatus.OrderStatusActivity
 import com.example.songil.page_shop.ShopFragmentMain
 import com.example.songil.page_with.WithFragment
 import com.example.songil.utils.setStatusBarBlack
@@ -47,5 +49,18 @@ class MainActivity : BaseActivity<MainActivityBinding>(R.layout.main_activity){
     fun toggleMyPage(toArtist : Boolean){
         if (toArtist) { supportFragmentManager.beginTransaction().replace(binding.layoutFragment.id, ArtistManageFragment()).commit() }
         else { supportFragmentManager.beginTransaction().replace(binding.layoutFragment.id, MypageFragment()).commit() }
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        val direct = intent?.getIntExtra("TARGET_DIRECTION", 0)
+        direct?.let { targetIdx ->
+            when (targetIdx){
+                1 -> { // 결제 완료 이후 주문 현황 페이지로 이동
+                    binding.bottom.selectedItemId = R.id.bottom_my
+                    startActivityHorizontal(Intent(this, OrderStatusActivity::class.java))
+                }
+            }
+        }
     }
 }

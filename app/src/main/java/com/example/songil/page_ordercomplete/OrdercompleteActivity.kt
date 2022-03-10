@@ -20,12 +20,14 @@ class OrdercompleteActivity : BaseActivity<OrderActivityCompleteBinding>(R.layou
         binding.btnClose.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
-            //onBackPressed()
             startActivity(intent)
         }
 
         binding.btnSearchOrderStatus.setOnClickListener {
-
+            val intent = Intent(this, MainActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
+            intent.putExtra("TARGET_DIRECTION", 1)
+            startActivity(intent)
         }
     }
 }
