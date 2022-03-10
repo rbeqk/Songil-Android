@@ -44,6 +44,7 @@ class ArtistManageCancelRequestActivity : BaseActivity<SimpleBaseActivityBinding
         binding.rvContent.adapter = CancelRequestListPagingAdapter(::callDialog)
     }
 
+    // 주문취소 혹은 반품요청에 대한 승인 or 거부를 눌렀을 때 확인하는 popup dialog 호출
     private fun callDialog(cancelOrReturn: CancelOrReturn, isApprove : Boolean, orderDetailIdx : Int, positionInAdapter : Int){
         val title = when(cancelOrReturn){
             CancelOrReturn.CANCEL -> {
@@ -55,10 +56,12 @@ class ArtistManageCancelRequestActivity : BaseActivity<SimpleBaseActivityBinding
                 else {"반품 요청을 거절하시겠습니까?"}
             }
         }
+        // 각 인자를 넘겨주고, callAnswerRequestApi 함수에서 넘겨준 4개의 인자를 사용한다.
         val dialog = CancelOrReturnDialog(title = title, cancelOrReturn = cancelOrReturn, isApprove = isApprove, orderDetailIdx = orderDetailIdx, position = positionInAdapter, ::callAnswerRequestApi)
         dialog.show(supportFragmentManager, dialog.tag)
     }
 
+    // dialog 에 넘겨주기 위한 함수
     private fun callAnswerRequestApi(cancelOrReturn: CancelOrReturn, isApprove : Boolean, orderDetailIdx : Int, positionInAdapter : Int){
         viewModel.trySendRequestAnswer(cancelOrReturn, isApprove, orderDetailIdx, positionInAdapter)
     }
@@ -86,14 +89,16 @@ class ArtistManageCancelRequestActivity : BaseActivity<SimpleBaseActivityBinding
         }
         viewModel.pageCntResult.observe(this, pageCntObserver)
 
+        // 반품 및 주문취소 승인/거부를 호출한 다음 결과 반영
+        // 만약 api 가 성공적으로 수행되었다면, recyclerView 에 있는 클릭한 item 을 갱신한다.
         val changeItemObserver = Observer<ChangedItemFromAPI<Int>> { liveData ->
             when (liveData.ApiResultCode){
-                200 -> {
+                200 -> { // 성공하면 item 갱신
                     (binding.rvContent.adapter as CancelRequestListPagingAdapter).applyChange(liveData.newData?: 0, liveData.position)
                 }
                 4001 -> { // 부트페이 api 에서 취소 불가가 발생한 경우 (취소 불가, 해당거래 취소 실패 등)
                     (binding.rvContent.adapter as CancelRequestListPagingAdapter).applyChange(liveData.newData?: 0, liveData.position)
-                    showSimpleToastMessage(viewModel.errorMsg)
+                    //showSimpleToastMessage(viewModel.errorMsg)
                 }
             }
         }
