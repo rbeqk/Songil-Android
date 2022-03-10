@@ -1,14 +1,13 @@
 package com.example.songil.page_craft.subpage_comment
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.songil.config.BaseViewModel
 import com.example.songil.data.CraftComment
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlin.math.max
 
-class CraftCommentViewModel : ViewModel() {
+class CraftCommentViewModel : BaseViewModel() {
     private val repository = CraftCommentRepository()
 
     var updateResult = MutableLiveData<Int>()
@@ -26,7 +25,7 @@ class CraftCommentViewModel : ViewModel() {
 
     fun tryGetComments(){
         if (requestPage > 0) {
-            CoroutineScope(Dispatchers.IO).launch {
+            viewModelScope.launch(exceptionHandler) {
                 repository.getCraftComments(craftIdx, requestPage, changeTypeToString()).let { response ->
                     if (response.isSuccessful) {
                         if (response.body()?.code == 200) {
@@ -45,7 +44,7 @@ class CraftCommentViewModel : ViewModel() {
 
     fun tryGetCommentFirst(){
         if (requestPage > 0) {
-            CoroutineScope(Dispatchers.IO).launch {
+            viewModelScope.launch(exceptionHandler) {
                 var tempDataCnt = 0
                 repository.getCraftComments(craftIdx, requestPage, changeTypeToString()).let { response ->
                     if (response.isSuccessful) {
@@ -74,7 +73,7 @@ class CraftCommentViewModel : ViewModel() {
     }
 
     fun tryGetCommentsPageCnt(){
-        CoroutineScope(Dispatchers.IO).launch {
+        viewModelScope.launch(exceptionHandler) {
             repository.getCraftCommentsPageCnt(craftIdx, changeTypeToString()).let { response ->
                 if (response.isSuccessful){
                     if (response.body()?.code == 200){

@@ -75,6 +75,8 @@ class ArtistManageOrderStatActivity : BaseActivity<SimpleBaseActivityBinding>(R.
             }
         }
         viewModel.pageCntResult.observe(this, pageCntObserver)
+
+        viewModel.fetchState.observe(this, baseNetworkErrorObserver)
     }
 
     private fun restartJob(){

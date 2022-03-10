@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.viewbinding.ViewBinding
 import com.example.songil.R
 import com.example.songil.popup_warning.NeedLoginDialog
@@ -16,6 +17,22 @@ abstract class BaseActivity<B : ViewBinding> (@LayoutRes val layoutRes: Int) : A
     protected val exitVertical by lazy { overridePendingTransition(R.anim.none, R.anim.to_bottom) }
     protected val exitHorizontal by lazy { overridePendingTransition(R.anim.from_left_30, R.anim.to_right) }
     lateinit var mLoadingDialog : LoadingDialog
+    // 네트워크 에러를 관찰할 observer
+    protected val baseNetworkErrorObserver = Observer<BaseViewModel.FetchState>{ fetchState ->
+        when (fetchState){
+            BaseViewModel.FetchState.BAD_INTERNET -> {
+                showSimpleToastMessage(getString(R.string.bad_internet))
+            }
+            BaseViewModel.FetchState.FAIL -> {
+                showSimpleToastMessage(getString(R.string.bad_internet))
+            }
+            BaseViewModel.FetchState.WRONG_CONNECTION -> {
+                showSimpleToastMessage(getString(R.string.bad_internet))
+            }
+            BaseViewModel.FetchState.PARSE_ERROR -> {}
+            null -> {}
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

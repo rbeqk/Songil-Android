@@ -20,6 +20,6 @@ class WithAbtestRepository {
         if (result.isSuccessful){
             if (result.body()?.code == 200) return result.body()!!.result.totalPages
         }
-        return -1
+        throw UnknownError()
     }
 }

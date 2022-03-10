@@ -36,14 +36,16 @@ class WithdrawalActivity : BaseActivity<WithdrawalActivityBinding>(R.layout.with
         }
         viewModel.withdrawalResult.observe(this, withdrawalResultObserver)
 
-        binding.btnWithdrawal.setOnClickListener {
-            viewModel.tryWithdrawal()
-        }
+        viewModel.fetchState.observe(this, baseNetworkErrorObserver)
     }
 
     private fun setButton(){
         binding.btnBack.setOnClickListener {
             finish()
+        }
+
+        binding.btnWithdrawal.setOnClickListener {
+            viewModel.tryWithdrawal()
         }
     }
 

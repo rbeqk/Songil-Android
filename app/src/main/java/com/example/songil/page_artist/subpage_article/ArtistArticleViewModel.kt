@@ -1,13 +1,12 @@
 package com.example.songil.page_artist.subpage_article
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.songil.config.BaseViewModel
 import com.example.songil.data.ItemArticle
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class ArtistArticleViewModel : ViewModel() {
+class ArtistArticleViewModel : BaseViewModel() {
     private val repository = ArtistArticleRepository()
     private var artistIdx = 0
     private var requestPage = 0
@@ -25,7 +24,7 @@ class ArtistArticleViewModel : ViewModel() {
 
     fun tryGetArticleList(){
         if (requestPage > 0){
-            CoroutineScope(Dispatchers.IO).launch {
+            viewModelScope.launch(exceptionHandler) {
                 repository.getArticleList(artistIdx, requestPage, sort).let { response ->
                     if (response.isSuccessful){
                         if (response.body()?.code == 200){
@@ -43,7 +42,7 @@ class ArtistArticleViewModel : ViewModel() {
     }
 
     fun tryGetArticlePageCnt(){
-        CoroutineScope(Dispatchers.IO).launch {
+        viewModelScope.launch(exceptionHandler) {
             repository.getArtistPageCnt(artistIdx).let { response ->
                 if (response.isSuccessful){
                     if (response.body()?.code == 200){

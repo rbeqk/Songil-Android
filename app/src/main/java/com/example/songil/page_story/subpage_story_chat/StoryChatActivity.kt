@@ -86,6 +86,8 @@ class StoryChatActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activi
             }
         }
         viewModel.deleteCommentResult.observe(this, deleteCommentResult)
+
+        viewModel.fetchState.observe(this, baseNetworkErrorObserver)
     }
 
     private fun setRecyclerView(){

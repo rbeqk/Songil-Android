@@ -70,18 +70,7 @@ class MyFavoriteCraftActivity : BaseActivity<MydetailActivityBinding>(R.layout.m
         }
         viewModel.totalCnt.observe(this, cntObserver)
 
-        val errorObserver = Observer<BaseViewModel.FetchState>{ liveData ->
-            when(liveData){
-                BaseViewModel.FetchState.BAD_INTERNET -> {
-                    val timeOutDialog = SocketTimeoutDialog()
-                    timeOutDialog.show(supportFragmentManager, timeOutDialog.tag)
-                }
-                else -> {
-
-                }
-            }
-        }
-        viewModel.fetchState.observe(this, errorObserver)
+        viewModel.fetchState.observe(this, baseNetworkErrorObserver)
     }
 
     private fun setButton(){

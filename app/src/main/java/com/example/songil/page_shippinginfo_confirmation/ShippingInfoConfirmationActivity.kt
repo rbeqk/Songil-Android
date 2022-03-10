@@ -43,6 +43,8 @@ class ShippingInfoConfirmationActivity : BaseActivity<ShippinginfoActivityBindin
             }
         }
         viewModel.getShippingInfoResult.observe(this, getShippingInfoObserver)
+
+        viewModel.fetchState.observe(this, baseNetworkErrorObserver)
     }
 
     override fun finish() {

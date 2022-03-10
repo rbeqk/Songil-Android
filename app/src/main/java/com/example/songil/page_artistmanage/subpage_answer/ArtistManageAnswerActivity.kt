@@ -8,11 +8,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.songil.R
 import com.example.songil.config.BaseActivity
-import com.example.songil.config.BaseViewModel
 import com.example.songil.config.GlobalApplication
 import com.example.songil.data.AskDetail
 import com.example.songil.databinding.InquiryActivityAnswerBinding
-import com.example.songil.popup_warning.SocketTimeoutDialog
 
 class ArtistManageAnswerActivity : BaseActivity<InquiryActivityAnswerBinding>(R.layout.inquiry_activity_answer){
 
@@ -54,19 +52,7 @@ class ArtistManageAnswerActivity : BaseActivity<InquiryActivityAnswerBinding>(R.
     }
 
     private fun setObserver(){
-        val errorObserver = Observer<BaseViewModel.FetchState>{ liveData ->
-            when(liveData){
-                BaseViewModel.FetchState.PARSE_ERROR -> {}
-                BaseViewModel.FetchState.WRONG_CONNECTION -> {}
-                BaseViewModel.FetchState.FAIL -> {}
-                BaseViewModel.FetchState.BAD_INTERNET -> {
-                    val dialog = SocketTimeoutDialog()
-                    dialog.show(supportFragmentManager, dialog.tag)
-                }
-                null -> {}
-            }
-        }
-        viewModel.fetchState.observe(this, errorObserver)
+        viewModel.fetchState.observe(this, baseNetworkErrorObserver)
 
         val inquiryDetailObserver = Observer<AskDetail> { liveData ->
             binding.tvCraftNickname.text = getString(R.string.form_craft_nickname, liveData.name, liveData.nickname)

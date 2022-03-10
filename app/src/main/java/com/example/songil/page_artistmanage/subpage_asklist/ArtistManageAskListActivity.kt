@@ -65,16 +65,19 @@ class ArtistManageAskListActivity : BaseActivity<SimpleBaseActivityBinding>(R.la
         }
         viewModel.pageCntResult.observe(this, startCntObserver)
 
-        val errorObserver = Observer<BaseViewModel.FetchState>{ liveData ->
+        val errorObserver = Observer<BaseViewModel.FetchState>{ fetchState ->
             binding.layoutRefresh.isRefreshing = false
-            when(liveData){
-                BaseViewModel.FetchState.PARSE_ERROR -> {}
-                BaseViewModel.FetchState.WRONG_CONNECTION -> {}
-                BaseViewModel.FetchState.FAIL -> {}
+            when (fetchState){
                 BaseViewModel.FetchState.BAD_INTERNET -> {
-                    val dialog = SocketTimeoutDialog()
-                    dialog.show(supportFragmentManager, dialog.tag)
+                    showSimpleToastMessage(getString(R.string.bad_internet))
                 }
+                BaseViewModel.FetchState.FAIL -> {
+                    showSimpleToastMessage(getString(R.string.bad_internet))
+                }
+                BaseViewModel.FetchState.WRONG_CONNECTION -> {
+                    showSimpleToastMessage(getString(R.string.bad_internet))
+                }
+                BaseViewModel.FetchState.PARSE_ERROR -> {}
                 null -> {}
             }
         }

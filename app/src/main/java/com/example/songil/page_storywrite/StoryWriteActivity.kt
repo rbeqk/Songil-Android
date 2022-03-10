@@ -6,7 +6,6 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
@@ -100,8 +99,20 @@ class StoryWriteActivity : BaseActivity<StoryActivityWriteBinding>(R.layout.stor
         }
         viewModel.getStoryResult.observe(this, getStoryObserver)
 
-        val errorObserver = Observer<BaseViewModel.FetchState>{ liveData ->
-            Log.d("errorHandling", "$liveData")
+        val errorObserver = Observer<BaseViewModel.FetchState>{ fetchState ->
+            when (fetchState){
+                BaseViewModel.FetchState.BAD_INTERNET -> {
+                    showSimpleToastMessage(getString(R.string.bad_internet))
+                }
+                BaseViewModel.FetchState.FAIL -> {
+                    showSimpleToastMessage(getString(R.string.bad_internet))
+                }
+                BaseViewModel.FetchState.WRONG_CONNECTION -> {
+                    showSimpleToastMessage(getString(R.string.bad_internet))
+                }
+                BaseViewModel.FetchState.PARSE_ERROR -> {}
+                null -> {}
+            }
             viewModel.checkAvailable()
             dismissLoadingDialog()
         }

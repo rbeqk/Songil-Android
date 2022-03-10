@@ -1,13 +1,12 @@
 package com.example.songil.page_artist
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.songil.config.BaseViewModel
 import com.example.songil.data.ArtistInfo
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class ArtistViewModel : ViewModel() {
+class ArtistViewModel : BaseViewModel() {
     private val repository = ArtistRepository()
     var btnCraftActivate = MutableLiveData(true)
     var btnArticleActivate = MutableLiveData(false)
@@ -31,7 +30,7 @@ class ArtistViewModel : ViewModel() {
     }
 
     fun tryGetArtistInfo(){
-        CoroutineScope(Dispatchers.IO).launch {
+        viewModelScope.launch(exceptionHandler) {
             repository.getArtistInfo(artistIdx).let { response ->
                 if (response.isSuccessful){
                     if (response.body()?.code == 200){

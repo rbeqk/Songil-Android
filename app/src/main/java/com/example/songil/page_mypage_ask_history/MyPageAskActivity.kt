@@ -55,6 +55,8 @@ class MyPageAskActivity : BaseActivity<MydetailActivityBinding>(R.layout.mydetai
             }
         }
         viewModel.itemCntIsZero.observe(this, itemCntIsZeroObserver)
+
+        viewModel.fetchState.observe(this, baseNetworkErrorObserver)
     }
 
     private fun setRecyclerView(){

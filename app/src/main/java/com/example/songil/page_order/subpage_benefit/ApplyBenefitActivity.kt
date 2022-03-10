@@ -9,6 +9,7 @@ import com.example.songil.R
 import com.example.songil.config.BaseActivity
 import com.example.songil.databinding.SimpleBaseActivityBinding
 import com.example.songil.recycler.adapter.BenefitApplyAdapter
+import com.example.songil.recycler.decoration.BenefitDecoration
 import com.example.songil.recycler.rv_interface.RvClickView
 
 class ApplyBenefitActivity : BaseActivity<SimpleBaseActivityBinding>(R.layout.simple_base_activity), RvClickView {
@@ -35,11 +36,14 @@ class ApplyBenefitActivity : BaseActivity<SimpleBaseActivityBinding>(R.layout.si
             }
         }
         viewModel.getBenefitResult.observe(this, getBenefitObserver)
+
+        viewModel.fetchState.observe(this, baseNetworkErrorObserver)
     }
 
     private fun setRecyclerView(){
         binding.rvContent.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.rvContent.adapter = BenefitApplyAdapter(this, this)
+        binding.rvContent.addItemDecoration(BenefitDecoration(this))
     }
 
     private fun setButton(){

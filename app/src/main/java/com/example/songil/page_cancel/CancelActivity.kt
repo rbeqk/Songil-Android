@@ -76,6 +76,8 @@ class CancelActivity : BaseActivity<CancelActivityBinding>(R.layout.cancel_activ
             }
         }
         viewModel.sendCancelRequestResult.observe(this, cancelObserver)
+
+        viewModel.fetchState.observe(this, baseNetworkErrorObserver)
     }
 
     private fun setEditText(){

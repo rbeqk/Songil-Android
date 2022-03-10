@@ -56,16 +56,21 @@ class InquiryActivity : BaseActivity<InquiryActivityBinding>(R.layout.inquiry_ac
         }
         viewModel.inquiryResult.observe(this, inquiryResultObserver)
 
-        val errorObserver = Observer<BaseViewModel.FetchState> {
+        val errorObserver = Observer<BaseViewModel.FetchState> { fetchState ->
             viewModel.checkTextSizeInRange()
-            val errorString = "에러 발생 : " + when(it){
-                BaseViewModel.FetchState.BAD_INTERNET -> { "BAD_INTERNET" }
-                BaseViewModel.FetchState.FAIL -> { "FAIL"}
-                BaseViewModel.FetchState.WRONG_CONNECTION -> { "WRONG_CONNECTION"}
-                BaseViewModel.FetchState.PARSE_ERROR -> { "PARSE_ERROR"}
-                null -> {"UNKNOWN_ERROR"}
+            when (fetchState){
+                BaseViewModel.FetchState.BAD_INTERNET -> {
+                    showSimpleToastMessage(getString(R.string.bad_internet))
+                }
+                BaseViewModel.FetchState.FAIL -> {
+                    showSimpleToastMessage(getString(R.string.bad_internet))
+                }
+                BaseViewModel.FetchState.WRONG_CONNECTION -> {
+                    showSimpleToastMessage(getString(R.string.bad_internet))
+                }
+                BaseViewModel.FetchState.PARSE_ERROR -> {}
+                null -> {}
             }
-            showSimpleToastMessage(errorString)
         }
         viewModel.fetchState.observe(this, errorObserver)
     }

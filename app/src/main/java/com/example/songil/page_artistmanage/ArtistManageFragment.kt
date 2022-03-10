@@ -70,6 +70,8 @@ class ArtistManageFragment : BaseFragment<ArtistFragmentManageBinding>(ArtistFra
             }
         }
         viewModel.getArtistPageInfoResult.observe(viewLifecycleOwner, getArtistInfoObserver)
+
+        viewModel.fetchState.observe(viewLifecycleOwner, baseNetworkErrorObserver)
     }
 
     override fun logout() {

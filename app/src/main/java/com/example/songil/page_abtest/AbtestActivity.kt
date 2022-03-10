@@ -10,10 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.songil.R
-import com.example.songil.config.BaseActivity
-import com.example.songil.config.GlobalApplication
-import com.example.songil.config.ReportTarget
-import com.example.songil.config.WriteType
+import com.example.songil.config.*
 import com.example.songil.databinding.ChatActivityBinding
 import com.example.songil.page_abtestwrite.AbtestWriteActivity
 import com.example.songil.page_report.ReportActivity
@@ -21,6 +18,7 @@ import com.example.songil.popup_more.MoreBottomSheet
 import com.example.songil.popup_more.popup_interface.PopupMoreView
 import com.example.songil.popup_remove.RemoveDialog
 import com.example.songil.popup_remove.popup_interface.PopupRemoveView
+import com.example.songil.popup_warning.SocketTimeoutDialog
 import com.example.songil.popup_warning.WarningDialog
 import com.example.songil.recycler.adapter.PostAndChatAdapter
 import com.example.songil.recycler.rv_interface.RvPostAndChatView
@@ -163,6 +161,13 @@ class AbtestActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity)
             }
         }
         viewModel.deleteResult.observe(this, deleteObserver)
+
+        val networkErrorObserver = Observer<BaseViewModel.FetchState>{ _ ->
+            itemIsExists = false
+            val dialog = SocketTimeoutDialog(true)
+            dialog.show(supportFragmentManager, dialog.tag)
+        }
+        viewModel.fetchState.observe(this, networkErrorObserver)
     }
 
     override fun finish() {

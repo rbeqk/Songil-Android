@@ -136,6 +136,8 @@ class ShopActivityCategory : BaseActivity<ShopActivityCategoryBinding>(R.layout.
             }
         }
         viewModel.popularResultCode.observe(this, popularObserver)
+
+        viewModel.fetchState.observe(this, baseNetworkErrorObserver)
     }
 
     private fun setButton(){

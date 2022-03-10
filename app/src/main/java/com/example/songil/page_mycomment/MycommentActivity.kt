@@ -107,6 +107,8 @@ class MycommentActivity : BaseActivity<MycommentActivityBinding>(R.layout.mycomm
             }
         }
         viewModel.deleteCommentResult.observe(this, removeCommentResult)
+
+        viewModel.fetchState.observe(this, baseNetworkErrorObserver)
     }
 
     private fun setRecyclerView(){

@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.songil.R
 import com.example.songil.config.BaseActivity
+import com.example.songil.config.BaseViewModel
 import com.example.songil.config.GlobalApplication
 import com.example.songil.databinding.ArtistActivityBinding
 import com.example.songil.page_artist.subpage_article.ArtistArticleFragment
@@ -18,6 +19,7 @@ import com.example.songil.page_search.models.SearchCategory
 import com.example.songil.popup_sort.SortBottomSheet
 import com.example.songil.popup_sort.SortBottomSheetSimple
 import com.example.songil.popup_sort.popup_interface.PopupSortView
+import com.example.songil.popup_warning.SocketTimeoutDialog
 
 class ArtistActivity : BaseActivity<ArtistActivityBinding>(R.layout.artist_activity), PopupSortView {
 
@@ -99,6 +101,12 @@ class ArtistActivity : BaseActivity<ArtistActivityBinding>(R.layout.artist_activ
             }
         }
         artistViewModel.btnCraftActivate.observe(this, btnObserver)
+
+        val networkErrorObserver = Observer<BaseViewModel.FetchState> { _ ->
+            val dialog = SocketTimeoutDialog(true)
+            dialog.show(supportFragmentManager, dialog.tag)
+        }
+        artistViewModel.fetchState.observe(this, networkErrorObserver)
     }
 
     private fun setNestedScrollView(){

@@ -103,6 +103,8 @@ class ArtistManageCancelRequestActivity : BaseActivity<SimpleBaseActivityBinding
             }
         }
         viewModel.requestAnswerResult.observe(this, changeItemObserver)
+
+        viewModel.fetchState.observe(this, baseNetworkErrorObserver)
     }
 
     private fun restartJob(){

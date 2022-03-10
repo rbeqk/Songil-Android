@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.songil.R
 import com.example.songil.config.BaseFragment
+import com.example.songil.config.BaseViewModel
 import com.example.songil.config.LoginProcess
 import com.example.songil.databinding.LoginFragmentPasswordBinding
 import com.example.songil.page_login.LoginActivity
@@ -50,7 +52,6 @@ class LoginPasswordFragment(private val loginInfo : LoginInfo) : BaseFragment<Lo
             when (liveData){
                 200 ->{
                     viewModel.tryGetUserType()
-                    //(activity as LoginActivity).changeFragment(LoginProcess.COMPLETE)
                 }
                 else -> {
                     binding.tvDescription.text = getString(R.string.cannot_find_user_login)
@@ -59,10 +60,28 @@ class LoginPasswordFragment(private val loginInfo : LoginInfo) : BaseFragment<Lo
         }
         viewModel.loginResult.observe(viewLifecycleOwner, loginResultObserver)
 
-        val getUserTypeObserver =Observer<Int> { _ ->
+        val getUserTypeObserver = Observer<Int> { _ ->
             (activity as LoginActivity).changeFragment(LoginProcess.COMPLETE)
         }
         viewModel.userTypeResultCode.observe(viewLifecycleOwner, getUserTypeObserver)
+
+        val networkErrorObserver = Observer<BaseViewModel.FetchState> { fetchState ->
+            viewModel.changeBtnState()
+            when (fetchState){
+                BaseViewModel.FetchState.BAD_INTERNET -> {
+                    Toast.makeText(activity, getString(R.string.bad_internet), Toast.LENGTH_SHORT).show()
+                }
+                BaseViewModel.FetchState.FAIL -> {
+                    Toast.makeText(activity, getString(R.string.bad_internet), Toast.LENGTH_SHORT).show()
+                }
+                BaseViewModel.FetchState.WRONG_CONNECTION -> {
+                    Toast.makeText(activity, getString(R.string.bad_internet), Toast.LENGTH_SHORT).show()
+                }
+                BaseViewModel.FetchState.PARSE_ERROR -> {}
+                null -> {}
+            }
+        }
+        viewModel.fetchState.observe(viewLifecycleOwner, networkErrorObserver)
     }
 
     private fun setButton(){

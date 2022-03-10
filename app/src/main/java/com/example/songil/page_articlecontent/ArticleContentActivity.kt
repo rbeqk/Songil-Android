@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.songil.R
 import com.example.songil.config.BaseActivity
+import com.example.songil.config.BaseViewModel
 import com.example.songil.config.GlobalApplication
 import com.example.songil.databinding.ArticleActivityContentBinding
 import com.example.songil.page_main.MainActivity
@@ -63,6 +64,24 @@ class ArticleContentActivity : BaseActivity<ArticleActivityContentBinding>(R.lay
             }
         }
         viewModel.favButtonResultCode.observe(this, likeObserver)
+
+        val errorObserver = Observer<BaseViewModel.FetchState>{ fetchState ->
+            binding.btnShare.isClickable = false
+            when (fetchState){
+                BaseViewModel.FetchState.BAD_INTERNET -> {
+                    showSimpleToastMessage(getString(R.string.bad_internet))
+                }
+                BaseViewModel.FetchState.FAIL -> {
+                    showSimpleToastMessage(getString(R.string.bad_internet))
+                }
+                BaseViewModel.FetchState.WRONG_CONNECTION -> {
+                    showSimpleToastMessage(getString(R.string.bad_internet))
+                }
+                BaseViewModel.FetchState.PARSE_ERROR -> {}
+                null -> {}
+            }
+        }
+        viewModel.fetchState.observe(this, errorObserver)
     }
 
     private fun setArticleInfo(){

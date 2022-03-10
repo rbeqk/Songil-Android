@@ -63,8 +63,6 @@ class MyPagePostActivity : BaseActivity<MydetailActivityBinding>(R.layout.mydeta
                 binding.viewEmpty.tvEmptyTarget.text = getString(R.string.empty_my_favorite_post)
             }
         }
-
-
     }
 
     private fun setObserver(){
@@ -84,11 +82,7 @@ class MyPagePostActivity : BaseActivity<MydetailActivityBinding>(R.layout.mydeta
         }
         viewModel.totalCnt.observe(this, cntObserver)
 
-        val errorObserver = Observer<BaseViewModel.FetchState> { _ ->
-            val dialog = SocketTimeoutDialog()
-            dialog.show(supportFragmentManager, dialog.tag)
-        }
-        viewModel.fetchState.observe(this, errorObserver)
+        viewModel.fetchState.observe(this, baseNetworkErrorObserver)
     }
 
     private fun setButton(){

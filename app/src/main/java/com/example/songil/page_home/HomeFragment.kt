@@ -118,11 +118,7 @@ class HomeFragment : BaseFragment<HomeFragmentBinding>(HomeFragmentBinding::bind
         }
         viewModel.talkWithData.observe(viewLifecycleOwner, talkWithObserver)
 
-        val errorObserver = Observer<BaseViewModel.FetchState>{ _ ->
-            val socketTimeoutDialog = SocketTimeoutDialog()
-            socketTimeoutDialog.show(childFragmentManager, socketTimeoutDialog.tag)
-        }
-        viewModel.fetchState.observe(viewLifecycleOwner, errorObserver)
+        viewModel.fetchState.observe(viewLifecycleOwner, baseNetworkErrorObserver)
     }
 
     private fun setSeekBar(){

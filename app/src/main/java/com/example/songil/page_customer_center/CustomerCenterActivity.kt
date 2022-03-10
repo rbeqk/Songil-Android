@@ -36,22 +36,7 @@ class CustomerCenterActivity : BaseActivity<CustomercenterActivityBinding>(R.lay
         }
         viewModel.getFnqResult.observe(this, getFnqObserver)
 
-        val errorObserver = Observer<BaseViewModel.FetchState>{ liveData ->
-            when(liveData){
-                BaseViewModel.FetchState.PARSE_ERROR -> {}
-                BaseViewModel.FetchState.WRONG_CONNECTION -> {}
-                BaseViewModel.FetchState.FAIL -> {
-                    val dialog = SocketTimeoutDialog()
-                    dialog.show(supportFragmentManager, dialog.tag)
-                }
-                BaseViewModel.FetchState.BAD_INTERNET -> {
-                    val dialog = SocketTimeoutDialog()
-                    dialog.show(supportFragmentManager, dialog.tag)
-                }
-                null -> {}
-            }
-        }
-        viewModel.fetchState.observe(this, errorObserver)
+        viewModel.fetchState.observe(this, baseNetworkErrorObserver)
     }
 
     private fun setRecyclerView(){

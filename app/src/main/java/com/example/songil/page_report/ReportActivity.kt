@@ -3,12 +3,12 @@ package com.example.songil.page_report
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import androidx.appcompat.widget.AppCompatCheckBox
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.songil.R
 import com.example.songil.config.BaseActivity
+import com.example.songil.config.BaseViewModel
 import com.example.songil.config.GlobalApplication
 import com.example.songil.config.ReportTarget
 import com.example.songil.databinding.ReportActivityBinding
@@ -33,7 +33,6 @@ class ReportActivity : BaseActivity<ReportActivityBinding>(R.layout.report_activ
             reportViewModel.setTarget(target, targetIdx)
             setTitleText(target)
         } else {
-            Log.d("ReportActivity", "target is empty")
             finish()
             exitHorizontal
         }
@@ -110,7 +109,23 @@ class ReportActivity : BaseActivity<ReportActivityBinding>(R.layout.report_activ
         }
         reportViewModel.reportSuccess.observe(this, reportResultObserver)
 
-
+        val networkErrorObserver = Observer<BaseViewModel.FetchState>{ fetchState ->
+            reportViewModel.checkContent()
+            when (fetchState){
+                BaseViewModel.FetchState.BAD_INTERNET -> {
+                    showSimpleToastMessage(getString(R.string.bad_internet))
+                }
+                BaseViewModel.FetchState.FAIL -> {
+                    showSimpleToastMessage(getString(R.string.bad_internet))
+                }
+                BaseViewModel.FetchState.WRONG_CONNECTION -> {
+                    showSimpleToastMessage(getString(R.string.bad_internet))
+                }
+                BaseViewModel.FetchState.PARSE_ERROR -> {}
+                null -> {}
+            }
+        }
+        reportViewModel.fetchState.observe(this, networkErrorObserver)
     }
 
     override fun finish() {

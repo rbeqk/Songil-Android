@@ -109,11 +109,7 @@ class ShopFragmentMain : BaseFragment<ShopFragmentMainBinding>(ShopFragmentMainB
         }
         viewModel.bannerData.observe(viewLifecycleOwner, bannerObserver)
 
-        val errorObserver = Observer<BaseViewModel.FetchState>() {
-            val errorDialog = SocketTimeoutDialog()
-            errorDialog.show(childFragmentManager, errorDialog.tag)
-        }
-        viewModel.fetchState.observe(viewLifecycleOwner, errorObserver)
+        viewModel.fetchState.observe(viewLifecycleOwner, baseNetworkErrorObserver)
     }
 
     private fun setRecyclerView(){

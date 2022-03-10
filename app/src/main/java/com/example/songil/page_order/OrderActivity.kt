@@ -19,6 +19,7 @@ import com.example.songil.data.CraftAndAmount
 import com.example.songil.databinding.OrderActivityBinding
 import com.example.songil.page_order.subpage_benefit.ApplyBenefitActivity
 import com.example.songil.page_ordercomplete.OrdercompleteActivity
+import com.example.songil.popup_warning.WarningDialog
 import com.example.songil.recycler.adapter.Craft4Adapter
 import com.example.songil.utils.changeToPriceForm
 import com.example.songil.utils.changeToPriceFormKr
@@ -164,7 +165,10 @@ class OrderActivity : BaseActivity<OrderActivityBinding>(R.layout.order_activity
                     applyPriceChange()
                 }
                 2301 -> { // when craft is not exist
-
+                    val dialog = WarningDialog("구매할 수 없는 물품이 있습니다", "현재 주문하려는 제품이\n삭제되거나 품절되었습니다."){
+                        finish()
+                    }
+                    dialog.show(supportFragmentManager, dialog.tag)
                 }
             }
         }

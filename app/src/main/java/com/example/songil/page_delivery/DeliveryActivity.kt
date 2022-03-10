@@ -64,6 +64,8 @@ class DeliveryActivity : BaseActivity<DeliveryActivityBinding>(R.layout.delivery
             }
         }
         viewModel.deliveryTrackingResult.observe(this, tempResult)
+
+        viewModel.fetchState.observe(this, baseNetworkErrorObserver)
     }
 
     private fun setButton(){

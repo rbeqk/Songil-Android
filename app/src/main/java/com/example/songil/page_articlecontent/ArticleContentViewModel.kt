@@ -1,13 +1,12 @@
 package com.example.songil.page_articlecontent
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.songil.config.BaseViewModel
 import com.example.songil.data.ArticleDetailInfo
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class ArticleContentViewModel : ViewModel() {
+class ArticleContentViewModel : BaseViewModel(){
     private val repository = ArticleContentRepository()
 
     var getArticleResult = MutableLiveData<Int>()
@@ -15,7 +14,7 @@ class ArticleContentViewModel : ViewModel() {
     lateinit var articleData : ArticleDetailInfo
 
     fun tryGetArticleContent(articleIdx : Int){
-        CoroutineScope(Dispatchers.IO).launch {
+        viewModelScope.launch(exceptionHandler) {
             repository.getArticleContent(articleIdx).let { response ->
                 if (response.isSuccessful){
                     when (response.body()!!.code){
@@ -32,7 +31,7 @@ class ArticleContentViewModel : ViewModel() {
     }
 
     fun tryChangeLikeData(){
-        CoroutineScope(Dispatchers.IO).launch {
+        viewModelScope.launch(exceptionHandler) {
             repository.patchArticleLike(articleData.articleIdx).let { response ->
                 if (response.isSuccessful){
                     when (response.body()!!.code){

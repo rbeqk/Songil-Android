@@ -62,13 +62,7 @@ class ArticleFragmentMain : BaseFragment<ArticleFragmentMainBinding>(ArticleFrag
         }
         viewModel.articleData.observe(viewLifecycleOwner, articleObserver)
 
-        val articleResultCodeObserver = Observer<Boolean>{ LiveData ->
-            if (LiveData){
-                val socketTimeoutDialog = SocketTimeoutDialog()
-                socketTimeoutDialog.show(childFragmentManager, socketTimeoutDialog.tag)
-            }
-        }
-        viewModel.isSocketTimeout.observe(viewLifecycleOwner, articleResultCodeObserver)
+        viewModel.fetchState.observe(viewLifecycleOwner, baseNetworkErrorObserver)
     }
 
     private fun setViewPager(){

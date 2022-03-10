@@ -79,6 +79,8 @@ class BasketActivity : BaseActivity<ShoppingbasketActivityBinding>(R.layout.shop
             }
         }
         viewModel.cartItemCnt.observe(this, cartItemCntObserver)
+
+        viewModel.fetchState.observe(this, baseNetworkErrorObserver)
     }
 
     private fun setRecyclerView(){

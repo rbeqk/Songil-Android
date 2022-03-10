@@ -211,6 +211,8 @@ class SearchActivity : BaseActivity<SearchActivityBinding>(R.layout.search_activ
             }
         }
         viewModel.cntList.observe(this, cntListObserver)
+
+        viewModel.fetchState.observe(this, baseNetworkErrorObserver)
     }
 
     // 처음 화면 (아무것도 검색하지 않은 상태) 에서는 뒤로가기 누르면 바로 이전 화면으로 이동

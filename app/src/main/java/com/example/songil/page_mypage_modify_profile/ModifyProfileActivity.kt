@@ -89,6 +89,8 @@ class ModifyProfileActivity : BaseActivity<ProfileModifyActivityBinding>(R.layou
             }
         }
         viewModel.modifyProfileResult.observe(this, modifyProfileObserver)
+
+        viewModel.fetchState.observe(this, baseNetworkErrorObserver)
     }
 
     private fun setButton(){

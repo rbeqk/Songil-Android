@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.songil.R
 import com.example.songil.config.BaseActivity
+import com.example.songil.config.BaseViewModel
 import com.example.songil.config.GlobalApplication
 import com.example.songil.config.InquiryTarget
 import com.example.songil.data.LikeData
@@ -23,6 +24,7 @@ import com.example.songil.page_inquiry.InquiryActivity
 import com.example.songil.page_order.OrderActivity
 import com.example.songil.page_search.SearchActivity
 import com.example.songil.page_search.models.SearchCategory
+import com.example.songil.popup_warning.SocketTimeoutDialog
 
 class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity) {
 
@@ -121,6 +123,12 @@ class CraftActivity : BaseActivity<CraftActivityBinding>(R.layout.craft_activity
             binding.btnFavorite.setBackgroundResource(if (liveData.isLike == "Y") R.drawable.ic_heart_base_28 else R.drawable.ic_heart_line_28)
         }
         viewModel.likeData.observe(this, likeObserver)
+
+        val networkErrorObserver = Observer<BaseViewModel.FetchState>{ _ ->
+            val dialog = SocketTimeoutDialog(true)
+            dialog.show(supportFragmentManager, dialog.tag)
+        }
+        viewModel.fetchState.observe(this, networkErrorObserver)
     }
 
     private fun changeFragment(targetFragment : Fragment){

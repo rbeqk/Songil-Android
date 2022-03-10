@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.songil.R
 import com.example.songil.config.BaseActivity
+import com.example.songil.config.BaseViewModel
 import com.example.songil.config.GlobalApplication
 import com.example.songil.databinding.ShippinginfoActivityInputBinding
 import com.example.songil.recycler.adapter.CourierSelectAdapter
@@ -68,6 +69,24 @@ class ShippingInfoActivity : BaseActivity<ShippinginfoActivityInputBinding>(R.la
             }
         }
         viewModel.sendingInfoResult.observe(this, uploadResultObserver)
+
+        val networkErrorObserver = Observer<BaseViewModel.FetchState> { fetchState ->
+            viewModel.checkBtnActivate()
+            when (fetchState){
+                BaseViewModel.FetchState.BAD_INTERNET -> {
+                    showSimpleToastMessage(getString(R.string.bad_internet))
+                }
+                BaseViewModel.FetchState.FAIL -> {
+                    showSimpleToastMessage(getString(R.string.bad_internet))
+                }
+                BaseViewModel.FetchState.WRONG_CONNECTION -> {
+                    showSimpleToastMessage(getString(R.string.bad_internet))
+                }
+                BaseViewModel.FetchState.PARSE_ERROR -> {}
+                null -> {}
+            }
+        }
+        viewModel.fetchState.observe(this, networkErrorObserver)
     }
 
     private fun setRecyclerView(){

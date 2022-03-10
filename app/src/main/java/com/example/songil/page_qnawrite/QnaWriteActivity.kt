@@ -65,7 +65,7 @@ class QnaWriteActivity : BaseActivity<QnaActivityWriteBinding>(R.layout.qna_acti
                 setResult(RESULT_OK, intent)
                 finish()
             } else {
-                Log.d("qna write", "fail...")
+                showSimpleToastMessage("Qna 업로드에 실패했습니다.\n잠시 후에 다시 시도해주세요.")
             }
         }
         viewModel.writeQnaResult.observe(this, qnaWriteResultObserver)
@@ -76,6 +76,7 @@ class QnaWriteActivity : BaseActivity<QnaActivityWriteBinding>(R.layout.qna_acti
         }
         viewModel.loadQnaResult.observe(this, loadQnaResultObserver)
 
+        viewModel.fetchState.observe(this, baseNetworkErrorObserver)
     }
 
     private fun setButton(){

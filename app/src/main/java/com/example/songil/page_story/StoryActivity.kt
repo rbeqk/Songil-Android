@@ -11,10 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.example.songil.R
-import com.example.songil.config.BaseActivity
-import com.example.songil.config.GlobalApplication
-import com.example.songil.config.ReportTarget
-import com.example.songil.config.WriteType
+import com.example.songil.config.*
 import com.example.songil.databinding.StoryActivityBinding
 import com.example.songil.page_report.ReportActivity
 import com.example.songil.page_story.subpage_story_chat.StoryChatActivity
@@ -23,6 +20,7 @@ import com.example.songil.popup_more.MoreBottomSheet
 import com.example.songil.popup_more.popup_interface.PopupMoreView
 import com.example.songil.popup_remove.RemoveDialog
 import com.example.songil.popup_remove.popup_interface.PopupRemoveView
+import com.example.songil.popup_warning.SocketTimeoutDialog
 import com.example.songil.popup_warning.WarningDialog
 import com.example.songil.viewPager2.adapter.Vp2ImageAdapter
 import com.google.android.material.chip.Chip
@@ -81,6 +79,13 @@ class StoryActivity : BaseActivity<StoryActivityBinding>(R.layout.story_activity
             }
         }
         viewModel.removeResult.observe(this, removeStoryObserver)
+
+        val networkErrorObserver = Observer<BaseViewModel.FetchState>{ _ ->
+            itemIsExists = false
+            val dialog = SocketTimeoutDialog(true)
+            dialog.show(supportFragmentManager, dialog.tag)
+        }
+        viewModel.fetchState.observe(this, networkErrorObserver)
     }
 
     private fun setButton(){

@@ -51,6 +51,8 @@ class MybenefitActivity : BaseActivity<MydetailActivityBinding>(R.layout.mydetai
             (binding.rvContent.adapter as BenefitAdapter).applyData(liveData)
         }
         viewModel.benefitDatas.observe(this, benefitObserver)
+
+        viewModel.fetchState.observe(this, baseNetworkErrorObserver)
     }
 
     private fun setButton(){

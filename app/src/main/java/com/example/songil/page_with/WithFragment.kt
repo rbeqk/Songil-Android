@@ -18,7 +18,6 @@ import com.example.songil.config.WriteType
 import com.example.songil.databinding.WithFragmentMainBinding
 import com.example.songil.page_abtestwrite.AbtestWriteActivity
 import com.example.songil.page_main.MainActivity
-import com.example.songil.page_alarm.AlarmActivity
 import com.example.songil.page_qnawrite.QnaWriteActivity
 import com.example.songil.page_search.SearchActivity
 import com.example.songil.page_search.models.SearchCategory
@@ -82,10 +81,6 @@ class WithFragment : BaseFragment<WithFragmentMainBinding>(WithFragmentMainBindi
         binding.btnQna.setOnClickListener { changeFragment(1) }
         binding.btnAbTest.setOnClickListener { changeFragment(2) }
 
-        binding.btnNotice.setOnClickListener {
-            (activity as MainActivity).startActivityHorizontal(Intent(activity as MainActivity, AlarmActivity::class.java))
-        }
-
         binding.btnWrite.setOnClickListener {
             if (!(activity as BaseActivity<*>).isLogin()){
                 (activity as BaseActivity<*>).callNeedLoginDialog()
@@ -137,6 +132,8 @@ class WithFragment : BaseFragment<WithFragmentMainBinding>(WithFragmentMainBindi
             }
         }
         viewModel.loadHotTalkResult.observe(viewLifecycleOwner, hotTalkObserver)
+
+        viewModel.fetchState.observe(viewLifecycleOwner, baseNetworkErrorObserver)
     }
 
     override fun sort(sort: String) {

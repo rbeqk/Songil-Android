@@ -70,7 +70,7 @@ class OrderStatusActivity : BaseActivity<SimpleBaseActivityBinding>(R.layout.sim
     }
 
     private fun setObserver(){
-
+        viewModel.fetchState.observe(this, baseNetworkErrorObserver)
     }
 
     private fun setButton(){

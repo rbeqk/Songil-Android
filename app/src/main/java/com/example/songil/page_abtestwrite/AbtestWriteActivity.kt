@@ -120,9 +120,22 @@ class AbtestWriteActivity : BaseActivity<AbtestActivityWriteBinding>(R.layout.ab
         }
         viewModel.resultModify.observe(this, modifyObserver)
 
-        val errorObserver = Observer<BaseViewModel.FetchState>{ liveData ->
+        val errorObserver = Observer<BaseViewModel.FetchState>{ fetchState ->
             viewModel.checkAvailable()
             dismissLoadingDialog()
+            when (fetchState){
+                BaseViewModel.FetchState.BAD_INTERNET -> {
+                    showSimpleToastMessage(getString(R.string.bad_internet))
+                }
+                BaseViewModel.FetchState.FAIL -> {
+                    showSimpleToastMessage(getString(R.string.bad_internet))
+                }
+                BaseViewModel.FetchState.WRONG_CONNECTION -> {
+                    showSimpleToastMessage(getString(R.string.bad_internet))
+                }
+                BaseViewModel.FetchState.PARSE_ERROR -> {}
+                null -> {}
+            }
         }
         viewModel.fetchState.observe(this, errorObserver)
     }

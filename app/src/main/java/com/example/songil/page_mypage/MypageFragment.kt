@@ -64,6 +64,8 @@ class MypageFragment : BaseFragment<MypageFragmentBinding>(MypageFragmentBinding
                 binding.ivProfile.setImageResource(0)
         }
         viewModel.userInfo.observe(viewLifecycleOwner, userInfoObserver)
+
+        viewModel.fetchState.observe(viewLifecycleOwner, baseNetworkErrorObserver)
     }
 
     override fun onResume() {

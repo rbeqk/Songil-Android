@@ -1,33 +1,23 @@
 package com.example.songil.page_article
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.songil.config.BaseViewModel
 import com.example.songil.data.SimpleArticle
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class ArticleViewModel : ViewModel() {
+class ArticleViewModel : BaseViewModel() {
     private val repository = ArticleRepository()
     var articleData = MutableLiveData<ArrayList<SimpleArticle>>()
 
-    var articleResultCode = MutableLiveData<Int>()
-    var isSocketTimeout = MutableLiveData<Boolean>()
-
-    private val handler = CoroutineExceptionHandler { _, _ ->
-        isSocketTimeout.postValue(true)
-    }
-
     fun tryGetArticleData(){
-        CoroutineScope(Dispatchers.IO).launch(handler) {
-            repository.getArticleTitles().let { response ->
-                if (response.isSuccessful){
-                    if (response.body()!!.isSuccess){
-                        articleData.postValue(response.body()!!.result)
-                    }
-                    articleResultCode.postValue(response.body()!!.code)
-                }
+        viewModelScope.launch(exceptionHandler) {
+            val result = repository.getArticleTitles()
+
+            if (result.isSuccessful && result.body()?.isSuccess == true){
+                articleData.postValue(result.body()!!.result)
+            } else {
+                throw UnknownError()
             }
         }
     }

@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.songil.R
 import com.example.songil.config.BaseActivity
+import com.example.songil.config.BaseViewModel
 import com.example.songil.databinding.ReturnActivityBinding
 import com.example.songil.page_main.MainActivity
 import com.example.songil.popup_cancel.CancelDialog
@@ -87,6 +88,24 @@ class ReturnActivity : BaseActivity<ReturnActivityBinding>(R.layout.return_activ
             }
         }
         viewModel.sendReturnRequestResult.observe(this, returnObserver)
+
+        val networkErrorObserver = Observer<BaseViewModel.FetchState>{ fetchState ->
+            viewModel.checkBtnActivate()
+            when (fetchState){
+                BaseViewModel.FetchState.BAD_INTERNET -> {
+                    showSimpleToastMessage(getString(R.string.bad_internet))
+                }
+                BaseViewModel.FetchState.FAIL -> {
+                    showSimpleToastMessage(getString(R.string.bad_internet))
+                }
+                BaseViewModel.FetchState.WRONG_CONNECTION -> {
+                    showSimpleToastMessage(getString(R.string.bad_internet))
+                }
+                BaseViewModel.FetchState.PARSE_ERROR -> {}
+                null -> {}
+            }
+        }
+        viewModel.fetchState.observe(this, networkErrorObserver)
     }
 
     private fun setEditText(){

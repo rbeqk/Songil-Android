@@ -54,11 +54,7 @@ class NoticeActivity : BaseActivity<SimpleBaseActivityBinding>(R.layout.simple_b
         }
         viewModel.getNoticeResult.observe(this, getNoticeObserver)
 
-        val errorObserver = Observer<BaseViewModel.FetchState>{ _ ->
-            val socketTimeoutDialog = SocketTimeoutDialog()
-            socketTimeoutDialog.show(supportFragmentManager, socketTimeoutDialog.tag)
-        }
-        viewModel.fetchState.observe(this, errorObserver)
+        viewModel.fetchState.observe(this, baseNetworkErrorObserver)
     }
 
     private fun setButton(){

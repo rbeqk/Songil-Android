@@ -1,13 +1,12 @@
 package com.example.songil.page_artist.subpage_craft
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.songil.config.BaseViewModel
 import com.example.songil.data.Craft1
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class ArtistCraftViewModel : ViewModel() {
+class ArtistCraftViewModel : BaseViewModel() {
     private val repository = ArtistCraftRepository()
     private var artistIdx = 0
     private var requestPage = 0
@@ -26,7 +25,7 @@ class ArtistCraftViewModel : ViewModel() {
     // requestPage 가 0 이면, 마지막 페이지까지 요청한 이후 상태
     fun tryGetCraftList(){
         if (requestPage > 0) {
-            CoroutineScope(Dispatchers.IO).launch {
+            viewModelScope.launch(exceptionHandler) {
                 repository.getCraftList(artistIdx, requestPage, sort).let { response ->
                     if (response.isSuccessful) {
                         if (response.body()?.code == 200) {
@@ -44,7 +43,7 @@ class ArtistCraftViewModel : ViewModel() {
     }
 
     fun tryGetCraftPageCnt(){
-        CoroutineScope(Dispatchers.IO).launch {
+        viewModelScope.launch(exceptionHandler) {
             repository.getCraftPageCnt(artistIdx).let { response ->
                 if (response.isSuccessful){
                     if (response.body()?.code == 200){

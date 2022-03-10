@@ -80,6 +80,8 @@ class CommentWriteActivity : BaseActivity<CommentActivityWriteBinding>(R.layout.
             }
         }
         viewModel.uploadCommentResult.observe(this, uploadResultObserver)
+
+        viewModel.fetchState.observe(this, baseNetworkErrorObserver)
     }
 
     private fun setButton(){
