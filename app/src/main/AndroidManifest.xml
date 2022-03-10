@@ -49,7 +49,6 @@
         <activity android:name=".page_storywrite.StoryWriteActivity"/>
         <activity android:name=".page_imagepicker.ImagePickerActivity"/>
         <activity android:name=".page_artist.ArtistActivity"/>
-        <activity android:name=".page_alarm.AlarmActivity"/>
         <activity android:name=".webview_address.WebAddressActivity"/>
         <activity android:name=".page_notice.NoticeActivity"/>
         <activity android:name=".page_qna.QnaActivity" android:windowSoftInputMode="adjustResize"/>
