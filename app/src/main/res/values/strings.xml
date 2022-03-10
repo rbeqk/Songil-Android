@@ -392,6 +392,7 @@
     <!-- 서버 응답 없음 dialog 관련 -->
     <string name="socket_time_out">서버로부터 \n데이터를 받지 못했어요</string>
     <string name="socket_time_out_message">인터넷 상태를 확인해주세요</string>
+    <string name="bad_internet">통신이 원활하지 않습니다.\n인터넷 연결 상태를 확인해주세요</string>
 
     <!-- 로그인 필요 dialog 관련 -->
     <string name="login_slash_signup"><u>로그인/회원가입</u></string>

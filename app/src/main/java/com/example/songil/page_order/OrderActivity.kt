@@ -32,7 +32,6 @@ import kr.co.bootpay.model.BootExtra
 import kr.co.bootpay.model.BootUser
 import org.json.JSONObject
 
-// 여기 부트페이 테스트 api key 있다. commit 금지
 class OrderActivity : BaseActivity<OrderActivityBinding>(R.layout.order_activity){
 
     private val orderViewModel : OrderViewModel by lazy { ViewModelProvider(this)[OrderViewModel::class.java] }
@@ -91,7 +90,6 @@ class OrderActivity : BaseActivity<OrderActivityBinding>(R.layout.order_activity
 
         binding.btnPayment.setOnClickListener {
             orderViewModel.trySendOrderInfo()
-            //goBootPayRequest()
         }
 
         binding.btnCheckCoupon.setOnClickListener {
@@ -114,12 +112,15 @@ class OrderActivity : BaseActivity<OrderActivityBinding>(R.layout.order_activity
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
             override fun afterTextChanged(s: Editable?) {
-                if (!fixEditTextByUser){
+                if (!fixEditTextByUser) {
                     val disCount = s.toString().toIntOrNull()
-                    if (disCount != null){
+                    if (disCount != null) {
                         orderViewModel.priceData.applyUserPoint(disCount)
-                        fixEditTextByUser = true
-                        binding.etPoint.setText(orderViewModel.priceData.usePoint.toString())
+                        if (disCount > orderViewModel.priceData.havePoint) {
+                            fixEditTextByUser = true
+                            binding.etPoint.setText(orderViewModel.priceData.usePoint.toString())
+                            binding.etPoint.setSelection(binding.etPoint.length())
+                        }
                     } else {
                         orderViewModel.priceData.applyUserPoint(0)
                     }
@@ -244,28 +245,23 @@ class OrderActivity : BaseActivity<OrderActivityBinding>(R.layout.order_activity
             .setBootUser(bootUser).setBootExtra(bootExtra).setUX(UX.PG_DIALOG).setPG(PG.NICEPAY).setMethod(Method.CARD)
             .setName(orderViewModel.getOrderName()).setOrderId(orderViewModel.orderIdx.toString()).setPrice(orderViewModel.priceData.calTotalPrice())
             .onDone { data ->
-                Log.d("tesintg", parseReceiptId(data))
                 orderViewModel.tryPostOrderVerification(parseReceiptId(data))
             }.onConfirm { message ->
                 //showSimpleToastMessage(message)
-                Log.d("onConfirm", message)
                 Bootpay.confirm(message)
             }
-            .onReady { message ->
+            .onReady { _ ->
                 // 가상계좌로 결제 시, 가상계좌 발급이 완료되면 호출
                 //showSimpleToastMessage(message)
-                Log.d("onReady", message)
             }
-            .onCancel { message -> // 결제 진행 중 사용자가 결제를 취소한 경우
+            .onCancel { _ -> // 결제 진행 중 사용자가 결제를 취소한 경우
                 //showSimpleToastMessage(message)
-                Log.d("onCancel", message)
             }
-            .onError{ message -> // 결제 진행 중 오류 발생시 호출 (활성화 하지 않은 pg, 한도초과, 카드 정지 등)
+            .onError{ _ -> // 결제 진행 중 오류 발생시 호출 (활성화 하지 않은 pg, 한도초과, 카드 정지 등)
                 //showSimpleToastMessage(message)
-                Log.d("onError", message)
             }
             .onClose { _ ->
-                Log.d("close", "close")
+
             }
             .request()
     }
