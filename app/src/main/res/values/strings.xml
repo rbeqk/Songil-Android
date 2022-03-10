@@ -416,6 +416,7 @@
     <string name="empty_my_wrote_post">아직 작성한 글이 없어요.</string>
     <string name="empty_order_status">주문내역이 없어요.</string>
     <string name="empty_my_benefit">보유한 베네핏이 없어요.</string>
+    <string name="empty_enable_benefit">사용 가능한 베네핏이 없어요.</string>
     <string name="empty_artist_order_status">아직 들어온 주문이 없어요.</string>
     <string name="empty_cancel_request">아직 반품/취소요청이 없어요.</string>
     <string name="empty_notice">아직 공지사항이 없어요.</string>

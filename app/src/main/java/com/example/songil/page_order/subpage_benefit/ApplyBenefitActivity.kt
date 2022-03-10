@@ -2,6 +2,7 @@ package com.example.songil.page_order.subpage_benefit
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,13 +26,19 @@ class ApplyBenefitActivity : BaseActivity<SimpleBaseActivityBinding>(R.layout.si
 
         viewModel.tryGetBenefit()
         binding.tvTitle.text = getString(R.string.my_benefit)
+        binding.viewEmpty.tvEmptyTarget.text = getString(R.string.empty_enable_benefit)
     }
 
     private fun setObserver(){
         val getBenefitObserver = Observer<Int> { resultCode ->
             when (resultCode){
                 200 -> {
-                    (binding.rvContent.adapter as BenefitApplyAdapter).applyData(viewModel.benefitList)
+                    if (viewModel.benefitList.size == 0){
+                        binding.viewEmpty.root.visibility = View.VISIBLE
+                    } else {
+                        binding.viewEmpty.root.visibility = View.GONE
+                        (binding.rvContent.adapter as BenefitApplyAdapter).applyData(viewModel.benefitList)
+                    }
                 }
             }
         }

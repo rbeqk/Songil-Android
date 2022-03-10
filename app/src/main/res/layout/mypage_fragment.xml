@@ -110,10 +110,11 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_nickname"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     app:layout_constraintStart_toEndOf="@id/cv_profile"
                     app:layout_constraintTop_toTopOf="@id/cv_profile"
                     app:layout_constraintBottom_toBottomOf="@id/cv_profile"
+                    android:gravity="center_vertical"
                     android:layout_marginStart="16dp"
                     android:textSize="16sp"
                     android:fontFamily="@font/spoqahansansneo_bold"
