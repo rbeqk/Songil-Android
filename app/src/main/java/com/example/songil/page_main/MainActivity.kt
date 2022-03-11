@@ -2,6 +2,7 @@ package com.example.songil.page_main
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import com.example.songil.R
 import com.example.songil.config.BaseActivity
 import com.example.songil.databinding.MainActivityBinding
@@ -15,6 +16,9 @@ import com.example.songil.page_with.WithFragment
 import com.example.songil.utils.setStatusBarBlack
 
 class MainActivity : BaseActivity<MainActivityBinding>(R.layout.main_activity){
+
+    private var waitTime = 0L
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -61,6 +65,15 @@ class MainActivity : BaseActivity<MainActivityBinding>(R.layout.main_activity){
                     startActivityHorizontal(Intent(this, OrderStatusActivity::class.java))
                 }
             }
+        }
+    }
+
+    override fun onBackPressed() {
+        if (System.currentTimeMillis() - waitTime >= 1500){
+            waitTime = System.currentTimeMillis()
+            showSimpleToastMessage("뒤로가기 버튼을 한번 더 누르면 종료됩니다.")
+        } else {
+            finish()
         }
     }
 }
