@@ -7,7 +7,7 @@
         android:layout_height="match_parent"
         android:background="@color/songil_1">
 
-        <com.example.songil.custom_layout.LockableNestedScrollView
+        <com.songil.songil.custom_layout.LockableNestedScrollView
             android:id="@+id/layout_main"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -34,7 +34,7 @@
                     android:tint="@color/songil_1"
                     android:src="@drawable/ic_search_22"/>
 
-                <com.example.songil.custom_view.PageCountDot
+                <com.songil.songil.custom_view.PageCountDot
                     android:id="@+id/page_count_dot"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -153,7 +153,7 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </com.example.songil.custom_layout.LockableNestedScrollView>
+        </com.songil.songil.custom_layout.LockableNestedScrollView>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

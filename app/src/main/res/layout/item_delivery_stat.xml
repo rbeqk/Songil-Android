@@ -6,7 +6,7 @@
     <data>
         <variable
             name="data"
-            type="com.example.songil.data.DeliveryStatus" />
+            type="com.songil.songil.data.DeliveryStatus" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

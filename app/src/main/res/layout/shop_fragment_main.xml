@@ -23,7 +23,7 @@
                     android:layout_height="60dp"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <com.example.songil.custom_view.shopping_cart_button.ShoppingCartButton
+                    <com.songil.songil.custom_view.shopping_cart_button.ShoppingCartButton
                         android:id="@+id/btn_shoppingbasket"
                         android:layout_width="28dp"
                         android:layout_height="28dp"
@@ -60,7 +60,7 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <com.example.songil.custom_layout.LockableNestedScrollView
+        <com.songil.songil.custom_layout.LockableNestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
@@ -218,7 +218,7 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </com.example.songil.custom_layout.LockableNestedScrollView>
+        </com.songil.songil.custom_layout.LockableNestedScrollView>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

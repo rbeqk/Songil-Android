@@ -52,7 +52,7 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <com.example.songil.custom_layout.StickyNestedScrollView
+        <com.songil.songil.custom_layout.StickyNestedScrollView
             android:id="@+id/layout_main_scroll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -204,7 +204,7 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </com.example.songil.custom_layout.StickyNestedScrollView>
+        </com.songil.songil.custom_layout.StickyNestedScrollView>
 
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.songil.page_craft.CraftViewModel" />
+            type="com.songil.songil.page_craft.CraftViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -37,7 +37,7 @@
                         android:tint="@color/songil_2"
                         android:src="@drawable/ic_back_22"/>
 
-                    <com.example.songil.custom_view.shopping_cart_button.ShoppingCartButton
+                    <com.songil.songil.custom_view.shopping_cart_button.ShoppingCartButton
                         android:id="@+id/btn_shoppingbasket"
                         android:layout_width="28dp"
                         android:layout_height="28dp"
@@ -65,7 +65,7 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <com.example.songil.custom_layout.StickyNestedScrollView
+        <com.songil.songil.custom_layout.StickyNestedScrollView
             android:id="@+id/layout_nested"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -377,7 +377,7 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </com.example.songil.custom_layout.StickyNestedScrollView>
+        </com.songil.songil.custom_layout.StickyNestedScrollView>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

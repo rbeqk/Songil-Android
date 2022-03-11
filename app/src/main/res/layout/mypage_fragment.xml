@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.songil.page_mypage.MypageViewModel" />
+            type="com.songil.songil.page_mypage.MypageViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -50,7 +50,7 @@
                         android:src="@drawable/ic_setting_22"/>
 
 
-                    <com.example.songil.custom_view.shopping_cart_button.ShoppingCartButton
+                    <com.songil.songil.custom_view.shopping_cart_button.ShoppingCartButton
                         android:id="@+id/btn_shopping_cart"
                         android:layout_width="28dp"
                         android:layout_height="28dp"

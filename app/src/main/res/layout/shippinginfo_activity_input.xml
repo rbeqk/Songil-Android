@@ -8,7 +8,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.songil.page_shippinginfo.ShippingInfoViewModel" />
+            type="com.songil.songil.page_shippinginfo.ShippingInfoViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

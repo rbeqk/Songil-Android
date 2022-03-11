@@ -5,7 +5,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.songil.page_report.ReportViewModel" />
+            type="com.songil.songil.page_report.ReportViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

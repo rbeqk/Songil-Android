@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.songil.page_search.SearchViewModel" />
+            type="com.songil.songil.page_search.SearchViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -5,7 +5,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.songil.page_mypage_modify_profile.ModifyProfileViewModel" />
+            type="com.songil.songil.page_mypage_modify_profile.ModifyProfileViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

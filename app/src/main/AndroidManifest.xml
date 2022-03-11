@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.songil">
+    package="com.songil.songil">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
-        android:name=".config.GlobalApplication"
+        android:name="com.songil.songil.config.GlobalApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_songil"
         android:label="@string/app_name"
@@ -15,61 +15,61 @@
         android:supportsRtl="true"
         android:largeHeap="true"
         android:theme="@style/Theme.Songil">
-        <activity android:name=".page_splash.SplashActivity">
+        <activity android:name="com.songil.songil.page_splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".page_login.LoginActivity" android:windowSoftInputMode="adjustResize" android:noHistory="true"/>
-        <activity android:name=".page_signup.SignupActivity" android:windowSoftInputMode="adjustResize">
+        <activity android:name="com.songil.songil.page_login.LoginActivity" android:windowSoftInputMode="adjustResize" android:noHistory="true"/>
+        <activity android:name="com.songil.songil.page_signup.SignupActivity" android:windowSoftInputMode="adjustResize">
         </activity>
-        <activity android:name=".page_main.MainActivity"/>
-        <activity android:name=".page_craft.CraftActivity"/>
-        <activity android:name=".page_report.ReportActivity" android:windowSoftInputMode="adjustResize"/>
-        <activity android:name=".page_shop.shop_category.ShopActivityCategory"/>
-        <activity android:name=".page_needlogin.NeedLoginActivity"/>
-        <activity android:name=".page_inquiry.InquiryActivity" android:windowSoftInputMode="adjustResize"/>
-        <activity android:name=".page_basket.BasketActivity"/>
-        <activity android:name=".page_mybenefit.MybenefitActivity"/>
-        <activity android:name=".page_myfavorite_craft.MyFavoriteCraftActivity"/>
-        <activity android:name=".page_order.OrderActivity"/>
-        <activity android:name=".page_orderstatus.OrderStatusActivity"/>
-        <activity android:name=".page_mycomment.MycommentActivity"/>
-        <activity android:name=".page_setting.SettingActivity"/>
-        <activity android:name=".page_search.SearchActivity"/>
-        <activity android:name=".page_cancel.CancelActivity" android:windowSoftInputMode="adjustResize"/>
-        <activity android:name=".page_articlecontent.ArticleContentActivity"/>
-        <activity android:name=".page_ordercomplete.OrdercompleteActivity" android:noHistory="true"/>
-        <activity android:name=".page_withdrawal.WithdrawalActivity"/>
-        <activity android:name=".page_shippinginfo.ShippingInfoActivity" android:windowSoftInputMode="adjustResize"/>
-        <activity android:name=".page_commentwrite.CommentWriteActivity"/>
-        <activity android:name=".page_story.StoryActivity"/>
-        <activity android:name=".page_storywrite.StoryWriteActivity"/>
-        <activity android:name=".page_imagepicker.ImagePickerActivity"/>
-        <activity android:name=".page_artist.ArtistActivity"/>
-        <activity android:name=".webview_address.WebAddressActivity"/>
-        <activity android:name=".page_notice.NoticeActivity"/>
-        <activity android:name=".page_qna.QnaActivity" android:windowSoftInputMode="adjustResize"/>
-        <activity android:name=".page_abtest.AbtestActivity" android:windowSoftInputMode="adjustResize"/>
-        <activity android:name=".page_artistmanage.subpage_answer.ArtistManageAnswerActivity" android:windowSoftInputMode="adjustResize"/>
-        <activity android:name=".page_artistmanage.subpage_orderstat.ArtistManageOrderStatActivity"/>
-        <activity android:name=".page_artistmanage.subpage_asklist.ArtistManageAskListActivity"/>
-        <activity android:name=".page_delivery.DeliveryActivity"/>
-        <activity android:name=".page_story.subpage_story_chat.StoryChatActivity" android:windowSoftInputMode="adjustResize"/>
-        <activity android:name=".page_qnawrite.QnaWriteActivity" android:windowSoftInputMode="adjustResize"/>
-        <activity android:name=".page_abtestwrite.AbtestWriteActivity" android:windowSoftInputMode="adjustResize"/>
-        <activity android:name=".page_myfavorite_article.MyFavoriteArticleActivity"/>
-        <activity android:name=".page_mypage_about_post.MyPagePostActivity"/>
-        <activity android:name=".page_mypage_ask_history.MyPageAskActivity"/>
-        <activity android:name=".page_mypage_modify_profile.ModifyProfileActivity" android:windowSoftInputMode="adjustResize"/>
-        <activity android:name=".page_order.subpage_benefit.ApplyBenefitActivity"/>
-        <activity android:name=".page_payinfo.PayInfoActivity"/>
-        <activity android:name=".page_artistmanage.subpage_cancel_request.ArtistManageCancelRequestActivity"/>
-        <activity android:name=".page_customer_center.CustomerCenterActivity"/>
-        <activity android:name=".page_return.ReturnActivity"/>
-        <activity android:name=".page_shippinginfo_confirmation.ShippingInfoConfirmationActivity"/>
+        <activity android:name="com.songil.songil.page_main.MainActivity"/>
+        <activity android:name="com.songil.songil.page_craft.CraftActivity"/>
+        <activity android:name="com.songil.songil.page_report.ReportActivity" android:windowSoftInputMode="adjustResize"/>
+        <activity android:name="com.songil.songil.page_shop.shop_category.ShopActivityCategory"/>
+        <activity android:name="com.songil.songil.page_needlogin.NeedLoginActivity"/>
+        <activity android:name="com.songil.songil.page_inquiry.InquiryActivity" android:windowSoftInputMode="adjustResize"/>
+        <activity android:name="com.songil.songil.page_basket.BasketActivity"/>
+        <activity android:name="com.songil.songil.page_mybenefit.MybenefitActivity"/>
+        <activity android:name="com.songil.songil.page_myfavorite_craft.MyFavoriteCraftActivity"/>
+        <activity android:name="com.songil.songil.page_order.OrderActivity"/>
+        <activity android:name="com.songil.songil.page_orderstatus.OrderStatusActivity"/>
+        <activity android:name="com.songil.songil.page_mycomment.MycommentActivity"/>
+        <activity android:name="com.songil.songil.page_setting.SettingActivity"/>
+        <activity android:name="com.songil.songil.page_search.SearchActivity"/>
+        <activity android:name="com.songil.songil.page_cancel.CancelActivity" android:windowSoftInputMode="adjustResize"/>
+        <activity android:name="com.songil.songil.page_articlecontent.ArticleContentActivity"/>
+        <activity android:name="com.songil.songil.page_ordercomplete.OrdercompleteActivity" android:noHistory="true"/>
+        <activity android:name="com.songil.songil.page_withdrawal.WithdrawalActivity"/>
+        <activity android:name="com.songil.songil.page_shippinginfo.ShippingInfoActivity" android:windowSoftInputMode="adjustResize"/>
+        <activity android:name="com.songil.songil.page_commentwrite.CommentWriteActivity"/>
+        <activity android:name="com.songil.songil.page_story.StoryActivity"/>
+        <activity android:name="com.songil.songil.page_storywrite.StoryWriteActivity"/>
+        <activity android:name="com.songil.songil.page_imagepicker.ImagePickerActivity"/>
+        <activity android:name="com.songil.songil.page_artist.ArtistActivity"/>
+        <activity android:name="com.songil.songil.webview_address.WebAddressActivity"/>
+        <activity android:name="com.songil.songil.page_notice.NoticeActivity"/>
+        <activity android:name="com.songil.songil.page_qna.QnaActivity" android:windowSoftInputMode="adjustResize"/>
+        <activity android:name="com.songil.songil.page_abtest.AbtestActivity" android:windowSoftInputMode="adjustResize"/>
+        <activity android:name="com.songil.songil.page_artistmanage.subpage_answer.ArtistManageAnswerActivity" android:windowSoftInputMode="adjustResize"/>
+        <activity android:name="com.songil.songil.page_artistmanage.subpage_orderstat.ArtistManageOrderStatActivity"/>
+        <activity android:name="com.songil.songil.page_artistmanage.subpage_asklist.ArtistManageAskListActivity"/>
+        <activity android:name="com.songil.songil.page_delivery.DeliveryActivity"/>
+        <activity android:name="com.songil.songil.page_story.subpage_story_chat.StoryChatActivity" android:windowSoftInputMode="adjustResize"/>
+        <activity android:name="com.songil.songil.page_qnawrite.QnaWriteActivity" android:windowSoftInputMode="adjustResize"/>
+        <activity android:name="com.songil.songil.page_abtestwrite.AbtestWriteActivity" android:windowSoftInputMode="adjustResize"/>
+        <activity android:name="com.songil.songil.page_myfavorite_article.MyFavoriteArticleActivity"/>
+        <activity android:name="com.songil.songil.page_mypage_about_post.MyPagePostActivity"/>
+        <activity android:name="com.songil.songil.page_mypage_ask_history.MyPageAskActivity"/>
+        <activity android:name="com.songil.songil.page_mypage_modify_profile.ModifyProfileActivity" android:windowSoftInputMode="adjustResize"/>
+        <activity android:name="com.songil.songil.page_order.subpage_benefit.ApplyBenefitActivity"/>
+        <activity android:name="com.songil.songil.page_payinfo.PayInfoActivity"/>
+        <activity android:name="com.songil.songil.page_artistmanage.subpage_cancel_request.ArtistManageCancelRequestActivity"/>
+        <activity android:name="com.songil.songil.page_customer_center.CustomerCenterActivity"/>
+        <activity android:name="com.songil.songil.page_return.ReturnActivity"/>
+        <activity android:name="com.songil.songil.page_shippinginfo_confirmation.ShippingInfoConfirmationActivity"/>
     </application>
 
 </manifest>

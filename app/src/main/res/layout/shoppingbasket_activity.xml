@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.songil.page_basket.BasketViewModel" />
+            type="com.songil.songil.page_basket.BasketViewModel" />
 
     </data>
 

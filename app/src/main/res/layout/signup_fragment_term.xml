@@ -5,7 +5,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.songil.page_signup.subpage_term.SignupTermViewModel" />
+            type="com.songil.songil.page_signup.subpage_term.SignupTermViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

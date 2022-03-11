@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.songil.page_signup.subpage_authcode.SignupAuthcodeViewModel" />
+            type="com.songil.songil.page_signup.subpage_authcode.SignupAuthcodeViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

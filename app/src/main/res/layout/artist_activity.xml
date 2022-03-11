@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.songil.page_artist.ArtistViewModel" />
+            type="com.songil.songil.page_artist.ArtistViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -54,7 +54,7 @@
                         android:textSize="16sp"
                         tools:text="조민지"/>
 
-                    <com.example.songil.custom_view.shopping_cart_button.ShoppingCartButton
+                    <com.songil.songil.custom_view.shopping_cart_button.ShoppingCartButton
                         android:id="@+id/btn_cart"
                         android:layout_width="28dp"
                         android:layout_height="28dp"
@@ -80,7 +80,7 @@
 
         </com.google.android.material.appbar.AppBarLayout>
 
-        <com.example.songil.custom_layout.StickyNestedScrollView
+        <com.songil.songil.custom_layout.StickyNestedScrollView
             android:id="@+id/layout_main_scroll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -383,7 +383,7 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </com.example.songil.custom_layout.StickyNestedScrollView>
+        </com.songil.songil.custom_layout.StickyNestedScrollView>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

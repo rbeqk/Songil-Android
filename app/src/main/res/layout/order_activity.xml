@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.songil.page_order.OrderViewModel" />
+            type="com.songil.songil.page_order.OrderViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -184,7 +184,7 @@
                     android:layout_marginTop="8dp"
                     android:layout_marginEnd="6dp"
                     tools:text="00000"
-                    android:enabled="false"
+                    android:enabled="true"
                     android:text="@={viewModel.shippingInfo.zipCode}"
                     style="@style/EditTextStyle"
                     />
@@ -223,7 +223,7 @@
                     android:paddingBottom="8dp"
                     android:layout_marginTop="8dp"
                     android:text="@={viewModel.shippingInfo.address}"
-                    android:enabled="false"
+                    android:enabled="true"
                     style="@style/EditTextStyle"
                     />
 
