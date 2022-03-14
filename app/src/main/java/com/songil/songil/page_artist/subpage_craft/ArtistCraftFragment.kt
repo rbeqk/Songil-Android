@@ -45,9 +45,10 @@ class ArtistCraftFragment : BaseFragment<SimpleRecyclerviewFragmentBinding>(Simp
             if (liveData > 0){
                 binding.viewEmpty.root.visibility = View.GONE
                 viewModel.tryGetCraftList()
-                if (liveData < 2){ // 페이지 수가 적어 표시되는 아이템이 화면크기보다 작을 경우, 레이아웃의 minHeight 조정
+                binding.layoutMain.minHeight = getWindowSize()[1] - (activity as ArtistActivity).getToolbarHeight() - getStatusBarHeight()
+                /*if (liveData < 2){ // 페이지 수가 적어 표시되는 아이템이 화면크기보다 작을 경우, 레이아웃의 minHeight 조정
                     binding.layoutMain.minHeight = getWindowSize()[1] - (activity as ArtistActivity).getToolbarHeight() - getStatusBarHeight()
-                }
+                }*/
             } else {
                 binding.viewEmpty.root.visibility = View.VISIBLE
                 binding.progressBar.visibility = View.GONE

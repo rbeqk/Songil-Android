@@ -16,6 +16,8 @@ import com.songil.songil.config.BaseActivity
 import com.songil.songil.config.GlobalApplication
 import com.songil.songil.databinding.ShopActivityCategoryBinding
 import com.songil.songil.page_craft.CraftActivity
+import com.songil.songil.page_search.SearchActivity
+import com.songil.songil.page_search.models.SearchCategory
 import com.songil.songil.popup_sort.SortBottomSheet
 import com.songil.songil.popup_sort.popup_interface.PopupSortView
 import com.songil.songil.recycler.adapter.ShopCategoryTextAdapter
@@ -159,6 +161,12 @@ class ShopActivityCategory : BaseActivity<ShopActivityCategoryBinding>(R.layout.
         }
         binding.categoryBackground.setOnClickListener {
             hideCategorySelectView()
+        }
+
+        binding.btnSearch.setOnClickListener {
+            val intent = Intent(this, SearchActivity::class.java)
+            intent.putExtra(GlobalApplication.SEARCH_CATEGORY, SearchCategory.SHOP)
+            startActivityHorizontal(intent)
         }
     }
 

@@ -97,7 +97,7 @@ class OrderViewModel : BaseViewModel() {
 
     // 결제 버튼의 활성화 여부 설정
     fun checkBtnActivate(){
-        btnActivate.value = (shippingInfo.recipient != "" && shippingInfo.phone != "" && shippingInfo.zipCode != "" &&
+        btnActivate.value = (shippingInfo.recipient != "" && shippingInfo.phone != "" && shippingInfo.zipCode.length == 5 &&
                 shippingInfo.address != "" && shippingInfo.detailAddress != "")
     }
 

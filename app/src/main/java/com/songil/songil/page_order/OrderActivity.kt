@@ -162,6 +162,7 @@ class OrderActivity : BaseActivity<OrderActivityBinding>(R.layout.order_activity
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) { }
 
             override fun afterTextChanged(s: Editable?) {
+                orderViewModel.checkBtnActivate()
                 if (s.toString().length == 5){
                     Log.d("zipCode", "call!")
                     orderViewModel.tryCheckExtraFee()
