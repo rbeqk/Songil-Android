@@ -170,12 +170,12 @@ class WithABTestPagingAdapter(private val view : RvAbTestView) : PagingDataAdapt
             "A" -> {
                 holder.layoutA.visibility = View.VISIBLE
                 holder.layoutB.visibility = View.GONE
-                holder.rateA.text = holder.itemView.context.getString(R.string.form_vote_rate, percent, count)
+                holder.rateA.text = holder.itemView.context.getString(R.string.form_vote_rate, count, percent)
             }
             "B" -> {
                 holder.layoutA.visibility = View.GONE
                 holder.layoutB.visibility = View.VISIBLE
-                holder.rateB.text = holder.itemView.context.getString(R.string.form_vote_rate, percent, count)
+                holder.rateB.text = holder.itemView.context.getString(R.string.form_vote_rate, count, percent)
             }
             else -> {
                 holder.layoutA.visibility = View.GONE
