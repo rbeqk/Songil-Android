@@ -36,7 +36,7 @@ class MainTrendCraftAdapter(private val context: Context) : RecyclerView.Adapter
         Glide.with(context).load(dataList[position].mainImageUrl).into(holder.thumbnail)
         holder.craftName.text = dataList[position].name
         holder.artistName.text = dataList[position].artistName
-        holder.isNew.visibility = View.VISIBLE
+        holder.isNew.visibility = if (dataList[position].isNew == "Y") View.VISIBLE else View.GONE
         holder.root.setOnClickListener {
             val intent = Intent(context, CraftActivity::class.java)
             intent.putExtra(GlobalApplication.CRAFT_IDX, dataList[position].craftIdx)
