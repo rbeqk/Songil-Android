@@ -136,6 +136,7 @@
     <string name="usage">용도</string>
     <string name="detail_eng">DETAIL</string>
     <string name="one_by_one_ask_eng">1:1 ASK</string>
+    <string name="comment_eng">COMMENT</string>
     <string name="craft_description">작품 설명</string>
     <string name="size">크기</string>
     <string name="warning_notice">유의사항</string>
@@ -151,7 +152,7 @@
     <string name="write_inquiry_content">문의 내용을 작성해주세요.</string>
     <string name="register_inquiry">문의 등록하기</string>
     <string name="form_craft_size">%d x %d x %d (cm)</string>
-    <string name="show_only_photo_review">포토리뷰만 보기</string>
+    <string name="show_only_photo_review">포토 코멘트만 보기</string>
     <string name="report_with_underline"><u>신고</u></string>
     <string name="remove_with_underline"><u>삭제</u></string>
     <string name="form_count">%d/%d</string>
@@ -425,5 +426,7 @@
     <string name="empty_registered_article">아직 작가님이 등록한 아티클이 없어요</string>
     <string name="empty_inquiry_list">보낸 문의사항이 없어요.</string>
     <string name="empty_inquiry_list_artist">받은 문의사항이 없어요.</string>
+    <string name="empty_craft_comment">아직 상품에 대한 코멘트가 없어요.</string>
+    <string name="empty_craft_comment_photo">아직 상품에 대한 포토 코멘트가 없어요.</string>
 
 </resources>
