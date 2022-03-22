@@ -32,6 +32,7 @@ class QnaActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity), R
     private lateinit var keyboardVisibilityUtils : KeyboardVisibilityUtils
     private lateinit var writeResult : ActivityResultLauncher<Intent>
     private var itemIsExists = true // 현재 조회중인 아이템이 존재하는지 여부
+    private var itemIsLoaded = false // 조회하려는 Qna 요청에 대한 서버의 응답을 받았는지 여부
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,9 +84,11 @@ class QnaActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity), R
     private fun setObserver(){
         // get QnA 결과 observer
         val qnaResult = Observer<Int>{ liveData ->
+            itemIsLoaded = true
             when (liveData){
                 200 -> {
                     (binding.rvComment.adapter as PostAndChatAdapter).refresh()
+                    itemIsExists = true
                 }
                 2312 -> {
                     val dialog = WarningDialog("삭제된 QnA입니다.", "이전 페이지로 이동되며\n바로 새로고침됩니다."){
@@ -155,7 +158,6 @@ class QnaActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity), R
 
     private fun setButton(){
         binding.btnBack.setOnClickListener {
-            itemIsExists = true
             finish()
         }
 
@@ -183,11 +185,11 @@ class QnaActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity), R
     }
 
     override fun finish() {
-        if (itemIsExists){
+        if (itemIsExists && itemIsLoaded){
             val intent = Intent(this, BaseActivity::class.java)
             intent.putExtra("QNA", viewModel.getQna)
             setResult(RESULT_OK, intent)
-        } else {
+        } else if (!itemIsExists && itemIsLoaded) {
             val intent = Intent(this, BaseActivity::class.java)
             setResult(RESULT_OK, intent)
         }

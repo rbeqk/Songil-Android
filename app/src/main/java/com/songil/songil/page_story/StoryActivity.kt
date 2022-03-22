@@ -30,6 +30,7 @@ class StoryActivity : BaseActivity<StoryActivityBinding>(R.layout.story_activity
     private val viewModel : StoryViewModel by lazy { ViewModelProvider(this)[StoryViewModel::class.java] }
     private lateinit var writeResult : ActivityResultLauncher<Intent>
     private var itemIsExists = true // 현재 조회중인 아이템이 존재하는지 여부
+    private var itemIsLoaded = false // 현재 조회하려는 story 요청에 대한 서버의 응답을 받았는지 여부
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +51,7 @@ class StoryActivity : BaseActivity<StoryActivityBinding>(R.layout.story_activity
 
     private fun setObserver(){
         val getStoryObserver = Observer<Int>{ liveData ->
+            itemIsLoaded = true
             when (liveData){
                 200 -> {
                     applyView()
@@ -90,7 +92,6 @@ class StoryActivity : BaseActivity<StoryActivityBinding>(R.layout.story_activity
 
     private fun setButton(){
         binding.btnBack.setOnClickListener {
-            itemIsExists = true
             finish()
         }
 
@@ -168,11 +169,11 @@ class StoryActivity : BaseActivity<StoryActivityBinding>(R.layout.story_activity
     }
 
     override fun finish() {
-        if (itemIsExists){
+        if (itemIsExists && itemIsLoaded){
             val intent = Intent(this, BaseActivity::class.java)
-            intent.putExtra("STORY", viewModel.getFrontStory())
+            intent.putExtra("STORY", viewModel.getFrontStory()) // error check
             setResult(RESULT_OK, intent)
-        } else {
+        } else if (!itemIsExists && itemIsLoaded) {
             val intent = Intent(this, BaseActivity::class.java)
             setResult(RESULT_OK, intent)
         }

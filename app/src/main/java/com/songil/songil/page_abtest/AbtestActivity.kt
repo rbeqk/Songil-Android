@@ -33,6 +33,7 @@ class AbtestActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity)
     private lateinit var keyboardVisibilityUtils : KeyboardVisibilityUtils
     private lateinit var writeResult : ActivityResultLauncher<Intent>
     private var itemIsExists = true // 현재 조회중인 아이템이 존재하는지 여부
+    private var itemIsLoaded = false // 조회하려는 ab-test 요청에 대한 서버의 응답을 받았는지 여부
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -105,6 +106,7 @@ class AbtestActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity)
 
     private fun setObserver(){
         val abTestResult = Observer<Int>{ liveData ->
+            itemIsLoaded = true
             when (liveData){
                 200 -> {
                     binding.tvTitle.text = getString(R.string.AB_TEST_title, viewModel.getAbtest.artistName)
@@ -171,11 +173,11 @@ class AbtestActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity)
     }
 
     override fun finish() {
-        if (itemIsExists){
+        if (itemIsExists && itemIsLoaded){
             val intent = Intent(this, BaseActivity::class.java)
             intent.putExtra("ABTEST", viewModel.getAbtest)
             setResult(RESULT_OK, intent)
-        } else {
+        } else if (!itemIsExists && itemIsLoaded){
             val intent = Intent(this, BaseActivity::class.java)
             setResult(RESULT_OK, intent)
         }
