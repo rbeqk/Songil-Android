@@ -13,3 +13,10 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+## built application fils
+*.apk
+*.aar
+*.ap_
+*.aab
+
