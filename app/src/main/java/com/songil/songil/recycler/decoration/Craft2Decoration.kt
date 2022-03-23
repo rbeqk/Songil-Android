@@ -18,8 +18,8 @@ class Craft2Decoration(context : Context) : RecyclerView.ItemDecoration() {
     ) {
         super.getItemOffsets(outRect, view, parent, state)
 
-        val position = parent.getChildLayoutPosition(view)
-        val max = parent.childCount
+        val position = parent.getChildAdapterPosition(view)
+        val max = state.itemCount
 
         if (position == 0){
             outRect.left = size12
