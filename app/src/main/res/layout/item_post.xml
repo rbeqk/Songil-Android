@@ -23,6 +23,8 @@
             android:layout_marginTop="12dp"
             android:layout_marginEnd="8dp"
             android:textSize="14sp"
+            android:maxLines="1"
+            android:ellipsize="end"
             tools:text="집들이 선물로 어떤게 좋을까요?"/>
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -37,7 +39,7 @@
             android:layout_marginEnd="8dp"
             android:lineSpacingExtra="4sp"
             tools:text="신혼부부 친구의 집에 집들이를 가는데 부부선물로 어떤게 좋을까요? 와인을 좋아하는 친구라 와인잔이나 와인관련 용품이면 추천좀 부탁드립니다 "
-            android:maxLines="2"
+            android:lines="2"
             android:ellipsize="end"/>
 
         <androidx.appcompat.widget.AppCompatImageView
