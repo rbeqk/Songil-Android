@@ -189,11 +189,11 @@
                 <LinearLayout
                     android:id="@+id/btn_sort"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:layout_marginEnd="16dp"
+                    android:paddingHorizontal="16dp"
                     android:orientation="horizontal"
                     android:gravity="center">
 
@@ -206,6 +206,7 @@
                         android:text="@string/sort_popular"/>
 
                     <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/iv_sort_arrow"
                         android:layout_width="19dp"
                         android:layout_height="19dp"
                         android:layout_marginStart="6dp"
