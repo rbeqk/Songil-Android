@@ -373,8 +373,11 @@
     <string name="tag">태그</string>
     <string name="input_tag_message">#태그를 입력하세요.</string>
     <string name="how_to_input_tag">엔터를 누르면 태그가 등록됩니다. (최대 3개)</string>
-    <string name="comment_remove_content">삭제된 댓글입니다.</string>
+    <string name="comment_remove_content">[삭제된 댓글입니다]</string>
     <string name="comment_remove_user">(삭제)</string>
+    <string name="comment_block_content">[차단한 사용자의 댓글입니다]</string>
+    <string name="comment_block_user">(차단한 사용자)</string>
+    <string name="comment_report_content">[블라인드 처리된 댓글입니다]</string>
     <string name="do_modfiy">수정하기</string>
     <string name="do_remove">삭제하기</string>
     <string name="reported_comment">블라인드 처리된 코멘트입니다.</string>

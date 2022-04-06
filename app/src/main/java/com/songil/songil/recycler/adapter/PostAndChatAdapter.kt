@@ -1,5 +1,6 @@
 package com.songil.songil.recycler.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -88,7 +89,7 @@ class PostAndChatAdapter(private val view : RvPostAndChatView) : PagingDataAdapt
         }
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, @SuppressLint("RecyclerView") position: Int) {
         val item = getItem(position)
         if (item != null){
             when (holder) {
@@ -102,6 +103,39 @@ class PostAndChatAdapter(private val view : RvPostAndChatView) : PagingDataAdapt
                         holder.replyBtn.visibility = View.GONE
                         holder.reportOrRemoveBtn.visibility = View.GONE
                         holder.isWriter.visibility = View.GONE
+                    } else if (item.isReported == "Y") {
+                        // 신고 누적으로 인해 블라인드처리된 댓글인 경우
+                        holder.date.visibility = View.VISIBLE
+                        holder.replyBtn.visibility = View.VISIBLE
+                        holder.reportOrRemoveBtn.visibility = View.GONE
+                        holder.content.text = holder.itemView.context.getString(R.string.comment_report_content)
+                        holder.userName.text = item.userName
+                        holder.date.text = item.createdAt
+                        holder.replyBtn.text = if (position == pointPosition){
+                            holder.itemView.context.getString(R.string.cancel_write_reply)
+                        } else {
+                            holder.itemView.context.getString(R.string.comment_reply)
+                        }
+                        holder.replyBtn.setOnClickListener {
+                            view.clickReply(item.commentIdx, item.userName)
+                            setPointPosition(position)
+                        }
+                        holder.isWriter.visibility = if (isChatWriter) View.VISIBLE else View.INVISIBLE
+                        Glide.with(holder.itemView.context).load(item.userProfile).into(holder.profile)
+                    } else if (item.isBlocked == "Y" && item.isWriter != "Y") {
+                        // 차단된 사용자이면서, 해당 사용자가 작성한 글이 아닌 경우 해당 댓글을 숨김
+                        holder.content.text = holder.itemView.context.getString(R.string.comment_block_content)
+                        holder.userName.text = holder.itemView.context.getString(R.string.comment_block_user)
+                        holder.date.visibility = View.VISIBLE
+                        holder.reportOrRemoveBtn.visibility = View.VISIBLE
+                        holder.replyBtn.visibility = View.GONE
+                        holder.date.text = item.createdAt
+                        holder.reportOrRemoveBtn.text = if (item.isUserComment == "Y") holder.itemView.context.getString(R.string.remove_with_underline) else holder.itemView.context.getString(R.string.report_with_underline)
+                        holder.reportOrRemoveBtn.setOnClickListener {
+                            if (item.isUserComment == "Y"){ view.removeChat(item.commentIdx) }
+                            else { view.reportChat(item.commentIdx) }
+                        }
+                        holder.isWriter.visibility = if (isChatWriter) View.VISIBLE else View.INVISIBLE
                     } else {
                         holder.date.visibility = View.VISIBLE
                         holder.replyBtn.visibility = View.VISIBLE

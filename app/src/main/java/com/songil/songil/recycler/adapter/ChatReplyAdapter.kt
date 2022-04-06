@@ -18,9 +18,7 @@ class ChatReplyAdapter(private val replyData : ArrayList<ChatReply>, private val
     }
 
     override fun onBindViewHolder(holder: PostCommentReplyViewHolder, position: Int) {
-        holder.content.text = replyData[position].comment
         holder.date.text = replyData[position].createdAt
-        holder.userName.text = replyData[position].userName
         holder.isWriter.visibility = if (replyData[position].isWriter == "Y") View.VISIBLE else View.INVISIBLE
         holder.reportOrRemoveBtn.text = if (replyData[position].isUserComment == "Y") holder.itemView.context.getString(R.string.remove_with_underline) else holder.itemView.context.getString(R.string.report_with_underline)
         holder.reportOrRemoveBtn.setOnClickListener {
@@ -29,6 +27,16 @@ class ChatReplyAdapter(private val replyData : ArrayList<ChatReply>, private val
             } else {
                 view.reportChat(replyData[position].commentIdx)
             }
+        }
+        if (replyData[position].isReported == "Y"){
+            holder.content.text = holder.itemView.context.getString(R.string.comment_report_content)
+            holder.userName.text = replyData[position].userName
+        } else if (replyData[position].isBlocked == "Y" && replyData[position].isWriter != "Y") {
+            holder.content.text = holder.itemView.context.getString(R.string.comment_block_content)
+            holder.userName.text = holder.itemView.context.getString(R.string.comment_block_user)
+        } else {
+            holder.content.text = replyData[position].comment
+            holder.userName.text = replyData[position].userName
         }
     }
 

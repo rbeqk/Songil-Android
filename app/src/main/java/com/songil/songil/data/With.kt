@@ -27,10 +27,10 @@ data class WithStory(val storyIdx : Int, val imageUrl : ArrayList<String>, val t
 // qna, story 등에서 보이는 댓글들
 data class Chat(val commentIdx : Int, val userIdx : Int, val userProfile : String?, val userName : String,
                 val isWriter : String, val comment : String, val createdAt : String, val isUserComment : String,
-                val isDeleted : String, val isReported : String, val reComment : ArrayList<ChatReply>) : HeaderPost()
+                val isDeleted : String, val isReported : String, val isBlocked : String, val reComment : ArrayList<ChatReply>) : HeaderPost()
 
 data class ChatReply(val commentIdx : Int, val userIdx : Int, val userProfile : String?, val userName : String,
-                     val isWriter: String, val comment : String, val createdAt : String, val isUserComment : String)
+                     val isWriter: String, val comment : String, val createdAt : String, val isUserComment : String, val isReported : String, val isBlocked : String)
 
 // post (ab-test, qna) 가 header 이고, chat 이 content 인 postAndChatAdapter 에서 사용하기 위해 만든 클래스
 sealed class HeaderPost() : Serializable
