@@ -8,12 +8,14 @@ import androidx.paging.PagingConfig
 import androidx.paging.insertHeaderItem
 import com.songil.songil.config.BaseViewModel
 import com.songil.songil.data.WithQna
+import com.songil.songil.page_with.WithRepository
 import com.songil.songil.recycler.pagingSource.PostAndCommentPagingSource
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 class QnaViewModel : BaseViewModel() {
     private val repository = QnaRepository()
+    private val blockRepository = WithRepository()
     var qnaIdx = 0
     var loadQna = MutableLiveData<Int>()
     private var qna : WithQna = WithQna(0, 0, null, "",
@@ -26,6 +28,9 @@ class QnaViewModel : BaseViewModel() {
     var deleteCommentResult = MutableLiveData<Int>()
     var changeLikeResult = MutableLiveData<Boolean>()
     var deleteQnaResult = MutableLiveData<Boolean>()
+
+    var blockWriterResult = MutableLiveData<Boolean>()
+    var blockCommentUserResult = MutableLiveData<Boolean>()
 
     var flow = Pager(PagingConfig(pageSize = 10)){
         PostAndCommentPagingSource(repository, qnaIdx)
@@ -82,6 +87,20 @@ class QnaViewModel : BaseViewModel() {
             } else {
                 deleteQnaResult.postValue(false)
             }
+        }
+    }
+
+    fun tryBlockWriter(){
+        viewModelScope.launch(exceptionHandler) {
+            val result = blockRepository.postBlockUser(qna.userIdx)
+            blockWriterResult.postValue(result == 200)
+        }
+    }
+
+    fun tryBlockUserByChat(targetUserIdx : Int){
+        viewModelScope.launch(exceptionHandler) {
+            val result = blockRepository.postBlockUser(targetUserIdx)
+            blockCommentUserResult.postValue(result == 200)
         }
     }
 }

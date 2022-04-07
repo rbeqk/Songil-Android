@@ -11,6 +11,7 @@ class PostCommentViewHolder(binding : ItemPostCommentBinding) : RecyclerView.Vie
     val replies = binding.rvReply
     val date = binding.tvDeadline
     val replyBtn = binding.btnReply
+    val blockBtn = binding.btnBlock
     val isWriter = binding.tvIsWriter
     val reportOrRemoveBtn = binding.btnReport
 }
@@ -20,5 +21,6 @@ class PostCommentReplyViewHolder(binding : ItemPostCommentReplyBinding) : Recycl
     val content = binding.tvReply
     val date = binding.tvDeadline
     val reportOrRemoveBtn = binding.btnReport
+    val blockBtn = binding.btnBlock
     val isWriter = binding.tvIsWriter
 }

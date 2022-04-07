@@ -103,6 +103,7 @@ class PostAndChatAdapter(private val view : RvPostAndChatView) : PagingDataAdapt
                         holder.replyBtn.visibility = View.GONE
                         holder.reportOrRemoveBtn.visibility = View.GONE
                         holder.isWriter.visibility = View.GONE
+                        holder.blockBtn.visibility = View.GONE
                     } else if (item.isReported == "Y") {
                         // 신고 누적으로 인해 블라인드처리된 댓글인 경우
                         holder.date.visibility = View.VISIBLE
@@ -122,6 +123,10 @@ class PostAndChatAdapter(private val view : RvPostAndChatView) : PagingDataAdapt
                         }
                         holder.isWriter.visibility = if (isChatWriter) View.VISIBLE else View.INVISIBLE
                         Glide.with(holder.itemView.context).load(item.userProfile).into(holder.profile)
+                        holder.blockBtn.visibility = if (item.isUserComment == "Y") View.GONE else View.VISIBLE
+                        holder.blockBtn.setOnClickListener{
+                            view.blockChatUser(item.userIdx)
+                        }
                     } else if (item.isBlocked == "Y" && item.isWriter != "Y") {
                         // 차단된 사용자이면서, 해당 사용자가 작성한 글이 아닌 경우 해당 댓글을 숨김
                         holder.content.text = holder.itemView.context.getString(R.string.comment_block_content)
@@ -136,6 +141,7 @@ class PostAndChatAdapter(private val view : RvPostAndChatView) : PagingDataAdapt
                             else { view.reportChat(item.commentIdx) }
                         }
                         holder.isWriter.visibility = if (isChatWriter) View.VISIBLE else View.INVISIBLE
+                        holder.blockBtn.visibility = View.GONE
                     } else {
                         holder.date.visibility = View.VISIBLE
                         holder.replyBtn.visibility = View.VISIBLE
@@ -160,6 +166,10 @@ class PostAndChatAdapter(private val view : RvPostAndChatView) : PagingDataAdapt
                         }
                         holder.isWriter.visibility = if (isChatWriter) View.VISIBLE else View.INVISIBLE
                         Glide.with(holder.itemView.context).load(item.userProfile).into(holder.profile)
+                        holder.blockBtn.visibility = if (item.isUserComment == "Y") View.GONE else View.VISIBLE
+                        holder.blockBtn.setOnClickListener{
+                            view.blockChatUser(item.userIdx)
+                        }
                     }
                     holder.replies.layoutManager = LinearLayoutManager(holder.itemView.context, LinearLayoutManager.VERTICAL, false)
                     holder.replies.adapter = ChatReplyAdapter(item.reComment, view)

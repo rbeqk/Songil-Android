@@ -14,6 +14,8 @@ import com.songil.songil.config.*
 import com.songil.songil.databinding.ChatActivityBinding
 import com.songil.songil.page_abtestwrite.AbtestWriteActivity
 import com.songil.songil.page_report.ReportActivity
+import com.songil.songil.popup_block.BlockDialog
+import com.songil.songil.popup_block.PopupBlockView
 import com.songil.songil.popup_more.MoreBottomSheet
 import com.songil.songil.popup_more.popup_interface.PopupMoreView
 import com.songil.songil.popup_remove.RemoveDialog
@@ -27,7 +29,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 // Qna activity 와 99% 동일함, 나중에 리팩토링시 통합하는 작업 수행 예정
-class AbtestActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity), RvPostAndChatView, PopupMoreView, PopupRemoveView {
+class AbtestActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity), RvPostAndChatView, PopupMoreView, PopupRemoveView, PopupBlockView {
 
     private val viewModel : AbtestViewModel by lazy { ViewModelProvider(this)[AbtestViewModel::class.java] }
     private lateinit var keyboardVisibilityUtils : KeyboardVisibilityUtils
@@ -99,8 +101,12 @@ class AbtestActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity)
         }
 
         binding.btnMore.setOnClickListener {
-            val moreBottomSheet = MoreBottomSheet(this, (viewModel.getAbtest.isUserABTest == "Y"))
-            moreBottomSheet.show(supportFragmentManager, moreBottomSheet.tag)
+            if (itemIsLoaded){
+                val moreBottomSheet = MoreBottomSheet(this, (viewModel.getAbtest.isUserABTest == "Y"))
+                moreBottomSheet.show(supportFragmentManager, moreBottomSheet.tag)
+            } else {
+                showSimpleToastMessage(getString(R.string.data_loading))
+            }
         }
     }
 
@@ -170,6 +176,27 @@ class AbtestActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity)
             dialog.show(supportFragmentManager, dialog.tag)
         }
         viewModel.fetchState.observe(this, networkErrorObserver)
+
+        // 댓글을 통한 사용자 차단 결과 observer
+        val blockCommentUserObserver = Observer<Boolean> { result ->
+            if (result) {
+                (binding.rvComment.adapter as PostAndChatAdapter).refresh()
+            } else {
+                showSimpleToastMessage("사용자 차단에 실패했습니다. 잠시 후에 시도해주세요.")
+            }
+        }
+        viewModel.blockCommentUserResult.observe(this, blockCommentUserObserver)
+
+        // 본문의 더보기 버튼을 통한 작성자 차단 결과 observer
+        val blockWriterObserver = Observer<Boolean>{ result ->
+            if (result){
+                itemIsExists = false
+                finish()
+            } else {
+                showSimpleToastMessage("사용자 차단에 실패했습니다. 잠시 후에 시도해주세요.")
+            }
+        }
+        viewModel.blockWriterResult.observe(this, blockWriterObserver)
     }
 
     override fun finish() {
@@ -186,7 +213,6 @@ class AbtestActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity)
     }
 
     override fun clickReply(parentIdx: Int, userName : String?) {
-
         if (viewModel.replyPointIdx == parentIdx){
             viewModel.replyPointIdx = null
             binding.etComment.hint = ""
@@ -207,10 +233,24 @@ class AbtestActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity)
     }
 
     override fun reportChat(commentIdx: Int) {
-        val intent = Intent(this, ReportActivity::class.java)
-        intent.putExtra(GlobalApplication.TARGET_IDX, commentIdx)
-        intent.putExtra(GlobalApplication.REPORT_TARGET, ReportTarget.ABTEST_COMMENT)
-        startActivityHorizontal(intent)
+        if (isLogin()){
+            val intent = Intent(this, ReportActivity::class.java)
+            intent.putExtra(GlobalApplication.TARGET_IDX, commentIdx)
+            intent.putExtra(GlobalApplication.REPORT_TARGET, ReportTarget.ABTEST_COMMENT)
+            startActivityHorizontal(intent)
+        } else {
+            callNeedLoginDialog()
+        }
+    }
+
+    // 댓글에서 사용자 차단을 클릭한 경우 호출
+    override fun blockChatUser(targetUserIdx: Int) {
+        if (isLogin()){
+            val dialog = BlockDialog(this, targetUserIdx)
+            dialog.show(supportFragmentManager, dialog.tag)
+        } else {
+            callNeedLoginDialog()
+        }
     }
 
     override fun clickLikeBtn() { /* empty function, only qna activity use this function */ }
@@ -245,13 +285,38 @@ class AbtestActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity)
     }
 
     override fun bottomSheetReportClick() {
-        val intent = Intent(this, ReportActivity::class.java)
-        intent.putExtra(GlobalApplication.REPORT_TARGET, ReportTarget.ABTEST)
-        intent.putExtra(GlobalApplication.TARGET_IDX, viewModel.abtestIdx)
-        startActivityHorizontal(intent)
+        if (isLogin()){
+            val intent = Intent(this, ReportActivity::class.java)
+            intent.putExtra(GlobalApplication.REPORT_TARGET, ReportTarget.ABTEST)
+            intent.putExtra(GlobalApplication.TARGET_IDX, viewModel.abtestIdx)
+            startActivityHorizontal(intent)
+        } else {
+            callNeedLoginDialog()
+        }
+    }
+
+    // 더보기 클릭시 아래에서 올라오는 항목 중 차단하기 클릭시 이벤트
+    // 차단 확인 dialog 호출
+    override fun bottomSheetBlockClick() {
+        if (isLogin()){
+            val dialog = BlockDialog(this)
+            dialog.show(supportFragmentManager, dialog.tag)
+        } else {
+            callNeedLoginDialog()
+        }
     }
 
     override fun popupRemoveClick() {
         viewModel.tryDeleteAbTest()
+    }
+
+    // 차단하기 클릭시 발생하는 dialog 에서 예 클릭시 이벤트
+    // targetIdx 가 null 인 경우는 해당 본문을 통한 차단하기 이벤트가 발생한 경우
+    override fun block(targetIdx: Int?) {
+        if (targetIdx == null){
+            viewModel.tryBlockWriter()
+        } else {
+            viewModel.tryBlockUserByChat(targetIdx)
+        }
     }
 }

@@ -24,12 +24,15 @@ import com.songil.songil.popup_warning.SocketTimeoutDialog
 import com.songil.songil.popup_warning.WarningDialog
 import com.songil.songil.viewPager2.adapter.Vp2ImageAdapter
 import com.google.android.material.chip.Chip
+import com.songil.songil.popup_block.BlockDialog
+import com.songil.songil.popup_block.PopupBlockView
 
-class StoryActivity : BaseActivity<StoryActivityBinding>(R.layout.story_activity), PopupMoreView, PopupRemoveView {
+class StoryActivity : BaseActivity<StoryActivityBinding>(R.layout.story_activity), PopupMoreView, PopupRemoveView, PopupBlockView {
 
     private val viewModel : StoryViewModel by lazy { ViewModelProvider(this)[StoryViewModel::class.java] }
     private lateinit var writeResult : ActivityResultLauncher<Intent>
-    private var itemIsExists = true // 현재 조회중인 아이템이 존재하는지 여부
+    private lateinit var blockUserInChat : ActivityResultLauncher<Intent> // storyChatActivity 에서 누군가를 차단했을 때를 위해 사용
+    private var itemIsExists = true // 현재 조회중인 아이템이 존재하는지 여부 또는 전 페이지에서 데이터를 다시 로딩해야되는지 여부
     private var itemIsLoaded = false // 현재 조회하려는 story 요청에 대한 서버의 응답을 받았는지 여부
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,6 +46,15 @@ class StoryActivity : BaseActivity<StoryActivityBinding>(R.layout.story_activity
                 viewModel.tryGetStoryDetail()
             }
         }
+
+        // 채팅 페이지에서 누군가를 차단했다면, with 페이지에서 해당 사용자의 게시글을 숨겨야 하므로 다시 로드하는게 필요함
+        // 따라서 itemIsExists 를 true 로 설정
+        blockUserInChat = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
+            if (result.resultCode == RESULT_OK){
+                itemIsExists = false
+            }
+        }
+
 
         setButton()
         setObserver()
@@ -88,6 +100,16 @@ class StoryActivity : BaseActivity<StoryActivityBinding>(R.layout.story_activity
             dialog.show(supportFragmentManager, dialog.tag)
         }
         viewModel.fetchState.observe(this, networkErrorObserver)
+
+        val blockWriterObserver = Observer<Boolean> { result ->
+             if (result){
+                 itemIsExists = false
+                 finish()
+             } else {
+                 showSimpleToastMessage("사용자 차단에 실패했습니다. 잠시 후에 시도해주세요.")
+             }
+        }
+        viewModel.blockWriterResult.observe(this, blockWriterObserver)
     }
 
     private fun setButton(){
@@ -96,9 +118,15 @@ class StoryActivity : BaseActivity<StoryActivityBinding>(R.layout.story_activity
         }
 
         binding.btnComment.setOnClickListener {
-            val intent = Intent(this, StoryChatActivity::class.java)
-            intent.putExtra(GlobalApplication.STORY_IDX, viewModel.storyIdx)
-            startActivityHorizontal(intent)
+            if (itemIsLoaded){
+                val intent = Intent(this, StoryChatActivity::class.java)
+                intent.putExtra(GlobalApplication.STORY_IDX, viewModel.storyIdx)
+                blockUserInChat.launch(intent)
+                overridePendingTransition(R.anim.from_right, R.anim.to_left)
+                //startActivityHorizontal(intent)
+            } else {
+                showSimpleToastMessage(getString(R.string.data_loading))
+            }
         }
 
         binding.btnFavorite.setOnClickListener {
@@ -111,8 +139,12 @@ class StoryActivity : BaseActivity<StoryActivityBinding>(R.layout.story_activity
         }
 
         binding.btnMore.setOnClickListener {
-            val moreBottomSheet = MoreBottomSheet(this, (viewModel.storyDetail.isUserStory == "Y"))
-            moreBottomSheet.show(supportFragmentManager, moreBottomSheet.tag)
+            if (itemIsLoaded){
+                val moreBottomSheet = MoreBottomSheet(this, (viewModel.storyDetail.isUserStory == "Y"))
+                moreBottomSheet.show(supportFragmentManager, moreBottomSheet.tag)
+            } else {
+                showSimpleToastMessage(getString(R.string.data_loading))
+            }
         }
     }
 
@@ -195,14 +227,34 @@ class StoryActivity : BaseActivity<StoryActivityBinding>(R.layout.story_activity
     }
 
     override fun bottomSheetReportClick() {
-        val intent = Intent(this, ReportActivity::class.java)
-        intent.putExtra(GlobalApplication.REPORT_TARGET, ReportTarget.STORY)
-        intent.putExtra(GlobalApplication.TARGET_IDX, viewModel.storyIdx)
-        startActivityHorizontal(intent)
+        if (isLogin()){
+            val intent = Intent(this, ReportActivity::class.java)
+            intent.putExtra(GlobalApplication.REPORT_TARGET, ReportTarget.STORY)
+            intent.putExtra(GlobalApplication.TARGET_IDX, viewModel.storyIdx)
+            startActivityHorizontal(intent)
+        } else {
+            callNeedLoginDialog()
+        }
+    }
+
+    override fun bottomSheetBlockClick() {
+        if (isLogin()){
+            val dialog = BlockDialog(this)
+            dialog.show(supportFragmentManager, dialog.tag)
+        }
+         else {
+             callNeedLoginDialog()
+        }
     }
 
     override fun popupRemoveClick() {
         viewModel.tryDeleteStory()
+    }
+
+    override fun block(targetIdx: Int?) {
+        if (targetIdx == null){
+            viewModel.tryBlockWriter()
+        }
     }
 
 }

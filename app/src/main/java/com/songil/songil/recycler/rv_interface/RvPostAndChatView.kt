@@ -8,6 +8,8 @@ interface RvPostAndChatView {
 
     fun reportChat(commentIdx : Int)
 
+    fun blockChatUser(targetUserIdx : Int)
+
     // header qna
     fun clickLikeBtn()
 

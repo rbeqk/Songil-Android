@@ -25,6 +25,8 @@ class MoreBottomSheet(private val view : PopupMoreView, private val isWriter : B
         if (isWriter){
             binding.tvbtnReport.visibility = View.GONE
             binding.lineRemove.visibility = View.GONE
+            binding.tvbtnBlock.visibility = View.GONE
+            binding.lineReport.visibility = View.GONE
         } else {
             binding.tvbtnRemove.visibility = View.GONE
             binding.lineRemove.visibility = View.GONE
@@ -46,6 +48,11 @@ class MoreBottomSheet(private val view : PopupMoreView, private val isWriter : B
 
         binding.tvbtnReport.setOnClickListener {
             view.bottomSheetReportClick()
+            dismiss()
+        }
+
+        binding.tvbtnBlock.setOnClickListener {
+            view.bottomSheetBlockClick()
             dismiss()
         }
     }
