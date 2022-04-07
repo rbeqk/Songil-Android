@@ -268,7 +268,7 @@ class OrderActivity : BaseActivity<OrderActivityBinding>(R.layout.order_activity
         val bootUser = BootUser().setPhone(orderViewModel.shippingInfo.phone)
         val bootExtra = BootExtra().setQuotas(intArrayOf(0, 2, 3))
         Bootpay.init(this).setApplicationId(BuildConfig.BOOTPAY_KEY).setContext(this)
-            .setBootUser(bootUser).setBootExtra(bootExtra).setUX(UX.PG_DIALOG).setPG(PG.NICEPAY).setMethod(Method.CARD)
+            .setBootUser(bootUser).setBootExtra(bootExtra).setUX(UX.PG_DIALOG).setPG(PG.INICIS).setMethod(Method.CARD)
             .setName(orderViewModel.getOrderName()).setOrderId(orderViewModel.orderIdx.toString()).setPrice(orderViewModel.priceData.calTotalPrice())
             .onDone { data ->
                 orderViewModel.tryPostOrderVerification(parseReceiptId(data))
