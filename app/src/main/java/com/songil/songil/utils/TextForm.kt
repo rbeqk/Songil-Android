@@ -19,3 +19,7 @@ fun changeToPriceFormKr(price : Int, isMinus : Boolean ?= null) : String {
 fun changeToPriceForm(price : Int) : String {
     return DecimalFormat("#,###").format(price)
 }
+
+fun checkPhoneString(phoneNumber : String) : Boolean {
+    return (phoneNumber.matches(Regex("^01[016789]-\\d{3,4}-\\d{4}\$")) || phoneNumber.matches(Regex("^01[016789][0-9]{3,4}[0-9]{4}\$")))
+}

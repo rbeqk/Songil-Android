@@ -150,8 +150,8 @@ class OrderActivity : BaseActivity<OrderActivityBinding>(R.layout.order_activity
         }
 
         val phoneTextWatcher = object : PhoneNumberFormattingTextWatcher(){
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                super.onTextChanged(s, start, before, count)
+            override fun afterTextChanged(s: Editable?) {
+                super.afterTextChanged(s)
                 orderViewModel.checkBtnActivate()
             }
         }
@@ -164,7 +164,6 @@ class OrderActivity : BaseActivity<OrderActivityBinding>(R.layout.order_activity
             override fun afterTextChanged(s: Editable?) {
                 orderViewModel.checkBtnActivate()
                 if (s.toString().length == 5){
-                    Log.d("zipCode", "call!")
                     orderViewModel.tryCheckExtraFee()
                 }
             }
