@@ -14,16 +14,19 @@ import com.songil.songil.config.GlobalApplication
 import com.songil.songil.config.ReportTarget
 import com.songil.songil.databinding.ChatActivityBinding
 import com.songil.songil.page_report.ReportActivity
+import com.songil.songil.popup_block.BlockDialog
+import com.songil.songil.popup_block.PopupBlockView
 import com.songil.songil.recycler.adapter.PostAndChatAdapter
 import com.songil.songil.recycler.rv_interface.RvPostAndChatView
 import com.songil.songil.utils.softKeyboardCallback.KeyboardVisibilityUtils
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class StoryChatActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity), RvPostAndChatView {
+class StoryChatActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity), RvPostAndChatView, PopupBlockView {
 
     private val viewModel : StoryChatViewModel by lazy { ViewModelProvider(this)[StoryChatViewModel::class.java] }
     private lateinit var keyboardVisibilityUtils : KeyboardVisibilityUtils
+    private var userBlock = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -88,6 +91,16 @@ class StoryChatActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activi
         viewModel.deleteCommentResult.observe(this, deleteCommentResult)
 
         viewModel.fetchState.observe(this, baseNetworkErrorObserver)
+
+        val blockUserResult = Observer<Boolean> { result ->
+            if (result) {
+                (binding.rvComment.adapter as PostAndChatAdapter).refresh()
+                userBlock = true
+            } else {
+                showSimpleToastMessage("사용자 차단에 실패했습니다. 잠시 후에 시도해주세요.")
+            }
+        }
+        viewModel.blockCommentUserResult.observe(this, blockUserResult)
     }
 
     private fun setRecyclerView(){
@@ -114,6 +127,10 @@ class StoryChatActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activi
     }
 
     override fun finish() {
+        if (userBlock){
+            val intent = Intent(this, BaseActivity::class.java)
+            setResult(RESULT_OK, intent)
+        }
         super.finish()
         exitHorizontal
     }
@@ -139,13 +156,34 @@ class StoryChatActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activi
     }
 
     override fun reportChat(commentIdx: Int) {
-        val intent = Intent(this, ReportActivity::class.java)
-        intent.putExtra(GlobalApplication.TARGET_IDX, commentIdx)
-        intent.putExtra(GlobalApplication.REPORT_TARGET, ReportTarget.STORY_COMMENT)
-        startActivityHorizontal(intent)
+        if (isLogin()){
+            val intent = Intent(this, ReportActivity::class.java)
+            intent.putExtra(GlobalApplication.TARGET_IDX, commentIdx)
+            intent.putExtra(GlobalApplication.REPORT_TARGET, ReportTarget.STORY_COMMENT)
+            startActivityHorizontal(intent)
+        } else {
+            callNeedLoginDialog()
+        }
+    }
+
+    override fun blockChatUser(targetUserIdx: Int) {
+        if (isLogin()){
+            val dialog = BlockDialog(this, targetUserIdx)
+            dialog.show(supportFragmentManager, dialog.tag)
+        } else {
+            callNeedLoginDialog()
+        }
     }
 
     override fun clickLikeBtn() { /* empty function, only qna activity use this function */ }
     override fun vote(abTestIdx: Int, vote: String) { /* empty function, only ab-test activity use this function */ }
     override fun cancelVote(abTestIdx: Int) { /* empty function, only ab-test activity use this function */ }
+
+    override fun block(targetIdx: Int?) {
+        if (targetIdx != null){
+            viewModel.tryBlockUserByChat(targetIdx)
+        } else {
+            showSimpleToastMessage("사용자 차단에 실패했습니다. 잠시 후에 시도해주세요.")
+        }
+    }
 }

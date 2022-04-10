@@ -9,6 +9,7 @@ import com.songil.songil.data.CraftAndAmount
 import com.songil.songil.page_order.models.PriceData
 import com.songil.songil.page_order.models.RequestBodyPostEtcInfo
 import com.songil.songil.page_order.models.ShippingInfo
+import com.songil.songil.utils.checkPhoneString
 import kotlinx.coroutines.launch
 
 class OrderViewModel : BaseViewModel() {
@@ -97,7 +98,7 @@ class OrderViewModel : BaseViewModel() {
 
     // 결제 버튼의 활성화 여부 설정
     fun checkBtnActivate(){
-        btnActivate.value = (shippingInfo.recipient != "" && shippingInfo.phone != "" && shippingInfo.zipCode.length == 5 &&
+        btnActivate.value = (shippingInfo.recipient != "" && checkPhoneString(shippingInfo.phone) && shippingInfo.zipCode.length == 5 &&
                 shippingInfo.address != "" && shippingInfo.detailAddress != "")
     }
 

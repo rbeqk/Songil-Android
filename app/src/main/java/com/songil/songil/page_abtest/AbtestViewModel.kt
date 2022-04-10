@@ -7,6 +7,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.insertHeaderItem
 import com.songil.songil.config.BaseViewModel
 import com.songil.songil.data.ABTest
+import com.songil.songil.page_with.WithRepository
 import com.songil.songil.recycler.pagingSource.PostAndCommentPagingSource
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -14,6 +15,7 @@ import kotlinx.coroutines.launch
 class AbtestViewModel : BaseViewModel() {
     private val abtestRepository = AbtestRepository()
     private val voteRepository = AbtestVoteRepository()
+    private val blockRepository = WithRepository()
 
     var abtestIdx = 0
     var loadAbtest = MutableLiveData<Int>()
@@ -27,6 +29,9 @@ class AbtestViewModel : BaseViewModel() {
 
     var voteResult = MutableLiveData<Boolean>()
     var deleteResult = MutableLiveData<Int>()
+
+    var blockWriterResult = MutableLiveData<Boolean>()
+    var blockCommentUserResult = MutableLiveData<Boolean>()
 
     var flow = Pager(PagingConfig(pageSize = 10)) {
         PostAndCommentPagingSource(abtestRepository, abtestIdx)
@@ -75,6 +80,20 @@ class AbtestViewModel : BaseViewModel() {
         viewModelScope.launch(exceptionHandler) {
             val result = abtestRepository.deleteAbTest(abtestIdx)
             deleteResult.postValue(result.body()?.code ?: -1)
+        }
+    }
+
+    fun tryBlockWriter(){
+        viewModelScope.launch(exceptionHandler) {
+            val result = blockRepository.postBlockUser(abTest.userIdx)
+            blockWriterResult.postValue(result == 200)
+        }
+    }
+
+    fun tryBlockUserByChat(targetUserIdx : Int){
+        viewModelScope.launch(exceptionHandler) {
+            val result = blockRepository.postBlockUser(targetUserIdx)
+            blockCommentUserResult.postValue(result == 200)
         }
     }
 }

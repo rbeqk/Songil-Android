@@ -31,12 +31,21 @@ class ChatReplyAdapter(private val replyData : ArrayList<ChatReply>, private val
         if (replyData[position].isReported == "Y"){
             holder.content.text = holder.itemView.context.getString(R.string.comment_report_content)
             holder.userName.text = replyData[position].userName
+            holder.blockBtn.visibility = if (replyData[position].isUserComment == "Y") View.GONE else View.VISIBLE
+            holder.blockBtn.setOnClickListener {
+                view.blockChatUser(replyData[position].userIdx)
+            }
         } else if (replyData[position].isBlocked == "Y" && replyData[position].isWriter != "Y") {
             holder.content.text = holder.itemView.context.getString(R.string.comment_block_content)
             holder.userName.text = holder.itemView.context.getString(R.string.comment_block_user)
+            holder.blockBtn.visibility = View.GONE
         } else {
             holder.content.text = replyData[position].comment
             holder.userName.text = replyData[position].userName
+            holder.blockBtn.visibility = if (replyData[position].isUserComment == "Y") View.GONE else View.VISIBLE
+            holder.blockBtn.setOnClickListener {
+                view.blockChatUser(replyData[position].userIdx)
+            }
         }
     }
 

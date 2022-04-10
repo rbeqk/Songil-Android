@@ -9,7 +9,7 @@ data class WithQna(val qnaIdx : Int, val userIdx : Int, var userProfile : String
 
 data class TalkWith(val categoryIdx : Int, val text : String, val idx : Int) // home 화면에서 talk with +
 
-data class ABTest(val abTestIdx : Int = -1, val artistIdx : Int = -1, var artistImageUrl : String? = null, var artistName : String = "",
+data class ABTest(val abTestIdx : Int = -1, val userIdx : Int = -1, val artistIdx : Int = -1, var artistImageUrl : String? = null, var artistName : String = "",
                   var content : String = "", val imageA : String = "", val imageB : String = "", val deadline : String = "", var totalCommentCnt : Int = -1,
                   var isFinished : String = "", val isUserABTest : String = "", var voteInfo : ABVoteInfo? = null, var finalInfo : ABVoteInfo? = null) : HeaderPost(), Serializable
 

@@ -5,16 +5,19 @@ import androidx.lifecycle.viewModelScope
 import com.songil.songil.config.BaseViewModel
 import com.songil.songil.data.FrontStory
 import com.songil.songil.data.WithStory
+import com.songil.songil.page_with.WithRepository
 import kotlinx.coroutines.launch
 
 class StoryViewModel : BaseViewModel() {
     private val repository = StoryRepository()
+    private val blockRepository = WithRepository()
     lateinit var storyDetail : WithStory
     var storyIdx = 0
 
     var storyDetailResult = MutableLiveData<Int>()
     var likeResult = MutableLiveData<Boolean>()
     var removeResult = MutableLiveData<Boolean>()
+    val blockWriterResult = MutableLiveData<Boolean>()
 
     fun getFrontStory() : FrontStory {
         return FrontStory(
@@ -62,4 +65,10 @@ class StoryViewModel : BaseViewModel() {
         }
     }
 
+    fun tryBlockWriter(){
+        viewModelScope.launch(exceptionHandler) {
+            val result = blockRepository.postBlockUser(storyDetail.userIdx)
+            blockWriterResult.postValue(result == 200)
+        }
+    }
 }

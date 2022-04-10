@@ -154,6 +154,7 @@
     <string name="form_craft_size">%d x %d x %d (cm)</string>
     <string name="show_only_photo_review">포토 코멘트만 보기</string>
     <string name="report_with_underline"><u>신고</u></string>
+    <string name="block_with_underline"><u>차단</u></string>
     <string name="remove_with_underline"><u>삭제</u></string>
     <string name="form_count">%d/%d</string>
     <string name="form_single_count">%d개</string>
@@ -380,7 +381,10 @@
     <string name="comment_report_content">[블라인드 처리된 댓글입니다]</string>
     <string name="do_modfiy">수정하기</string>
     <string name="do_remove">삭제하기</string>
+    <string name="do_block">차단하기</string>
+    <string name="block_confirm_message">이 게시글의 작성자를 차단하시겠습니까?\n차단한 사용자의 게시글은 hot-talk를 제외하고는 조회할 수 없으며 차단은 해제할 수 없습니다.</string>
     <string name="reported_comment">블라인드 처리된 코멘트입니다.</string>
+    <string name="data_loading">데이터 로딩중입니다 잠시만 기다려주세요</string>
 
     <!-- story 상세 페이지 관련 -->
     <string name="story_title">%s님의 스토리</string>

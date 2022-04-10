@@ -6,4 +6,6 @@ interface PopupMoreView {
     fun bottomSheetRemoveClick()
 
     fun bottomSheetReportClick()
+
+    fun bottomSheetBlockClick()
 }

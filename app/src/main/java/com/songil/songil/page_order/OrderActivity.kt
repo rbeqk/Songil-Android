@@ -150,8 +150,8 @@ class OrderActivity : BaseActivity<OrderActivityBinding>(R.layout.order_activity
         }
 
         val phoneTextWatcher = object : PhoneNumberFormattingTextWatcher(){
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                super.onTextChanged(s, start, before, count)
+            override fun afterTextChanged(s: Editable?) {
+                super.afterTextChanged(s)
                 orderViewModel.checkBtnActivate()
             }
         }
@@ -164,7 +164,6 @@ class OrderActivity : BaseActivity<OrderActivityBinding>(R.layout.order_activity
             override fun afterTextChanged(s: Editable?) {
                 orderViewModel.checkBtnActivate()
                 if (s.toString().length == 5){
-                    Log.d("zipCode", "call!")
                     orderViewModel.tryCheckExtraFee()
                 }
             }
@@ -268,7 +267,7 @@ class OrderActivity : BaseActivity<OrderActivityBinding>(R.layout.order_activity
         val bootUser = BootUser().setPhone(orderViewModel.shippingInfo.phone)
         val bootExtra = BootExtra().setQuotas(intArrayOf(0, 2, 3))
         Bootpay.init(this).setApplicationId(BuildConfig.BOOTPAY_KEY).setContext(this)
-            .setBootUser(bootUser).setBootExtra(bootExtra).setUX(UX.PG_DIALOG).setPG(PG.NICEPAY).setMethod(Method.CARD)
+            .setBootUser(bootUser).setBootExtra(bootExtra).setUX(UX.PG_DIALOG).setPG(PG.INICIS).setMethod(Method.CARD)
             .setName(orderViewModel.getOrderName()).setOrderId(orderViewModel.orderIdx.toString()).setPrice(orderViewModel.priceData.calTotalPrice())
             .onDone { data ->
                 orderViewModel.tryPostOrderVerification(parseReceiptId(data))
