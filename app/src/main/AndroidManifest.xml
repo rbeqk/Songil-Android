@@ -15,7 +15,8 @@
         android:supportsRtl="true"
         android:largeHeap="true"
         android:theme="@style/Theme.Songil">
-        <activity android:name="com.songil.songil.page_splash.SplashActivity">
+        <activity android:name="com.songil.songil.page_splash.SplashActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
