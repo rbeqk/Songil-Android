@@ -382,7 +382,7 @@
     <string name="do_modfiy">수정하기</string>
     <string name="do_remove">삭제하기</string>
     <string name="do_block">차단하기</string>
-    <string name="block_confirm_message">이 게시글의 작성자를 차단하시겠습니까?\n차단한 사용자의 게시글은 hot-talk를 제외하고는 조회할 수 없으며 차단은 해제할 수 없습니다.</string>
+    <string name="block_confirm_message">이 사용자를 차단하시겠습니까?\n차단한 사용자의 게시글은 hot-talk를 제외하고는 조회할 수 없으며 차단은 해제할 수 없습니다.</string>
     <string name="reported_comment">블라인드 처리된 코멘트입니다.</string>
     <string name="data_loading">데이터 로딩중입니다 잠시만 기다려주세요</string>
 
