@@ -13,6 +13,7 @@ import java.util.concurrent.TimeUnit
 class GlobalApplication : Application() {
     companion object {
         const val API_URL = "https://prod.songilcraft.shop/"
+        const val TEST_API_URL = "https://dev.songilcraft.shop"
         const val X_ACCESS_TOKEN = "x-access-token"
         const val IS_ARTIST = "is_artist"
         const val CRAFT_IDX = "craft-idx"
