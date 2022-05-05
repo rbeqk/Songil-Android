@@ -71,6 +71,7 @@
         <activity android:name="com.songil.songil.page_customer_center.CustomerCenterActivity"/>
         <activity android:name="com.songil.songil.page_return.ReturnActivity"/>
         <activity android:name="com.songil.songil.page_shippinginfo_confirmation.ShippingInfoConfirmationActivity"/>
+        <activity android:name="com.songil.songil.page_term.TermActivity"/>
     </application>
 
 </manifest>

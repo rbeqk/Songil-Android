@@ -27,3 +27,7 @@ enum class InquiryTarget {
 enum class CancelOrReturn {
     CANCEL, RETURN
 }
+
+enum class Term {
+    USE, PRIVACY
+}
