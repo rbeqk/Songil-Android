@@ -436,4 +436,20 @@
     <string name="empty_craft_comment">아직 상품에 대한 코멘트가 없어요.</string>
     <string name="empty_craft_comment_photo">아직 상품에 대한 포토 코멘트가 없어요.</string>
 
+    <!-- 메인화면 최하단의 사업자 정보 관련 -->
+    <string name="company_name">손길(SONGIL)</string>
+    <string name="representative_director">대표</string>
+    <string name="representative_director_value">채세은</string>
+    <string name="representative_director_phone_number">대표번호</string>
+    <string name="representative_director_phone_number_value">010–2077–7578</string>
+    <string name="business_registration_number">사업자등록번호</string>
+    <string name="business_registration_number_value">803–08–01966</string>
+    <string name="company_address">주소</string>
+    <string name="company_address_value">서울특별시 송파구 올림픽로 212, A동 1238호</string>
+    <string name="main_order_sales_registration_number">통신판매업신고</string>
+    <string name="main_order_sales_registration_number_value">제2022–서울송파–1376</string>
+    <string name="vertical_separator">|</string>
+
+    <string name="wrong_access">잘못된 접근입니다.</string>
+
 </resources>
