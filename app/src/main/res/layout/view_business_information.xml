@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:background="@color/g_1">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_const_company"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="@string/company_name"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iv_var_arrow"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@drawable/ic_down"
+            app:layout_constraintTop_toTopOf="@id/tv_const_company"
+            app:layout_constraintBottom_toBottomOf="@id/tv_const_company"
+            app:layout_constraintStart_toEndOf="@id/tv_const_company"
+            android:tint="@color/songil_2"/>
+
+        <View
+            android:id="@+id/btn_show_business_info"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="@id/tv_const_company"
+            app:layout_constraintEnd_toEndOf="@id/iv_var_arrow"
+            app:layout_constraintTop_toTopOf="@id/tv_const_company"
+            app:layout_constraintBottom_toBottomOf="@id/tv_const_company"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_business_information"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tv_const_company"
+            android:visibility="gone"
+            android:layout_marginTop="12dp">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guide_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintGuide_percent="0.3"
+                android:orientation="vertical"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_const_business_registration_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/business_registration_number"
+                app:layout_constraintTop_toTopOf="@id/tv_var_business_registration_number_value"
+                app:layout_constraintStart_toStartOf="parent"
+                android:paddingVertical="2dp"
+                style="@style/business_registration_text"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_var_business_registration_number_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/business_registration_number_value"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="@id/guide_value"
+                android:paddingVertical="2dp"
+                style="@style/business_registration_text"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_const_main_order_sales_registration_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/main_order_sales_registration_number"
+                app:layout_constraintTop_toTopOf="@id/tv_var_main_order_sales_registration_number_value"
+                app:layout_constraintStart_toStartOf="parent"
+                android:paddingVertical="2dp"
+                style="@style/business_registration_text"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_var_main_order_sales_registration_number_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/main_order_sales_registration_number_value"
+                app:layout_constraintTop_toBottomOf="@id/tv_var_business_registration_number_value"
+                app:layout_constraintStart_toStartOf="@id/guide_value"
+                android:paddingVertical="2dp"
+                style="@style/business_registration_text"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_const_representative_director"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/representative_director"
+                app:layout_constraintTop_toTopOf="@id/tv_var_representative_director_value"
+                app:layout_constraintStart_toStartOf="parent"
+                android:paddingVertical="2dp"
+                style="@style/business_registration_text"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_var_representative_director_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/representative_director_value"
+                app:layout_constraintTop_toBottomOf="@id/tv_var_main_order_sales_registration_number_value"
+                app:layout_constraintStart_toStartOf="@id/guide_value"
+                android:paddingVertical="2dp"
+                style="@style/business_registration_text"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_const_representative_director_phone_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/representative_director_phone_number"
+                app:layout_constraintTop_toTopOf="@id/tv_var_representative_director_phone_number_value"
+                app:layout_constraintStart_toStartOf="parent"
+                android:paddingVertical="2dp"
+                style="@style/business_registration_text"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_var_representative_director_phone_number_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/representative_director_phone_number_value"
+                app:layout_constraintTop_toBottomOf="@id/tv_var_representative_director_value"
+                app:layout_constraintStart_toStartOf="@id/guide_value"
+                android:paddingVertical="2dp"
+                style="@style/business_registration_text"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_const_company_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/company_address"
+                app:layout_constraintTop_toTopOf="@id/tv_var_company_address_value"
+                app:layout_constraintStart_toStartOf="parent"
+                android:paddingVertical="2dp"
+                style="@style/business_registration_text"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_var_company_address_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/company_address_value"
+                app:layout_constraintTop_toBottomOf="@id/tv_var_representative_director_phone_number_value"
+                app:layout_constraintStart_toStartOf="@id/guide_value"
+                android:paddingVertical="2dp"
+                style="@style/business_registration_text"/>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvbtn_const_use_term"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@id/layout_business_information"
+            app:layout_constraintStart_toStartOf="parent"
+            android:paddingVertical="8dp"
+            android:text="@string/use_term"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_const_vertical_separator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/tvbtn_const_use_term"
+            app:layout_constraintTop_toTopOf="@id/tvbtn_const_use_term"
+            app:layout_constraintBottom_toBottomOf="@id/tvbtn_const_use_term"
+            android:paddingHorizontal="12dp"
+            android:text="@string/vertical_separator"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvbtn_const_privacy_term"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            app:layout_constraintTop_toTopOf="@id/tvbtn_const_use_term"
+            app:layout_constraintBottom_toBottomOf="@id/tvbtn_const_use_term"
+            app:layout_constraintStart_toEndOf="@id/tv_const_vertical_separator"
+            android:paddingVertical="8dp"
+            android:text="@string/terms_privacy_policy"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

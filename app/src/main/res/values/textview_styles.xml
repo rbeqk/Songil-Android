@@ -4,4 +4,9 @@
         <item name="android:background">@color/songil_2</item>
         <item name="android:textColor">@color/songil_4</item>
     </style>
+    <style name="business_registration_text" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/g_4</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/spoqahansansneo_regular</item>
+    </style>
 </resources>
