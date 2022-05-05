@@ -1,5 +1,6 @@
 package com.songil.songil.page_artist.subpage_craft
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -70,6 +71,7 @@ class ArtistCraftFragment : BaseFragment<SimpleRecyclerviewFragmentBinding>(Simp
         viewModel.craftListResult.observe(viewLifecycleOwner, craftResult)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun changeSort(sort: String) {
         viewModel.craftList.clear()
         (binding.rvContent.adapter as Craft1Adapter).notifyDataSetChanged()
