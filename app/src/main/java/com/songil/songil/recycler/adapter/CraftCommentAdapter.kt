@@ -1,5 +1,6 @@
 package com.songil.songil.recycler.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.songil.songil.R
+import com.songil.songil.config.BaseActivity
 import com.songil.songil.config.GlobalApplication
 import com.songil.songil.config.ReportTarget
 import com.songil.songil.data.CraftComment
@@ -60,10 +62,14 @@ class CraftCommentAdapter(private val context : Context, inputCommentData : Arra
             holder.photoCount.visibility = View.GONE
         }
         holder.reportBtn.setOnClickListener {
-            val intent = Intent(context, ReportActivity::class.java)
-            intent.putExtra(GlobalApplication.REPORT_TARGET, ReportTarget.CRAFT_COMMENT)
-            intent.putExtra(GlobalApplication.TARGET_IDX, commentData[position].commentIdx)
-            (holder.itemView.context as CraftActivity).startActivityHorizontal(intent)
+            if (GlobalApplication.checkIsLogin()){
+                val intent = Intent(context, ReportActivity::class.java)
+                intent.putExtra(GlobalApplication.REPORT_TARGET, ReportTarget.CRAFT_COMMENT)
+                intent.putExtra(GlobalApplication.TARGET_IDX, commentData[position].commentIdx)
+                (holder.itemView.context as CraftActivity).startActivityHorizontal(intent)
+            } else {
+                (context as BaseActivity<*>).callNeedLoginDialog()
+            }
         }
         if (commentData[position].isReported == "Y"){
             holder.contentLayout.visibility = View.INVISIBLE
@@ -82,6 +88,7 @@ class CraftCommentAdapter(private val context : Context, inputCommentData : Arra
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun clearData(){
         notifyDataSetChanged()
     }

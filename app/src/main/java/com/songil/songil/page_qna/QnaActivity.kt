@@ -246,10 +246,14 @@ class QnaActivity : BaseActivity<ChatActivityBinding>(R.layout.chat_activity), R
     }
 
     override fun reportChat(commentIdx: Int) {
-        val intent = Intent(this, ReportActivity::class.java)
-        intent.putExtra(GlobalApplication.TARGET_IDX, commentIdx)
-        intent.putExtra(GlobalApplication.REPORT_TARGET, ReportTarget.QNA_COMMENT)
-        startActivityHorizontal(intent)
+        if (isLogin()){
+            val intent = Intent(this, ReportActivity::class.java)
+            intent.putExtra(GlobalApplication.TARGET_IDX, commentIdx)
+            intent.putExtra(GlobalApplication.REPORT_TARGET, ReportTarget.QNA_COMMENT)
+            startActivityHorizontal(intent)
+        } else {
+            callNeedLoginDialog()
+        }
     }
 
     // 채팅에서 차단하기 버튼을 클릭했을 때 이벤트
