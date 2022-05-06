@@ -67,6 +67,11 @@ class StoryWriteActivity : BaseActivity<StoryActivityWriteBinding>(R.layout.stor
         }
     }
 
+    override fun onDestroy() {
+        (binding.rvPhoto.adapter as AddPhotoPickerAdapter).clearBitmapList()
+        super.onDestroy()
+    }
+
     private fun setObserver(){
         val uploadResultObserver = Observer<Int>{ liveData ->
             dismissLoadingDialog()

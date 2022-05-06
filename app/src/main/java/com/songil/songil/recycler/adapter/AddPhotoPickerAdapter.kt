@@ -1,5 +1,6 @@
 package com.songil.songil.recycler.adapter
 
+import android.annotation.SuppressLint
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
@@ -13,6 +14,7 @@ import com.songil.songil.databinding.ItemAddPhotoBinding
 import com.songil.songil.recycler.rv_interface.RvPhotoView
 import kotlin.math.min
 
+@SuppressLint("NotifyDataSetChanged")
 class AddPhotoPickerAdapter(private val view : RvPhotoView, private val max : Int = 3, private val imageList : ArrayList<String> = ArrayList()) : RecyclerView.Adapter<AddPhotoPickerAdapter.AddPhotoPickerViewHolder>(){
 
     private val bitmapList = ArrayList<Bitmap>()
@@ -72,12 +74,12 @@ class AddPhotoPickerAdapter(private val view : RvPhotoView, private val max : In
     fun applyData(newImageList : ArrayList<String>){
         imageList.clear()
         imageList.addAll(newImageList)
-        bitmapList.clear()
+        clearBitmapList()
         notifyDataSetChanged()
     }
 
     fun applyData(){
-        bitmapList.clear()
+        clearBitmapList()
         notifyDataSetChanged()
     }
 
@@ -87,4 +89,12 @@ class AddPhotoPickerAdapter(private val view : RvPhotoView, private val max : In
     }
 
     fun getBitmapList() = bitmapList
+
+    // 반드시 이 adapter 를 사용하는 모든 activity, fragment 가 destroy 될 때 호출해야 한다.
+    fun clearBitmapList() {
+        for (bitmap in bitmapList){
+            bitmap.recycle()
+        }
+        bitmapList.clear()
+    }
 }

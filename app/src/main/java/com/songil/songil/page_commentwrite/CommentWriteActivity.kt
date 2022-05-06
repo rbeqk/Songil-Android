@@ -49,6 +49,11 @@ class CommentWriteActivity : BaseActivity<CommentActivityWriteBinding>(R.layout.
         setObserver()
     }
 
+    override fun onDestroy() {
+        (binding.rvPhoto.adapter as AddPhotoPickerAdapter).clearBitmapList()
+        super.onDestroy()
+    }
+
     private fun setRecyclerView(){
         binding.rvPhoto.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.rvPhoto.adapter = AddPhotoPickerAdapter(this, 3, viewModel.getImageUriList())

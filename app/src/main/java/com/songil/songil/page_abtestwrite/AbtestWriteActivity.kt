@@ -73,6 +73,11 @@ class AbtestWriteActivity : BaseActivity<AbtestActivityWriteBinding>(R.layout.ab
         }
     }
 
+    override fun onDestroy() {
+        (binding.rvPhoto.adapter as AddPhotoPickerAdapter).clearBitmapList()
+        super.onDestroy()
+    }
+
     // set view's state in modify mode (cannot change date, image in ab-test post)
     private fun setModifyStat(){
         binding.etYear.isClickable = false
