@@ -30,6 +30,9 @@ class CraftFragmentDetail : BaseFragment<CraftFragmentDetailBinding>(CraftFragme
             binding.tvSizeValue.text = detailInfo.size
             binding.tvWarningNoticeContent.text = setCautionString(detailInfo.cautions)
             (binding.rvDetailImage.adapter as SimpleImageAdapter).applyData(detailInfo.detailImageUrls)
+
+            binding.tvRefundRuleContent.text = setCautionString(detailInfo.refundInfo)
+            binding.tvDeliveryPeriodContent.text = setCautionString(detailInfo.deliveryPeriodInfo)
         }
     }
 

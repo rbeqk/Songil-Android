@@ -141,6 +141,8 @@
     <string name="size">크기</string>
     <string name="warning_notice">유의사항</string>
     <string name="detail_image">상세 이미지</string>
+    <string name="refund_rule">교환,환불,취소규정</string>
+    <string name="delivery_period">배송기간안내</string>
     <string name="cart_eng">CART</string>
     <string name="buy_now_eng">BUY NOW</string>
     <string name="buy_eng">BUY</string>

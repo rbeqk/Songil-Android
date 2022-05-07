@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -68,10 +67,31 @@
             android:fontFamily="@font/spoqahansansneo_light"/>
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_warning_notice"
+            android:id="@+id/tv_detail_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/tv_size_value"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            android:layout_marginTop="44dp"
+            android:text="@string/detail_image"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_detail_image"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            app:layout_constraintTop_toBottomOf="@id/tv_detail_image"
+            android:overScrollMode="never"
+            android:layout_marginTop="14dp"/>
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_warning_notice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/rv_detail_image"
             app:layout_constraintStart_toStartOf="@id/guideline_start"
             android:layout_marginTop="44dp"
             android:text="@string/warning_notice"/>
@@ -90,24 +110,48 @@
             tools:text="100도 이상의 높은 온도에서 보관을 피해주십시오."/>
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tv_detail_image"
+            android:id="@+id/tv_refund_rule"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/tv_warning_notice_content"
             app:layout_constraintStart_toStartOf="@id/guideline_start"
             android:layout_marginTop="44dp"
-            android:text="@string/detail_image"/>
+            android:text="@string/refund_rule" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_detail_image"
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_refund_rule_content"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:nestedScrollingEnabled="false"
+            app:layout_constraintTop_toBottomOf="@id/tv_refund_rule"
             app:layout_constraintStart_toStartOf="@id/guideline_start"
             app:layout_constraintEnd_toEndOf="@id/guideline_end"
-            app:layout_constraintTop_toBottomOf="@id/tv_detail_image"
-            android:overScrollMode="never"
-            android:layout_marginTop="14dp"/>
+            android:layout_marginTop="14dp"
+            android:lineSpacingExtra="4sp"
+            android:textSize="13sp"
+            android:fontFamily="@font/spoqahansansneo_light"
+            tools:text="주문/제작 상품의 경우, 상품의 제작이 이미 진행된 경우 교환/환불/취소가 불가능합니다."/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_delivery_period"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tv_refund_rule_content"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            android:layout_marginTop="44dp"
+            android:text="@string/delivery_period" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_delivery_period_content"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tv_delivery_period"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            android:layout_marginTop="14dp"
+            android:lineSpacingExtra="4sp"
+            android:textSize="13sp"
+            android:fontFamily="@font/spoqahansansneo_light"
+            tools:text="백태배송으로 진행되며 1주일내에 배송됩니다.\n준비된 재고 소진시 제작기간이 한달 정도 소요될 수 있습니다."/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

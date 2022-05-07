@@ -9,6 +9,7 @@ data class CraftSimpleInfo(val craftIdx : Int = 0, val mainImageUrl : String, va
 data class CraftDetailInfo(val craftIdx : Int, val isNew : String, val isSoldOut : String, val mainImageUrl : String, val name : String,
                            val price : Int, val shippingFee : ArrayList<String>, val material : ArrayList<String>,
                            val usage : ArrayList<String>, val content : String, val size : String, val cautions : ArrayList<String>,
+                           val refundInfo : ArrayList<String>, val deliveryPeriodInfo : ArrayList<String>,
                            val detailImageUrls : ArrayList<String>, val artistIdx : Int, val artistName : String, val artistIntroduction : String, val totalCommentCnt : Int,
                            val artistImageUrl : String? = null, var isLike : String)
 
