@@ -16,8 +16,8 @@ android {
         applicationId "com.songil.songil"
         minSdkVersion 24
         targetSdkVersion 31
-        versionCode 8
-        versionName "1.2.5"
+        versionCode 9
+        versionName "1.2.6"
 
         buildConfigField "String", "BOOTPAY_KEY", properties["BOOTPAY_KEY"]
     }
